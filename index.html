@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2F4A36">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Obi-Wan Quinoa</title>
+<style>
+  :root{
+    --vert-fonce:#2F4A36;--vert-feuille:#6E9E5E;--vert-clair:#E7EEE0;
+    --betterave:#A8455E;--betterave-clair:#F4E3E7;
+    --encre:#25342A;--ardoise:#6B7468;--papier:#F4F6EF;--carte:#FFFFFF;--trait:#E2E7DA;
+    --ombre:0 1px 3px rgba(37,52,42,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--papier);color:var(--encre);
+    font-family:"Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    font-size:15px;line-height:1.55;}
+  h2,h3{font-family:Georgia,"Iowan Old Style",Palatino,"Times New Roman",serif;color:var(--vert-fonce);margin:0;}
+
+  /* ---------- Header (sobre, slim) ---------- */
+  .app-header{position:sticky;top:0;z-index:20;background:var(--vert-fonce);color:#fff;
+    padding:max(9px,env(safe-area-inset-top)) 16px 10px;box-shadow:var(--ombre);}
+  .app-header .brand{font-family:Georgia,serif;font-size:17px;font-weight:700;line-height:1.1;letter-spacing:.01em;}
+  .app-header .slogan{font-size:11.5px;opacity:.82;margin-top:2px;font-style:italic;}
+
+  /* ---------- Planning ---------- */
+  #planning{max-width:720px;margin:0 auto;padding:6px 16px calc(48px + env(safe-area-inset-bottom));}
+
+  /* Marqueur de semaine — sobre, NON fixe, avant chaque lundi */
+  .week-marker{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+    margin:28px 2px 14px;padding:0 2px 8px;border-bottom:1px solid var(--trait);scroll-margin-top:70px;}
+  .week-marker:first-child{margin-top:10px;}
+  .wm-name{font-family:Georgia,serif;font-size:15px;color:var(--vert-fonce);font-weight:700;}
+  .courses-btn{border:1px solid var(--vert-feuille);background:transparent;color:var(--vert-fonce);
+    border-radius:20px;padding:5px 12px 5px 9px;font:inherit;font-size:12.5px;font-weight:600;
+    display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;}
+  .courses-btn svg{width:15px;height:15px;stroke:var(--vert-feuille);fill:none;stroke-width:1.7;}
+  .courses-btn:active{background:var(--vert-clair);}
+
+  /* Diviseur AMAP — avant chaque jeudi */
+  .amap-div{display:flex;align-items:center;gap:12px;margin:22px 2px 14px;scroll-margin-top:70px;}
+  .amap-div::before,.amap-div::after{content:"";flex:1;height:1px;background:var(--trait);}
+  .amap-div span{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--vert-feuille);}
+
+  .day-card{background:var(--carte);border:1px solid var(--trait);border-radius:12px;
+    box-shadow:var(--ombre);margin-bottom:12px;overflow:hidden;scroll-margin-top:70px;}
+  .day-card.passe{opacity:.5;}
+  .day-card.today{border-color:var(--vert-feuille);box-shadow:0 0 0 2px var(--vert-feuille),var(--ombre);}
+  .day-h{font-size:16px;padding:12px 15px 10px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-bottom:1px solid var(--trait);}
+  .today-tag{font-family:"Helvetica Neue",sans-serif;font-size:10px;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;color:#fff;background:var(--vert-feuille);border-radius:20px;padding:3px 9px;}
+  .badge{font-family:"Helvetica Neue",sans-serif;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:3px 9px;}
+  .badge.prep{color:var(--betterave);background:var(--betterave-clair);}
+
+  .repas-row{width:100%;display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:10px;
+    padding:11px 14px;min-height:60px;border-left:4px solid var(--vert-feuille);cursor:pointer;}
+  .repas-row + .repas-row{border-top:1px solid var(--trait);}
+  .repas-row.soir{border-left-color:var(--betterave);}
+  .repas-main:active{opacity:.6;}
+  .repas-row-moment{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--vert-feuille);}
+  .repas-row.soir .repas-row-moment{color:var(--betterave);}
+  .repas-row-titre{font-size:14.5px;line-height:1.35;color:var(--encre);}
+  .repas-row-meta{font-size:12px;color:var(--ardoise);margin-top:2px;display:block;}
+  .frais-pill{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;
+    color:var(--vert-feuille);border:1px solid var(--vert-feuille);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:1px;}
+  .row-action{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--trait);background:#fff;
+    color:var(--ardoise);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .row-action:active{background:#F0F2EC;}
+  .repas-row.supprime{opacity:.5;}
+  .repas-row.supprime .repas-row-titre{text-decoration:line-through;}
+  .repas-row.supprime .row-action{color:var(--vert-feuille);border-color:var(--vert-feuille);}
+  .repas-vide{padding:16px 15px;color:var(--ardoise);font-size:13.5px;font-style:italic;}
+
+  /* ---------- Overlay ---------- */
+  #overlay{position:fixed;inset:0;z-index:50;background:var(--papier);display:flex;flex-direction:column;}
+  #overlay[hidden]{display:none;}
+  .ov-head{position:sticky;top:0;background:var(--carte);border-bottom:1px solid var(--trait);
+    display:flex;align-items:center;gap:10px;padding:max(10px,env(safe-area-inset-top)) 16px 10px;min-height:54px;}
+  .ov-back{border:none;background:none;padding:6px;margin:-6px 0 -6px -6px;color:var(--vert-fonce);cursor:pointer;display:flex;}
+  .ov-back svg{width:24px;height:24px;}
+  .ov-title{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--vert-fonce);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .ov-body{overflow:auto;-webkit-overflow-scrolling:touch;padding:18px 16px calc(28px + env(safe-area-inset-bottom));max-width:720px;margin:0 auto;width:100%;}
+
+  .recipe{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);padding:20px 18px 22px;}
+  .recipe-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--vert-feuille);border:1px solid var(--vert-feuille);border-radius:20px;padding:3px 11px;margin-bottom:12px;}
+  .recipe-tag.soir{color:var(--betterave);border-color:var(--betterave);}
+  .recipe-titre{font-size:22px;line-height:1.2;margin-bottom:14px;}
+  .macros{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+  .chip{font-size:12px;font-weight:700;padding:5px 11px;border-radius:7px;font-variant-numeric:tabular-nums;}
+  .chip.kcal{background:var(--vert-clair);color:var(--vert-fonce);}
+  .chip.prot{background:var(--betterave-clair);color:var(--betterave);}
+  .chip.frais{background:#fff;color:var(--vert-feuille);border:1px solid var(--vert-feuille);}
+  .recipe h3{font-family:"Helvetica Neue",sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ardoise);font-weight:700;margin:0 0 10px;}
+  .recipe .bloc{margin-bottom:22px;}
+  ul.ingr{list-style:none;margin:0;padding:0;}
+  ul.ingr li{position:relative;padding:7px 0 7px 18px;border-bottom:1px dotted var(--trait);font-size:14px;}
+  ul.ingr li:last-child{border-bottom:none;}
+  ul.ingr li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;border-radius:50%;background:var(--vert-feuille);}
+  .recipe.soir ul.ingr li::before{background:var(--betterave);}
+  ol.etapes{list-style:none;margin:0;padding:0;counter-reset:step;}
+  ol.etapes li{position:relative;padding:0 0 13px 34px;font-size:14px;}
+  ol.etapes li:last-child{padding-bottom:0;}
+  ol.etapes li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:-1px;width:23px;height:23px;border-radius:50%;
+    background:var(--vert-fonce);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .recipe.soir ol.etapes li::before{background:var(--betterave);}
+  .del-btn{margin-top:6px;width:100%;padding:13px;border-radius:10px;border:1px solid var(--trait);background:#fff;
+    color:var(--betterave);font:inherit;font-weight:600;cursor:pointer;}
+  .del-btn.is-del{color:var(--vert-fonce);border-color:var(--vert-feuille);background:var(--vert-clair);}
+
+  .hint{color:var(--ardoise);font-size:13px;margin:0 0 16px;}
+  .rayon{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);padding:6px 16px 8px;margin-bottom:14px;}
+  .rayon h2{font-size:16px;display:flex;align-items:center;gap:9px;padding:11px 0 9px;border-bottom:2px solid var(--vert-clair);margin-bottom:2px;}
+  .rayon h2 .pip{width:11px;height:11px;border-radius:3px;background:var(--vert-feuille);}
+  .rayon.r-prot h2 .pip{background:var(--betterave);}
+  .rayon.r-epi h2 .pip{background:#C9912F;}
+  .rayon.r-fru h2 .pip{background:#D26A3B;}
+  .rayon.r-con h2 .pip{background:#8A8F82;}
+  .rayon ul{list-style:none;margin:0;padding:0;}
+  .course-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dotted var(--trait);cursor:pointer;font-size:14px;min-height:46px;}
+  .course-item:last-child{border-bottom:none;}
+  .course-item .check{flex:0 0 auto;width:21px;height:21px;border:2px solid var(--vert-feuille);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background .12s;}
+  .course-item .check svg{width:13px;height:13px;opacity:0;}
+  .course-nom{flex:1 1 auto;}
+  .course-q{color:var(--ardoise);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  .course-item.done .check{background:var(--vert-feuille);}
+  .course-item.done .check svg{opacity:1;}
+  .course-item.done .course-nom{text-decoration:line-through;color:var(--ardoise);}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">Obi-Wan Quinoa</div>
+  <div class="slogan">Que la graine soit avec toi, jeûne padawan !</div>
+</header>
+
+<main id="planning"></main>
+
+<div id="overlay" hidden>
+  <header class="ov-head">
+    <button class="ov-back" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <span class="ov-title"></span>
+  </header>
+  <div class="ov-body"></div>
+</div>
+
+<script>
+/* ============================================================
+   OBI-WAN QUINOA
+   Semaine alimentaire JEUDI -> MERCREDI (rythme AMAP).
+   - Marqueur "Semaine du <lundi>" : repère calendaire, avant chaque lundi.
+   - Diviseur "AMAP" : avant chaque jeudi (nouveau panier).
+   La liste de courses est CALCULÉE à partir des repas non supprimés.
+   Pour ajouter une semaine : MENUS["AAAA-MM-JJ"(jeudi)] = { jours:[...7...] }.
+   ============================================================ */
+
+/* champ shop : {n:nom, q:quantité|null, u:unité, r:rayon, note?}
+   r ∈ prot|leg|epi|con|fru   ·   q=null => pas de cumul (condiment, à l'unité) */
+const C_OLIVE={n:"Huile d’olive",q:null,u:"",r:"con"};
+const SEL={n:"Sel, poivre",q:null,u:"",r:"con"};
+
+const R = {
+  taboule:{moment:"Midi",heure:"12 h 30",titre:"Taboulé de semoule, protéine de soja & crudités",kcal:900,prot:32,
+    ingredients:["Semoule — 80 g (sèche)","Protéine de soja texturée — 30 g (sèche)","Concombre — ½","Carottes — 2 petites","Petits pois — 1 poignée","Oignon jaune — ¼","Noix — 20 g","Salade verte — 1 poignée","Vinaigrette : moutarde, huile d’olive, vinaigre, sel, poivre","Cumin & paprika"],
+    etapes:["Réhydrater la soja à l’eau bouillante salée 10–15 min, égoutter, presser.","Couvrir la semoule d’eau bouillante + un filet d’huile, 5 min, puis égrainer.","Poêler la soja 5 min avec l’oignon et les épices.","Concombre en dés, carottes râpées, petits pois (blanchis 2 min si crus).","Mélanger semoule, soja, crudités et vinaigrette ; parsemer de noix, servir sur salade."],
+    shop:[{n:"Semoule",q:80,u:"g",r:"epi"},{n:"Protéine de soja texturée",q:30,u:"g",r:"prot"},{n:"Concombre",q:0.5,u:"",r:"leg"},{n:"Carottes",q:2,u:"",r:"leg"},{n:"Petits pois",q:50,u:"g",r:"leg"},{n:"Oignons jaunes",q:0.25,u:"",r:"leg"},{n:"Noix",q:20,u:"g",r:"epi"},{n:"Salade verte",q:0.25,u:"",r:"leg"},{n:"Moutarde",q:null,u:"",r:"con"},C_OLIVE,{n:"Vinaigre",q:null,u:"",r:"con"},{n:"Cumin",q:null,u:"",r:"con"},{n:"Paprika",q:null,u:"",r:"con"},SEL]},
+
+  pates_courgette:{moment:"Soir",heure:"19 h",titre:"Pâtes courgette & faux lardons + entrée betterave-noix",kcal:1000,prot:30,
+    ingredients:["Betteraves cuites — 3 petites","Noix concassées — 15 g","Pâtes — 90 g (sèches)","Faux lardons de soja — 90 g","Courgette — 1","Oignon jaune — ½","Ail — 1 gousse","Huile d’olive","Amandes effilées — option","Vinaigrette entrée : moutarde, huile, sel, poivre"],
+    etapes:["Entrée : betteraves en dés + noix + vinaigrette.","Cuire les pâtes, garder une louche d’eau de cuisson.","Faire revenir oignon + courgette 6–8 min.","Ajouter faux lardons + ail, 4–5 min.","Ajouter les pâtes + un peu d’eau de cuisson pour lier ; servir avec les amandes."],
+    shop:[{n:"Betteraves cuites",q:3,u:"",r:"leg"},{n:"Noix",q:15,u:"g",r:"epi"},{n:"Pâtes",q:90,u:"g",r:"epi"},{n:"Faux lardons de soja",q:90,u:"g",r:"prot"},{n:"Courgettes",q:1,u:"",r:"leg"},{n:"Oignons jaunes",q:0.5,u:"",r:"leg"},{n:"Ail",q:1,u:"gousse",r:"leg"},C_OLIVE,{n:"Amandes effilées",q:null,u:"",r:"epi",note:"option"},{n:"Moutarde",q:null,u:"",r:"con"},SEL]},
+
+  salade_pates:{moment:"Midi",heure:"12 h 30",titre:"Salade de pâtes estivale, pois chiches & féta",kcal:970,prot:33,
+    ingredients:["Pâtes — 90 g (sèches)","Pois chiches égouttés — 150 g","Tomates cerises — 150 g","Concombre — ½","Carottes râpées — 1","Oignon jaune — ¼","Féta — 50 g","Noix — 15 g","Basilic","Vinaigrette : moutarde, huile, ½ citron, sel, poivre"],
+    etapes:["Cuire les pâtes, rafraîchir à l’eau froide.","Tomates en deux, concombre en dés, carottes râpées.","Mélanger pâtes, pois chiches, légumes, oignon et vinaigrette.","Ajouter féta émiettée, noix et basilic ; servir frais."],
+    shop:[{n:"Pâtes",q:90,u:"g",r:"epi"},{n:"Pois chiches",q:150,u:"g",r:"epi"},{n:"Tomates cerises",q:150,u:"g",r:"leg"},{n:"Concombre",q:0.5,u:"",r:"leg"},{n:"Carottes",q:1,u:"",r:"leg"},{n:"Oignons jaunes",q:0.25,u:"",r:"leg"},{n:"Féta",q:50,u:"g",r:"prot"},{n:"Noix",q:15,u:"g",r:"epi"},{n:"Basilic",q:null,u:"",r:"leg"},{n:"Moutarde",q:null,u:"",r:"con"},C_OLIVE,{n:"Citrons",q:0.5,u:"",r:"fru"},SEL]},
+
+  shakshuka:{moment:"Soir",heure:"19 h",titre:"Shakshuka aux œufs, pain & yaourt",kcal:930,prot:32,
+    ingredients:["Œufs — 3","Tomates concassées — 400 g","Poivron — 1","Oignon jaune — ½","Ail — 1 gousse","Cumin, paprika","Huile d’olive","Pain complet — 2 tranches","Yaourt grec — 100 g","Salade verte — 1 poignée"],
+    etapes:["Faire revenir oignon + poivron 8 min.","Ajouter ail + épices 1 min, puis les tomates ; mijoter 10–12 min.","Creuser 3 puits, casser un œuf dans chacun, couvrir 5–7 min (jaune coulant).","Servir avec le pain, le yaourt à part et la salade."],
+    shop:[{n:"Œufs",q:3,u:"",r:"prot"},{n:"Tomates concassées",q:400,u:"g",r:"epi"},{n:"Poivrons",q:1,u:"",r:"leg"},{n:"Oignons jaunes",q:0.5,u:"",r:"leg"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Cumin",q:null,u:"",r:"con"},{n:"Paprika",q:null,u:"",r:"con"},C_OLIVE,{n:"Pain complet",q:2,u:"tranche",r:"epi"},{n:"Yaourt grec",q:100,u:"g",r:"prot"},{n:"Salade verte",q:0.25,u:"",r:"leg"},SEL]},
+
+  buddha:{moment:"Soir",heure:"19 h",titre:"Buddha bowl quinoa & tofu grillé, sauce tahini",kcal:950,prot:32,priorite:true,
+    ingredients:["Quinoa — 80 g (sec)","Tofu ferme — 150 g","Haricots verts — 150 g","Betterave cuite — 1 petite","Jeunes pousses — 1 poignée","Sauce soja","Huile d’olive","Sauce tahini : tahini, ½ citron, 1 gousse d’ail, eau","Graines de courge — option"],
+    etapes:["Rincer le quinoa, cuire 12–15 min dans 2× son volume d’eau salée.","Presser le tofu, cubes, mariner 5 min dans la sauce soja, poêler 8–10 min.","Cuire les haricots verts 6–8 min, garder croquants.","Délayer le tahini avec citron, ail râpé, eau et sel.","Dresser : quinoa, tofu, haricots verts, betterave en dés, pousses ; napper, parsemer de graines."],
+    shop:[{n:"Quinoa",q:80,u:"g",r:"epi"},{n:"Tofu ferme",q:150,u:"g",r:"prot"},{n:"Haricots verts",q:150,u:"g",r:"leg"},{n:"Betteraves cuites",q:1,u:"",r:"leg"},{n:"Jeunes pousses",q:1,u:"",r:"leg",note:"sachet"},{n:"Sauce soja",q:null,u:"",r:"con"},C_OLIVE,{n:"Tahini",q:null,u:"",r:"epi",note:"1 pot"},{n:"Citrons",q:0.5,u:"",r:"fru"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Graines de courge",q:null,u:"",r:"epi",note:"option"}]},
+
+  curry:{moment:"Soir",heure:"19 h",titre:"Curry de lentilles corail aux épinards, riz & yaourt",kcal:980,prot:31,priorite:true,
+    ingredients:["Lentilles corail — 70 g (sèches)","Épinards frais — 150 g","Lait de coco — 100 ml","Riz basmati — 70 g (sec)","Oignon — ½","Ail 1 gousse, gingembre 1 cm","Curry/curcuma, cumin","Huile d’olive","Yaourt grec — 100 g, ½ citron"],
+    etapes:["Cuire le riz.","Faire revenir oignon, ail et gingembre 4 min, ajouter les épices 1 min.","Ajouter les lentilles rincées + 250 ml d’eau, mijoter 12–15 min.","Incorporer le lait de coco et les épinards, cuire 3–4 min.","Servir sur le riz, yaourt à part, filet de citron."],
+    shop:[{n:"Lentilles corail",q:70,u:"g",r:"epi"},{n:"Épinards frais",q:150,u:"g",r:"leg"},{n:"Lait de coco",q:100,u:"ml",r:"epi",note:"1 boîte"},{n:"Riz basmati",q:70,u:"g",r:"epi"},{n:"Oignons jaunes",q:0.5,u:"",r:"leg"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Gingembre",q:null,u:"",r:"leg",note:"1 morceau"},{n:"Curry",q:null,u:"",r:"con"},{n:"Curcuma",q:null,u:"",r:"con"},{n:"Cumin",q:null,u:"",r:"con"},C_OLIVE,{n:"Yaourt grec",q:100,u:"g",r:"prot"},{n:"Citrons",q:0.5,u:"",r:"fru"}]},
+
+  omelette:{moment:"Midi",heure:"12 h 30",titre:"Omelette aux blettes & féta, salade et pain",kcal:920,prot:31,priorite:true,
+    ingredients:["Œufs — 3","Blettes — 200 g (vert + côtes)","Féta — 50 g","Oignon — ½","Huile d’olive","Pain complet — 1 tranche","Salade verte — 1 poignée","Sel, poivre"],
+    etapes:["Séparer le vert des côtes ; émincer les côtes et l’oignon.","Poêler côtes + oignon 6–7 min, ajouter le vert 2–3 min.","Battre les œufs, saler/poivrer, verser dans la poêle.","Émietter la féta dessus, cuire à couvert 4–5 min.","Servir avec le pain et la salade."],
+    shop:[{n:"Œufs",q:3,u:"",r:"prot"},{n:"Blettes",q:200,u:"g",r:"leg"},{n:"Féta",q:50,u:"g",r:"prot"},{n:"Oignons jaunes",q:0.5,u:"",r:"leg"},C_OLIVE,{n:"Pain complet",q:1,u:"tranche",r:"epi"},{n:"Salade verte",q:0.25,u:"",r:"leg"},SEL]},
+
+  tempeh:{moment:"Soir",heure:"19 h",titre:"Tempeh teriyaki, nouilles, courgette & petits pois",kcal:1000,prot:33,
+    ingredients:["Tempeh — 120 g","Nouilles (blé/soba) — 80 g (sèches)","Courgette — 1","Petits pois — 80 g","Sauce soja, sirop d’érable","Ail 1 gousse, gingembre 1 cm","Huile de sésame","Graines de sésame"],
+    etapes:["Cuire les nouilles, égoutter.","Dorer le tempeh en bâtonnets 5–6 min à l’huile de sésame.","Ajouter courgette en demi-rondelles + petits pois, sauter 5 min.","Ajouter ail, gingembre, sauce soja + sirop, caraméliser 2 min.","Ajouter les nouilles, mélanger, parsemer de sésame."],
+    shop:[{n:"Tempeh",q:120,u:"g",r:"prot"},{n:"Nouilles (blé/soba)",q:80,u:"g",r:"epi"},{n:"Courgettes",q:1,u:"",r:"leg"},{n:"Petits pois",q:80,u:"g",r:"leg"},{n:"Sauce soja",q:null,u:"",r:"con"},{n:"Sirop d’érable",q:null,u:"",r:"con",note:"1 flacon"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Gingembre",q:null,u:"",r:"leg",note:"1 morceau"},{n:"Huile de sésame",q:null,u:"",r:"con"},{n:"Graines de sésame",q:null,u:"",r:"epi",note:"1 sachet"}]},
+
+  salade_lentilles:{moment:"Midi",heure:"12 h 30",titre:"Salade de lentilles vertes, radis & œuf dur",kcal:930,prot:32,priorite:true,
+    ingredients:["Lentilles vertes — 70 g (sèches)","Œufs — 2","Radis — ½ botte","Concombre — ½","Noix — 15 g","Échalote — 1","Persil","Vinaigrette : moutarde, huile, vinaigre, sel, poivre"],
+    etapes:["Cuire les lentilles 18–20 min, égoutter, tiédir.","Cuire les œufs 9 min, refroidir, écaler, couper en deux.","Radis en rondelles, concombre en dés, échalote ciselée.","Mélanger lentilles, légumes et vinaigrette.","Dresser avec les œufs, les noix et le persil."],
+    shop:[{n:"Lentilles vertes",q:70,u:"g",r:"epi"},{n:"Œufs",q:2,u:"",r:"prot"},{n:"Radis",q:1,u:"botte",r:"leg"},{n:"Concombre",q:0.5,u:"",r:"leg"},{n:"Noix",q:15,u:"g",r:"epi"},{n:"Échalote",q:1,u:"",r:"leg"},{n:"Persil",q:null,u:"",r:"leg"},{n:"Moutarde",q:null,u:"",r:"con"},C_OLIVE,{n:"Vinaigre",q:null,u:"",r:"con"},SEL]},
+
+  falafels:{moment:"Midi",heure:"12 h 30",titre:"Falafels au four, taboulé de boulgour & tzatziki",kcal:990,prot:31,
+    ingredients:["Pois chiches égouttés — 250 g","Boulgour — 70 g (sec)","Yaourt grec — 100 g","Concombre — ½","Tomate — 1","Oignon ¼, ail 1 gousse","Persil & menthe, cumin, coriandre moulue","Huile d’olive, citron"],
+    etapes:["Mixer pois chiches, oignon, ail, persil, épices et 1 c.à.s d’huile ; former des boulettes.","Cuire au four 25 min à 200 °C en retournant à mi-cuisson.","Boulgour couvert d’eau bouillante 10 min ; ajouter tomate en dés, citron, huile, menthe.","Tzatziki : yaourt + concombre râpé essoré + ail + menthe.","Servir falafels, taboulé et tzatziki ensemble."],
+    shop:[{n:"Pois chiches",q:250,u:"g",r:"epi"},{n:"Boulgour",q:70,u:"g",r:"epi"},{n:"Yaourt grec",q:100,u:"g",r:"prot"},{n:"Concombre",q:0.5,u:"",r:"leg"},{n:"Tomates",q:1,u:"",r:"leg"},{n:"Oignons jaunes",q:0.25,u:"",r:"leg"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Persil",q:null,u:"",r:"leg"},{n:"Menthe",q:null,u:"",r:"leg"},{n:"Cumin",q:null,u:"",r:"con"},{n:"Coriandre moulue",q:null,u:"",r:"con"},C_OLIVE,{n:"Citrons",q:0.5,u:"",r:"fru"}]},
+
+  tofu_brouille:{moment:"Midi",heure:"12 h 30",titre:"Tofu brouillé aux courgettes & tomates, pain complet",kcal:900,prot:31,
+    ingredients:["Tofu ferme — 200 g","Courgette — ½","Tomate — 1","Oignon — ¼","Curcuma","Huile d’olive","Pain complet — 1 tranche","Yaourt grec — 100 g (option)","Sel, poivre, ciboulette"],
+    etapes:["Émietter le tofu pressé à la fourchette.","Faire revenir oignon + courgette en dés 6 min.","Ajouter le tofu + curcuma, sauter 4–5 min.","Ajouter la tomate en dés, 2–3 min ; saler, poivrer.","Servir avec le pain (et le yaourt) ; parsemer de ciboulette."],
+    shop:[{n:"Tofu ferme",q:200,u:"g",r:"prot"},{n:"Courgettes",q:0.5,u:"",r:"leg"},{n:"Tomates",q:1,u:"",r:"leg"},{n:"Oignons jaunes",q:0.25,u:"",r:"leg"},{n:"Curcuma",q:null,u:"",r:"con"},C_OLIVE,{n:"Pain complet",q:1,u:"tranche",r:"epi"},{n:"Yaourt grec",q:100,u:"g",r:"prot",note:"option"},{n:"Ciboulette",q:null,u:"",r:"leg"},SEL]},
+
+  orzotto:{moment:"Soir",heure:"19 h",titre:"Orzotto d’orge, fèves & petits pois, parmesan",kcal:970,prot:30,
+    ingredients:["Orge perlé — 80 g (sec)","Courgette — ½","Fèves écossées — 100 g","Petits pois — 80 g","Parmesan végétarien — 30 g","Oignon — ¼","Bouillon de légumes","Huile d’olive"],
+    etapes:["Faire revenir l’oignon, ajouter l’orge, nacrer 1 min.","Mouiller au bouillon chaud louche par louche, ~30 min.","À mi-cuisson, ajouter courgette en dés, fèves et petits pois.","Hors du feu, incorporer le parmesan ; poivrer.","Servir crémeux, un filet d’huile dessus."],
+    shop:[{n:"Orge perlé",q:80,u:"g",r:"epi"},{n:"Courgettes",q:0.5,u:"",r:"leg"},{n:"Fèves",q:100,u:"g",r:"leg"},{n:"Petits pois",q:80,u:"g",r:"leg"},{n:"Parmesan végétarien",q:30,u:"g",r:"prot"},{n:"Oignons jaunes",q:0.25,u:"",r:"leg"},{n:"Bouillon de légumes",q:null,u:"",r:"epi",note:"cubes"},C_OLIVE]},
+
+  gratin:{moment:"Midi",heure:"12 h 30",titre:"Gratin de blettes à la ricotta, salade et pain",kcal:950,prot:31,priorite:true,
+    ingredients:["Blettes — 250 g","Ricotta — 150 g","Œufs — 2","Parmesan végétarien — 20 g","Ail 1 gousse, muscade","Pain complet — 1 tranche","Salade verte — 1 poignée","Huile d’olive"],
+    etapes:["Faire tomber les blettes (côtes puis vert) 8–10 min avec l’ail.","Battre œufs + ricotta + muscade ; saler, poivrer.","Mélanger aux blettes, verser dans un plat, parsemer de parmesan.","Cuire au four 20–25 min à 190 °C.","Servir avec la salade et le pain."],
+    shop:[{n:"Blettes",q:250,u:"g",r:"leg"},{n:"Ricotta",q:150,u:"g",r:"prot"},{n:"Œufs",q:2,u:"",r:"prot"},{n:"Parmesan végétarien",q:20,u:"g",r:"prot"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Muscade",q:null,u:"",r:"con"},{n:"Pain complet",q:1,u:"tranche",r:"epi"},{n:"Salade verte",q:0.25,u:"",r:"leg"},C_OLIVE]},
+
+  chili:{moment:"Soir",heure:"19 h",titre:"Chili sin carne haricots rouges & soja, riz",kcal:990,prot:34,
+    ingredients:["Haricots rouges égouttés — 150 g","Protéine de soja texturée — 25 g (sèche)","Tomates concassées — 200 g","Riz — 70 g (sec)","Poivron — 1","Oignon ½, ail 1 gousse","Cumin, paprika, origan, piment","Cheddar végétarien — 20 g (ou yaourt)","Huile d’olive"],
+    etapes:["Réhydrater la soja à l’eau bouillante 10 min, égoutter.","Cuire le riz.","Revenir oignon + poivron 8 min, ajouter ail + épices 1 min.","Ajouter tomates, haricots rouges et soja ; mijoter 15 min.","Servir sur le riz, cheddar râpé (ou yaourt) dessus."],
+    shop:[{n:"Haricots rouges",q:150,u:"g",r:"epi"},{n:"Protéine de soja texturée",q:25,u:"g",r:"prot"},{n:"Tomates concassées",q:200,u:"g",r:"epi"},{n:"Riz basmati",q:70,u:"g",r:"epi"},{n:"Poivrons",q:1,u:"",r:"leg"},{n:"Oignons jaunes",q:0.5,u:"",r:"leg"},{n:"Ail",q:1,u:"gousse",r:"leg"},{n:"Cumin",q:null,u:"",r:"con"},{n:"Paprika",q:null,u:"",r:"con"},{n:"Origan",q:null,u:"",r:"con"},{n:"Piment",q:null,u:"",r:"con"},{n:"Cheddar végétarien",q:20,u:"g",r:"prot",note:"option"},C_OLIVE]}
+};
+
+function midi(r){ return Object.assign({}, r, {moment:"Midi", heure:"12 h 30"}); }
+function soir(r){ return Object.assign({}, r, {moment:"Soir", heure:"19 h"}); }
+
+/* Semaine type, fraîcheur d'abord (jeudi→mercredi) */
+const SAMPLE = { jours:[
+  { repas:[ midi(R.omelette),         soir(R.curry) ] },           // Jeudi  (blettes, épinards)
+  { repas:[ midi(R.salade_lentilles), soir(R.buddha) ] },         // Vendredi (radis, pousses)
+  { repas:[ midi(R.gratin),           soir(R.orzotto) ] },        // Samedi (blettes, fèves)
+  { repas:[ midi(R.salade_pates),     soir(R.tempeh) ] },         // Dimanche
+  { repas:[ midi(R.tofu_brouille),    soir(R.pates_courgette) ] },// Lundi
+  { repas:[ midi(R.taboule),          soir(R.shakshuka) ] },      // Mardi
+  { repas:[ midi(R.falafels),         soir(R.chili) ] }           // Mercredi (conserves, prépa +1)
+]};
+
+/* Toujours ajoutés à la liste, quels que soient les repas */
+const EXTRAS = [ {r:"fru", n:"Pêches jaunes / pommes", disp:"~7 (desserts)"} ];
+
+const MENUS = {};
+/* >>> Semaines suivantes : MENUS["2026-07-02"] = { jours:[...] };  (clé = le JEUDI) */
+
+/* ============================ Dates ============================ */
+const MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+const JOURS=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+function pad(n){return (n<10?'0':'')+n;}
+function idOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function parseId(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);x.setHours(0,0,0,0);return x;}
+function startOfWeek(d){const x=new Date(d);x.setHours(0,0,0,0);return addDays(x,-((x.getDay()+7-4)%7));}/*jeudi=4*/
+function fmt(d){const j=d.getDate();return (j===1?'1ᵉʳ':j)+' '+MOIS[d.getMonth()];}
+
+const today=(function(){const t=new Date();t.setHours(0,0,0,0);return t;})();
+MENUS[idOf(startOfWeek(today))]=SAMPLE;   // pré-remplit la semaine en cours
+
+/* ============================ Persistance ============================ */
+const store={mem:{},
+  get(k){try{return localStorage.getItem(k);}catch(e){return (k in this.mem)?this.mem[k]:null;}},
+  set(k,v){try{localStorage.setItem(k,v);}catch(e){this.mem[k]=v;}}};
+function loadSet(k){const raw=store.get(k);if(!raw)return new Set();try{return new Set(JSON.parse(raw));}catch(e){return new Set();}}
+function saveSet(k,s){store.set(k,JSON.stringify(Array.from(s)));}
+const deleted=loadSet('owq.deleted');   // clés "wid:di-ri"
+const coches=loadSet('owq.checked');    // clés "wid§rayon§nom"
+
+/* ============================ Liste de courses calculée ============================ */
+const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
+function frac(x){const w=Math.floor(x+1e-6),r=x-w;let f='';
+  if(Math.abs(r-0.25)<.02)f='¼';else if(Math.abs(r-0.5)<.02)f='½';else if(Math.abs(r-0.75)<.02)f='¾';
+  if(f)return (w>0?w:'')+f;
+  return (Math.round(x*10)/10).toString().replace('.',',');}
+function qLabel(e){
+  let s;
+  if(e.q==null){ s=''; }
+  else if(e.u==='g') s=Math.round(e.q)+' g';
+  else if(e.u==='ml') s=Math.round(e.q)+' ml';
+  else if(e.u==='gousse') s=frac(e.q)+' gousse'+(e.q>1?'s':'');
+  else if(e.u==='botte') s=frac(e.q)+' botte'+(e.q>1?'s':'');
+  else if(e.u==='tranche') s=Math.round(e.q)+' tranche'+(e.q>1?'s':'');
+  else s=frac(e.q);
+  if(e.note) s = s ? s+' ('+e.note+')' : e.note;
+  return s;
+}
+function computeCourses(wid){
+  const menu=MENUS[wid]; if(!menu) return null;
+  const map=new Map(), order=[];
+  menu.jours.forEach(function(day,di){
+    day.repas.forEach(function(r,ri){
+      if(deleted.has(wid+':'+di+'-'+ri)) return;
+      (r.shop||[]).forEach(function(s){
+        const k=s.n+'|'+(s.u||'')+'|'+s.r;
+        if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
+        const e=map.get(k);
+        if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q;
+        if(s.note && !e.note) e.note=s.note;
+      });
+    });
+  });
+  const byR={}; RAYONS.forEach(function(x){byR[x[0]]=[];});
+  order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, disp:qLabel(e)});});
+  EXTRAS.forEach(function(x){ byR[x.r].push({n:x.n, disp:x.disp}); });
+  return RAYONS.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
+}
+
+/* ============================ Rendu planning ============================ */
+const planning=document.getElementById('planning');
+const overlay=document.getElementById('overlay');
+const ovBody=overlay.querySelector('.ov-body');
+const ovTitle=overlay.querySelector('.ov-title');
+const COURSES_SVG='<svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.3a1 1 0 0 0 1 .8h8.4a1 1 0 0 0 1-.8L20 7H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>';
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
+
+function repasRow(wid,di,ri,r){
+  const key=wid+':'+di+'-'+ri, del=deleted.has(key);
+  return '<div class="repas-row '+(r.moment==='Soir'?'soir':'midi')+(del?' supprime':'')+'" data-key="'+key+'">'
+    +'<span class="repas-main repas-row-moment">'+r.moment+'</span>'
+    +'<span class="repas-main"><span class="repas-row-titre">'+r.titre+'</span>'
+    +'<span class="repas-row-meta">~'+r.kcal+' kcal · '+r.prot+' g prot'+(r.priorite?'<span class="frais-pill">frais</span>':'')+'</span></span>'
+    +'<button class="row-action" data-action="toggle" aria-label="'+(del?'Rétablir':'Supprimer')+' ce repas">'+(del?'↩':'✕')+'</button>'
+    +'</div>';
+}
+function dayCard(d){
+  const wid=idOf(startOfWeek(d)), menu=MENUS[wid];
+  const di=Math.round((d-startOfWeek(d))/86400000);
+  const past=d<today, isToday=(+d===+today), prep=(d.getDay()===3);
+  let h='<div class="day-card'+(past?' passe':'')+(isToday?' today':'')+'" id="day-'+idOf(d)+'">';
+  h+='<div class="day-h">'+JOURS[d.getDay()]+' '+fmt(d)
+    +(isToday?'<span class="today-tag">Aujourd’hui</span>':'')
+    +(prep?'<span class="badge prep">Prépa semaine +1</span>':'')+'</div>';
+  if(menu){ menu.jours[di].repas.forEach(function(r,ri){ h+=repasRow(wid,di,ri,r); }); }
+  else { h+='<div class="repas-vide">Menu à définir</div>'; }
+  h+='</div>'; return h;
+}
+function renderDay(d){
+  let h='';
+  if(d.getDay()===4) h+='<div class="amap-div"><span>AMAP</span></div>';      // jeudi
+  if(d.getDay()===1){                                                          // lundi
+    const wid=idOf(startOfWeek(d));
+    h+='<div class="week-marker"><span class="wm-name">Semaine du '+fmt(d)+'</span>'
+      +'<button class="courses-btn" data-courses="'+wid+'">'+COURSES_SVG+'Courses</button></div>';
+  }
+  h+=dayCard(d); return h;
+}
+
+let cursor=startOfWeek(today), daysRendered=0;
+const MAX_DAYS=30*7;
+function appendDays(n){ let h=''; for(let i=0;i<n && daysRendered<MAX_DAYS;i++){ h+=renderDay(cursor); cursor=addDays(cursor,1); daysRendered++; } planning.insertAdjacentHTML('beforeend',h); }
+
+appendDays(21);
+(function(){const el=document.getElementById('day-'+idOf(today)); if(el) el.scrollIntoView({block:'start'});})();
+
+let loading=false;
+window.addEventListener('scroll',function(){
+  if(loading||daysRendered>=MAX_DAYS) return;
+  if(window.innerHeight+window.scrollY>=document.body.offsetHeight-800){ loading=true; appendDays(7); setTimeout(function(){loading=false;},60); }
+});
+
+/* ============================ Suppression de repas ============================ */
+function updateRow(row,del){
+  row.classList.toggle('supprime',del);
+  const b=row.querySelector('.row-action');
+  b.textContent=del?'↩':'✕'; b.setAttribute('aria-label',(del?'Rétablir':'Supprimer')+' ce repas');
+}
+function setDeleted(key,del){
+  if(del) deleted.add(key); else deleted.delete(key);
+  saveSet('owq.deleted',deleted);
+  const row=planning.querySelector('.repas-row[data-key="'+key+'"]');
+  if(row) updateRow(row,del);
+}
+
+/* ============================ Overlays ============================ */
+function openOverlay(){ overlay.hidden=false; document.body.style.overflow='hidden'; ovBody.scrollTop=0; }
+function closeOverlay(){ overlay.hidden=true; document.body.style.overflow=''; }
+overlay.querySelector('.ov-back').addEventListener('click',closeOverlay);
+
+function openRecipe(key){
+  const p=key.split(':'), wid=p[0], idx=p[1].split('-'), di=+idx[0], ri=+idx[1];
+  const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir');
+  ovTitle.textContent=r.moment+' · '+r.heure;
+  let h='<article class="recipe'+(sc?' soir':'')+'">';
+  h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
+  h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
+  h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span>'+(r.priorite?'<span class="chip frais">Légumes frais</span>':'')+'</div>';
+  h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+  h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
+  const del=deleted.has(key);
+  h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
+  h+='</article>';
+  ovBody.innerHTML=h; openOverlay();
+}
+function openCourses(wid){
+  const monday=addDays(parseId(wid),4);
+  ovTitle.textContent='Courses · sem. du '+fmt(monday);
+  const data=computeCourses(wid);
+  if(!data){ ovBody.innerHTML='<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>'; openOverlay(); return; }
+  let h='<p class="hint">Liste calculée à partir des repas conservés. Pense à retirer ce que tu as déjà via le panier AMAP.</p>';
+  data.forEach(function(ray){
+    h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
+    ray.items.forEach(function(it){
+      const ck=wid+'§'+ray.cls+'§'+it.n;
+      h+='<li class="course-item'+(coches.has(ck)?' done':'')+'" data-ck="'+ck+'"><span class="check">'+CHECK+'</span>'
+        +'<span class="course-nom">'+it.n+'</span>'+(it.disp?'<span class="course-q">'+it.disp+'</span>':'')+'</li>';
+    });
+    h+='</ul></section>';
+  });
+  ovBody.innerHTML=h; openOverlay();
+}
+
+/* ============================ Événements ============================ */
+planning.addEventListener('click',function(e){
+  const act=e.target.closest('.row-action');
+  if(act){ const row=act.closest('.repas-row'); setDeleted(row.dataset.key, !deleted.has(row.dataset.key)); return; }
+  const main=e.target.closest('.repas-main');
+  if(main){ openRecipe(main.closest('.repas-row').dataset.key); return; }
+  const cb=e.target.closest('.courses-btn');
+  if(cb){ openCourses(cb.dataset.courses); }
+});
+ovBody.addEventListener('click',function(e){
+  const it=e.target.closest('.course-item');
+  if(it){ const k=it.dataset.ck; if(coches.has(k))coches.delete(k);else coches.add(k); it.classList.toggle('done'); saveSet('owq.checked',coches); return; }
+  const db=e.target.closest('.del-btn');
+  if(db){ const key=db.dataset.delkey, del=!deleted.has(key); setDeleted(key,del);
+    db.classList.toggle('is-del',del);
+    db.textContent=del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas'; }
+});
+
+/* Service worker (HTTPS uniquement, ex. GitHub Pages) */
+if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+</script>
+</body>
+</html>
