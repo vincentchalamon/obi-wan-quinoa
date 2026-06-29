@@ -327,9 +327,12 @@ function setDeleted(key,del){
 }
 
 /* ============================ Overlays ============================ */
-function openOverlay(){ overlay.hidden=false; document.body.style.overflow='hidden'; ovBody.scrollTop=0; }
+function openOverlay(){ overlay.hidden=false; document.body.style.overflow='hidden'; ovBody.scrollTop=0; history.pushState({owqOverlay:true},''); }
 function closeOverlay(){ overlay.hidden=true; document.body.style.overflow=''; }
-overlay.querySelector('.ov-back').addEventListener('click',closeOverlay);
+overlay.querySelector('.ov-back').addEventListener('click',function(){ history.back(); });
+/* "Précédent" du navigateur == flèche retour : ferme l'overlay. Sentinelle pour neutraliser le retour depuis la liste. */
+history.pushState({owqList:true},'');
+window.addEventListener('popstate',function(){ if(!overlay.hidden) closeOverlay(); else history.pushState({owqList:true},''); });
 
 function openRecipe(key){
   const p=key.split(':'), wid=p[0], idx=p[1].split('-'), di=+idx[0], ri=+idx[1];
