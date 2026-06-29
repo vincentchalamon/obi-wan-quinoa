@@ -1,0 +1,13 @@
+{
+  "2026-06-25": {
+    "jours": [
+      { "repas": [{ "recipe": "omelette" }, { "recipe": "curry" }] },
+      { "repas": [{ "recipe": "salade_lentilles" }, { "recipe": "buddha" }] },
+      { "repas": [{ "recipe": "gratin" }, { "recipe": "orzotto" }] },
+      { "repas": [{ "recipe": "salade_pates" }, { "recipe": "tempeh" }] },
+      { "repas": [{ "recipe": "tofu_brouille" }, { "recipe": "pates_courgette" }] },
+      { "repas": [{ "recipe": "taboule" }, { "recipe": "shakshuka" }] },
+      { "repas": [{ "recipe": "falafels" }, { "recipe": "chili" }] }
+    ]
+  }
+}
