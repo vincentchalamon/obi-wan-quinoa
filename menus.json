@@ -6,8 +6,19 @@
       { "repas": [] },
       { "repas": [] },
       { "repas": [{ "recipe": "taboule" }, { "recipe": "pates_courgette" }] },
-      { "repas": [{ "recipe": "tofu_brouille" }, { "recipe": "shakshuka" }] },
-      { "repas": [{ "recipe": "falafels" }, { "recipe": "chili" }] }
+      { "repas": [] },
+      { "repas": [{ "recipe": "tofu_brouille" }, { "recipe": "shakshuka" }] }
+    ]
+  },
+  "2026-07-02": {
+    "jours": [
+      { "repas": [{ "recipe": "falafels" }, { "recipe": "chili" }] },
+      { "repas": [{ "recipe": "omelette_p" }, { "recipe": "risotto_coquillettes" }] },
+      { "repas": [{ "recipe": "salade_pates_p" }, { "recipe": "tempeh_p" }] },
+      { "repas": [{ "recipe": "salade_lentilles_p" }, { "recipe": "pates_norma" }] },
+      { "repas": [{ "recipe": "tofu_brouille_p" }, { "recipe": "curry_p" }] },
+      { "repas": [{ "recipe": "tortilla" }, { "recipe": "pates_courgette_p" }] },
+      { "repas": [{ "recipe": "shakshuka_p" }, { "recipe": "chili_p" }] }
     ]
   }
 }
