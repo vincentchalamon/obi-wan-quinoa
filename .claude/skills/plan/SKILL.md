@@ -33,7 +33,7 @@ Principe absolu : **ne rien inventer côté nutrition**. Chaque principe ou chif
 ## Step 6 — Composer 7 jours (jeudi → mercredi, 2 repas/jour)
 Applique `nutrition.md` (cite les sources) :
 - **Autour du panier** + produits de saison ; frais en début de semaine ; **mercredi (jour 7) = placard/conserves/restes** (jour de courses, pas de frais à acheter ce jour-là).
-- **~1900 kcal/j** (déficit léger) et **~130 g de protéines/j** : relève la densité protéique (œufs, laitages, légumineuses, tofu/tempeh, soja).
+- **~1900 kcal/j** (déficit léger) et **~115 g de protéines/j** (cible pratique ; repère théorique haut ~1,6 g/kg ≈ 130 g) : relève la densité protéique (œufs, laitages, légumineuses, tofu/tempeh, soja).
 - **Fer + vitamine C** le même jour ; ne concentre pas les laitages (calcium) sur le repas le plus riche en fer ; **oméga-3** (noix/graines/colza) réguliers.
 - **Complémentarité** légumineuses + céréales ; **variété** (pas la même protéine dominante deux jours de suite ; varie les féculents).
 - Chaque jour : **fruit** de saison + **entrée optionnelle**. Sel modéré.

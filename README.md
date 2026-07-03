@@ -7,7 +7,7 @@ Application web personnelle (PWA) pour planifier mes **menus végétariens de la
 ## Équilibre alimentaire visé (par jour)
 
 - **~1900 kcal/j** (déficit léger d'environ 500 kcal pour ~0,5 kg/semaine ; estimation Mifflin-St Jeor).
-- **~130 g de protéines/j** (~1,6 g/kg) pour préserver la masse musculaire pendant la perte de poids.
+- **~115 g de protéines/j** (cible pratique) pour préserver la masse musculaire pendant la perte de poids ; le repère théorique haut est ~1,6 g/kg (≈ 130 g), atteint via les variantes protéinées et les desserts laitiers maigres (skyr, fromage blanc).
 - **2 repas** (midi/soir) + **fruit** quotidien + **entrée optionnelle** + **collation** autour du yoga.
 - Points d'attention d'un régime lacto-ovo (ANSES 2025) : **oméga-3 (EPA/DHA) et vitamine D**, **vitamine B12** (malgré les œufs), **calcium + vitamine D + protéines** pour la santé osseuse.
 - **Fer** : surtout une question d'absorption — associer **fer + vitamine C** (agrumes, poivron, kiwi, tomate) et éloigner les inhibiteurs (laitages/calcium, **tanins du thé/café**). Boissons : **rooibos, tisanes, infusions** (pauvres en tanins).
