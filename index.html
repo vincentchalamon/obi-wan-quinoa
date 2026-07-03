@@ -456,9 +456,11 @@ function recipePageUrl(id){ return new URL('r/'+id+'.html', location.href).href;
 function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:'Recette';
   if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
   else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
-/* RecipeSage clippe l'URL côté serveur (lit le JSON-LD du HTML). */
-function sendToRecipeSage(id){ const url=recipePageUrl(id);
-  window.open('https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(url), '_blank', 'noopener'); }
+/* RecipeSage clippe l'URL côté serveur (lit le JSON-LD du HTML).
+   Navigation top-level (pas window.open) : déclenche les Android App Links ->
+   ouvre l'app RecipeSage installée ; repli navigateur/PWA sinon (iOS, desktop). */
+function sendToRecipeSage(id){
+  window.location.href='https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(recipePageUrl(id)); }
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
   const data=coursesFor(wid);
