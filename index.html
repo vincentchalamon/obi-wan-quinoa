@@ -457,16 +457,16 @@ function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:
   if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
   else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
 /* RecipeSage clippe l'URL côté serveur (lit le JSON-LD du HTML).
-   Sur Android, une URL intent:// cible explicitement l'app (package) et ouvre
-   RecipeSage même sous Firefox (qui n'honore pas les App Links https), avec
-   repli navigateur automatique (browser_fallback_url) si l'app est absente.
-   Ailleurs (iOS, desktop) : lien https vers l'import web / la PWA. */
+   - Mobile : navigator.share -> feuille de partage de l'OS, où l'app RecipeSage
+     installée (share target) apparaît ; c'est le seul canal fiable sous Firefox
+     Android (qui n'ouvre pas d'app via App Links / intent://).
+   - Desktop, ou partage indisponible/refusé : lien https vers l'import web (repli). */
 function sendToRecipeSage(id){
-  const web='https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(recipePageUrl(id));
-  if(/Android/i.test(navigator.userAgent)){
-    window.location.href='intent://recipesage.com/app/edit-recipe/new?autofill-url='
-      +encodeURIComponent(recipePageUrl(id))
-      +'#Intent;scheme=https;package=com.recipesage.app;S.browser_fallback_url='+encodeURIComponent(web)+';end';
+  const url=recipePageUrl(id);
+  const web='https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(url);
+  const mobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||'');
+  if(mobile && navigator.share){
+    navigator.share({title:(R[id]&&R[id].titre)||'Recette', url:url}).catch(function(){});
   } else {
     window.location.href=web;
   } }
