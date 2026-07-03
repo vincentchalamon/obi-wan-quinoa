@@ -135,9 +135,16 @@
   .course-item .check svg{width:13px;height:13px;opacity:0;}
   .course-nom{flex:1 1 auto;}
   .course-q{color:var(--ardoise);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  button.course-q.edit{border:none;background:none;font:inherit;cursor:pointer;padding:4px 6px;margin:-4px -6px;border-radius:7px;line-height:1.2;}
+  button.course-q.edit:active{background:var(--vert-clair);}
+  .course-q .q-need{display:block;font-size:10.5px;opacity:.7;}
+  .q-edit{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+  .q-edit input{width:66px;font:inherit;font-size:14px;padding:4px 6px;border:1px solid var(--vert-feuille);border-radius:7px;text-align:right;-webkit-appearance:none;}
+  .q-unit{font-size:12px;color:var(--ardoise);}
   .course-item.done .check{background:var(--vert-feuille);}
   .course-item.done .check svg{opacity:1;}
   .course-item.done .course-nom{text-decoration:line-through;color:var(--ardoise);}
+  .course-item.done{opacity:.45;}   /* atténuer les articles cochés pour faire ressortir le reste */
 
   /* Bouton flottant : revenir à aujourd’hui */
   #today-fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;
@@ -280,6 +287,17 @@ function applyOverrides(raw){
 const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
 /* frac/qLabel/computeCourses : voir logic.js. Wrapper local pour l'app : */
 function coursesFor(wid){ return computeCourses(MENUS[wid], wid, deleted, RAYONS, EXTRAS); }
+
+/* Quantités "à acheter" ajustées (j'ai déjà X, je n'achète que Y), par semaine.
+   Réinitialisées à la régénération de la semaine (empreinte du brut, comme les overrides). */
+function qtyKey(wid){ return 'owq.qty.'+wid; }
+function loadQty(wid){ const raw=store.get(qtyKey(wid)); if(!raw) return {};
+  let o; try{ o=JSON.parse(raw); }catch(e){ return {}; }
+  if(!o || o.base!==JSON.stringify(RAW_MENUS[wid]||null)) return {};   // semaine régénérée -> reset
+  return o.q||{}; }
+function saveQty(wid,q){ store.set(qtyKey(wid), JSON.stringify({base:JSON.stringify(RAW_MENUS[wid]||null), q:q})); }
+function qtyGet(wid,ck,need){ const q=loadQty(wid); return (ck in q)?q[ck]:need; }
+function qtySet(wid,ck,val,need){ const q=loadQty(wid); if(val==null||val===need) delete q[ck]; else q[ck]=val; saveQty(wid,q); }
 
 /* ============================ Rendu planning ============================ */
 const planning=document.getElementById('planning');
@@ -440,27 +458,54 @@ function openRecipe(key){
   h+='</article>';
   ovBody.innerHTML=h; openOverlay();
 }
-function openCourses(wid){
-  const monday=addDays(parseId(wid),-3);
-  ovTitle.textContent='Courses · sem. du '+fmt(monday);
+/* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
+function coursesInner(wid){
   const data=coursesFor(wid);
-  if(!data){ ovBody.innerHTML='<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>'; openOverlay(); return; }
+  if(!data) return null;
   let h='<div class="export-bar">'
     +'<button class="mini-btn" data-exp="menu-pdf" data-wid="'+wid+'">Menu PDF</button>'
     +'<button class="mini-btn" data-exp="menu-md" data-wid="'+wid+'">Menu .md</button>'
     +'<button class="mini-btn" data-exp="courses-pdf" data-wid="'+wid+'">Courses PDF</button>'
     +'</div>';
-  h+='<p class="hint">Liste calculée à partir des repas conservés. Pense à retirer ce que tu as déjà via le panier AMAP.</p>';
+  h+='<p class="hint">Liste calculée à partir des repas conservés. Ajuste une quantité si tu en as déjà : touche le nombre.</p>';
   data.forEach(function(ray){
     h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
     ray.items.forEach(function(it){
       const ck=wid+'§'+ray.cls+'§'+it.n;
+      let qHtml='';
+      if(typeof it.q==='number'){                                    // quantité numérique -> ajustable
+        const buy=qtyGet(wid,ck,it.q);
+        qHtml='<button class="course-q edit" data-qedit="1" data-ck="'+ck+'" data-wid="'+wid+'" data-need="'+it.q+'" data-u="'+(it.u||'')+'" data-buy="'+buy+'">'
+          +qLabel({q:buy,u:it.u,note:it.note})
+          +(buy!==it.q?'<span class="q-need">sur '+qLabel({q:it.q,u:it.u})+'</span>':'')
+          +'</button>';
+      } else if(it.disp){ qHtml='<span class="course-q">'+it.disp+'</span>'; }
       h+='<li class="course-item'+(coches.has(ck)?' done':'')+'" data-ck="'+ck+'"><span class="check">'+CHECK+'</span>'
-        +'<span class="course-nom">'+it.n+'</span>'+(it.disp?'<span class="course-q">'+it.disp+'</span>':'')+'</li>';
+        +'<span class="course-nom">'+it.n+'</span>'+qHtml+'</li>';
     });
     h+='</ul></section>';
   });
-  ovBody.innerHTML=h; openOverlay();
+  return h;
+}
+function openCourses(wid){
+  const monday=addDays(parseId(wid),-3);
+  ovTitle.textContent='Courses · sem. du '+fmt(monday);
+  const h=coursesInner(wid);
+  ovBody.innerHTML = h===null ? '<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>' : h;
+  openOverlay();
+}
+/* Re-rendu sans réinitialiser le scroll (après ajustement d'une quantité). */
+function rerenderCourses(wid){ const top=ovBody.scrollTop; const h=coursesInner(wid); if(h!=null){ ovBody.innerHTML=h; ovBody.scrollTop=top; } }
+function startQtyEdit(btn){
+  const ck=btn.dataset.ck, wid=btn.dataset.wid, need=+btn.dataset.need, u=btn.dataset.u, buy=+btn.dataset.buy;
+  const wrap=document.createElement('span'); wrap.className='q-edit';
+  const inp=document.createElement('input'); inp.type='number'; inp.min='0'; inp.step='any'; inp.inputMode='decimal'; inp.value=buy;
+  wrap.appendChild(inp); if(u){ const us=document.createElement('span'); us.className='q-unit'; us.textContent=u; wrap.appendChild(us); }
+  btn.replaceWith(wrap); inp.focus(); inp.select();
+  let done=false;
+  function commit(){ if(done) return; done=true; let v=parseFloat(inp.value); if(isNaN(v)||v<0) v=need; qtySet(wid,ck,v,need); rerenderCourses(wid); }
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); inp.blur(); } });
+  inp.addEventListener('blur',commit);
 }
 
 /* ============================ Export d'une semaine (PDF via impression + Markdown) ============================ */
@@ -603,6 +648,9 @@ ovBody.addEventListener('click',function(e){
   if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
   const ex=e.target.closest('[data-exp]');
   if(ex){ exportWeek(ex.dataset.exp, ex.dataset.wid); return; }
+  const qe=e.target.closest('[data-qedit]');
+  if(qe){ startQtyEdit(qe); return; }                          // éditer la quantité
+  if(e.target.closest('.q-edit')) return;                      // clic dans l'éditeur : ne pas cocher
   const it=e.target.closest('.course-item');
   if(it){ const k=it.dataset.ck; if(coches.has(k))coches.delete(k);else coches.add(k); it.classList.toggle('done'); saveSet('owq.checked',coches); return; }
   const db=e.target.closest('.del-btn');

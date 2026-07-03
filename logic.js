@@ -67,7 +67,7 @@
       });
     });
     const byR={}; rayons.forEach(function(x){byR[x[0]]=[];});
-    order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, u:e.u, r:e.r, q:e.q, disp:qLabel(e)});});
+    order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, u:e.u, r:e.r, q:e.q, note:e.note, disp:qLabel(e)});});
     extras.forEach(function(x){ byR[x.r].push({n:x.n, disp:x.disp}); });
     return rayons.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
   }
