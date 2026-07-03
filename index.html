@@ -116,13 +116,13 @@
   .del-btn{margin-top:6px;width:100%;padding:13px;border-radius:10px;border:1px solid var(--trait);background:#fff;
     color:var(--betterave);font:inherit;font-weight:600;cursor:pointer;}
   .del-btn.is-del{color:var(--vert-fonce);border-color:var(--vert-feuille);background:var(--vert-clair);}
-  .cook-btn{margin:0 0 22px;width:100%;padding:11px;border-radius:10px;border:1px solid var(--trait);background:#fff;
-    color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;}
-  .cook-btn.is-on{color:#fff;background:var(--vert-feuille);border-color:var(--vert-feuille);}
-  .recipe-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
-  .rs-btn{flex:1 1 150px;padding:11px;border-radius:10px;border:1px solid var(--vert-feuille);
-    background:#fff;color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;}
-  .rs-btn:active{background:var(--vert-clair);}
+  /* Barre d'actions recette (icônes) : mode cuisine, partager, RecipeSage */
+  .recipe-actions{display:flex;gap:8px;margin:0 0 22px;}
+  .act-btn{flex:1 1 0;height:46px;border:1px solid var(--trait);background:#fff;border-radius:10px;
+    color:var(--vert-fonce);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .act-btn svg{width:22px;height:22px;}
+  .act-btn:active{background:var(--vert-clair);}
+  .act-btn.is-on{background:var(--vert-feuille);border-color:var(--vert-feuille);color:#fff;}
 
   .hint{color:var(--ardoise);font-size:13px;margin:0 0 16px;}
   .rayon{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);padding:6px 16px 8px;margin-bottom:14px;}
@@ -293,6 +293,9 @@ const ovTitle=overlay.querySelector('.ov-title');
 const COURSES_SVG='<svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.3a1 1 0 0 0 1 .8h8.4a1 1 0 0 0 1-.8L20 7H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>';
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
+const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6l-6.8 3.9"/></svg>';
+const RECIPESAGE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4a1 1 0 0 1 1-1h13v18H6a1 1 0 0 1-1-1V4Z"/><path d="M19 17H6a2 2 0 0 0-2 2"/><path d="M12 7v6M9 10h6"/></svg>';
 
 function repasRow(wid,di,ri,r){
   const key=wid+':'+di+'-'+ri, del=deleted.has(key);
@@ -395,7 +398,7 @@ let wakeLock=null, cookMode=false;
 async function acquireWake(){ if(!('wakeLock' in navigator)) return; try{ wakeLock=await navigator.wakeLock.request('screen'); }catch(e){ wakeLock=null; } }
 function releaseWake(){ if(wakeLock){ try{ wakeLock.release(); }catch(e){} wakeLock=null; } }
 async function setCookMode(on){ cookMode=on; if(on) await acquireWake(); else releaseWake();
-  const b=ovBody.querySelector('[data-cook]'); if(b){ b.setAttribute('aria-pressed',on?'true':'false'); b.classList.toggle('is-on',on); b.textContent=on?'✓ Écran maintenu allumé':'🔥 Mode cuisine'; } }
+  const b=ovBody.querySelector('[data-cook]'); if(b){ b.setAttribute('aria-pressed',on?'true':'false'); b.classList.toggle('is-on',on); } }
 /* Le système relâche le wake lock quand l'onglet passe en arrière-plan : le ré-acquérir au retour si le mode est actif. */
 document.addEventListener('visibilitychange',function(){ if(!document.hidden && cookMode && !wakeLock) acquireWake(); });
 
@@ -436,13 +439,13 @@ function openRecipe(key){
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
   h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
   h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span>'+(r.priorite?'<span class="chip frais">Légumes frais</span>':'')+'</div>';
-  if('wakeLock' in navigator) h+='<button class="cook-btn" data-cook aria-pressed="false">🔥 Mode cuisine</button>';
+  h+='<div class="recipe-actions">';
+  if('wakeLock' in navigator) h+='<button class="act-btn" data-cook aria-pressed="false" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
+  if(r.id){ h+='<button class="act-btn" data-share="'+r.id+'" aria-label="Partager la recette" title="Partager">'+SHARE_SVG+'</button>'
+    +'<button class="act-btn" data-recipesage="'+r.id+'" aria-label="Envoyer vers RecipeSage" title="Envoyer vers RecipeSage">'+RECIPESAGE_SVG+'</button>'; }
+  h+='</div>';
   h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
-  if(r.id){ h+='<div class="recipe-actions">'
-    +'<button class="rs-btn" data-share="'+r.id+'">Partager</button>'
-    +'<button class="rs-btn" data-recipesage="'+r.id+'">Envoyer vers RecipeSage</button>'
-    +'</div>'; }
   const del=deleted.has(key);
   h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
   h+='</article>';
