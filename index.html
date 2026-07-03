@@ -40,6 +40,7 @@
     display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;}
   .courses-btn svg{width:15px;height:15px;stroke:var(--vert-feuille);fill:none;stroke-width:1.7;}
   .courses-btn:active{background:var(--vert-clair);}
+  .day-h .courses-btn{margin-left:auto;}
 
   /* Badge AMAP — sur le mardi (jour de récupération du panier) */
   .badge.amap{color:var(--vert-fonce);background:var(--vert-clair);}
@@ -50,7 +51,6 @@
   .day-card.today{border-color:var(--vert-feuille);box-shadow:0 0 0 1px var(--vert-feuille),var(--ombre);}
   .day-h{font-size:16px;padding:12px 15px 10px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-bottom:1px solid var(--trait);}
   .badge{font-family:"Helvetica Neue",sans-serif;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:3px 9px;}
-  .badge.prep{color:var(--betterave);background:var(--betterave-clair);}
 
   .repas-row{width:100%;display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:10px;
     padding:11px 14px;min-height:60px;border-left:4px solid var(--vert-feuille);cursor:pointer;}
@@ -157,9 +157,10 @@
 <script>
 /* ============================================================
    OBI-WAN QUINOA
-   Semaine alimentaire JEUDI -> MERCREDI (rythme AMAP).
-   - Marqueur "Semaine du <lundi>" : repère calendaire, avant chaque lundi.
-   - Badge "AMAP" : sur chaque mardi (récupération du panier) ; badge "Prépa semaine +1" le mercredi.
+   Semaine alimentaire JEUDI -> MERCREDI (rythme AMAP) ; affichage par semaine civile (démarre au lundi courant).
+   - Marqueur "Semaine du <lundi>" : entête de semaine civile, avant chaque lundi.
+   - Badge "AMAP" : sur chaque mardi (récupération du panier).
+   - Bouton "Courses" : sur le mercredi (jour des courses) ; ouvre la semaine AMAP qui démarre le jeudi suivant.
    La liste de courses est CALCULÉE à partir des repas non supprimés.
    Données : recipes.json (catalogue) + menus.json (planning, clé = le jeudi) ; génération via la skill /plan.
    ============================================================ */
@@ -269,26 +270,24 @@ function repasRow(wid,di,ri,r){
 function dayCard(d){
   const wid=idOf(startOfWeek(d)), menu=MENUS[wid];
   const di=Math.round((d-startOfWeek(d))/86400000);
-  const past=d<today, isToday=(+d===+today), prep=(d.getDay()===3), amap=(d.getDay()===2);
+  const past=d<today, isToday=(+d===+today), amap=(d.getDay()===2), courses=(d.getDay()===3);
   let h='<div class="day-card'+(past?' passe':'')+(isToday?' today':'')+'" id="day-'+idOf(d)+'">';
   h+='<div class="day-h">'+JOURS[d.getDay()]+' '+fmt(d)
     +(amap?'<span class="badge amap">AMAP</span>':'')
-    +(prep?'<span class="badge prep">Prépa semaine +1</span>':'')+'</div>';
+    +(courses?'<button class="courses-btn" data-courses="'+idOf(addDays(d,1))+'">'+COURSES_SVG+'Courses</button>':'')+'</div>';
   if(menu){ menu.jours[di].repas.forEach(function(r,ri){ h+=repasRow(wid,di,ri,r); }); }
   else { h+='<div class="repas-vide">Menu à définir</div>'; }
   h+='</div>'; return h;
 }
 function renderDay(d){
   let h='';
-  if(d.getDay()===1){                                                          // lundi
-    const wid=idOf(startOfWeek(d));
-    h+='<div class="week-marker"><span class="wm-name">Semaine du '+fmt(d)+'</span>'
-      +'<button class="courses-btn" data-courses="'+wid+'">'+COURSES_SVG+'Courses</button></div>';
+  if(d.getDay()===1){                                                          // lundi : entête semaine civile
+    h+='<div class="week-marker"><span class="wm-name">Semaine du '+fmt(d)+'</span></div>';
   }
   h+=dayCard(d); return h;
 }
 
-let cursor=startOfWeek(today), daysRendered=0;
+let cursor=addDays(today,-((today.getDay()+6)%7)), daysRendered=0;
 const MAX_DAYS=30*7;
 function appendDays(n){ let h=''; for(let i=0;i<n && daysRendered<MAX_DAYS;i++){ h+=renderDay(cursor); cursor=addDays(cursor,1); daysRendered++; } planning.insertAdjacentHTML('beforeend',h); }
 
@@ -350,7 +349,7 @@ function openRecipe(key){
   ovBody.innerHTML=h; openOverlay();
 }
 function openCourses(wid){
-  const monday=addDays(parseId(wid),4);
+  const monday=addDays(parseId(wid),-3);
   ovTitle.textContent='Courses · sem. du '+fmt(monday);
   const data=computeCourses(wid);
   if(!data){ ovBody.innerHTML='<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>'; openOverlay(); return; }

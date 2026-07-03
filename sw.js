@@ -1,7 +1,7 @@
 /* Service worker — cache hors-ligne.
    Stratégie : network-first sur le HTML (pour voir les nouveaux menus en ligne),
    cache-first sur les fichiers statiques (icônes, manifeste). */
-const CACHE = 'menu-v2';   // <-- incrémente ce numéro si besoin de purger le cache
+const CACHE = 'menu-v3';   // <-- incrémente ce numéro si besoin de purger le cache
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './recipes.json', './menus.json',
