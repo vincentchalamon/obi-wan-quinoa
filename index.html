@@ -295,7 +295,6 @@ const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
 const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6l-6.8 3.9"/></svg>';
-const RECIPESAGE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4a1 1 0 0 1 1-1h13v18H6a1 1 0 0 1-1-1V4Z"/><path d="M19 17H6a2 2 0 0 0-2 2"/><path d="M12 7v6M9 10h6"/></svg>';
 
 function repasRow(wid,di,ri,r){
   const key=wid+':'+di+'-'+ri, del=deleted.has(key);
@@ -441,8 +440,7 @@ function openRecipe(key){
   h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span>'+(r.priorite?'<span class="chip frais">Légumes frais</span>':'')+'</div>';
   h+='<div class="recipe-actions">';
   if('wakeLock' in navigator) h+='<button class="act-btn" data-cook aria-pressed="false" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
-  if(r.id){ h+='<button class="act-btn" data-share="'+r.id+'" aria-label="Partager la recette" title="Partager">'+SHARE_SVG+'</button>'
-    +'<button class="act-btn" data-recipesage="'+r.id+'" aria-label="Envoyer vers RecipeSage" title="Envoyer vers RecipeSage">'+RECIPESAGE_SVG+'</button>'; }
+  if(r.id) h+='<button class="act-btn" data-share="'+r.id+'" aria-label="Partager la recette" title="Partager">'+SHARE_SVG+'</button>';
   h+='</div>';
   h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
@@ -452,24 +450,12 @@ function openRecipe(key){
   ovBody.innerHTML=h; openOverlay();
 }
 /* Page publique d'une recette (JSON-LD schema.org/Recipe généré par scripts/build_recipe_pages.py). */
+/* Page publique de la recette (JSON-LD schema.org/Recipe) : partageable, et
+   importable dans RecipeSage en la partageant vers l'app depuis la feuille. */
 function recipePageUrl(id){ return new URL('r/'+id+'.html', location.href).href; }
 function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:'Recette';
   if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
   else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
-/* RecipeSage clippe l'URL côté serveur (lit le JSON-LD du HTML).
-   - Mobile : navigator.share -> feuille de partage de l'OS, où l'app RecipeSage
-     installée (share target) apparaît ; c'est le seul canal fiable sous Firefox
-     Android (qui n'ouvre pas d'app via App Links / intent://).
-   - Desktop, ou partage indisponible/refusé : lien https vers l'import web (repli). */
-function sendToRecipeSage(id){
-  const url=recipePageUrl(id);
-  const web='https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(url);
-  const mobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||'');
-  if(mobile && navigator.share){
-    navigator.share({title:(R[id]&&R[id].titre)||'Recette', url:url}).catch(function(){});
-  } else {
-    window.location.href=web;
-  } }
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
   const data=coursesFor(wid);
@@ -591,8 +577,6 @@ ovBody.addEventListener('click',function(e){
   if(cook){ setCookMode(!cookMode); return; }
   const sh=e.target.closest('[data-share]');
   if(sh){ shareRecipe(sh.dataset.share); return; }
-  const rs=e.target.closest('[data-recipesage]');
-  if(rs){ sendToRecipeSage(rs.dataset.recipesage); return; }
   const pg=e.target.closest('[data-prep-go]');
   if(pg){ openDeepLink(pg.dataset.prepGo); return; }
   const pc=e.target.closest('[data-prep-copy]');

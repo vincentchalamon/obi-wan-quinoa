@@ -37,7 +37,7 @@ Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don
 - **Ajuster une quantité de courses** : sur l'écran Courses, toucher le nombre d'un article pour saisir la quantité **à acheter** (si j'en ai déjà) ; la quantité nécessaire pour la semaine reste affichée (« sur N »). Local, réinitialisé à la régénération de la semaine.
 - **Reporter un repas sauté** : les repas retirés (« je mange à l'extérieur ») de la semaine en cours sont signalés dans le prompt « Préparer » ; à la génération, la skill propose de les **reporter au jeudi** de la semaine suivante (ingrédients déjà achetés, fraîcheur d'abord).
 - **Mode cuisine** : sur une recette, garder l'écran allumé pendant la préparation.
-- **Partager une recette / l'envoyer vers RecipeSage** : chaque recette a une **page publique** (`r/<id>.html`) avec un JSON-LD `schema.org/Recipe`. Le bouton *Partager* utilise `navigator.share` (ou copie l'URL) ; *Envoyer vers RecipeSage* ouvre l'import RecipeSage (`autofill-url`), qui clippe la page côté serveur.
+- **Partager une recette** : chaque recette a une **page publique** (`r/<id>.html`) avec un JSON-LD `schema.org/Recipe`. Le bouton *Partager* utilise `navigator.share` (ou copie l'URL). Pour l'importer dans **RecipeSage**, partager la page vers l'app depuis la feuille de partage (RecipeSage clippe l'URL côté serveur).
 
 ## Fonctionnement technique
 
