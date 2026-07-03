@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+# Déploiement statique du site (racine du repo) via GitHub Actions.
+# Avantages vs "Deploy from a branch" : contrôle des étapes, anti-collision
+# (concurrency) et retry automatique de l'étape de déploiement, qui échoue
+# parfois côté GitHub avec "Deployment failed, try again later.".
+# Aucun secret : utilise le GITHUB_TOKEN automatique (permissions ci-dessous).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Sérialise les déploiements : un push suivant attend le précédent au lieu
+# d'entrer en collision (cancel-in-progress: false = ne pas couper un run en cours).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy1.outputs.page_url || steps.deploy2.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact (racine du repo)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      # Tentative 1 : n'échoue pas le job, pour laisser une seconde chance.
+      - name: Deploy to GitHub Pages (tentative 1)
+        id: deploy1
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Attente avant retry
+        if: steps.deploy1.outcome == 'failure'
+        run: sleep 20
+
+      # Tentative 2 : récupère le flake transitoire ; si elle échoue, le job échoue.
+      - name: Deploy to GitHub Pages (tentative 2)
+        id: deploy2
+        if: steps.deploy1.outcome == 'failure'
+        uses: actions/deploy-pages@v4

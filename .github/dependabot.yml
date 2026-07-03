@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Maintient a jour les versions des actions utilisees dans .github/workflows/
+  # (seule "surface de dependances" du projet : le site reste zero-dependance).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

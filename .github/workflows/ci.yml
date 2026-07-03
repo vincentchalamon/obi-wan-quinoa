@@ -1,0 +1,40 @@
+name: CI
+
+# Verifications legeres, sans dependance : Python et Node sont preinstalles sur
+# le runner, aucun paquet a installer, aucun secret. Le site deploye reste
+# zero-dependance / zero-build ; ceci n'outille que l'integration.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Valider les donnees et l'integrite statique
+        run: python3 scripts/validate.py
+
+      - name: Verifier la syntaxe du service worker
+        run: node --check sw.js
+
+      - name: Verifier la syntaxe du JS inline de l'app
+        run: |
+          python3 scripts/extract_app_js.py > app.tmp.js
+          node --check app.tmp.js
+          rm -f app.tmp.js
+
+      - name: Scan de secrets (garde-fou OSS)
+        run: |
+          if grep -rInE '(sk-ant-[A-Za-z0-9_-]{8})|(ghp_[A-Za-z0-9]{20})|(github_pat_[A-Za-z0-9_]{20})|(-----BEGIN [A-Z ]*PRIVATE KEY-----)' --exclude-dir=.git .; then
+            echo "::error::Secret potentiel detecte dans le depot"
+            exit 1
+          fi
+          echo "Aucun secret detecte"
