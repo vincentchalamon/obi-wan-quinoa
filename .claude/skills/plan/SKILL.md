@@ -2,7 +2,7 @@
 name: plan
 description: Proposer un menu végétarien hebdomadaire de saison à partir du panier AMAP, le valider repas par repas en conversation, puis l'écrire dans menus.json
 argument-hint: "<jeudi AAAA-MM-JJ | prochaine>"
-allowed-tools: Read, Edit, Write, Grep, Glob, Bash(python3 *), WebSearch, WebFetch
+allowed-tools: Read, Edit, Write, Grep, Glob, Bash(python3 *), Bash(git status *), Bash(git diff *), Bash(git add *), Bash(git commit *), Bash(git push *), WebSearch, WebFetch
 ---
 
 Génère une proposition de menu pour la **semaine à venir** (jeudi → mercredi, rythme AMAP), la fait **valider repas par repas**, puis l'écrit dans `menus.json` après accord explicite. La semaine cible est `$ARGUMENTS` (un jeudi `AAAA-MM-JJ`, ou `prochaine`). Si absent, demande-le.
@@ -15,11 +15,12 @@ Principe absolu : **ne rien inventer côté nutrition**. Chaque principe ou chif
 - Déduis la **saison** depuis la date (pour la cohérence des produits).
 
 ## Step 2 — Saisir le panier AMAP
-- Demande à l'utilisateur ce qu'il a récupéré (légumes/fruits + quantités approximatives).
+- **Si le panier AMAP (et l'éventuel jour de don) sont déjà fournis dans le message initial** (l'app Obi-Wan Quinoa pré-remplit le prompt via un deep link `claude://code/new`), les utiliser directement sans les redemander.
+- Sinon, demande à l'utilisateur ce qu'il a récupéré (légumes/fruits + quantités approximatives).
 - Ces produits frais sont la **base de la semaine**, placés **en début de semaine** (jeudi/vendredi/...), **jamais le mercredi** (jour de courses).
 
 ## Step 3 — Don de sang cette semaine ?
-- Demande si un **don de plasma/plaquettes** est prévu et **quel jour**.
+- Si l'info figure déjà dans le message initial, utilise-la ; sinon, demande si un **don de plasma/plaquettes** est prévu et **quel jour**.
 - Si oui : repère les repas dans la fenêtre **~12-20 h avant le don** (le repas du soir de la veille si don le matin, et/ou le midi du jour) ; ils devront être **équilibrés et pauvres en graisses**, tout en restant riches en fer + vitamine C (cf. nutrition.md §7).
 
 ## Step 4 — Charger le contexte
@@ -44,9 +45,10 @@ Applique `nutrition.md` (cite les sources) :
 - Présente un **tableau jour par jour** : Midi / Soir (titre, ~kcal, ~prot), tag « frais », entrée et fruit éventuels, collation, et **jour de don** signalé le cas échéant.
 - Ajoute une **courte justification nutritionnelle sourcée** (équilibre, fer/vit C, saison, dons...). **N'écris rien dans les fichiers à ce stade.**
 
-## Step 8 — Valider repas par repas
-- Présente chaque repas **un par un**. Pour chacun, l'utilisateur **valide** ou **commente** (demande de modification/clarification). Ajuste et re-propose jusqu'à validation.
-- Ne propose que des recettes existantes ou de **nouvelles recettes complètes** (au schéma) que l'utilisateur valide aussi.
+## Step 8 — Réviser puis valider en bloc
+- Présente la **semaine complète** (Step 7), puis laisse l'utilisateur **demander des changements** en langage naturel ; ajuste et **re-présente la semaine entière** à chaque itération, jusqu'à ce qu'il n'ait plus de modifications.
+- La validation est **globale** (toute la semaine d'un coup), **pas** repas par repas.
+- Ne propose que des recettes existantes ou de **nouvelles recettes complètes** (au schéma) — validées avec l'ensemble.
 
 ## Step 9 — Acceptation globale
 - Une fois **tous les repas validés**, propose d'écrire l'ensemble. N'écris **que** sur un accord explicite. Flux : proposition → revue → acceptation → écriture.
@@ -57,8 +59,11 @@ Applique `nutrition.md` (cite les sources) :
 - **Merge sans toucher aux autres semaines** dans `menus.json` ; **ajoute les nouvelles recettes** à `recipes.json`. Indentation 2 espaces, UTF-8, accents non échappés.
 - Contrôle : `python3 -c "import json; json.load(open('menus.json')); json.load(open('recipes.json'))"`.
 
-## Step 11 — Rendre compte
-- Montre le diff (ou un récap des fichiers modifiés) et **rappelle à l'utilisateur de relire puis de committer/pusher** lui-même. **Ne committe pas.**
+## Step 11 — Publier (push direct sur `main`, sans PR)
+- Après l'acceptation globale (Step 9) uniquement : reste sur `main` (**ne crée pas** de branche `claude/...`), **committe et pousse directement sur `main`** (message Conventional Commits, ex. `feat(menus): semaine <jeudi>`). GitHub Pages publie. **Pas de PR.**
+- Le proxy git des sessions cloud autorise le push sur la **branche de travail courante** : en restant sur `main`, le push direct fonctionne (le repo perso n'a pas de protection de branche). **Fallback** : si le push sur `main` est refusé, bascule sur une branche `claude/...`, ouvre une PR et **préviens l'utilisateur** (à merger, ou relancer la skill depuis Claude Code en local).
+- Montre un récap (semaine ajoutée, recettes créées).
+- Ne publie **jamais** un menu non validé : commit/push seulement **après** l'acceptation explicite. Aucune autre semaine ne doit être modifiée.
 
 ## Conditions de complétion
 - Semaine écrite pour le bon jeudi, **7 jours**, **mercredi en placard/conserves**, repas pré-don conformes si un don est prévu, ids tous valides, `menus.json` et `recipes.json` valides (JSON + invariants), **aucune autre semaine modifiée**, sources citées dans la justification. Sinon, la skill n'est pas terminée.

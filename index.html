@@ -35,12 +35,12 @@
     margin:28px 2px 14px;padding:0 2px 8px;border-bottom:1px solid var(--trait);scroll-margin-top:70px;}
   .week-marker:first-child{margin-top:10px;}
   .wm-name{font-family:Georgia,serif;font-size:15px;color:var(--vert-fonce);font-weight:700;}
-  .courses-btn{border:1px solid var(--vert-feuille);background:transparent;color:var(--vert-fonce);
+  .courses-btn,.prep-btn{border:1px solid var(--vert-feuille);background:transparent;color:var(--vert-fonce);
     border-radius:20px;padding:5px 12px 5px 9px;font:inherit;font-size:12.5px;font-weight:600;
     display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;}
-  .courses-btn svg{width:15px;height:15px;stroke:var(--vert-feuille);fill:none;stroke-width:1.7;}
-  .courses-btn:active{background:var(--vert-clair);}
-  .day-h .courses-btn{margin-left:auto;}
+  .courses-btn svg,.prep-btn svg{width:15px;height:15px;stroke:var(--vert-feuille);fill:none;stroke-width:1.7;}
+  .courses-btn:active,.prep-btn:active{background:var(--vert-clair);}
+  .day-h .courses-btn,.day-h .prep-btn{margin-left:auto;}
 
   /* Badge AMAP — sur le mardi (jour de récupération du panier) */
   .badge.amap{color:var(--vert-fonce);background:var(--vert-clair);}
@@ -53,7 +53,8 @@
   .badge{font-family:"Helvetica Neue",sans-serif;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:3px 9px;}
 
   .repas-row{width:100%;display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:10px;
-    padding:11px 14px;min-height:60px;border-left:4px solid var(--vert-feuille);cursor:pointer;}
+    padding:11px 14px;min-height:60px;border-left:4px solid var(--vert-feuille);cursor:pointer;
+    user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
   .repas-row + .repas-row{border-top:1px solid var(--trait);}
   .repas-row.soir{border-left-color:var(--betterave);}
   .repas-main:active{opacity:.6;}
@@ -70,6 +71,14 @@
   .repas-row.supprime .repas-row-titre{text-decoration:line-through;}
   .repas-row.supprime .row-action{color:var(--vert-feuille);border-color:var(--vert-feuille);}
   .repas-vide{padding:16px 15px;color:var(--ardoise);font-size:13.5px;font-style:italic;}
+
+  /* Drag'n'drop (appui long sur la ligne entière) */
+  .repas-row.dragging{opacity:.35;}
+  .repas-row.drop-target{background:var(--vert-clair);box-shadow:inset 0 0 0 2px var(--vert-feuille);}
+  body.dragging-active{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grabbing;}
+  .drag-ghost{position:fixed;left:0;top:0;z-index:60;pointer-events:none;background:var(--carte);
+    border:1px solid var(--vert-feuille);border-radius:10px;box-shadow:0 6px 20px rgba(37,52,42,.25);
+    padding:8px 12px;font-size:14px;max-width:80vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
   /* ---------- Overlay ---------- */
   #overlay{position:fixed;inset:0;z-index:50;background:var(--papier);display:flex;flex-direction:column;}
@@ -133,6 +142,47 @@
     box-shadow:0 2px 8px rgba(37,52,42,.25);display:flex;align-items:center;justify-content:center;cursor:pointer;}
   #today-fab svg{width:22px;height:22px;}
   #today-fab:active{background:var(--vert-feuille);}
+
+  /* ---------- Écran « Préparer » + formulaires ---------- */
+  .prep-note{color:var(--ardoise);font-size:13px;margin:0 0 16px;}
+  .prep-week{font-weight:700;color:var(--vert-fonce);}
+  .field{margin-bottom:16px;}
+  .field > label{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ardoise);margin-bottom:6px;}
+  .field textarea,.field select{width:100%;font:inherit;font-size:15px;color:var(--encre);background:var(--carte);
+    border:1px solid var(--trait);border-radius:10px;padding:10px 12px;-webkit-appearance:none;}
+  .field textarea{min-height:96px;resize:vertical;line-height:1.5;}
+  .field .row{display:flex;align-items:center;gap:8px;}
+  .field .row input[type=checkbox]{width:18px;height:18px;}
+  .field .row label{margin:0;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px;color:var(--encre);}
+  .btn-primary{width:100%;padding:14px;border-radius:10px;border:none;background:var(--vert-fonce);color:#fff;
+    font:inherit;font-weight:700;font-size:15px;cursor:pointer;margin-top:4px;}
+  .btn-primary:active{background:var(--vert-feuille);}
+  .btn-secondary{width:100%;padding:12px;border-radius:10px;border:1px solid var(--trait);background:#fff;
+    color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;margin-top:10px;}
+  .btn-secondary:active{background:var(--vert-clair);}
+  .prep-ok{color:var(--vert-feuille);font-size:13px;text-align:center;margin-top:10px;min-height:18px;}
+  .export-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .mini-btn{border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);border-radius:20px;
+    padding:6px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;}
+  .mini-btn:active{background:var(--vert-clair);}
+  .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
+  .day-total .pt-ok{color:var(--vert-feuille);font-weight:700;}
+  #owq-status{background:var(--betterave-clair);color:var(--betterave);font-size:12.5px;text-align:center;padding:8px 14px;}
+  #owq-status.ok{background:var(--vert-clair);color:var(--vert-fonce);}
+  #owq-status[hidden]{display:none;}
+
+  /* ---------- Impression / export PDF (une semaine) ---------- */
+  #print-area{display:none;}
+  @media print{
+    .app-header,#today-fab,#overlay,#planning{display:none!important;}
+    #print-area{display:block!important;}
+    body{background:#fff;color:#000;}
+    .print-title{font-size:20px;margin:0 0 6px;}
+    .print-day{font-size:16px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid #ccc;}
+    .recipe{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #ddd;margin-bottom:14px;}
+    .rayon{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
+    @page{margin:14mm;}
+  }
 </style>
 </head>
 <body>
@@ -141,8 +191,10 @@
   <div class="brand">Obi-Wan Quinoa</div>
   <div class="slogan">Que la graine soit avec toi, padawan !</div>
 </header>
+<div id="owq-status" hidden></div>
 
 <main id="planning"></main>
+<div id="print-area" aria-hidden="true"></div>
 
 <div id="overlay" hidden>
   <header class="ov-head">
@@ -187,7 +239,9 @@ function materializeMenus(raw){
 
 /* Toujours ajoutés à la liste, quels que soient les repas */
 const EXTRAS = [ {r:"fru", n:"Pêches jaunes / pommes", disp:"~7 (desserts)"} ];
+const PROT_CIBLE = 115;   /* seuil "objectif protéines atteint" par jour (préférence utilisateur) */
 
+let RAW_MENUS = {}; /* données brutes de menus.json (avant matérialisation), base des overrides */
 let MENUS = {};   /* peuplé au boot depuis menus.json (clé = le JEUDI) */
 
 /* ============================ Dates ============================ */
@@ -210,6 +264,21 @@ function loadSet(k){const raw=store.get(k);if(!raw)return new Set();try{return n
 function saveSet(k,s){store.set(k,JSON.stringify(Array.from(s)));}
 const deleted=loadSet('owq.deleted');   // clés "wid:di-ri"
 const coches=loadSet('owq.checked');    // clés "wid§rayon§nom"
+
+/* ============================ Overrides de menu (édition à la volée) ============================ */
+function loadOverrides(){ const raw=store.get('owq.menu'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
+function saveOverrides(o){ store.set('owq.menu', JSON.stringify(o)); }
+/* Applique les overrides valides sur le brut ; purge ceux dont la source a changé (régénération Claude). */
+function applyOverrides(raw){
+  const ov=loadOverrides(); let changed=false; const eff={};
+  Object.keys(raw).forEach(function(w){ eff[w]=raw[w]; });
+  Object.keys(ov).forEach(function(w){
+    if(raw[w] && ov[w].base===JSON.stringify(raw[w])){ eff[w]={jours:ov[w].jours}; }
+    else { delete ov[w]; changed=true; }
+  });
+  if(changed) saveOverrides(ov);
+  return eff;
+}
 
 /* ============================ Liste de courses calculée ============================ */
 const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
@@ -257,6 +326,7 @@ const ovBody=overlay.querySelector('.ov-body');
 const ovTitle=overlay.querySelector('.ov-title');
 const COURSES_SVG='<svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.3a1 1 0 0 0 1 .8h8.4a1 1 0 0 0 1-.8L20 7H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>';
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
+const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 
 function repasRow(wid,di,ri,r){
   const key=wid+':'+di+'-'+ri, del=deleted.has(key);
@@ -267,6 +337,7 @@ function repasRow(wid,di,ri,r){
     +'<button class="row-action" data-action="toggle" aria-label="'+(del?'Rétablir':'Supprimer')+' ce repas">'+(del?'↩':'✕')+'</button>'
     +'</div>';
 }
+function dayTotal(kc,pr){ return '<div class="day-total">Total du jour ~'+Math.round(kc)+' kcal · <span class="'+(pr>=PROT_CIBLE?'pt-ok':'')+'">'+Math.round(pr)+' g protéines</span></div>'; }
 function dayCard(d){
   const wid=idOf(startOfWeek(d)), menu=MENUS[wid];
   const di=Math.round((d-startOfWeek(d))/86400000);
@@ -274,8 +345,12 @@ function dayCard(d){
   let h='<div class="day-card'+(past?' passe':'')+(isToday?' today':'')+'" id="day-'+idOf(d)+'">';
   h+='<div class="day-h">'+JOURS[d.getDay()]+' '+fmt(d)
     +(amap?'<span class="badge amap">AMAP</span>':'')
+    +(amap?'<button class="prep-btn" data-prepare="'+idOf(addDays(d,2))+'">'+PREPARE_SVG+'Préparer</button>':'')
     +(courses?'<button class="courses-btn" data-courses="'+idOf(addDays(d,1))+'">'+COURSES_SVG+'Courses</button>':'')+'</div>';
-  if(menu){ menu.jours[di].repas.forEach(function(r,ri){ h+=repasRow(wid,di,ri,r); }); }
+  if(menu){ let kc=0,pr=0,n=0;
+    menu.jours[di].repas.forEach(function(r,ri){ h+=repasRow(wid,di,ri,r);
+      if(!deleted.has(wid+':'+di+'-'+ri)){ kc+=r.kcal; pr+=r.prot; n++; } });
+    if(n) h+=dayTotal(kc,pr); }
   else { h+='<div class="repas-vide">Menu à définir</div>'; }
   h+='</div>'; return h;
 }
@@ -297,9 +372,9 @@ async function boot(){
       fetch('recipes.json').then(function(r){ return r.json(); }),
       fetch('menus.json').then(function(r){ return r.json(); })
     ]);
-    R = recipes;
-    MENUS = materializeMenus(menus);
-  } catch(e){ R = {}; MENUS = {}; }
+    R = recipes; RAW_MENUS = menus;
+    MENUS = materializeMenus(applyOverrides(RAW_MENUS));
+  } catch(e){ R = {}; RAW_MENUS = {}; MENUS = {}; }
   appendDays(21);
   const el = document.getElementById('day-'+idOf(today));
   if(el) el.scrollIntoView({block:'start'});
@@ -311,6 +386,30 @@ window.addEventListener('scroll',function(){
   if(loading||daysRendered>=MAX_DAYS) return;
   if(window.innerHeight+window.scrollY>=document.body.offsetHeight-800){ loading=true; appendDays(7); setTimeout(function(){loading=false;},60); }
 });
+
+/* ============================ Rafraîchissement au retour dans l'app + statut ============================ */
+function setStatus(msg,ok){ const s=document.getElementById('owq-status'); if(!s) return; s.textContent=msg; s.className=ok?'ok':''; s.hidden=false; }
+function clearStatus(){ const s=document.getElementById('owq-status'); if(s) s.hidden=true; }
+function weekHasMeals(wid){ const m=MENUS[wid]; return !!(m && m.jours.some(function(d){ return d.repas.length; })); }
+function checkPending(){ const p=store.get('owq.pending'); if(!p) return;
+  if(weekHasMeals(p)){ store.set('owq.pending',''); setStatus('Menu publié ✓',true); setTimeout(clearStatus,4000); }
+  else setStatus('Menu en préparation… valide-le dans Claude, il apparaîtra ici.'); }
+function rerenderPlanning(){ const cards=planning.querySelectorAll('.day-card');
+  cards.forEach(function(c){ refreshDay(parseId(c.id.replace('day-',''))); }); }
+async function refreshMenus(){
+  try{
+    const res=await Promise.all([
+      fetch('recipes.json',{cache:'no-store'}).then(function(r){ return r.json(); }),
+      fetch('menus.json',{cache:'no-store'}).then(function(r){ return r.json(); })
+    ]);
+    if(JSON.stringify(res[0])!==JSON.stringify(R) || JSON.stringify(res[1])!==JSON.stringify(RAW_MENUS)){
+      R=res[0]; RAW_MENUS=res[1]; MENUS=materializeMenus(applyOverrides(RAW_MENUS)); rerenderPlanning();
+    }
+  }catch(e){}
+  checkPending();
+}
+document.addEventListener('visibilitychange',function(){ if(!document.hidden) refreshMenus(); });
+window.addEventListener('focus',function(){ refreshMenus(); });
 
 /* ============================ Suppression de repas ============================ */
 function updateRow(row,del){
@@ -353,7 +452,12 @@ function openCourses(wid){
   ovTitle.textContent='Courses · sem. du '+fmt(monday);
   const data=computeCourses(wid);
   if(!data){ ovBody.innerHTML='<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>'; openOverlay(); return; }
-  let h='<p class="hint">Liste calculée à partir des repas conservés. Pense à retirer ce que tu as déjà via le panier AMAP.</p>';
+  let h='<div class="export-bar">'
+    +'<button class="mini-btn" data-exp="menu-pdf" data-wid="'+wid+'">Menu PDF</button>'
+    +'<button class="mini-btn" data-exp="menu-md" data-wid="'+wid+'">Menu .md</button>'
+    +'<button class="mini-btn" data-exp="courses-pdf" data-wid="'+wid+'">Courses PDF</button>'
+    +'</div>';
+  h+='<p class="hint">Liste calculée à partir des repas conservés. Pense à retirer ce que tu as déjà via le panier AMAP.</p>';
   data.forEach(function(ray){
     h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
     ray.items.forEach(function(it){
@@ -366,16 +470,144 @@ function openCourses(wid){
   ovBody.innerHTML=h; openOverlay();
 }
 
+/* ============================ Export d'une semaine (PDF via impression + Markdown) ============================ */
+function weekTitle(wid){ const j=parseId(wid), mer=addDays(j,6); return 'Menu — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(mer)+' '+mer.getFullYear(); }
+function weekRepas(wid,di,day){ const out=[]; day.repas.forEach(function(r,ri){ if(!deleted.has(wid+':'+di+'-'+ri)) out.push(r); }); return out; }
+function renderWeekMenuHTML(wid){
+  const m=MENUS[wid]; let h='<h1 class="print-title">'+weekTitle(wid)+'</h1>';
+  if(!m) return h+'<p>Menu non défini pour cette semaine.</p>';
+  m.jours.forEach(function(day,di){
+    const d=addDays(parseId(wid),di), rows=weekRepas(wid,di,day);
+    if(!rows.length) return;
+    h+='<h2 class="print-day">'+JOURS[d.getDay()]+' '+fmt(d)+'</h2>';
+    rows.forEach(function(r){ const sc=(r.moment==='Soir');
+      h+='<article class="recipe'+(sc?' soir':'')+'">';
+      h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
+      h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
+      h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span></div>';
+      h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+      h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
+      h+='</article>';
+    });
+  });
+  return h;
+}
+function renderCoursesPrintHTML(wid){
+  const j=parseId(wid), data=computeCourses(wid);
+  let h='<h1 class="print-title">Courses — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(addDays(j,6))+' '+addDays(j,6).getFullYear()+'</h1>';
+  if(!data) return h+'<p>Liste non définie.</p>';
+  data.forEach(function(ray){
+    h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
+    ray.items.forEach(function(it){ h+='<li class="course-item"><span class="check"></span><span class="course-nom">'+it.n+'</span>'+(it.disp?'<span class="course-q">'+it.disp+'</span>':'')+'</li>'; });
+    h+='</ul></section>';
+  });
+  return h;
+}
+function buildWeekMarkdown(wid){
+  const m=MENUS[wid]; let md='# '+weekTitle(wid)+'\n';
+  if(!m) return md+'\n_Menu non défini._\n';
+  m.jours.forEach(function(day,di){
+    const d=addDays(parseId(wid),di), rows=weekRepas(wid,di,day);
+    if(!rows.length) return;
+    md+='\n## '+JOURS[d.getDay()]+' '+fmt(d)+'\n';
+    rows.forEach(function(r){
+      md+='\n### '+r.moment+' — '+r.titre+' (~'+r.kcal+' kcal · '+r.prot+' g prot)\n\n**Ingrédients**\n';
+      r.ingredients.forEach(function(i){ md+='- '+i+'\n'; });
+      md+='\n**Préparation**\n';
+      r.etapes.forEach(function(s,k){ md+=(k+1)+'. '+s+'\n'; });
+    });
+  });
+  return md;
+}
+function downloadText(name,text){
+  const blob=new Blob([text],{type:'text/markdown;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+}
+function printDoc(html,title){
+  const area=document.getElementById('print-area'); area.innerHTML=html;
+  const prev=document.title; document.title=title;
+  window.print();
+  setTimeout(function(){ document.title=prev; },500);
+}
+function exportWeek(kind,wid){
+  if(kind==='menu-md') downloadText('obi-wan-quinoa-semaine-'+wid+'.md', buildWeekMarkdown(wid));
+  else if(kind==='menu-pdf') printDoc(renderWeekMenuHTML(wid), weekTitle(wid));
+  else if(kind==='courses-pdf') printDoc(renderCoursesPrintHTML(wid), 'Courses '+wid);
+}
+
+/* ============================ Préparer la semaine (deep link Claude Code) ============================ */
+function ghRepo(){
+  try{ const h=location.hostname, p=location.pathname.split('/').filter(Boolean);
+    if(/\.github\.io$/.test(h)) return h.split('.')[0]+'/'+(p[0]||''); }catch(e){}
+  return 'vincentchalamon/obi-wan-quinoa';
+}
+function weekLabel(thu){ const j=parseId(thu), mer=addDays(j,6); return 'jeudi '+fmt(j)+' au mercredi '+fmt(mer)+' '+mer.getFullYear(); }
+function buildPrompt(thu){
+  const panier=(document.getElementById('owq-panier')||{}).value||'';
+  const don=document.getElementById('owq-don'), donSel=document.getElementById('owq-don-jour');
+  let p='/plan '+thu+'\n';
+  p+='Panier AMAP : '+(panier.trim()||'(à préciser)')+'\n';
+  p+='Don de plasma/plaquettes : '+(don&&don.checked?donSel.value:'aucun')+'\n';
+  const m=MENUS[thu];
+  if(m){ p+='\nMenu actuel de cette semaine (ajuste-le plutôt que repartir de zéro) :\n';
+    m.jours.forEach(function(day,di){ const d=addDays(parseId(thu),di);
+      const parts=day.repas.map(function(r){ return r.moment+' : '+r.titre; }).join(' ; ');
+      p+='- '+JOURS[d.getDay()]+' '+fmt(d)+(parts?' — '+parts:' — (à définir)')+'\n'; }); }
+  p+='\nPropose-moi la semaine complète et laisse-moi demander des changements ; quand je valide tout, committe et pousse directement sur main (sans PR).';
+  return p;
+}
+function savePanier(thu){ store.set('owq.panier.'+thu, (document.getElementById('owq-panier')||{}).value||''); }
+function openPrepare(thu){
+  ovTitle.textContent='Préparer la semaine';
+  const saved=store.get('owq.panier.'+thu)||'';
+  let jours=''; for(let i=0;i<7;i++){ const d=addDays(parseId(thu),i); const lbl=JOURS[d.getDay()]+' '+fmt(d);
+    jours+='<option value="'+lbl+'">'+lbl+'</option>'; }
+  let h='<p class="prep-note">Semaine du <span class="prep-week">'+weekLabel(thu)+'</span>. '
+    +'Le bouton ouvre Claude Code sur ton repo avec le contexte pré-rempli : valide repas par repas, la skill publiera la semaine.</p>';
+  h+='<div class="field"><label>Panier AMAP</label>'
+    +'<textarea id="owq-panier" placeholder="ex. courgettes 1 kg, tomates 500 g, salade, basilic, pêches...">'+saved.replace(/</g,'&lt;')+'</textarea></div>';
+  h+='<div class="field"><div class="row"><input type="checkbox" id="owq-don"><label for="owq-don">Don de plasma/plaquettes cette semaine</label></div></div>';
+  h+='<div class="field"><label>Jour du don</label><select id="owq-don-jour" disabled>'+jours+'</select></div>';
+  h+='<button class="btn-primary" data-prep-go="'+thu+'">Générer avec Claude</button>';
+  h+='<button class="btn-secondary" data-prep-copy="'+thu+'">Copier le prompt</button>';
+  h+='<div class="prep-ok" id="owq-prep-ok"></div>';
+  ovBody.innerHTML=h; openOverlay();
+  const cb=document.getElementById('owq-don'), sel=document.getElementById('owq-don-jour');
+  cb.addEventListener('change',function(){ sel.disabled=!cb.checked; });
+}
+function openDeepLink(thu){ savePanier(thu); store.set('owq.pending',thu);
+  setStatus('Menu en préparation… valide-le dans Claude, il apparaîtra ici.');
+  window.location.href='claude://code/new?repo='+ghRepo()+'&q='+encodeURIComponent(buildPrompt(thu)); }
+function copyPrompt(thu){
+  const txt=buildPrompt(thu), ok=document.getElementById('owq-prep-ok'); savePanier(thu);
+  function done(){ if(ok) ok.textContent='Prompt copié ✓'; }
+  function fallback(){ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fallback); else fallback(); }
+  catch(e){ fallback(); }
+}
+
 /* ============================ Événements ============================ */
 planning.addEventListener('click',function(e){
+  if(suppressClick) return;
   const act=e.target.closest('.row-action');
   if(act){ const row=act.closest('.repas-row'); setDeleted(row.dataset.key, !deleted.has(row.dataset.key)); return; }
   const main=e.target.closest('.repas-main');
   if(main){ openRecipe(main.closest('.repas-row').dataset.key); return; }
+  const pb=e.target.closest('.prep-btn');
+  if(pb){ openPrepare(pb.dataset.prepare); return; }
   const cb=e.target.closest('.courses-btn');
   if(cb){ openCourses(cb.dataset.courses); }
 });
 ovBody.addEventListener('click',function(e){
+  const pg=e.target.closest('[data-prep-go]');
+  if(pg){ openDeepLink(pg.dataset.prepGo); return; }
+  const pc=e.target.closest('[data-prep-copy]');
+  if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
+  const ex=e.target.closest('[data-exp]');
+  if(ex){ exportWeek(ex.dataset.exp, ex.dataset.wid); return; }
   const it=e.target.closest('.course-item');
   if(it){ const k=it.dataset.ck; if(coches.has(k))coches.delete(k);else coches.add(k); it.classList.toggle('done'); saveSet('owq.checked',coches); return; }
   const db=e.target.closest('.del-btn');
@@ -389,6 +621,70 @@ document.getElementById('today-fab').addEventListener('click',function(){
   const el=document.getElementById('day-'+idOf(today));
   if(el) el.scrollIntoView({block:'start',behavior:'smooth'});
 });
+
+/* ============================ Édition à la volée : drag'n'drop (échange de positions) ============================ */
+function parseKey(k){ const p=k.split(':'), idx=p[1].split('-'); return {wid:p[0], di:+idx[0], ri:+idx[1]}; }
+function swapDeleted(a,b){ const da=deleted.has(a), db=deleted.has(b);
+  if(da!==db){ if(da){deleted.delete(a);deleted.add(b);} else {deleted.delete(b);deleted.add(a);} saveSet('owq.deleted',deleted); } }
+function refreshDay(d){ const el=document.getElementById('day-'+idOf(d)); if(el){ const t=document.createElement('div'); t.innerHTML=dayCard(d); el.replaceWith(t.firstElementChild); } }
+function doSwap(srcKey,tgtKey){
+  const a=parseKey(srcKey), b=parseKey(tgtKey);
+  if(a.wid!==b.wid) return;                        // échange au sein d'une même semaine
+  const wid=a.wid, base=JSON.stringify(RAW_MENUS[wid]||null);
+  const ov=loadOverrides();
+  const src=(ov[wid]&&ov[wid].base===base)?ov[wid].jours:(RAW_MENUS[wid]?RAW_MENUS[wid].jours:null);
+  if(!src) return;
+  const jours=JSON.parse(JSON.stringify(src));
+  const t=jours[a.di].repas[a.ri]; jours[a.di].repas[a.ri]=jours[b.di].repas[b.ri]; jours[b.di].repas[b.ri]=t;
+  ov[wid]={base:base, jours:jours}; saveOverrides(ov);
+  swapDeleted(srcKey,tgtKey);
+  MENUS=materializeMenus(applyOverrides(RAW_MENUS));
+  refreshDay(addDays(parseId(wid),a.di)); if(b.di!==a.di) refreshDay(addDays(parseId(wid),b.di));
+}
+let drag=null, dragTimer=null, suppressClick=false;
+const LONGPRESS=320, MOVE_CANCEL=10;
+function targetRowAt(x,y){ const el=document.elementFromPoint(x,y); return el?el.closest('.repas-row'):null; }
+function moveGhost(x,y){ if(drag&&drag.ghost) drag.ghost.style.transform='translate('+(x+8)+'px,'+(y-16)+'px)'; }
+function setDropTarget(t){ const prev=planning.querySelector('.drop-target'); if(prev&&prev!==t) prev.classList.remove('drop-target'); if(t&&drag&&t!==drag.row) t.classList.add('drop-target'); }
+function endDragCleanup(){ if(!drag) return; if(drag.ghost) drag.ghost.remove(); if(drag.row) drag.row.classList.remove('dragging'); const dt=planning.querySelector('.drop-target'); if(dt) dt.classList.remove('drop-target'); document.body.classList.remove('dragging-active'); drag=null; }
+function armDrag(x,y){
+  if(!drag) return; drag.armed=true; dragTimer=null;
+  const g=document.createElement('div'); g.className='drag-ghost';
+  const t=drag.row.querySelector('.repas-row-titre'); g.textContent=t?t.textContent:'';
+  document.body.appendChild(g); drag.ghost=g;
+  drag.row.classList.add('dragging'); document.body.classList.add('dragging-active');
+  moveGhost(x,y); if(navigator.vibrate){ try{ navigator.vibrate(25); }catch(e){} }
+}
+/* Appui long sur une ligne = déplacer ; tap = ouvrir la recette ; glissement avant l'appui long = scroll. */
+planning.addEventListener('pointerdown',function(e){
+  if(e.pointerType==='mouse' && e.button!==0) return;
+  if(e.target.closest('.row-action')) return;
+  const row=e.target.closest('.repas-row'); if(!row) return;
+  drag={row:row, key:row.dataset.key, x:e.clientX, y:e.clientY, armed:false};
+  dragTimer=setTimeout(function(){ armDrag(e.clientX,e.clientY); }, LONGPRESS);
+});
+window.addEventListener('pointermove',function(e){
+  if(!drag) return;
+  if(!drag.armed){
+    if(Math.abs(e.clientX-drag.x)>MOVE_CANCEL || Math.abs(e.clientY-drag.y)>MOVE_CANCEL){ clearTimeout(dragTimer); dragTimer=null; drag=null; }
+    return;
+  }
+  e.preventDefault();
+  moveGhost(e.clientX,e.clientY);
+  setDropTarget(targetRowAt(e.clientX,e.clientY));
+  const m=70, h=window.innerHeight;
+  if(e.clientY<m) window.scrollBy(0,-14); else if(e.clientY>h-m) window.scrollBy(0,14);
+},{passive:false});
+window.addEventListener('pointerup',function(e){
+  if(!drag) return;
+  if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; }
+  if(drag.armed){
+    const src=drag.key, t=targetRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.key)||null;
+    endDragCleanup(); suppressClick=true; setTimeout(function(){ suppressClick=false; },60);
+    if(tgt && tgt!==src) doSwap(src,tgt);
+  } else { drag=null; }
+});
+window.addEventListener('pointercancel',function(){ if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; } endDragCleanup(); });
 
 /* Service worker (HTTPS uniquement, ex. GitHub Pages) */
 if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
