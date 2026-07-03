@@ -186,6 +186,18 @@
     .rayon{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
     @page{margin:14mm;}
   }
+
+  /* ---------- Desktop : deux volets (planning à gauche, détail ancré à droite) ---------- */
+  .ov-placeholder{color:var(--ardoise);font-size:14px;text-align:center;margin:48px 8px 0;line-height:1.6;}
+  @media (min-width:900px){
+    :root{--panel-w:min(42vw,620px);}
+    #planning{max-width:720px;margin:0;margin-right:var(--panel-w);padding-left:24px;}
+    #overlay{position:fixed;inset:var(--head-h,56px) 0 0 auto;width:var(--panel-w);
+      border-left:1px solid var(--trait);box-shadow:-2px 0 12px rgba(37,52,42,.05);}
+    #overlay[hidden]{display:flex;}            /* panneau toujours visible sur desktop */
+    .ov-body{max-width:none;}
+    #today-fab{right:auto;left:16px;}          /* hors du panneau de droite */
+  }
 </style>
 </head>
 <body>
@@ -384,12 +396,32 @@ async function setCookMode(on){ cookMode=on; if(on) await acquireWake(); else re
 document.addEventListener('visibilitychange',function(){ if(!document.hidden && cookMode && !wakeLock) acquireWake(); });
 
 /* ============================ Overlays ============================ */
-function openOverlay(){ overlay.hidden=false; document.body.style.overflow='hidden'; ovBody.scrollTop=0; history.pushState({owqOverlay:true},''); }
-function closeOverlay(){ overlay.hidden=true; document.body.style.overflow=''; if(cookMode) setCookMode(false); }
-overlay.querySelector('.ov-back').addEventListener('click',function(){ history.back(); });
+/* Desktop (>=900px) : le détail s'affiche dans un panneau ancré à droite (deux volets),
+   sans verrou de scroll ni empilement d'historique ; « fermer » = revenir au placeholder.
+   Le planning reste dans le flux (scroll fenêtre) pour préserver le scroll infini. */
+const mqDesktop=window.matchMedia('(min-width:900px)');
+function isDesktop(){ return mqDesktop.matches; }
+function setHeadH(){ const hh=document.querySelector('.app-header'); if(hh) document.documentElement.style.setProperty('--head-h',hh.offsetHeight+'px'); }
+function showPlaceholder(){ if(cookMode) setCookMode(false); ovTitle.textContent='';
+  ovBody.innerHTML='<p class="ov-placeholder">Sélectionne un repas pour voir la recette, ou « Courses » pour la liste.</p>';
+  overlay.hidden=false; }
+function openOverlay(){ overlay.hidden=false; ovBody.scrollTop=0;
+  if(!isDesktop()){ document.body.style.overflow='hidden'; history.pushState({owqOverlay:true},''); } }
+function closeOverlay(){ if(cookMode) setCookMode(false);
+  if(isDesktop()){ showPlaceholder(); return; }
+  overlay.hidden=true; document.body.style.overflow=''; }
+overlay.querySelector('.ov-back').addEventListener('click',function(){ if(isDesktop()) closeOverlay(); else history.back(); });
 /* "Précédent" du navigateur == flèche retour : ferme l'overlay. Sentinelle pour neutraliser le retour depuis la liste. */
 history.pushState({owqList:true},'');
-window.addEventListener('popstate',function(){ if(!overlay.hidden) closeOverlay(); else history.pushState({owqList:true},''); });
+window.addEventListener('popstate',function(){ if(!isDesktop() && !overlay.hidden) closeOverlay(); else history.pushState({owqList:true},''); });
+/* Init + bascule de breakpoint */
+setHeadH();
+window.addEventListener('resize',setHeadH);
+mqDesktop.addEventListener('change',function(e){
+  if(e.matches){ document.body.style.overflow=''; setHeadH(); if(overlay.hidden) showPlaceholder(); }
+  else { if(overlay.querySelector('.ov-placeholder')){ overlay.hidden=true; } }
+});
+if(isDesktop()) showPlaceholder();
 
 function openRecipe(key){
   if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
