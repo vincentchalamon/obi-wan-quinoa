@@ -454,7 +454,9 @@ function openRecipe(key){
    importable dans RecipeSage en la partageant vers l'app depuis la feuille. */
 function recipePageUrl(id){ return new URL('r/'+id+'.html', location.href).href; }
 function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:'Recette';
-  if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
+  /* URL aussi dans `text` : un partage Android n'a pas de canal dédié pour `url`,
+     et le share target RecipeSage extrait la dernière URL du texte partagé. */
+  if(navigator.share){ navigator.share({title:title, text:title+' '+url, url:url}).catch(function(){}); }
   else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
