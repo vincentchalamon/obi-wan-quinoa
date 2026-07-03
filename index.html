@@ -669,12 +669,13 @@ window.addEventListener('pointermove',function(e){
     if(Math.abs(e.clientX-drag.x)>MOVE_CANCEL || Math.abs(e.clientY-drag.y)>MOVE_CANCEL){ clearTimeout(dragTimer); dragTimer=null; drag=null; }
     return;
   }
-  e.preventDefault();
   moveGhost(e.clientX,e.clientY);
   setDropTarget(targetRowAt(e.clientX,e.clientY));
   const m=70, h=window.innerHeight;
   if(e.clientY<m) window.scrollBy(0,-14); else if(e.clientY>h-m) window.scrollBy(0,14);
-},{passive:false});
+});
+/* Sur tactile, seul preventDefault sur touchmove bloque le scroll natif pendant le drag (touch-action ne suffit pas une fois le geste commence). */
+window.addEventListener('touchmove',function(e){ if(drag&&drag.armed) e.preventDefault(); },{passive:false});
 window.addEventListener('pointerup',function(e){
   if(!drag) return;
   if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; }
