@@ -119,6 +119,10 @@
   .cook-btn{margin:0 0 22px;width:100%;padding:11px;border-radius:10px;border:1px solid var(--trait);background:#fff;
     color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;}
   .cook-btn.is-on{color:#fff;background:var(--vert-feuille);border-color:var(--vert-feuille);}
+  .recipe-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+  .rs-btn{flex:1 1 150px;padding:11px;border-radius:10px;border:1px solid var(--vert-feuille);
+    background:#fff;color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;}
+  .rs-btn:active{background:var(--vert-clair);}
 
   .hint{color:var(--ardoise);font-size:13px;margin:0 0 16px;}
   .rayon{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);padding:6px 16px 8px;margin-bottom:14px;}
@@ -171,28 +175,11 @@
     color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;margin-top:10px;}
   .btn-secondary:active{background:var(--vert-clair);}
   .prep-ok{color:var(--vert-feuille);font-size:13px;text-align:center;margin-top:10px;min-height:18px;}
-  .export-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
-  .mini-btn{border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);border-radius:20px;
-    padding:6px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;}
-  .mini-btn:active{background:var(--vert-clair);}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
   .day-total .pt-ok{color:var(--vert-feuille);font-weight:700;}
   #owq-status{background:var(--betterave-clair);color:var(--betterave);font-size:12.5px;text-align:center;padding:8px 14px;}
   #owq-status.ok{background:var(--vert-clair);color:var(--vert-fonce);}
   #owq-status[hidden]{display:none;}
-
-  /* ---------- Impression / export PDF (une semaine) ---------- */
-  #print-area{display:none;}
-  @media print{
-    .app-header,#today-fab,#overlay,#planning{display:none!important;}
-    #print-area{display:block!important;}
-    body{background:#fff;color:#000;}
-    .print-title{font-size:20px;margin:0 0 6px;}
-    .print-day{font-size:16px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid #ccc;}
-    .recipe{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #ddd;margin-bottom:14px;}
-    .rayon{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
-    @page{margin:14mm;}
-  }
 
   /* ---------- Desktop : deux volets (planning à gauche, détail ancré à droite) ---------- */
   .ov-placeholder{color:var(--ardoise);font-size:14px;text-align:center;margin:48px 8px 0;line-height:1.6;}
@@ -216,7 +203,6 @@
 <div id="owq-status" hidden></div>
 
 <main id="planning"></main>
-<div id="print-area" aria-hidden="true"></div>
 
 <div id="overlay" hidden>
   <header class="ov-head">
@@ -453,21 +439,28 @@ function openRecipe(key){
   if('wakeLock' in navigator) h+='<button class="cook-btn" data-cook aria-pressed="false">🔥 Mode cuisine</button>';
   h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
+  if(r.id){ h+='<div class="recipe-actions">'
+    +'<button class="rs-btn" data-share="'+r.id+'">Partager</button>'
+    +'<button class="rs-btn" data-recipesage="'+r.id+'">Envoyer vers RecipeSage</button>'
+    +'</div>'; }
   const del=deleted.has(key);
   h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
   h+='</article>';
   ovBody.innerHTML=h; openOverlay();
 }
+/* Page publique d'une recette (JSON-LD schema.org/Recipe généré par scripts/build_recipe_pages.py). */
+function recipePageUrl(id){ return new URL('r/'+id+'.html', location.href).href; }
+function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:'Recette';
+  if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
+  else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
+/* RecipeSage clippe l'URL côté serveur (lit le JSON-LD du HTML). */
+function sendToRecipeSage(id){ const url=recipePageUrl(id);
+  window.open('https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(url), '_blank', 'noopener'); }
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
   const data=coursesFor(wid);
   if(!data) return null;
-  let h='<div class="export-bar">'
-    +'<button class="mini-btn" data-exp="menu-pdf" data-wid="'+wid+'">Menu PDF</button>'
-    +'<button class="mini-btn" data-exp="menu-md" data-wid="'+wid+'">Menu .md</button>'
-    +'<button class="mini-btn" data-exp="courses-pdf" data-wid="'+wid+'">Courses PDF</button>'
-    +'</div>';
-  h+='<p class="hint">Liste calculée à partir des repas conservés. Ajuste une quantité si tu en as déjà : touche le nombre.</p>';
+  let h='<p class="hint">Liste calculée à partir des repas conservés. Ajuste une quantité si tu en as déjà : touche le nombre.</p>';
   data.forEach(function(ray){
     h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
     ray.items.forEach(function(it){
@@ -508,72 +501,6 @@ function startQtyEdit(btn){
   inp.addEventListener('blur',commit);
 }
 
-/* ============================ Export d'une semaine (PDF via impression + Markdown) ============================ */
-function weekTitle(wid){ const j=parseId(wid), mer=addDays(j,6); return 'Menu — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(mer)+' '+mer.getFullYear(); }
-function weekRepas(wid,di,day){ const out=[]; day.repas.forEach(function(r,ri){ if(!deleted.has(wid+':'+di+'-'+ri)) out.push(r); }); return out; }
-function renderWeekMenuHTML(wid){
-  const m=MENUS[wid]; let h='<h1 class="print-title">'+weekTitle(wid)+'</h1>';
-  if(!m) return h+'<p>Menu non défini pour cette semaine.</p>';
-  m.jours.forEach(function(day,di){
-    const d=addDays(parseId(wid),di), rows=weekRepas(wid,di,day);
-    if(!rows.length) return;
-    h+='<h2 class="print-day">'+JOURS[d.getDay()]+' '+fmt(d)+'</h2>';
-    rows.forEach(function(r){ const sc=(r.moment==='Soir');
-      h+='<article class="recipe'+(sc?' soir':'')+'">';
-      h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
-      h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
-      h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span></div>';
-      h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
-      h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
-      h+='</article>';
-    });
-  });
-  return h;
-}
-function renderCoursesPrintHTML(wid){
-  const j=parseId(wid), data=coursesFor(wid);
-  let h='<h1 class="print-title">Courses — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(addDays(j,6))+' '+addDays(j,6).getFullYear()+'</h1>';
-  if(!data) return h+'<p>Liste non définie.</p>';
-  data.forEach(function(ray){
-    h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
-    ray.items.forEach(function(it){ h+='<li class="course-item"><span class="check"></span><span class="course-nom">'+it.n+'</span>'+(it.disp?'<span class="course-q">'+it.disp+'</span>':'')+'</li>'; });
-    h+='</ul></section>';
-  });
-  return h;
-}
-function buildWeekMarkdown(wid){
-  const m=MENUS[wid]; let md='# '+weekTitle(wid)+'\n';
-  if(!m) return md+'\n_Menu non défini._\n';
-  m.jours.forEach(function(day,di){
-    const d=addDays(parseId(wid),di), rows=weekRepas(wid,di,day);
-    if(!rows.length) return;
-    md+='\n## '+JOURS[d.getDay()]+' '+fmt(d)+'\n';
-    rows.forEach(function(r){
-      md+='\n### '+r.moment+' — '+r.titre+' (~'+r.kcal+' kcal · '+r.prot+' g prot)\n\n**Ingrédients**\n';
-      r.ingredients.forEach(function(i){ md+='- '+i+'\n'; });
-      md+='\n**Préparation**\n';
-      r.etapes.forEach(function(s,k){ md+=(k+1)+'. '+s+'\n'; });
-    });
-  });
-  return md;
-}
-function downloadText(name,text){
-  const blob=new Blob([text],{type:'text/markdown;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
-}
-function printDoc(html,title){
-  const area=document.getElementById('print-area'); area.innerHTML=html;
-  const prev=document.title; document.title=title;
-  window.print();
-  setTimeout(function(){ document.title=prev; },500);
-}
-function exportWeek(kind,wid){
-  if(kind==='menu-md') downloadText('obi-wan-quinoa-semaine-'+wid+'.md', buildWeekMarkdown(wid));
-  else if(kind==='menu-pdf') printDoc(renderWeekMenuHTML(wid), weekTitle(wid));
-  else if(kind==='courses-pdf') printDoc(renderCoursesPrintHTML(wid), 'Courses '+wid);
-}
 
 /* ============================ Préparer la semaine (deep link Claude Code) ============================ */
 function ghRepo(){
@@ -648,12 +575,14 @@ planning.addEventListener('click',function(e){
 ovBody.addEventListener('click',function(e){
   const cook=e.target.closest('[data-cook]');
   if(cook){ setCookMode(!cookMode); return; }
+  const sh=e.target.closest('[data-share]');
+  if(sh){ shareRecipe(sh.dataset.share); return; }
+  const rs=e.target.closest('[data-recipesage]');
+  if(rs){ sendToRecipeSage(rs.dataset.recipesage); return; }
   const pg=e.target.closest('[data-prep-go]');
   if(pg){ openDeepLink(pg.dataset.prepGo); return; }
   const pc=e.target.closest('[data-prep-copy]');
   if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
-  const ex=e.target.closest('[data-exp]');
-  if(ex){ exportWeek(ex.dataset.exp, ex.dataset.wid); return; }
   const qe=e.target.closest('[data-qedit]');
   if(qe){ startQtyEdit(qe); return; }                          // éditer la quantité
   if(e.target.closest('.q-edit')) return;                      // clic dans l'éditeur : ne pas cocher

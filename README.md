@@ -37,7 +37,7 @@ Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don
 - **Ajuster une quantité de courses** : sur l'écran Courses, toucher le nombre d'un article pour saisir la quantité **à acheter** (si j'en ai déjà) ; la quantité nécessaire pour la semaine reste affichée (« sur N »). Local, réinitialisé à la régénération de la semaine.
 - **Reporter un repas sauté** : les repas retirés (« je mange à l'extérieur ») de la semaine en cours sont signalés dans le prompt « Préparer » ; à la génération, la skill propose de les **reporter au jeudi** de la semaine suivante (ingrédients déjà achetés, fraîcheur d'abord).
 - **Mode cuisine** : sur une recette, garder l'écran allumé pendant la préparation.
-- **Exporter une semaine** (le menu, ou la liste de courses) en **PDF** ou **Markdown** daté, depuis l'écran Courses.
+- **Partager une recette / l'envoyer vers RecipeSage** : chaque recette a une **page publique** (`r/<id>.html`) avec un JSON-LD `schema.org/Recipe`. Le bouton *Partager* utilise `navigator.share` (ou copie l'URL) ; *Envoyer vers RecipeSage* ouvre l'import RecipeSage (`autofill-url`), qui clippe la page côté serveur.
 
 ## Fonctionnement technique
 
@@ -47,6 +47,7 @@ Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don
 - `menus.json` — planning par semaine. Clé = date du **jeudi** ; 7 jours (jeudi→mercredi) ; chaque repas référence une recette par son identifiant (`{"recipe":"buddha"}`), résolu en midi/soir selon sa position.
 - `sw.js` — service worker : *network-first* sur le HTML et les JSON (pour voir les nouveaux menus en ligne), *cache-first* sur les icônes ; précache pour l'usage hors-ligne.
 - `manifest.webmanifest` — métadonnées PWA (installable, hors-ligne).
+- `scripts/build_recipe_pages.py` — génère une page publique `r/<id>.html` par recette (JSON-LD `schema.org/Recipe` + rendu lisible), pour le partage et l'import RecipeSage. **Générées en CI** au déploiement (non commitées, cf. `.gitignore`).
 - `.claude/skills/plan/` — la skill de génération (`SKILL.md`) et son référentiel nutrition **sourcé** (`references/nutrition.md`).
 
 Aucune clé d'API ni serveur : la génération passe par **Claude Code** (abonnement, en local ou via l'app mobile) qui écrit puis pousse les données ; le site reste 100 % statique. Chaque utilisateur agit avec **son propre** compte Claude/GitHub, et **aucun secret n'est stocké dans le dépôt** (le deep link ne transporte aucun identifiant).
@@ -61,9 +62,10 @@ python3 -m http.server 8000   # puis ouvrir http://localhost:8000
 
 ### Validation & CI
 
-- `python3 scripts/validate.py` — valide `recipes.json`/`menus.json` (schéma, références de recettes, clé = jeudi, 7 jours) et l'intégrité statique (manifest, assets présents). À lancer avant de publier une semaine.
-- CI GitHub Actions (`.github/workflows/ci.yml`) sur chaque push/PR : validation des données, syntaxe JS (`sw.js` + JS inline de `index.html`), scan de secrets. Sans dépendance (Python/Node du runner), aucun secret.
-- Déploiement Pages via `.github/workflows/pages.yml` (source *GitHub Actions*), avec anti-collision (`concurrency`) et retry automatique.
+- `python3 scripts/validate.py` — valide `recipes.json`/`menus.json` (schéma, ids en slug, références de recettes, clé = jeudi, 7 jours) et l'intégrité statique (manifest, assets présents). À lancer avant de publier une semaine.
+- `node --test 'test/*.test.js'` — tests unitaires de la logique pure (`logic.js`).
+- CI GitHub Actions (`.github/workflows/ci.yml`) sur chaque push/PR : validation des données, syntaxe JS (`sw.js`, `logic.js`, JS inline de `index.html`), tests unitaires, scan de secrets. Sans dépendance (Python/Node du runner), aucun secret.
+- Déploiement Pages via `.github/workflows/pages.yml` (source *GitHub Actions*) : génère les pages recettes puis publie, avec anti-collision (`concurrency`) et retry automatique.
 
 ## Sources nutritionnelles
 

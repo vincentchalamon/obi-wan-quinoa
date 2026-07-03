@@ -21,7 +21,8 @@
   function midi(r){ return Object.assign({}, r, {moment:"Midi", heure:"12 h 30"}); }
   function soir(r){ return Object.assign({}, r, {moment:"Soir", heure:"19 h"}); }
   /* Résout une référence {recipe:id} en objet recette ; midi/soir selon la position (slot 0 = midi, 1 = soir). */
-  function resolveRepas(ref, slot, R){ const base = R[ref.recipe]; if(!base) return null; return slot===0 ? midi(base) : soir(base); }
+  function resolveRepas(ref, slot, R){ const base = R[ref.recipe]; if(!base) return null;
+    const o = slot===0 ? midi(base) : soir(base); o.id = ref.recipe; return o; }
   function materializeMenus(raw, R){
     const out = {};
     Object.keys(raw).forEach(function(wid){
