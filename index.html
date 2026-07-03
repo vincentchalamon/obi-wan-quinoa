@@ -457,10 +457,19 @@ function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:
   if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
   else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
 /* RecipeSage clippe l'URL côté serveur (lit le JSON-LD du HTML).
-   Navigation top-level (pas window.open) : déclenche les Android App Links ->
-   ouvre l'app RecipeSage installée ; repli navigateur/PWA sinon (iOS, desktop). */
+   Sur Android, une URL intent:// cible explicitement l'app (package) et ouvre
+   RecipeSage même sous Firefox (qui n'honore pas les App Links https), avec
+   repli navigateur automatique (browser_fallback_url) si l'app est absente.
+   Ailleurs (iOS, desktop) : lien https vers l'import web / la PWA. */
 function sendToRecipeSage(id){
-  window.location.href='https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(recipePageUrl(id)); }
+  const web='https://recipesage.com/app/edit-recipe/new?autofill-url='+encodeURIComponent(recipePageUrl(id));
+  if(/Android/i.test(navigator.userAgent)){
+    window.location.href='intent://recipesage.com/app/edit-recipe/new?autofill-url='
+      +encodeURIComponent(recipePageUrl(id))
+      +'#Intent;scheme=https;package=com.recipesage.app;S.browser_fallback_url='+encodeURIComponent(web)+';end';
+  } else {
+    window.location.href=web;
+  } }
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
   const data=coursesFor(wid);
