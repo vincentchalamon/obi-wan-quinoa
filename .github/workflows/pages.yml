@@ -44,7 +44,7 @@ jobs:
       - name: Deploy to GitHub Pages (tentative 1)
         id: deploy1
         continue-on-error: true
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       - name: Attente avant retry
         if: steps.deploy1.outcome == 'failure'
@@ -54,4 +54,4 @@ jobs:
       - name: Deploy to GitHub Pages (tentative 2)
         id: deploy2
         if: steps.deploy1.outcome == 'failure'
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
