@@ -46,6 +46,8 @@ def validate_recipes(recipes):
         return
     for rid, r in recipes.items():
         c = f"recipe '{rid}'"
+        if not re.fullmatch(r"[a-z0-9_]+", rid):
+            err(f"{c}: identifiant invalide (slug attendu : [a-z0-9_], sert de nom de page r/<id>.html)")
         if not isinstance(r, dict):
             err(f"{c}: doit etre un objet")
             continue

@@ -19,6 +19,12 @@ Principe absolu : **ne rien inventer côté nutrition**. Chaque principe ou chif
 - Sinon, demande à l'utilisateur ce qu'il a récupéré (légumes/fruits + quantités approximatives).
 - Ces produits frais sont la **base de la semaine**, placés **en début de semaine** (jeudi/vendredi/...), **jamais le mercredi** (jour de courses).
 
+## Step 2 bis — Repas sautés à reporter
+- Le prompt de l'app peut lister des **« Repas sautés cette semaine (ingrédients déjà achetés) »**. Ces plats ont été retirés du planning en cours alors que les courses étaient déjà faites : leurs ingrédients sont **en stock**.
+- **Propose de les reporter** dans la semaine cible, **placés le jeudi (jour 1)** pour consommer les produits frais en priorité (fraîcheur). Cela fait autant de recettes en moins à inventer.
+- Ces repas reportés **ne rajoutent pas de courses fraîches** (déjà achetés) : l'utilisateur ajuste au besoin les quantités dans l'app. N'ajoute pas de nouvel achat pour eux, hormis un éventuel complément.
+- Si aucun repas sauté n'est signalé, ignore cette étape.
+
 ## Step 3 — Don de sang cette semaine ?
 - Si l'info figure déjà dans le message initial, utilise-la ; sinon, demande si un **don de plasma/plaquettes** est prévu et **quel jour**.
 - Si oui : repère les repas dans la fenêtre **~12-20 h avant le don** (le repas du soir de la veille si don le matin, et/ou le midi du jour) ; ils devront être **équilibrés et pauvres en graisses**, tout en restant riches en fer + vitamine C (cf. nutrition.md §7).
@@ -33,7 +39,8 @@ Principe absolu : **ne rien inventer côté nutrition**. Chaque principe ou chif
 ## Step 6 — Composer 7 jours (jeudi → mercredi, 2 repas/jour)
 Applique `nutrition.md` (cite les sources) :
 - **Autour du panier** + produits de saison ; frais en début de semaine ; **mercredi (jour 7) = placard/conserves/restes** (jour de courses, pas de frais à acheter ce jour-là).
-- **~1900 kcal/j** (déficit léger) et **~130 g de protéines/j** : relève la densité protéique (œufs, laitages, légumineuses, tofu/tempeh, soja).
+- **Repas reportés** (Step 2 bis) : place-les le **jeudi** (jour 1), en priorité sur les nouveaux plats.
+- **~1900 kcal/j** (déficit léger) et **~115 g de protéines/j** (cible pratique ; repère théorique haut ~1,6 g/kg ≈ 130 g) : relève la densité protéique (œufs, laitages, légumineuses, tofu/tempeh, soja).
 - **Fer + vitamine C** le même jour ; ne concentre pas les laitages (calcium) sur le repas le plus riche en fer ; **oméga-3** (noix/graines/colza) réguliers.
 - **Complémentarité** légumineuses + céréales ; **variété** (pas la même protéine dominante deux jours de suite ; varie les féculents).
 - Chaque jour : **fruit** de saison + **entrée optionnelle**. Sel modéré.

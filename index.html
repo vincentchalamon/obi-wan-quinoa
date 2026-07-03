@@ -116,6 +116,13 @@
   .del-btn{margin-top:6px;width:100%;padding:13px;border-radius:10px;border:1px solid var(--trait);background:#fff;
     color:var(--betterave);font:inherit;font-weight:600;cursor:pointer;}
   .del-btn.is-del{color:var(--vert-fonce);border-color:var(--vert-feuille);background:var(--vert-clair);}
+  /* Barre d'actions recette (icônes) : mode cuisine, partager, RecipeSage */
+  .recipe-actions{display:flex;gap:8px;margin:0 0 22px;}
+  .act-btn{flex:1 1 0;height:46px;border:1px solid var(--trait);background:#fff;border-radius:10px;
+    color:var(--vert-fonce);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .act-btn svg{width:22px;height:22px;}
+  .act-btn:active{background:var(--vert-clair);}
+  .act-btn.is-on{background:var(--vert-feuille);border-color:var(--vert-feuille);color:#fff;}
 
   .hint{color:var(--ardoise);font-size:13px;margin:0 0 16px;}
   .rayon{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);padding:6px 16px 8px;margin-bottom:14px;}
@@ -132,9 +139,16 @@
   .course-item .check svg{width:13px;height:13px;opacity:0;}
   .course-nom{flex:1 1 auto;}
   .course-q{color:var(--ardoise);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  button.course-q.edit{border:none;background:none;font:inherit;cursor:pointer;padding:4px 6px;margin:-4px -6px;border-radius:7px;line-height:1.2;}
+  button.course-q.edit:active{background:var(--vert-clair);}
+  .course-q .q-need{display:block;font-size:10.5px;opacity:.7;}
+  .q-edit{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+  .q-edit input{width:66px;font:inherit;font-size:14px;padding:4px 6px;border:1px solid var(--vert-feuille);border-radius:7px;text-align:right;-webkit-appearance:none;}
+  .q-unit{font-size:12px;color:var(--ardoise);}
   .course-item.done .check{background:var(--vert-feuille);}
   .course-item.done .check svg{opacity:1;}
   .course-item.done .course-nom{text-decoration:line-through;color:var(--ardoise);}
+  .course-item.done{opacity:.45;}   /* atténuer les articles cochés pour faire ressortir le reste */
 
   /* Bouton flottant : revenir à aujourd’hui */
   #today-fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;
@@ -161,27 +175,22 @@
     color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;margin-top:10px;}
   .btn-secondary:active{background:var(--vert-clair);}
   .prep-ok{color:var(--vert-feuille);font-size:13px;text-align:center;margin-top:10px;min-height:18px;}
-  .export-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
-  .mini-btn{border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);border-radius:20px;
-    padding:6px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;}
-  .mini-btn:active{background:var(--vert-clair);}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
   .day-total .pt-ok{color:var(--vert-feuille);font-weight:700;}
   #owq-status{background:var(--betterave-clair);color:var(--betterave);font-size:12.5px;text-align:center;padding:8px 14px;}
   #owq-status.ok{background:var(--vert-clair);color:var(--vert-fonce);}
   #owq-status[hidden]{display:none;}
 
-  /* ---------- Impression / export PDF (une semaine) ---------- */
-  #print-area{display:none;}
-  @media print{
-    .app-header,#today-fab,#overlay,#planning{display:none!important;}
-    #print-area{display:block!important;}
-    body{background:#fff;color:#000;}
-    .print-title{font-size:20px;margin:0 0 6px;}
-    .print-day{font-size:16px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid #ccc;}
-    .recipe{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #ddd;margin-bottom:14px;}
-    .rayon{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
-    @page{margin:14mm;}
+  /* ---------- Desktop : deux volets (planning à gauche, détail ancré à droite) ---------- */
+  .ov-placeholder{color:var(--ardoise);font-size:14px;text-align:center;margin:48px 8px 0;line-height:1.6;}
+  @media (min-width:900px){
+    :root{--panel-w:min(42vw,620px);}
+    #planning{max-width:720px;margin:0;margin-right:var(--panel-w);padding-left:24px;}
+    #overlay{position:fixed;inset:var(--head-h,56px) 0 0 auto;width:var(--panel-w);
+      border-left:1px solid var(--trait);box-shadow:-2px 0 12px rgba(37,52,42,.05);}
+    #overlay[hidden]{display:flex;}            /* panneau toujours visible sur desktop */
+    .ov-body{max-width:none;}
+    #today-fab{right:auto;left:16px;}          /* hors du panneau de droite */
   }
 </style>
 </head>
@@ -194,7 +203,6 @@
 <div id="owq-status" hidden></div>
 
 <main id="planning"></main>
-<div id="print-area" aria-hidden="true"></div>
 
 <div id="overlay" hidden>
   <header class="ov-head">
@@ -206,6 +214,7 @@
 
 <button id="today-fab" aria-label="Revenir à aujourd’hui" title="Aujourd’hui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></button>
 
+<script src="logic.js"></script>
 <script>
 /* ============================================================
    OBI-WAN QUINOA
@@ -222,22 +231,10 @@
 /* Catalogue chargé depuis recipes.json au boot (voir boot()). */
 let R = {};
 
-function midi(r){ return Object.assign({}, r, {moment:"Midi", heure:"12 h 30"}); }
-function soir(r){ return Object.assign({}, r, {moment:"Soir", heure:"19 h"}); }
-
-/* Résout une référence {recipe:id} en objet recette ; midi/soir selon la position (slot 0 = midi, 1 = soir). */
-function resolveRepas(ref, slot){ const base = R[ref.recipe]; if(!base) return null; return slot===0 ? midi(base) : soir(base); }
-function materializeMenus(raw){
-  const out = {};
-  Object.keys(raw).forEach(function(wid){
-    out[wid] = { jours: raw[wid].jours.map(function(day){
-      return { repas: day.repas.map(function(ref,slot){ return resolveRepas(ref,slot); }).filter(Boolean) };
-    }) };
-  });
-  return out;
-}
+/* midi/soir/resolveRepas/materializeMenus : voir logic.js (materializeMenus(raw, R)). */
 
 /* Toujours ajoutés à la liste, quels que soient les repas */
+/* saisonnier (fruit de dessert quotidien), à revoir via /plan selon la saison */
 const EXTRAS = [ {r:"fru", n:"Pêches jaunes / pommes", disp:"~7 (desserts)"} ];
 const PROT_CIBLE = 115;   /* seuil "objectif protéines atteint" par jour (préférence utilisateur) */
 
@@ -245,15 +242,7 @@ let RAW_MENUS = {}; /* données brutes de menus.json (avant matérialisation), b
 let MENUS = {};   /* peuplé au boot depuis menus.json (clé = le JEUDI) */
 
 /* ============================ Dates ============================ */
-const MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
-const JOURS=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
-function pad(n){return (n<10?'0':'')+n;}
-function idOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-function parseId(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
-function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);x.setHours(0,0,0,0);return x;}
-function startOfWeek(d){const x=new Date(d);x.setHours(0,0,0,0);return addDays(x,-((x.getDay()+7-4)%7));}/*jeudi=4*/
-function fmt(d){const j=d.getDate();return (j===1?'1ᵉʳ':j)+' '+MOIS[d.getMonth()];}
-
+/* MOIS/JOURS/pad/idOf/parseId/addDays/startOfWeek/fmt : voir logic.js. */
 const today=(function(){const t=new Date();t.setHours(0,0,0,0);return t;})();
 
 /* ============================ Persistance ============================ */
@@ -282,42 +271,19 @@ function applyOverrides(raw){
 
 /* ============================ Liste de courses calculée ============================ */
 const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
-function frac(x){const w=Math.floor(x+1e-6),r=x-w;let f='';
-  if(Math.abs(r-0.25)<.02)f='¼';else if(Math.abs(r-0.5)<.02)f='½';else if(Math.abs(r-0.75)<.02)f='¾';
-  if(f)return (w>0?w:'')+f;
-  return (Math.round(x*10)/10).toString().replace('.',',');}
-function qLabel(e){
-  let s;
-  if(e.q==null){ s=''; }
-  else if(e.u==='g') s=Math.round(e.q)+' g';
-  else if(e.u==='ml') s=Math.round(e.q)+' ml';
-  else if(e.u==='gousse') s=frac(e.q)+' gousse'+(e.q>1?'s':'');
-  else if(e.u==='botte') s=frac(e.q)+' botte'+(e.q>1?'s':'');
-  else if(e.u==='tranche') s=Math.round(e.q)+' tranche'+(e.q>1?'s':'');
-  else s=frac(e.q);
-  if(e.note) s = s ? s+' ('+e.note+')' : e.note;
-  return s;
-}
-function computeCourses(wid){
-  const menu=MENUS[wid]; if(!menu) return null;
-  const map=new Map(), order=[];
-  menu.jours.forEach(function(day,di){
-    day.repas.forEach(function(r,ri){
-      if(deleted.has(wid+':'+di+'-'+ri)) return;
-      (r.shop||[]).forEach(function(s){
-        const k=s.n+'|'+(s.u||'')+'|'+s.r;
-        if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
-        const e=map.get(k);
-        if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q;
-        if(s.note && !e.note) e.note=s.note;
-      });
-    });
-  });
-  const byR={}; RAYONS.forEach(function(x){byR[x[0]]=[];});
-  order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, disp:qLabel(e)});});
-  EXTRAS.forEach(function(x){ byR[x.r].push({n:x.n, disp:x.disp}); });
-  return RAYONS.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
-}
+/* frac/qLabel/computeCourses : voir logic.js. Wrapper local pour l'app : */
+function coursesFor(wid){ return computeCourses(MENUS[wid], wid, deleted, RAYONS, EXTRAS); }
+
+/* Quantités "à acheter" ajustées (j'ai déjà X, je n'achète que Y), par semaine.
+   Réinitialisées à la régénération de la semaine (empreinte du brut, comme les overrides). */
+function qtyKey(wid){ return 'owq.qty.'+wid; }
+function loadQty(wid){ const raw=store.get(qtyKey(wid)); if(!raw) return {};
+  let o; try{ o=JSON.parse(raw); }catch(e){ return {}; }
+  if(!o || o.base!==JSON.stringify(RAW_MENUS[wid]||null)) return {};   // semaine régénérée -> reset
+  return o.q||{}; }
+function saveQty(wid,q){ store.set(qtyKey(wid), JSON.stringify({base:JSON.stringify(RAW_MENUS[wid]||null), q:q})); }
+function qtyGet(wid,ck,need){ const q=loadQty(wid); return (ck in q)?q[ck]:need; }
+function qtySet(wid,ck,val,need){ const q=loadQty(wid); if(val==null||val===need) delete q[ck]; else q[ck]=val; saveQty(wid,q); }
 
 /* ============================ Rendu planning ============================ */
 const planning=document.getElementById('planning');
@@ -327,6 +293,8 @@ const ovTitle=overlay.querySelector('.ov-title');
 const COURSES_SVG='<svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.3a1 1 0 0 0 1 .8h8.4a1 1 0 0 0 1-.8L20 7H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>';
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
+const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6l-6.8 3.9"/></svg>';
 
 function repasRow(wid,di,ri,r){
   const key=wid+':'+di+'-'+ri, del=deleted.has(key);
@@ -373,7 +341,7 @@ async function boot(){
       fetch('menus.json').then(function(r){ return r.json(); })
     ]);
     R = recipes; RAW_MENUS = menus;
-    MENUS = materializeMenus(applyOverrides(RAW_MENUS));
+    MENUS = materializeMenus(applyOverrides(RAW_MENUS), R);
   } catch(e){ R = {}; RAW_MENUS = {}; MENUS = {}; }
   appendDays(21);
   const el = document.getElementById('day-'+idOf(today));
@@ -403,7 +371,7 @@ async function refreshMenus(){
       fetch('menus.json',{cache:'no-store'}).then(function(r){ return r.json(); })
     ]);
     if(JSON.stringify(res[0])!==JSON.stringify(R) || JSON.stringify(res[1])!==JSON.stringify(RAW_MENUS)){
-      R=res[0]; RAW_MENUS=res[1]; MENUS=materializeMenus(applyOverrides(RAW_MENUS)); rerenderPlanning();
+      R=res[0]; RAW_MENUS=res[1]; MENUS=materializeMenus(applyOverrides(RAW_MENUS), R); rerenderPlanning();
     }
   }catch(e){}
   checkPending();
@@ -424,15 +392,45 @@ function setDeleted(key,del){
   if(row) updateRow(row,del);
 }
 
+/* ============================ Mode cuisine (wake lock) ============================ */
+let wakeLock=null, cookMode=false;
+async function acquireWake(){ if(!('wakeLock' in navigator)) return; try{ wakeLock=await navigator.wakeLock.request('screen'); }catch(e){ wakeLock=null; } }
+function releaseWake(){ if(wakeLock){ try{ wakeLock.release(); }catch(e){} wakeLock=null; } }
+async function setCookMode(on){ cookMode=on; if(on) await acquireWake(); else releaseWake();
+  const b=ovBody.querySelector('[data-cook]'); if(b){ b.setAttribute('aria-pressed',on?'true':'false'); b.classList.toggle('is-on',on); } }
+/* Le système relâche le wake lock quand l'onglet passe en arrière-plan : le ré-acquérir au retour si le mode est actif. */
+document.addEventListener('visibilitychange',function(){ if(!document.hidden && cookMode && !wakeLock) acquireWake(); });
+
 /* ============================ Overlays ============================ */
-function openOverlay(){ overlay.hidden=false; document.body.style.overflow='hidden'; ovBody.scrollTop=0; history.pushState({owqOverlay:true},''); }
-function closeOverlay(){ overlay.hidden=true; document.body.style.overflow=''; }
-overlay.querySelector('.ov-back').addEventListener('click',function(){ history.back(); });
+/* Desktop (>=900px) : le détail s'affiche dans un panneau ancré à droite (deux volets),
+   sans verrou de scroll ni empilement d'historique ; « fermer » = revenir au placeholder.
+   Le planning reste dans le flux (scroll fenêtre) pour préserver le scroll infini. */
+const mqDesktop=window.matchMedia('(min-width:900px)');
+function isDesktop(){ return mqDesktop.matches; }
+function setHeadH(){ const hh=document.querySelector('.app-header'); if(hh) document.documentElement.style.setProperty('--head-h',hh.offsetHeight+'px'); }
+function showPlaceholder(){ if(cookMode) setCookMode(false); ovTitle.textContent='';
+  ovBody.innerHTML='<p class="ov-placeholder">Sélectionne un repas pour voir la recette, ou « Courses » pour la liste.</p>';
+  overlay.hidden=false; }
+function openOverlay(){ overlay.hidden=false; ovBody.scrollTop=0;
+  if(!isDesktop()){ document.body.style.overflow='hidden'; history.pushState({owqOverlay:true},''); } }
+function closeOverlay(){ if(cookMode) setCookMode(false);
+  if(isDesktop()){ showPlaceholder(); return; }
+  overlay.hidden=true; document.body.style.overflow=''; }
+overlay.querySelector('.ov-back').addEventListener('click',function(){ if(isDesktop()) closeOverlay(); else history.back(); });
 /* "Précédent" du navigateur == flèche retour : ferme l'overlay. Sentinelle pour neutraliser le retour depuis la liste. */
 history.pushState({owqList:true},'');
-window.addEventListener('popstate',function(){ if(!overlay.hidden) closeOverlay(); else history.pushState({owqList:true},''); });
+window.addEventListener('popstate',function(){ if(!isDesktop() && !overlay.hidden) closeOverlay(); else history.pushState({owqList:true},''); });
+/* Init + bascule de breakpoint */
+setHeadH();
+window.addEventListener('resize',setHeadH);
+mqDesktop.addEventListener('change',function(e){
+  if(e.matches){ document.body.style.overflow=''; setHeadH(); if(overlay.hidden) showPlaceholder(); }
+  else { if(overlay.querySelector('.ov-placeholder')){ overlay.hidden=true; } }
+});
+if(isDesktop()) showPlaceholder();
 
 function openRecipe(key){
+  if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
   const p=key.split(':'), wid=p[0], idx=p[1].split('-'), di=+idx[0], ri=+idx[1];
   const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir');
   ovTitle.textContent=r.moment+' · '+r.heure;
@@ -440,6 +438,10 @@ function openRecipe(key){
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
   h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
   h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span>'+(r.priorite?'<span class="chip frais">Légumes frais</span>':'')+'</div>';
+  h+='<div class="recipe-actions">';
+  if('wakeLock' in navigator) h+='<button class="act-btn" data-cook aria-pressed="false" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
+  if(r.id) h+='<button class="act-btn" data-share="'+r.id+'" aria-label="Partager la recette" title="Partager">'+SHARE_SVG+'</button>';
+  h+='</div>';
   h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
   const del=deleted.has(key);
@@ -447,95 +449,58 @@ function openRecipe(key){
   h+='</article>';
   ovBody.innerHTML=h; openOverlay();
 }
-function openCourses(wid){
-  const monday=addDays(parseId(wid),-3);
-  ovTitle.textContent='Courses · sem. du '+fmt(monday);
-  const data=computeCourses(wid);
-  if(!data){ ovBody.innerHTML='<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>'; openOverlay(); return; }
-  let h='<div class="export-bar">'
-    +'<button class="mini-btn" data-exp="menu-pdf" data-wid="'+wid+'">Menu PDF</button>'
-    +'<button class="mini-btn" data-exp="menu-md" data-wid="'+wid+'">Menu .md</button>'
-    +'<button class="mini-btn" data-exp="courses-pdf" data-wid="'+wid+'">Courses PDF</button>'
-    +'</div>';
-  h+='<p class="hint">Liste calculée à partir des repas conservés. Pense à retirer ce que tu as déjà via le panier AMAP.</p>';
+/* Page publique d'une recette (JSON-LD schema.org/Recipe généré par scripts/build_recipe_pages.py). */
+/* Page publique de la recette (JSON-LD schema.org/Recipe) : partageable, et
+   importable dans RecipeSage en la partageant vers l'app depuis la feuille. */
+function recipePageUrl(id){ return new URL('r/'+id+'.html', location.href).href; }
+function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:'Recette';
+  if(navigator.share){ navigator.share({title:title, url:url}).catch(function(){}); }
+  else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
+/* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
+function coursesInner(wid){
+  const data=coursesFor(wid);
+  if(!data) return null;
+  let h='<p class="hint">Liste calculée à partir des repas conservés. Ajuste une quantité si tu en as déjà : touche le nombre.</p>';
   data.forEach(function(ray){
     h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
     ray.items.forEach(function(it){
       const ck=wid+'§'+ray.cls+'§'+it.n;
+      let qHtml='';
+      if(typeof it.q==='number'){                                    // quantité numérique -> ajustable
+        const buy=qtyGet(wid,ck,it.q);
+        qHtml='<button class="course-q edit" data-qedit="1" data-ck="'+ck+'" data-wid="'+wid+'" data-need="'+it.q+'" data-u="'+(it.u||'')+'" data-buy="'+buy+'">'
+          +qLabel({q:buy,u:it.u,note:it.note})
+          +(buy!==it.q?'<span class="q-need">sur '+qLabel({q:it.q,u:it.u})+'</span>':'')
+          +'</button>';
+      } else if(it.disp){ qHtml='<span class="course-q">'+it.disp+'</span>'; }
       h+='<li class="course-item'+(coches.has(ck)?' done':'')+'" data-ck="'+ck+'"><span class="check">'+CHECK+'</span>'
-        +'<span class="course-nom">'+it.n+'</span>'+(it.disp?'<span class="course-q">'+it.disp+'</span>':'')+'</li>';
+        +'<span class="course-nom">'+it.n+'</span>'+qHtml+'</li>';
     });
     h+='</ul></section>';
   });
-  ovBody.innerHTML=h; openOverlay();
+  return h;
+}
+function openCourses(wid){
+  const monday=addDays(parseId(wid),-3);
+  ovTitle.textContent='Courses · sem. du '+fmt(monday);
+  const h=coursesInner(wid);
+  ovBody.innerHTML = h===null ? '<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>' : h;
+  openOverlay();
+}
+/* Re-rendu sans réinitialiser le scroll (après ajustement d'une quantité). */
+function rerenderCourses(wid){ const top=ovBody.scrollTop; const h=coursesInner(wid); if(h!=null){ ovBody.innerHTML=h; ovBody.scrollTop=top; } }
+function startQtyEdit(btn){
+  const ck=btn.dataset.ck, wid=btn.dataset.wid, need=+btn.dataset.need, u=btn.dataset.u, buy=+btn.dataset.buy;
+  const wrap=document.createElement('span'); wrap.className='q-edit';
+  const inp=document.createElement('input'); inp.type='number'; inp.min='0'; inp.step='any'; inp.inputMode='decimal'; inp.value=buy;
+  wrap.appendChild(inp); if(u){ const us=document.createElement('span'); us.className='q-unit'; us.textContent=u; wrap.appendChild(us); }
+  btn.replaceWith(wrap); inp.focus(); inp.select();
+  let done=false;
+  function commit(){ if(done) return; done=true; let v=parseFloat(inp.value); if(isNaN(v)||v<0) v=need; qtySet(wid,ck,v,need); rerenderCourses(wid); }
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); inp.blur(); } });
+  inp.addEventListener('blur',commit);
 }
 
-/* ============================ Export d'une semaine (PDF via impression + Markdown) ============================ */
-function weekTitle(wid){ const j=parseId(wid), mer=addDays(j,6); return 'Menu — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(mer)+' '+mer.getFullYear(); }
-function weekRepas(wid,di,day){ const out=[]; day.repas.forEach(function(r,ri){ if(!deleted.has(wid+':'+di+'-'+ri)) out.push(r); }); return out; }
-function renderWeekMenuHTML(wid){
-  const m=MENUS[wid]; let h='<h1 class="print-title">'+weekTitle(wid)+'</h1>';
-  if(!m) return h+'<p>Menu non défini pour cette semaine.</p>';
-  m.jours.forEach(function(day,di){
-    const d=addDays(parseId(wid),di), rows=weekRepas(wid,di,day);
-    if(!rows.length) return;
-    h+='<h2 class="print-day">'+JOURS[d.getDay()]+' '+fmt(d)+'</h2>';
-    rows.forEach(function(r){ const sc=(r.moment==='Soir');
-      h+='<article class="recipe'+(sc?' soir':'')+'">';
-      h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
-      h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
-      h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span></div>';
-      h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
-      h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
-      h+='</article>';
-    });
-  });
-  return h;
-}
-function renderCoursesPrintHTML(wid){
-  const j=parseId(wid), data=computeCourses(wid);
-  let h='<h1 class="print-title">Courses — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(addDays(j,6))+' '+addDays(j,6).getFullYear()+'</h1>';
-  if(!data) return h+'<p>Liste non définie.</p>';
-  data.forEach(function(ray){
-    h+='<section class="rayon r-'+ray.cls+'"><h2><span class="pip"></span>'+ray.rayon+'</h2><ul>';
-    ray.items.forEach(function(it){ h+='<li class="course-item"><span class="check"></span><span class="course-nom">'+it.n+'</span>'+(it.disp?'<span class="course-q">'+it.disp+'</span>':'')+'</li>'; });
-    h+='</ul></section>';
-  });
-  return h;
-}
-function buildWeekMarkdown(wid){
-  const m=MENUS[wid]; let md='# '+weekTitle(wid)+'\n';
-  if(!m) return md+'\n_Menu non défini._\n';
-  m.jours.forEach(function(day,di){
-    const d=addDays(parseId(wid),di), rows=weekRepas(wid,di,day);
-    if(!rows.length) return;
-    md+='\n## '+JOURS[d.getDay()]+' '+fmt(d)+'\n';
-    rows.forEach(function(r){
-      md+='\n### '+r.moment+' — '+r.titre+' (~'+r.kcal+' kcal · '+r.prot+' g prot)\n\n**Ingrédients**\n';
-      r.ingredients.forEach(function(i){ md+='- '+i+'\n'; });
-      md+='\n**Préparation**\n';
-      r.etapes.forEach(function(s,k){ md+=(k+1)+'. '+s+'\n'; });
-    });
-  });
-  return md;
-}
-function downloadText(name,text){
-  const blob=new Blob([text],{type:'text/markdown;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
-}
-function printDoc(html,title){
-  const area=document.getElementById('print-area'); area.innerHTML=html;
-  const prev=document.title; document.title=title;
-  window.print();
-  setTimeout(function(){ document.title=prev; },500);
-}
-function exportWeek(kind,wid){
-  if(kind==='menu-md') downloadText('obi-wan-quinoa-semaine-'+wid+'.md', buildWeekMarkdown(wid));
-  else if(kind==='menu-pdf') printDoc(renderWeekMenuHTML(wid), weekTitle(wid));
-  else if(kind==='courses-pdf') printDoc(renderCoursesPrintHTML(wid), 'Courses '+wid);
-}
 
 /* ============================ Préparer la semaine (deep link Claude Code) ============================ */
 function ghRepo(){
@@ -555,6 +520,12 @@ function buildPrompt(thu){
     m.jours.forEach(function(day,di){ const d=addDays(parseId(thu),di);
       const parts=day.repas.map(function(r){ return r.moment+' : '+r.titre; }).join(' ; ');
       p+='- '+JOURS[d.getDay()]+' '+fmt(d)+(parts?' — '+parts:' — (à définir)')+'\n'; }); }
+  // Repas sautés de la semaine en cours (jeudi précédent) : ingrédients déjà achetés -> à reporter.
+  const prevWid=idOf(addDays(parseId(thu),-7)), pm=MENUS[prevWid], skipped=[];
+  if(pm){ pm.jours.forEach(function(day,di){ day.repas.forEach(function(r,ri){
+    if(deleted.has(prevWid+':'+di+'-'+ri)){ const d=addDays(parseId(prevWid),di); skipped.push(JOURS[d.getDay()]+' '+fmt(d)+' — '+r.moment+' : '+r.titre); } }); }); }
+  if(skipped.length){ p+='\nRepas sautés cette semaine (ingrédients déjà achetés) — propose de les reporter en début de semaine (jeudi) pour la fraîcheur :\n';
+    skipped.forEach(function(s){ p+='- '+s+'\n'; }); }
   p+='\nPropose-moi la semaine complète et laisse-moi demander des changements ; quand je valide tout, committe et pousse directement sur main (sans PR).';
   return p;
 }
@@ -602,12 +573,17 @@ planning.addEventListener('click',function(e){
   if(cb){ openCourses(cb.dataset.courses); }
 });
 ovBody.addEventListener('click',function(e){
+  const cook=e.target.closest('[data-cook]');
+  if(cook){ setCookMode(!cookMode); return; }
+  const sh=e.target.closest('[data-share]');
+  if(sh){ shareRecipe(sh.dataset.share); return; }
   const pg=e.target.closest('[data-prep-go]');
   if(pg){ openDeepLink(pg.dataset.prepGo); return; }
   const pc=e.target.closest('[data-prep-copy]');
   if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
-  const ex=e.target.closest('[data-exp]');
-  if(ex){ exportWeek(ex.dataset.exp, ex.dataset.wid); return; }
+  const qe=e.target.closest('[data-qedit]');
+  if(qe){ startQtyEdit(qe); return; }                          // éditer la quantité
+  if(e.target.closest('.q-edit')) return;                      // clic dans l'éditeur : ne pas cocher
   const it=e.target.closest('.course-item');
   if(it){ const k=it.dataset.ck; if(coches.has(k))coches.delete(k);else coches.add(k); it.classList.toggle('done'); saveSet('owq.checked',coches); return; }
   const db=e.target.closest('.del-btn');
@@ -638,7 +614,7 @@ function doSwap(srcKey,tgtKey){
   const t=jours[a.di].repas[a.ri]; jours[a.di].repas[a.ri]=jours[b.di].repas[b.ri]; jours[b.di].repas[b.ri]=t;
   ov[wid]={base:base, jours:jours}; saveOverrides(ov);
   swapDeleted(srcKey,tgtKey);
-  MENUS=materializeMenus(applyOverrides(RAW_MENUS));
+  MENUS=materializeMenus(applyOverrides(RAW_MENUS), R);
   refreshDay(addDays(parseId(wid),a.di)); if(b.di!==a.di) refreshDay(addDays(parseId(wid),b.di));
 }
 let drag=null, dragTimer=null, suppressClick=false;

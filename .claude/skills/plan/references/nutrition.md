@@ -27,8 +27,8 @@ Les recettes existantes (~900-1000 kcal/repas, ~1800-2000 kcal/j sur 2 repas) so
 
 ## 3. Protéines
 
-- Pour préserver la masse maigre pendant un déficit + activité : viser **~1,6 g/kg/j** (≈ 130 g/j pour 82 kg), fourchette 1,2-2 g/kg selon littérature de nutrition sportive.
-- C'est nettement plus que les ~30 g/repas actuels (~60 g/j) : **relever la densité protéique** (œufs, laitages — skyr/fromage blanc/yaourt grec, légumineuses, tofu/tempeh, protéine de soja). La collation sert notamment à compléter l'apport protéique.
+- Pour préserver la masse maigre pendant un déficit + activité : le repère théorique haut est **~1,6 g/kg/j** (≈ 130 g/j pour 82 kg), fourchette 1,2-2 g/kg selon littérature de nutrition sportive.
+- **Cible pratique retenue : ~115 g/j** (bas de la fourchette 1,2-2 g/kg, soutenable au quotidien), atteinte via les variantes protéinées (`_p`, ~2×55 g/repas) et les desserts laitiers maigres (skyr, fromage blanc). C'est nettement plus que les ~30 g/repas des recettes de base (~60 g/j) : **relever la densité protéique** (œufs, laitages, légumineuses, tofu/tempeh, protéine de soja). La collation sert notamment à compléter l'apport protéique.
 
 ## 4. Nutriments d'attention (régime lacto-ovo) — d'après l'ANSES 2025
 
@@ -93,7 +93,7 @@ Adapter les plats à la saison (pas de plat lourd type tartiflette en été). Pr
 ## 11. Règles de composition pour la skill
 
 1. Construire la semaine **autour du panier AMAP** saisi, complété par l'épicerie/protéines ; produits frais en début de semaine, **mercredi = placard/conserves** (jour de courses).
-2. Chaque jour : 2 repas + fruit + entrée optionnelle ; viser ~1900 kcal et **relever les protéines** (~130 g/j) via laitages/œufs/légumineuses/soja.
+2. Chaque jour : 2 repas + fruit + entrée optionnelle ; viser ~1900 kcal et **relever les protéines** (~115 g/j, cf. §3) via laitages/œufs/légumineuses/soja.
 3. Au moins une **source de fer + une source de vitamine C** dans la même journée ; éviter de concentrer les laitages (calcium) sur le repas le plus riche en fer.
 4. **Complémentarité** légumineuses + céréales sur la journée/semaine ; **oméga-3** réguliers (noix, graines, huile de colza).
 5. **Variété** : ne pas répéter la même protéine dominante deux jours de suite ; varier les féculents.

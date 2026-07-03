@@ -1,2 +1,4 @@
 __pycache__/
 *.pyc
+# Pages recettes générées (JSON-LD) : produites en CI avant le déploiement Pages.
+/r/
