@@ -209,6 +209,7 @@
 
 <button id="today-fab" aria-label="Revenir à aujourd’hui" title="Aujourd’hui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></button>
 
+<script src="logic.js"></script>
 <script>
 /* ============================================================
    OBI-WAN QUINOA
@@ -225,20 +226,7 @@
 /* Catalogue chargé depuis recipes.json au boot (voir boot()). */
 let R = {};
 
-function midi(r){ return Object.assign({}, r, {moment:"Midi", heure:"12 h 30"}); }
-function soir(r){ return Object.assign({}, r, {moment:"Soir", heure:"19 h"}); }
-
-/* Résout une référence {recipe:id} en objet recette ; midi/soir selon la position (slot 0 = midi, 1 = soir). */
-function resolveRepas(ref, slot){ const base = R[ref.recipe]; if(!base) return null; return slot===0 ? midi(base) : soir(base); }
-function materializeMenus(raw){
-  const out = {};
-  Object.keys(raw).forEach(function(wid){
-    out[wid] = { jours: raw[wid].jours.map(function(day){
-      return { repas: day.repas.map(function(ref,slot){ return resolveRepas(ref,slot); }).filter(Boolean) };
-    }) };
-  });
-  return out;
-}
+/* midi/soir/resolveRepas/materializeMenus : voir logic.js (materializeMenus(raw, R)). */
 
 /* Toujours ajoutés à la liste, quels que soient les repas */
 /* saisonnier (fruit de dessert quotidien), à revoir via /plan selon la saison */
@@ -249,15 +237,7 @@ let RAW_MENUS = {}; /* données brutes de menus.json (avant matérialisation), b
 let MENUS = {};   /* peuplé au boot depuis menus.json (clé = le JEUDI) */
 
 /* ============================ Dates ============================ */
-const MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
-const JOURS=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
-function pad(n){return (n<10?'0':'')+n;}
-function idOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-function parseId(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
-function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);x.setHours(0,0,0,0);return x;}
-function startOfWeek(d){const x=new Date(d);x.setHours(0,0,0,0);return addDays(x,-((x.getDay()+7-4)%7));}/*jeudi=4*/
-function fmt(d){const j=d.getDate();return (j===1?'1ᵉʳ':j)+' '+MOIS[d.getMonth()];}
-
+/* MOIS/JOURS/pad/idOf/parseId/addDays/startOfWeek/fmt : voir logic.js. */
 const today=(function(){const t=new Date();t.setHours(0,0,0,0);return t;})();
 
 /* ============================ Persistance ============================ */
@@ -286,42 +266,8 @@ function applyOverrides(raw){
 
 /* ============================ Liste de courses calculée ============================ */
 const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
-function frac(x){const w=Math.floor(x+1e-6),r=x-w;let f='';
-  if(Math.abs(r-0.25)<.02)f='¼';else if(Math.abs(r-0.5)<.02)f='½';else if(Math.abs(r-0.75)<.02)f='¾';
-  if(f)return (w>0?w:'')+f;
-  return (Math.round(x*10)/10).toString().replace('.',',');}
-function qLabel(e){
-  let s;
-  if(e.q==null){ s=''; }
-  else if(e.u==='g') s=Math.round(e.q)+' g';
-  else if(e.u==='ml') s=Math.round(e.q)+' ml';
-  else if(e.u==='gousse') s=frac(e.q)+' gousse'+(e.q>1?'s':'');
-  else if(e.u==='botte') s=frac(e.q)+' botte'+(e.q>1?'s':'');
-  else if(e.u==='tranche') s=Math.round(e.q)+' tranche'+(e.q>1?'s':'');
-  else s=frac(e.q);
-  if(e.note) s = s ? s+' ('+e.note+')' : e.note;
-  return s;
-}
-function computeCourses(wid){
-  const menu=MENUS[wid]; if(!menu) return null;
-  const map=new Map(), order=[];
-  menu.jours.forEach(function(day,di){
-    day.repas.forEach(function(r,ri){
-      if(deleted.has(wid+':'+di+'-'+ri)) return;
-      (r.shop||[]).forEach(function(s){
-        const k=s.n+'|'+(s.u||'')+'|'+s.r;
-        if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
-        const e=map.get(k);
-        if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q;
-        if(s.note && !e.note) e.note=s.note;
-      });
-    });
-  });
-  const byR={}; RAYONS.forEach(function(x){byR[x[0]]=[];});
-  order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, disp:qLabel(e)});});
-  EXTRAS.forEach(function(x){ byR[x.r].push({n:x.n, disp:x.disp}); });
-  return RAYONS.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
-}
+/* frac/qLabel/computeCourses : voir logic.js. Wrapper local pour l'app : */
+function coursesFor(wid){ return computeCourses(MENUS[wid], wid, deleted, RAYONS, EXTRAS); }
 
 /* ============================ Rendu planning ============================ */
 const planning=document.getElementById('planning');
@@ -377,7 +323,7 @@ async function boot(){
       fetch('menus.json').then(function(r){ return r.json(); })
     ]);
     R = recipes; RAW_MENUS = menus;
-    MENUS = materializeMenus(applyOverrides(RAW_MENUS));
+    MENUS = materializeMenus(applyOverrides(RAW_MENUS), R);
   } catch(e){ R = {}; RAW_MENUS = {}; MENUS = {}; }
   appendDays(21);
   const el = document.getElementById('day-'+idOf(today));
@@ -407,7 +353,7 @@ async function refreshMenus(){
       fetch('menus.json',{cache:'no-store'}).then(function(r){ return r.json(); })
     ]);
     if(JSON.stringify(res[0])!==JSON.stringify(R) || JSON.stringify(res[1])!==JSON.stringify(RAW_MENUS)){
-      R=res[0]; RAW_MENUS=res[1]; MENUS=materializeMenus(applyOverrides(RAW_MENUS)); rerenderPlanning();
+      R=res[0]; RAW_MENUS=res[1]; MENUS=materializeMenus(applyOverrides(RAW_MENUS), R); rerenderPlanning();
     }
   }catch(e){}
   checkPending();
@@ -465,7 +411,7 @@ function openRecipe(key){
 function openCourses(wid){
   const monday=addDays(parseId(wid),-3);
   ovTitle.textContent='Courses · sem. du '+fmt(monday);
-  const data=computeCourses(wid);
+  const data=coursesFor(wid);
   if(!data){ ovBody.innerHTML='<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>'; openOverlay(); return; }
   let h='<div class="export-bar">'
     +'<button class="mini-btn" data-exp="menu-pdf" data-wid="'+wid+'">Menu PDF</button>'
@@ -508,7 +454,7 @@ function renderWeekMenuHTML(wid){
   return h;
 }
 function renderCoursesPrintHTML(wid){
-  const j=parseId(wid), data=computeCourses(wid);
+  const j=parseId(wid), data=coursesFor(wid);
   let h='<h1 class="print-title">Courses — semaine du jeudi '+fmt(j)+' au mercredi '+fmt(addDays(j,6))+' '+addDays(j,6).getFullYear()+'</h1>';
   if(!data) return h+'<p>Liste non définie.</p>';
   data.forEach(function(ray){
@@ -655,7 +601,7 @@ function doSwap(srcKey,tgtKey){
   const t=jours[a.di].repas[a.ri]; jours[a.di].repas[a.ri]=jours[b.di].repas[b.ri]; jours[b.di].repas[b.ri]=t;
   ov[wid]={base:base, jours:jours}; saveOverrides(ov);
   swapDeleted(srcKey,tgtKey);
-  MENUS=materializeMenus(applyOverrides(RAW_MENUS));
+  MENUS=materializeMenus(applyOverrides(RAW_MENUS), R);
   refreshDay(addDays(parseId(wid),a.di)); if(b.di!==a.di) refreshDay(addDays(parseId(wid),b.di));
 }
 let drag=null, dragTimer=null, suppressClick=false;

@@ -3,7 +3,7 @@
    cache-first sur les fichiers statiques (icônes, manifeste). */
 const CACHE = 'menu-v5';   // <-- incrémente ce numéro si besoin de purger le cache
 const ASSETS = [
-  './', './index.html', './manifest.webmanifest',
+  './', './index.html', './logic.js', './manifest.webmanifest',
   './recipes.json', './menus.json',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'
 ];

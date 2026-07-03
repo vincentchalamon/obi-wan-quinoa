@@ -22,14 +22,17 @@ jobs:
       - name: Valider les donnees et l'integrite statique
         run: python3 scripts/validate.py
 
-      - name: Verifier la syntaxe du service worker
-        run: node --check sw.js
+      - name: Verifier la syntaxe du service worker et de la logique
+        run: node --check sw.js && node --check logic.js
 
       - name: Verifier la syntaxe du JS inline de l'app
         run: |
           python3 scripts/extract_app_js.py > app.tmp.js
           node --check app.tmp.js
           rm -f app.tmp.js
+
+      - name: Tests unitaires de la logique pure
+        run: node --test 'test/*.test.js'
 
       - name: Scan de secrets (garde-fou OSS)
         run: |

@@ -39,6 +39,7 @@ Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don
 ## Fonctionnement technique
 
 - `index.html` — la PWA (HTML/CSS/JS, sans dépendance). Charge les données au démarrage et calcule la liste de courses à partir des repas conservés.
+- `logic.js` — logique pure sans DOM (dates, matérialisation des menus, calcul de la liste de courses), extraite d'`index.html` pour être testée en Node. Chargée comme script classique (fonctions exposées en global) et couverte par `test/logic.test.js` (`node --test`).
 - `recipes.json` — catalogue de recettes (source de vérité, portions pour 1 personne). Champs : `moment`, `heure`, `titre`, `kcal`, `prot`, `priorite?`, `ingredients[]`, `etapes[]`, `shop[]` (`{n, q, u, r, note?}`, rayon `r ∈ prot|leg|epi|con|fru`).
 - `menus.json` — planning par semaine. Clé = date du **jeudi** ; 7 jours (jeudi→mercredi) ; chaque repas référence une recette par son identifiant (`{"recipe":"buddha"}`), résolu en midi/soir selon sa position.
 - `sw.js` — service worker : *network-first* sur le HTML et les JSON (pour voir les nouveaux menus en ligne), *cache-first* sur les icônes ; précache pour l'usage hors-ligne.
