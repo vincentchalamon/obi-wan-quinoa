@@ -593,6 +593,12 @@ function buildPrompt(thu){
     m.jours.forEach(function(day,di){ const d=addDays(parseId(thu),di);
       const parts=day.repas.map(function(r){ return r.moment+' : '+r.titre; }).join(' ; ');
       p+='- '+JOURS[d.getDay()]+' '+fmt(d)+(parts?' — '+parts:' — (à définir)')+'\n'; }); }
+  // Repas sautés de la semaine en cours (jeudi précédent) : ingrédients déjà achetés -> à reporter.
+  const prevWid=idOf(addDays(parseId(thu),-7)), pm=MENUS[prevWid], skipped=[];
+  if(pm){ pm.jours.forEach(function(day,di){ day.repas.forEach(function(r,ri){
+    if(deleted.has(prevWid+':'+di+'-'+ri)){ const d=addDays(parseId(prevWid),di); skipped.push(JOURS[d.getDay()]+' '+fmt(d)+' — '+r.moment+' : '+r.titre); } }); }); }
+  if(skipped.length){ p+='\nRepas sautés cette semaine (ingrédients déjà achetés) — propose de les reporter en début de semaine (jeudi) pour la fraîcheur :\n';
+    skipped.forEach(function(s){ p+='- '+s+'\n'; }); }
   p+='\nPropose-moi la semaine complète et laisse-moi demander des changements ; quand je valide tout, committe et pousse directement sur main (sans PR).';
   return p;
 }

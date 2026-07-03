@@ -35,6 +35,7 @@ Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don
 
 - **Glisser-déposer** (poignée à droite d'un repas) pour **échanger midi/soir** ou **déplacer un repas** d'un jour à l'autre. Les retouches sont locales (hors-ligne) et **fondues dans `menus.json`** à la prochaine génération via Claude.
 - **Ajuster une quantité de courses** : sur l'écran Courses, toucher le nombre d'un article pour saisir la quantité **à acheter** (si j'en ai déjà) ; la quantité nécessaire pour la semaine reste affichée (« sur N »). Local, réinitialisé à la régénération de la semaine.
+- **Reporter un repas sauté** : les repas retirés (« je mange à l'extérieur ») de la semaine en cours sont signalés dans le prompt « Préparer » ; à la génération, la skill propose de les **reporter au jeudi** de la semaine suivante (ingrédients déjà achetés, fraîcheur d'abord).
 - **Mode cuisine** : sur une recette, garder l'écran allumé pendant la préparation.
 - **Exporter une semaine** (le menu, ou la liste de courses) en **PDF** ou **Markdown** daté, depuis l'écran Courses.
 
