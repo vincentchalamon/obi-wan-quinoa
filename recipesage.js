@@ -45,6 +45,9 @@
       return { n:p.name, q:p.qty, u:p.unit, r:L.rayonFor(p.name) }; });
     const rec = { id: raw.id, titre: raw.title || '(sans titre)',
       ingredients: ingredients, etapes: splitLines(raw.instructions), shop: shop, labels: labelsOf(raw) };
+    const img = (raw.recipeImages && raw.recipeImages[0] && raw.recipeImages[0].image) ? raw.recipeImages[0].image.location : '';
+    if(img) rec.image = img;                 // photo (recettes RecipeSage uniquement)
+    if(raw.url) rec.url = raw.url;            // lien source
     const kc = firstNum(raw.nutritionCalories); if(kc != null) rec.kcal = kc;   // nutrition affichée seulement si présente
     const pr = firstNum(raw.nutritionProtein);  if(pr != null) rec.prot = pr;
     return rec;

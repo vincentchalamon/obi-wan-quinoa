@@ -148,6 +148,8 @@ def validate_static():
     for ref in re.findall(r'(?:href|src)="([^"]+)"', html):
         if ref.startswith(("http", "data:", "#", "mailto:")):
             continue
+        if "'" in ref or "+" in ref:  # refs construites en JS (concatenation) : hors du scan statique
+            continue
         rel = ref[2:] if ref.startswith("./") else ref
         if not (ROOT / rel).exists():
             err(f"index.html: reference locale absente '{ref}'")

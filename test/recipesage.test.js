@@ -23,6 +23,8 @@ test('rsMapRecipe : RecipeSage brut -> forme interne (shop dérivé, nutrition s
   assert.equal(r.id, 'x1');
   assert.equal(r.titre, 'Test');
   assert.deepEqual(r.labels, ['repas', 'vegan']);
+  assert.equal(r.image, 'http://img');
+  assert.equal(r.url, 'http://src');
   assert.equal(r.ingredients.length, 3);
   assert.equal(r.etapes.length, 2);
 
