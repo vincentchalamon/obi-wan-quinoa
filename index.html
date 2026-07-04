@@ -133,6 +133,7 @@
   .rayon.r-epi h2 .pip{background:#C9912F;}
   .rayon.r-fru h2 .pip{background:#D26A3B;}
   .rayon.r-con h2 .pip{background:#8A8F82;}
+  .rayon.r-aut h2 .pip{background:#B0A48F;}
   .rayon ul{list-style:none;margin:0;padding:0;}
   .course-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dotted var(--trait);cursor:pointer;font-size:14px;min-height:46px;}
   .course-item:last-child{border-bottom:none;}
@@ -176,6 +177,19 @@
     color:var(--vert-fonce);font:inherit;font-weight:600;cursor:pointer;margin-top:10px;}
   .btn-secondary:active{background:var(--vert-clair);}
   .prep-ok{color:var(--vert-feuille);font-size:13px;text-align:center;margin-top:10px;min-height:18px;}
+  /* Génération de menu (proposition RecipeSage) */
+  .src-note{color:var(--ardoise);font-size:12.5px;margin:-8px 0 16px;}
+  .src-note a{color:var(--vert-feuille);}
+  .gen-day{margin-bottom:14px;}
+  .gen-day-h{font-size:13px;font-weight:700;color:var(--vert-fonce);margin:0 0 6px;}
+  .gen-repas{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dotted var(--trait);}
+  .gen-moment{flex:0 0 auto;width:36px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--vert-feuille);}
+  .gen-moment.soir{color:var(--betterave);}
+  .gen-titre{flex:1 1 auto;color:var(--encre);text-decoration:none;font-size:14px;}
+  .gen-titre:active{opacity:.6;}
+  .gen-reroll{flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);font-size:15px;cursor:pointer;}
+  .gen-reroll:active{background:var(--vert-clair);}
+  .gen-reroll svg{width:16px;height:16px;}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
   /* Couverts (vue recette) */
   .couverts{display:flex;align-items:center;gap:10px;margin:0 0 20px;flex-wrap:wrap;}
@@ -226,6 +240,7 @@
 <button id="today-fab" aria-label="Revenir à aujourd’hui" title="Aujourd’hui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></button>
 
 <script src="logic.js"></script>
+<script src="recipesage.js"></script>
 <script>
 /* ============================================================
    OBI-WAN QUINOA
@@ -278,6 +293,17 @@ function couvertsSet(wid,di,ri,val){ const k=wid+':'+di+'-'+ri; val=Math.max(1,M
   if(val===profile.couverts) delete couvertsMap[k]; else couvertsMap[k]=val;
   store.set('owq.couverts', JSON.stringify(couvertsMap)); }
 
+/* ---- Catalogue RecipeSage sélectionné + menus générés (persistés localStorage, dispo hors-ligne) ---- */
+let seedRecipes={}, seedMenus={};   // recipes.json / menus.json (graine, pour la comparaison au refresh)
+function loadRecipesCache(){ const raw=store.get('owq.recipes'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
+function saveRecipesCache(o){ store.set('owq.recipes', JSON.stringify(o)); }
+function loadGenMenus(){ const raw=store.get('owq.gen'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
+function saveGenMenus(o){ store.set('owq.gen', JSON.stringify(o)); }
+/* Fusionne la graine (JSON du dépôt) avec les données générées (localStorage), puis matérialise. */
+function rebuild(){ R=Object.assign({}, seedRecipes, loadRecipesCache());
+  RAW_MENUS=Object.assign({}, seedMenus, loadGenMenus());
+  MENUS=materializeMenus(applyOverrides(RAW_MENUS), R); }
+
 /* ============================ Overrides de menu (édition à la volée) ============================ */
 function loadOverrides(){ const raw=store.get('owq.menu'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
 function saveOverrides(o){ store.set('owq.menu', JSON.stringify(o)); }
@@ -294,7 +320,7 @@ function applyOverrides(raw){
 }
 
 /* ============================ Liste de courses calculée ============================ */
-const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
+const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"],["aut","Autres"]];
 /* frac/qLabel/computeCourses : voir logic.js. Wrapper local pour l'app : */
 function coursesFor(wid){ return computeCourses(MENUS[wid], wid, deleted, RAYONS, function(di,ri){ return couvertsGet(wid,di,ri); }); }
 
@@ -318,7 +344,7 @@ const COURSES_SVG='<svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.3a1 1 0 0 0 1
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
-const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6l-6.8 3.9"/></svg>';
+const REROLL_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>';
 
 function nutriMeta(r){ const m=[];
   if(typeof r.kcal==='number') m.push('~'+r.kcal+' kcal');
@@ -357,7 +383,7 @@ function renderDay(d){
     const wid=idOf(d);
     h+='<div class="week-marker"><span class="wm-name">Semaine du '+fmt(d)+'</span>'
       +'<span class="wm-actions">'
-      +'<button class="prep-btn" data-prepare="'+wid+'">'+PREPARE_SVG+'Préparer</button>'
+      +'<button class="prep-btn" data-prepare="'+wid+'">'+PREPARE_SVG+'Générer</button>'
       +'<button class="courses-btn" data-courses="'+wid+'">'+COURSES_SVG+'Courses</button>'
       +'</span></div>';
   }
@@ -374,9 +400,8 @@ async function boot(){
       fetch('recipes.json').then(function(r){ return r.json(); }),
       fetch('menus.json').then(function(r){ return r.json(); })
     ]);
-    R = recipes; RAW_MENUS = menus;
-    MENUS = materializeMenus(applyOverrides(RAW_MENUS), R);
-  } catch(e){ R = {}; RAW_MENUS = {}; MENUS = {}; }
+    seedRecipes = recipes; seedMenus = menus; rebuild();
+  } catch(e){ seedRecipes = {}; seedMenus = {}; rebuild(); }
   appendDays(21);
   const el = document.getElementById('day-'+idOf(today));
   if(el) el.scrollIntoView({block:'start'});
@@ -392,10 +417,6 @@ window.addEventListener('scroll',function(){
 /* ============================ Rafraîchissement au retour dans l'app + statut ============================ */
 function setStatus(msg,ok){ const s=document.getElementById('owq-status'); if(!s) return; s.textContent=msg; s.className=ok?'ok':''; s.hidden=false; }
 function clearStatus(){ const s=document.getElementById('owq-status'); if(s) s.hidden=true; }
-function weekHasMeals(wid){ const m=MENUS[wid]; return !!(m && m.jours.some(function(d){ return d.repas.length; })); }
-function checkPending(){ const p=store.get('owq.pending'); if(!p) return;
-  if(weekHasMeals(p)){ store.set('owq.pending',''); setStatus('Menu publié ✓',true); setTimeout(clearStatus,4000); }
-  else setStatus('Menu en préparation… valide-le dans Claude, il apparaîtra ici.'); }
 function rerenderPlanning(){ const cards=planning.querySelectorAll('.day-card');
   cards.forEach(function(c){ refreshDay(parseId(c.id.replace('day-',''))); }); }
 async function refreshMenus(){
@@ -404,11 +425,10 @@ async function refreshMenus(){
       fetch('recipes.json',{cache:'no-store'}).then(function(r){ return r.json(); }),
       fetch('menus.json',{cache:'no-store'}).then(function(r){ return r.json(); })
     ]);
-    if(JSON.stringify(res[0])!==JSON.stringify(R) || JSON.stringify(res[1])!==JSON.stringify(RAW_MENUS)){
-      R=res[0]; RAW_MENUS=res[1]; MENUS=materializeMenus(applyOverrides(RAW_MENUS), R); rerenderPlanning();
+    if(JSON.stringify(res[0])!==JSON.stringify(seedRecipes) || JSON.stringify(res[1])!==JSON.stringify(seedMenus)){
+      seedRecipes=res[0]; seedMenus=res[1]; rebuild(); rerenderPlanning();
     }
   }catch(e){}
-  checkPending();
 }
 document.addEventListener('visibilitychange',function(){ if(!document.hidden) refreshMenus(); });
 window.addEventListener('focus',function(){ refreshMenus(); });
@@ -463,10 +483,9 @@ mqDesktop.addEventListener('change',function(e){
 });
 if(isDesktop()) showPlaceholder();
 
-function openRecipe(key){
-  if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
+function renderRecipe(key){
   const p=key.split(':'), wid=p[0], idx=p[1].split('-'), di=+idx[0], ri=+idx[1];
-  const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir');
+  const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir'), cv=couvertsGet(wid,di,ri);
   ovTitle.textContent=r.moment;
   let h='<article class="recipe'+(sc?' soir':'')+'">';
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+'</span>';
@@ -476,32 +495,25 @@ function openRecipe(key){
   if(typeof r.prot==='number') macros+='<span class="chip prot">~'+r.prot+' g prot</span>';
   if(r.priorite) macros+='<span class="chip frais">Légumes frais</span>';
   if(macros) h+='<div class="macros">'+macros+'</div>';
-  const cv=couvertsGet(wid,di,ri);
   h+='<div class="couverts" data-cvkey="'+key+'"><span class="cv-label">Couverts</span>'
     +'<button class="cv-btn" data-cv="-" aria-label="Moins de couverts">-</button>'
     +'<span class="cv-val">'+cv+'</span>'
     +'<button class="cv-btn" data-cv="+" aria-label="Plus de couverts">+</button>'
-    +'<span class="cv-hint">ajuste les quantités de la liste de courses</span></div>';
+    +'<span class="cv-hint">ajuste les quantités (recette et courses)</span></div>';
   h+='<div class="recipe-actions">';
-  if('wakeLock' in navigator) h+='<button class="act-btn" data-cook aria-pressed="false" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
-  if(r.id) h+='<button class="act-btn" data-share="'+r.id+'" aria-label="Partager la recette" title="Partager">'+SHARE_SVG+'</button>';
+  if('wakeLock' in navigator) h+='<button class="act-btn'+(cookMode?' is-on':'')+'" data-cook aria-pressed="'+(cookMode?'true':'false')+'" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
   h+='</div>';
-  h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+  h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+scaleIngredientLine(i,cv)+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
   const del=deleted.has(key);
   h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
   h+='</article>';
-  ovBody.innerHTML=h; openOverlay();
+  ovBody.innerHTML=h;
 }
-/* Page publique d'une recette (JSON-LD schema.org/Recipe généré par scripts/build_recipe_pages.py). */
-/* Page publique de la recette (JSON-LD schema.org/Recipe) : partageable, et
-   importable dans RecipeSage en la partageant vers l'app depuis la feuille. */
-function recipePageUrl(id){ return new URL('r/'+id+'.html', location.href).href; }
-function shareRecipe(id){ const r=R[id], url=recipePageUrl(id), title=r?r.titre:'Recette';
-  /* URL aussi dans `text` : un partage Android n'a pas de canal dédié pour `url`,
-     et le share target RecipeSage extrait la dernière URL du texte partagé. */
-  if(navigator.share){ navigator.share({title:title, text:title+' '+url, url:url}).catch(function(){}); }
-  else if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url); } }
+function openRecipe(key){
+  if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
+  renderRecipe(key); openOverlay();
+}
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
   const data=coursesFor(wid);
@@ -547,54 +559,98 @@ function startQtyEdit(btn){
 }
 
 
-/* ============================ Préparer la semaine (deep link Claude Code) ============================ */
-function ghRepo(){
-  try{ const h=location.hostname, p=location.pathname.split('/').filter(Boolean);
-    if(/\.github\.io$/.test(h)) return h.split('.')[0]+'/'+(p[0]||''); }catch(e){}
-  return 'vincentchalamon/obi-wan-quinoa';
-}
-function weekLabel(thu){ const j=parseId(thu), mer=addDays(j,6); return 'jeudi '+fmt(j)+' au mercredi '+fmt(mer)+' '+mer.getFullYear(); }
-function buildPrompt(thu){
-  const panier=(document.getElementById('owq-panier')||{}).value||'';
-  let p='/plan '+thu+'\n';
-  p+='Panier AMAP : '+(panier.trim()||'(à préciser)')+'\n';
-  const m=MENUS[thu];
-  if(m){ p+='\nMenu actuel de cette semaine (ajuste-le plutôt que repartir de zéro) :\n';
-    m.jours.forEach(function(day,di){ const d=addDays(parseId(thu),di);
-      const parts=day.repas.map(function(r){ return r.moment+' : '+r.titre; }).join(' ; ');
-      p+='- '+JOURS[d.getDay()]+' '+fmt(d)+(parts?' — '+parts:' — (à définir)')+'\n'; }); }
-  // Repas sautés de la semaine en cours (jeudi précédent) : ingrédients déjà achetés -> à reporter.
-  const prevWid=idOf(addDays(parseId(thu),-7)), pm=MENUS[prevWid], skipped=[];
-  if(pm){ pm.jours.forEach(function(day,di){ day.repas.forEach(function(r,ri){
-    if(deleted.has(prevWid+':'+di+'-'+ri)){ const d=addDays(parseId(prevWid),di); skipped.push(JOURS[d.getDay()]+' '+fmt(d)+' — '+r.moment+' : '+r.titre); } }); }); }
-  if(skipped.length){ p+='\nRepas sautés cette semaine (ingrédients déjà achetés) — propose de les reporter en début de semaine (jeudi) pour la fraîcheur :\n';
-    skipped.forEach(function(s){ p+='- '+s+'\n'; }); }
-  p+='\nPropose-moi la semaine complète et laisse-moi demander des changements ; quand je valide tout, committe et pousse directement sur main (sans PR).';
-  return p;
-}
-function savePanier(thu){ store.set('owq.panier.'+thu, (document.getElementById('owq-panier')||{}).value||''); }
-function openPrepare(thu){
-  ovTitle.textContent='Préparer la semaine';
-  const saved=store.get('owq.panier.'+thu)||'';
-  let h='<p class="prep-note">Semaine du <span class="prep-week">'+weekLabel(thu)+'</span>. '
-    +'Le bouton ouvre Claude Code sur ton repo avec le contexte pré-rempli : valide repas par repas, la skill publiera la semaine.</p>';
-  h+='<div class="field"><label>Panier AMAP</label>'
-    +'<textarea id="owq-panier" placeholder="ex. courgettes 1 kg, tomates 500 g, salade, basilic, pêches...">'+saved.replace(/</g,'&lt;')+'</textarea></div>';
-  h+='<button class="btn-primary" data-prep-go="'+thu+'">Générer avec Claude</button>';
-  h+='<button class="btn-secondary" data-prep-copy="'+thu+'">Copier le prompt</button>';
-  h+='<div class="prep-ok" id="owq-prep-ok"></div>';
+/* ============================ Génération de menus (logiciel, catalogue RecipeSage) ============================ */
+let genState=null;        // proposition en cours : { wid, tokens, pool:[recettes mappées], menu, used:Set }
+let genPoolCache=null;    // cache session du pool (évite un refetch entre régénérations)
+
+function genHistory(){ const raw=store.get('owq.history'); let a=[]; if(raw){ try{ a=JSON.parse(raw)||[]; }catch(e){} } return new Set(a); }
+function pushHistory(ids){ const raw=store.get('owq.history'); let a=[]; if(raw){ try{ a=JSON.parse(raw)||[]; }catch(e){} }
+  a=ids.concat(a.filter(function(x){ return ids.indexOf(x)===-1; })).slice(0,40); store.set('owq.history', JSON.stringify(a)); }
+function usedIdsOf(menu){ const s=new Set(); menu.jours.forEach(function(d){ d.repas.forEach(function(r){ s.add(r.recipe); }); }); return s; }
+function recipeById(id){ return genState&&genState.pool ? genState.pool.find(function(r){ return r.id===id; }) : null; }
+function setGenMsg(t){ const el=document.getElementById('gen-msg'); if(el) el.textContent=t||''; }
+function updateGenOffline(){ const b=document.getElementById('gen-go'); if(!b) return;
+  b.disabled=!navigator.onLine; if(!navigator.onLine) setGenMsg('Connexion requise pour générer le menu.'); }
+window.addEventListener('online',updateGenOffline);
+window.addEventListener('offline',updateGenOffline);
+
+function openGenerate(wid){
+  ovTitle.textContent='Générer le menu';
+  const saved=store.get('owq.panier.'+wid)||'', off=!navigator.onLine;
+  let h='<p class="prep-note">Semaine du <span class="prep-week">'+fmt(parseId(wid))+'</span>. '
+    +'Indique ce que tu as déjà (panier, placard) : le menu privilégiera les recettes qui les utilisent.</p>';
+  h+='<p class="src-note">Recettes issues du <a href="https://recipesage.com/app/list/main?userId='+OWNER_USER_ID+'" target="_blank" rel="noopener">catalogue RecipeSage</a> de l’auteur.</p>';
+  h+='<div class="field"><label>Ingrédients disponibles</label>'
+    +'<textarea id="owq-panier" placeholder="ex. 1 courgette; 3 tomates; 200 g de lentilles">'+saved.replace(/</g,'&lt;')+'</textarea></div>';
+  h+='<button class="btn-primary" id="gen-go"'+(off?' disabled':'')+' data-wid="'+wid+'">Générer le menu</button>';
+  h+='<div class="prep-ok" id="gen-msg">'+(off?'Connexion requise pour générer le menu.':'')+'</div>';
   ovBody.innerHTML=h; openOverlay();
 }
-function openDeepLink(thu){ savePanier(thu); store.set('owq.pending',thu);
-  setStatus('Menu en préparation… valide-le dans Claude, il apparaîtra ici.');
-  window.location.href='claude://code/new?repo='+ghRepo()+'&q='+encodeURIComponent(buildPrompt(thu)); }
-function copyPrompt(thu){
-  const txt=buildPrompt(thu), ok=document.getElementById('owq-prep-ok'); savePanier(thu);
-  function done(){ if(ok) ok.textContent='Prompt copié ✓'; }
-  function fallback(){ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
-    ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
-  try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fallback); else fallback(); }
-  catch(e){ fallback(); }
+/* Pool = plats (hors "dessert") du catalogue owner, détaillés puis mappés. Filtre régime souple. */
+function loadPool(){
+  if(genPoolCache) return Promise.resolve(genPoolCache);
+  return rsGetRecipes({}).then(function(lite){
+    let mains=lite.filter(function(r){ return !(r.recipeLabels||[]).some(function(l){ return l.label && l.label.title==='dessert'; }); });
+    if(profile.diet){ const d=mains.filter(function(r){ return (r.recipeLabels||[]).some(function(l){ return l.label && l.label.title===profile.diet; }); });
+      if(d.length>=4) mains=d; }
+    return Promise.all(mains.map(function(r){ return rsGetRecipe(r.id).then(rsMapRecipe).catch(function(){ return null; }); }));
+  }).then(function(details){ genPoolCache=details.filter(Boolean); return genPoolCache; });
+}
+function runGenerate(wid){
+  if(!navigator.onLine){ setGenMsg('Connexion requise pour générer le menu.'); return; }
+  const ta=document.getElementById('owq-panier'), stock=ta?ta.value:''; store.set('owq.panier.'+wid, stock);
+  const btn=document.getElementById('gen-go'); if(btn) btn.disabled=true; setGenMsg('Recherche de recettes…');
+  loadPool().then(function(pool){
+    if(!pool.length){ setGenMsg('Aucune recette exploitable dans le catalogue.'); if(btn) btn.disabled=false; return; }
+    const tokens=tokenize(stock), menu=generateMenu(pool, tokens, {history:genHistory(), rng:Math.random});
+    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu };
+    renderProposal();
+  }).catch(function(e){ setGenMsg('Erreur : '+e.message); if(btn) btn.disabled=false; });
+}
+function renderProposal(){
+  const wid=genState.wid, m=genState.menu;
+  let h='<p class="prep-note">Menu proposé pour la semaine du <span class="prep-week">'+fmt(parseId(wid))+'</span>. '
+    +'Ouvre une recette (lien), remplace un choix, puis valide.</p>';
+  m.jours.forEach(function(day,di){ const d=addDays(parseId(wid),di);
+    h+='<div class="gen-day"><div class="gen-day-h">'+JOURS[d.getDay()]+' '+fmt(d)+'</div>';
+    if(!day.repas.length) h+='<div class="repas-vide">—</div>';
+    day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe);
+      h+='<div class="gen-repas"><span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
+        +'<a class="gen-titre" href="https://recipesage.com/app/recipes/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>'
+        +'<button class="gen-reroll" data-reroll="'+di+'-'+ri+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button></div>';
+    });
+    h+='</div>';
+  });
+  h+='<button class="btn-primary" id="gen-validate">Valider la semaine</button>';
+  h+='<button class="btn-secondary" id="gen-back">Changer les ingrédients</button>';
+  ovBody.innerHTML=h;
+}
+function rerollSlot(di,ri){
+  if(!genState) return; const ref=genState.menu.jours[di].repas[ri]; if(!ref) return;
+  const alt=pickAlternative(genState.pool, genState.tokens, usedIdsOf(genState.menu), {rng:Math.random});
+  if(alt && alt!==ref.recipe){ ref.recipe=alt; renderProposal(); }
+}
+function validateGen(){
+  if(!genState) return; const wid=genState.wid, menu=genState.menu, used=usedIdsOf(menu);
+  const cache=loadRecipesCache(); used.forEach(function(id){ const r=recipeById(id); if(r) cache[id]=r; }); saveRecipesCache(cache);
+  const gen=loadGenMenus(); gen[wid]={jours:menu.jours}; saveGenMenus(gen);
+  pushHistory(Array.from(used));
+  rebuild();
+  deductStock(wid, store.get('owq.panier.'+wid)||'');       // pré-déduit le stock saisi de la liste de courses
+  rerenderPlanning(); genState=null; closeOverlay();
+  setStatus('Menu généré ✓', true); setTimeout(clearStatus, 3000);
+}
+/* Déduit le stock saisi des quantités à acheter (owq.qty), quand nom + unité concordent. */
+function parseStock(str){ return splitItems(str).map(function(part){ const p=parseQty(part);
+    return { name:norm(p.name), qty:p.qty, unit:p.unit }; }).filter(function(x){ return x.name; }); }
+function deductStock(wid, stockStr){
+  const data=coursesFor(wid); if(!data) return; const stock=parseStock(stockStr); if(!stock.length) return;
+  data.forEach(function(ray){ ray.items.forEach(function(it){
+    if(typeof it.q!=='number') return; const nn=' '+norm(it.n)+' ';
+    const s=stock.find(function(x){ return x.qty!=null && (x.unit||'')===(it.u||'') &&
+      (nn.indexOf(' '+x.name+' ')!==-1 || (' '+x.name+' ').indexOf(nn)!==-1); });   // concordance par mot entier
+    if(s) qtySet(wid, wid+'§'+ray.cls+'§'+it.n, Math.max(0, it.q - s.qty), it.q);
+  }); });
 }
 
 /* ============================ Réglages (profil utilisateur) ============================ */
@@ -615,6 +671,7 @@ function saveSettings(){
   let cv=parseInt((document.getElementById('set-couverts')||{}).value,10); if(isNaN(cv)||cv<1) cv=1;
   let ws=parseInt((document.getElementById('set-weekstart')||{}).value,10); if(isNaN(ws)||ws<0||ws>6) ws=4;
   profile={diet:diet, couverts:cv, weekStart:ws}; saveProfile(profile);
+  genPoolCache=null;   // le régime a pu changer -> invalider le pool en cache
   const ok=document.getElementById('set-ok'); if(ok) ok.textContent='Enregistré ✓';
   resetPlanning();
 }
@@ -633,24 +690,27 @@ planning.addEventListener('click',function(e){
   const main=e.target.closest('.repas-main');
   if(main){ openRecipe(main.closest('.repas-row').dataset.key); return; }
   const pb=e.target.closest('.prep-btn');
-  if(pb){ openPrepare(pb.dataset.prepare); return; }
+  if(pb){ openGenerate(pb.dataset.prepare); return; }
   const cb=e.target.closest('.courses-btn');
   if(cb){ openCourses(cb.dataset.courses); }
 });
 ovBody.addEventListener('click',function(e){
   const cook=e.target.closest('[data-cook]');
   if(cook){ setCookMode(!cookMode); return; }
-  const sh=e.target.closest('[data-share]');
-  if(sh){ shareRecipe(sh.dataset.share); return; }
-  const pg=e.target.closest('[data-prep-go]');
-  if(pg){ openDeepLink(pg.dataset.prepGo); return; }
-  const pc=e.target.closest('[data-prep-copy]');
-  if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
+  const gg=e.target.closest('#gen-go');
+  if(gg){ runGenerate(gg.dataset.wid); return; }
+  const gv=e.target.closest('#gen-validate');
+  if(gv){ validateGen(); return; }
+  const gbk=e.target.closest('#gen-back');
+  if(gbk){ if(genState) openGenerate(genState.wid); return; }
+  const rr=e.target.closest('[data-reroll]');
+  if(rr){ const rp=rr.dataset.reroll.split('-'); rerollSlot(+rp[0],+rp[1]); return; }
   const cvb=e.target.closest('[data-cv]');
   if(cvb){ const cont=cvb.closest('[data-cvkey]');
-    if(cont){ const kk=parseKey(cont.dataset.cvkey);
+    if(cont){ const key=cont.dataset.cvkey, kk=parseKey(key);
       let val=couvertsGet(kk.wid,kk.di,kk.ri)+(cvb.dataset.cv==='+'?1:-1); if(val<1) val=1; couvertsSet(kk.wid,kk.di,kk.ri,val);
-      const disp=cont.querySelector('.cv-val'); if(disp) disp.textContent=val; refreshDay(addDays(parseId(kk.wid),kk.di)); }
+      refreshDay(addDays(parseId(kk.wid),kk.di));
+      const top=ovBody.scrollTop; renderRecipe(key); ovBody.scrollTop=top; }   // ré-affiche quantités recette + cv-val
     return; }
   const ss=e.target.closest('#set-save');
   if(ss){ saveSettings(); return; }
