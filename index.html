@@ -96,6 +96,9 @@
     color:var(--vert-feuille);border:1px solid var(--vert-feuille);border-radius:20px;padding:3px 11px;margin-bottom:12px;}
   .recipe-tag.soir{color:var(--betterave);border-color:var(--betterave);}
   .recipe-titre{font-size:22px;line-height:1.2;margin-bottom:14px;}
+  .recipe-img{width:100%;border-radius:10px;margin:0 0 16px;display:block;object-fit:cover;max-height:280px;}
+  .recipe-src{margin:14px 0 0;font-size:13px;}
+  .recipe-src a{color:var(--vert-feuille);}
   .macros{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
   .chip{font-size:12px;font-weight:700;padding:5px 11px;border-radius:7px;font-variant-numeric:tabular-nums;}
   .chip.kcal{background:var(--vert-clair);color:var(--vert-fonce);}
@@ -490,6 +493,7 @@ function renderRecipe(key){
   let h='<article class="recipe'+(sc?' soir':'')+'">';
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+'</span>';
   h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
+  if(r.image && /^https?:\/\//i.test(r.image)) h+='<img class="recipe-img" src="'+r.image+'" alt="" loading="lazy">';
   let macros='';
   if(typeof r.kcal==='number') macros+='<span class="chip kcal">~'+r.kcal+' kcal</span>';
   if(typeof r.prot==='number') macros+='<span class="chip prot">~'+r.prot+' g prot</span>';
@@ -505,6 +509,7 @@ function renderRecipe(key){
   h+='</div>';
   h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+scaleIngredientLine(i,cv)+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
+  if(r.url && /^https?:\/\//i.test(r.url)) h+='<p class="recipe-src"><a href="'+r.url+'" target="_blank" rel="noopener">Voir la recette d’origine</a></p>';
   const del=deleted.has(key);
   h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
   h+='</article>';

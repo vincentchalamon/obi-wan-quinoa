@@ -81,7 +81,8 @@
     for(let i=0;i<UNITS.length;i++){ const tok=UNITS[i][0];
       const re=new RegExp('^'+tok.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![a-zà-ÿ])','i');
       if(re.test(rest)){ unit=UNITS[i][1]; rest=rest.slice(tok.length); break; } }
-    let name=rest.replace(/^\s*(?:de |d'|d’|des |du |l'|l’)/i,'').replace(/\s+/g,' ').trim();
+    let name=rest.replace(/^\s*\([^)]*\)\s*/,'');              // retire une parenthèse de tête ("(1 lb) ...")
+    name=name.replace(/^\s*(?:de |d'|d’|des |du |l'|l’)/i,'').replace(/\s+/g,' ').trim();
     name=name.replace(/\s*\([^)]*\)\s*$/,'').trim();          // retire une note finale entre parenthèses
     if(!name) name=raw;                                        // secours : ligne brute
     return { qty:(qty!=null && isFinite(qty)?qty:null), unit:unit, name:name, raw:raw };
@@ -89,15 +90,19 @@
 
   /* Rayon d'un ingrédient par mots-clés (défaut "aut" = Autres). */
   const RAYON_KEYWORDS=[
-    ['leg',['haricot vert','pomme de terre','patate','courgette','tomate','carotte','oignon','ail','poivron','aubergine','epinard','salade','concombre','betterave','champignon','brocoli','chou','poireau','celeri','courge','potiron','radis','navet','fenouil','petit pois','pousse','roquette','mache','endive','artichaut','asperge','panais']],
-    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','fromage','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','lentille','pois chiche','haricot rouge','haricot','edamame','soja']],
-    ['fru',['pomme','banane','poire','peche','abricot','fraise','framboise','citron','orange','raisin','kiwi','mangue','ananas','cerise','myrtille','melon','pasteque','figue','datte','clementine']],
-    ['epi',['farine','quinoa','riz','pate','boulgour','semoule','pain','flocon','avoine','chocolat','noix','amande','graine','tahini','conserve','coulis','bouillon','sucre','cassonade']],
-    ['con',['sel','poivre','huile','vinaigre','sauce','epice','curry','cumin','paprika','herbe','basilic','persil','coriandre','moutarde','miel','levure','bicarbonate','vanille']],
+    ['leg',['haricot vert','pomme de terre','patate douce','patate','courgette','tomate','carotte','oignon','echalote','ail','poivron','piment','aubergine','epinard','salade','laitue','roquette','mache','concombre','betterave','champignon','brocoli','chou-fleur','chou fleur','chou','romanesco','poireau','celeri','courge','potimarron','butternut','potiron','citrouille','radis','navet','rutabaga','fenouil','petit pois','pousse','endive','artichaut','asperge','panais','blette','cresson','mais','gingembre','avocat','courgette jaune']],
+    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','chevre','roquefort','gruyere','comte','emmental','halloumi','fromage','lentille','pois chiche','pois casse','haricot rouge','haricot blanc','haricot noir','feve','haricot','edamame','soja']],
+    ['fru',['pomme','banane','poire','peche','nectarine','abricot','prune','fraise','framboise','mure','groseille','citron','orange','pamplemousse','clementine','raisin','kiwi','mangue','ananas','cerise','myrtille','melon','pasteque','figue','datte','grenade','rhubarbe']],
+    ['epi',['farine','maizena','fecule','quinoa','riz','pate','nouille','spaghetti','penne','tagliatelle','vermicelle','couscous','boulgour','semoule','polenta','ble','orge','epeautre','sarrasin','pain','chapelure','flocon','avoine','chocolat','cacao','noix','noisette','amande','graine','tahini','conserve','coulis','concentre de tomate','bouillon','sucre','cassonade','sirop','confiture','pate feuilletee','pate brisee']],
+    ['con',['sel','poivre','huile','vinaigre','sauce soja','tamari','sauce','harissa','epice','curry','cumin','paprika','curcuma','cannelle','muscade','herbe','thym','romarin','laurier','origan','basilic','persil','coriandre','estragon','ciboulette','moutarde','miel','levure','bicarbonate','vanille']],
   ];
+  /* Regex compilées : mot entier + pluriel éventuel (s/x). Évite les faux positifs de sous-chaîne
+     ("mais" dans "maison") tout en acceptant les pluriels ("courgette" -> "courgettes"). */
+  const RAYON_RE = RAYON_KEYWORDS.map(function(g){ return [g[0], g[1].map(function(kw){
+    return new RegExp('\\b'+stripAccents(kw).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:s|x)?\\b'); })]; });
   function rayonFor(name){ const n=norm(name);
-    for(let i=0;i<RAYON_KEYWORDS.length;i++){ const kws=RAYON_KEYWORDS[i][1];
-      for(let j=0;j<kws.length;j++){ if(n.indexOf(stripAccents(kws[j]))!==-1) return RAYON_KEYWORDS[i][0]; } }
+    for(let i=0;i<RAYON_RE.length;i++){ const res=RAYON_RE[i][1];
+      for(let j=0;j<res.length;j++){ if(res[j].test(n)) return RAYON_RE[i][0]; } }
     return 'aut';
   }
 
@@ -118,15 +123,21 @@
      (recyclage si le pool est plus petit que le nombre de créneaux). */
   function generateMenu(pool, tokens, opts){
     opts=opts||{}; const days=opts.days||7, perDay=opts.perDay||2;
-    const ranked=rankPool(pool, tokens, opts), need=days*perDay, order=[];
-    let idx=0; const used=new Set();
-    while(order.length<need && ranked.length){
-      if(idx>=ranked.length){ idx=0; used.clear(); }          // pool trop petit -> recyclage
-      const c=ranked[idx++]; if(used.has(c.id)) continue; used.add(c.id); order.push(c.id);
+    const ranked=rankPool(pool, tokens, opts);
+    const labelsById={}; pool.forEach(function(r){ labelsById[r.id]=r.labels||[]; });
+    const used=new Set();
+    /* prochain id : non utilisé + label préféré, sinon non utilisé, sinon recyclage (pool trop petit). */
+    function pick(pref){
+      let i;
+      if(pref){ for(i=0;i<ranked.length;i++){ const id=ranked[i].id; if(!used.has(id) && labelsById[id].indexOf(pref)!==-1){ used.add(id); return id; } } }
+      for(i=0;i<ranked.length;i++){ const id=ranked[i].id; if(!used.has(id)){ used.add(id); return id; } }
+      if(!ranked.length) return null;
+      used.clear(); const id=ranked[0].id; used.add(id); return id;
     }
-    const jours=[]; let k=0;
+    const jours=[];
     for(let d=0; d<days; d++){ const repas=[];
-      for(let s=0; s<perDay && k<order.length; s++){ repas.push({ recipe: order[k++] }); }
+      for(let s=0; s<perDay; s++){ const pref=(perDay===2)?(s===0?'midi':'soir'):null;
+        const id=pick(pref); if(id==null) break; repas.push({ recipe:id }); }
       jours.push({ repas: repas }); }
     return { jours: jours };
   }
@@ -160,7 +171,7 @@
         if(deleted.has(wid+':'+di+'-'+ri)) return;
         const f = cv(di,ri) || 1;
         (r.shop||[]).forEach(function(s){
-          const k=s.n+'|'+(s.u||'')+'|'+s.r;
+          const k=s.n.toLowerCase().replace(/\s+/g,' ').trim()+'|'+(s.u||'')+'|'+s.r;   // cumul insensible à la casse (accents préservés)
           if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
           const e=map.get(k);
           if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f;

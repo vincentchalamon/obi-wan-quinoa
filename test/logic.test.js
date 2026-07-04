@@ -116,6 +116,18 @@ test('computeCourses : les couverts multiplient les quantités (q:null inchangé
   assert.equal(sel.q, null);                            // condiment (q:null) jamais multiplié
 });
 
+test('computeCourses : cumul insensible à la casse, accents préservés', () => {
+  const menu = { jours: [
+    { repas: [{ shop: [{ n: 'Tomate', q: 2, u: '', r: 'leg' }, { n: 'Pâte', q: 100, u: 'g', r: 'epi' }] }] },
+    { repas: [{ shop: [{ n: 'tomate', q: 3, u: '', r: 'leg' }, { n: 'Pâté', q: 50, u: 'g', r: 'epi' }] }] },
+  ] };
+  const data = L.computeCourses(menu, '2026-07-02', new Set(), RAYONS);
+  const leg = data.find((s) => s.cls === 'leg');
+  assert.equal(leg.items.length, 1); assert.equal(leg.items[0].q, 5);   // "Tomate"/"tomate" fusionnés (casse)
+  const epi = data.find((s) => s.cls === 'epi');
+  assert.equal(epi.items.length, 2);                                    // "Pâte"/"Pâté" distincts (accent préservé)
+});
+
 test('computeCourses : menu absent -> null', () => {
   assert.equal(L.computeCourses(null, '2026-07-02', new Set(), RAYONS), null);
 });
@@ -142,12 +154,23 @@ test('parseQty : ligne sans quantité -> qty null, nom = ligne brute', () => {
   assert.equal(p.qty, null); assert.equal(p.unit, ''); assert.equal(p.name, 'Huile d’olive');
 });
 
+test('parseQty : parenthèse de tête retirée du nom', () => {
+  const p = L.parseQty('450 g (1 lb) de ricotta');
+  assert.equal(p.qty, 450); assert.equal(p.unit, 'g'); assert.equal(p.name, 'ricotta');
+});
+
 test('rayonFor : classification par mots-clés, défaut aut', () => {
   assert.equal(L.rayonFor('Courgettes'), 'leg');
   assert.equal(L.rayonFor('Tofu ferme'), 'prot');
   assert.equal(L.rayonFor('pommes'), 'fru');
   assert.equal(L.rayonFor('farine T45'), 'epi');
   assert.equal(L.rayonFor('Huile d’olive'), 'con');
+  assert.equal(L.rayonFor('chou-fleur'), 'leg');
+  assert.equal(L.rayonFor('chèvre frais'), 'prot');
+  assert.equal(L.rayonFor('noisettes'), 'epi');
+  assert.equal(L.rayonFor('thym'), 'con');
+  assert.equal(L.rayonFor('maïs doux'), 'leg');       // "maïs" reconnu (mot entier + pluriel)
+  assert.equal(L.rayonFor('pesto maison'), 'aut');    // mais pas "maison" (pas de faux positif de sous-chaîne)
   assert.equal(L.rayonFor('objet mystère'), 'aut');
 });
 
@@ -199,4 +222,16 @@ test('generateMenu : 7 jours x 2, ids du pool, meilleur score en tête, recyclag
 
 test('pickAlternative : renvoie la meilleure recette non déjà utilisée', () => {
   assert.equal(L.pickAlternative(POOL, ['courgette'], new Set(['a']), { rng: () => 0.5 }), 'b');
+});
+
+test('generateMenu : respecte les labels midi/soir quand présents', () => {
+  const pool = [
+    { id: 'm1', titre: '', ingredients: [], labels: ['repas', 'midi'] },
+    { id: 's1', titre: '', ingredients: [], labels: ['repas', 'soir'] },
+    { id: 'x1', titre: '', ingredients: [], labels: ['repas'] },
+    { id: 'x2', titre: '', ingredients: [], labels: ['repas'] },
+  ];
+  const menu = L.generateMenu(pool, [], { rng: () => 0.5, days: 1, perDay: 2 });
+  assert.equal(menu.jours[0].repas[0].recipe, 'm1');   // créneau midi -> recette labellisée "midi"
+  assert.equal(menu.jours[0].repas[1].recipe, 's1');   // créneau soir -> recette labellisée "soir"
 });

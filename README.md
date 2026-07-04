@@ -24,6 +24,8 @@ Le catalogue-source est le RecipeSage **de l'auteur** (son `userId` est codé en
 
 Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en héberge aucune. Pour ajouter une recette, l'auteur utilise la skill **Claude Code `/recipe`** (en CLI/desktop, hors application) : elle rédige une recette équilibrée et sourcée, puis la produit **au format prêt à coller** dans le formulaire « nouvelle recette » de RecipeSage (ingrédients, étapes, **labels** dont les ingrédients-clés qui pilotent le matching, valeurs nutritionnelles à renseigner). L'import est **manuel**. Plus le catalogue est étiqueté et fourni, meilleures sont les propositions.
 
+**Convention de labels** : `dessert` (exclu de la génération de menus), `midi` / `soir` (place la recette dans le créneau correspondant), le régime (`vegetarien`, `vegan`, `lacto-ovo`), et les **ingrédients-clés** (`courgette`, `lentilles`, `tofu`…) qui orientent le matching anti-gaspi.
+
 ### Équilibre alimentaire visé (référence d'écriture des recettes)
 
 Cibles de l'auteur, appliquées par la skill `/recipe` (détail et sources : [`.claude/skills/recipe/references/nutrition.md`](.claude/skills/recipe/references/nutrition.md)) :
