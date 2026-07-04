@@ -45,7 +45,7 @@
   function splitLines(s){ return (s||'').split(/\r?\n/).map(function(x){ return x.trim(); }).filter(Boolean); }
   function labelsOf(raw){ return (raw.recipeLabels||[]).map(function(l){ return l.label && l.label.title; }).filter(Boolean); }
 
-  /* Recette RecipeSage brute -> forme interne de l'app (comme recipes.json), shop[] dérivé via parseQty. */
+  /* Recette RecipeSage brute -> forme interne de l'app (titre/ingredients/etapes/shop/labels), shop[] dérivé via parseQty. */
   function rsMapRecipe(raw){
     const ingredients = splitLines(raw.ingredients);
     const shop = ingredients.map(function(line){ const p = L.parseQty(line);

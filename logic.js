@@ -119,7 +119,7 @@
   function rankPool(pool, tokens, opts){ opts=opts||{}; const rng=opts.rng||Math.random, hist=opts.history||new Set();
     return pool.map(function(r){ return { id:r.id, score:scoreRecipe(r,tokens), recent:hist.has(r.id)?1:0, rand:rng() }; })
       .sort(function(a,b){ return (b.score-a.score) || (a.recent-b.recent) || (a.rand-b.rand); }); }
-  /* Génère un menu (forme menus.json) : days x perDay créneaux, sans répétition tant que le pool suffit
+  /* Génère un menu ({jours:[{repas:[{recipe:id}]}]}) : days x perDay créneaux, sans répétition tant que le pool suffit
      (recyclage si le pool est plus petit que le nombre de créneaux). */
   function generateMenu(pool, tokens, opts){
     opts=opts||{}; const days=opts.days||7, perDay=opts.perDay||2;

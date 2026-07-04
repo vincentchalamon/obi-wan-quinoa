@@ -4,7 +4,6 @@
 const CACHE = 'menu-v16';   // <-- incrémente ce numéro si besoin de purger le cache
 const ASSETS = [
   './', './index.html', './logic.js', './recipesage.js', './manifest.webmanifest',
-  './recipes.json', './menus.json',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'
 ];
 
