@@ -21,13 +21,20 @@
     }).then(function(j){ return j.result.data; });
   }
 
-  /* Liste "lite" (id, title, yield, url, image, recipeLabels) filtrable par labels. Pagination si >200. */
+  /* Liste "lite" (id, title, yield, url, image, recipeLabels) filtrable par labels.
+     Récupère TOUTES les pages (boucle par tranches de 200) pour ne rien tronquer si le catalogue grandit. */
   function rsGetRecipes(opts){
     opts = opts || {};
-    const input = { userIds:[OWNER_USER_ID], folder:'main', orderBy:'title', orderDirection:'asc',
-      offset: opts.offset||0, limit: opts.limit||200 };
-    if(opts.labels && opts.labels.length){ input.labels = opts.labels; input.labelIntersection = !!opts.labelIntersection; }
-    return rsGet('recipes.getRecipes', input).then(function(d){ return d.recipes || []; });
+    const PAGE = 200, all = [];
+    function page(offset){
+      const input = { userIds:[OWNER_USER_ID], folder:'main', orderBy:'title', orderDirection:'asc', offset: offset, limit: PAGE };
+      if(opts.labels && opts.labels.length){ input.labels = opts.labels; input.labelIntersection = !!opts.labelIntersection; }
+      return rsGet('recipes.getRecipes', input).then(function(d){
+        const batch = d.recipes || []; all.push.apply(all, batch);
+        return batch.length === PAGE ? page(offset + PAGE) : all;
+      });
+    }
+    return page(0);
   }
   /* Détail complet d'une recette (ingredients/instructions texte libre, champs nutrition*). */
   function rsGetRecipe(id){ return rsGet('recipes.getRecipe', { id: id }); }

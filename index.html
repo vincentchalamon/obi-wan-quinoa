@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#2F4A36">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Obi-Wan Quinoa</title>
 <style>
@@ -593,13 +594,14 @@ function openGenerate(wid){
 }
 /* Pool = plats (hors "dessert") du catalogue owner, détaillés puis mappés. Filtre régime souple. */
 function loadPool(){
-  if(genPoolCache) return Promise.resolve(genPoolCache);
+  if(genPoolCache && genPoolCache.length) return Promise.resolve(genPoolCache);   // ne pas re-servir un pool vide (échec réseau)
+  function labelIs(r, val){ return (r.recipeLabels||[]).some(function(l){ return l.label && norm(l.label.title)===val; }); }
   return rsGetRecipes({}).then(function(lite){
-    let mains=lite.filter(function(r){ return !(r.recipeLabels||[]).some(function(l){ return l.label && l.label.title==='dessert'; }); });
-    if(profile.diet){ const d=mains.filter(function(r){ return (r.recipeLabels||[]).some(function(l){ return l.label && l.label.title===profile.diet; }); });
-      if(d.length>=4) mains=d; }
+    let mains=lite.filter(function(r){ return !labelIs(r,'dessert'); });
+    if(profile.diet){ const d=mains.filter(function(r){ return labelIs(r, profile.diet); });
+      if(d.length>=4) mains=d; }                          // filtre régime souple (évite un pool vide)
     return Promise.all(mains.map(function(r){ return rsGetRecipe(r.id).then(rsMapRecipe).catch(function(){ return null; }); }));
-  }).then(function(details){ genPoolCache=details.filter(Boolean); return genPoolCache; });
+  }).then(function(details){ const pool=details.filter(Boolean); if(pool.length) genPoolCache=pool; return pool; });
 }
 function runGenerate(wid){
   if(!navigator.onLine){ setGenMsg('Connexion requise pour générer le menu.'); return; }
@@ -621,7 +623,7 @@ function renderProposal(){
     if(!day.repas.length) h+='<div class="repas-vide">—</div>';
     day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe);
       h+='<div class="gen-repas"><span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
-        +'<a class="gen-titre" href="https://recipesage.com/app/recipes/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>'
+        +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>'
         +'<button class="gen-reroll" data-reroll="'+di+'-'+ri+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button></div>';
     });
     h+='</div>';
@@ -743,6 +745,11 @@ document.getElementById('owq-settings').addEventListener('click',openSettings);
 function parseKey(k){ const p=k.split(':'), idx=p[1].split('-'); return {wid:p[0], di:+idx[0], ri:+idx[1]}; }
 function swapDeleted(a,b){ const da=deleted.has(a), db=deleted.has(b);
   if(da!==db){ if(da){deleted.delete(a);deleted.add(b);} else {deleted.delete(b);deleted.add(a);} saveSet('owq.deleted',deleted); } }
+function swapCouverts(a,b){ const ca=couvertsMap[a], cb=couvertsMap[b];   // suit les repas déplacés
+  if(ca===cb) return;
+  if(cb!==undefined) couvertsMap[a]=cb; else delete couvertsMap[a];
+  if(ca!==undefined) couvertsMap[b]=ca; else delete couvertsMap[b];
+  store.set('owq.couverts', JSON.stringify(couvertsMap)); }
 function refreshDay(d){ const el=document.getElementById('day-'+idOf(d)); if(el){ const t=document.createElement('div'); t.innerHTML=dayCard(d); el.replaceWith(t.firstElementChild); } }
 function doSwap(srcKey,tgtKey){
   const a=parseKey(srcKey), b=parseKey(tgtKey);
@@ -754,7 +761,7 @@ function doSwap(srcKey,tgtKey){
   const jours=JSON.parse(JSON.stringify(src));
   const t=jours[a.di].repas[a.ri]; jours[a.di].repas[a.ri]=jours[b.di].repas[b.ri]; jours[b.di].repas[b.ri]=t;
   ov[wid]={base:base, jours:jours}; saveOverrides(ov);
-  swapDeleted(srcKey,tgtKey);
+  swapDeleted(srcKey,tgtKey); swapCouverts(srcKey,tgtKey);
   MENUS=materializeMenus(applyOverrides(RAW_MENUS), R);
   refreshDay(addDays(parseId(wid),a.di)); if(b.di!==a.di) refreshDay(addDays(parseId(wid),b.di));
 }

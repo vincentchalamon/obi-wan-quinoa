@@ -194,11 +194,16 @@ test('tokenize : virgule décimale préservée (pas coupée en deux items)', () 
   assert.deepEqual(L.tokenize('1,5 kg de tomates; courgette'), ['tomates', 'courgette']);
 });
 
-test('scaleIngredientLine : ×couverts sur qté+unité et compte de tête, épargne T45/%', () => {
+test('scaleIngredientLine : ×couverts sur TOUTES les quantités, épargne T45/%/°', () => {
   assert.equal(L.scaleIngredientLine('Pois chiches — 250 g', 2), 'Pois chiches — 500 g');
   assert.equal(L.scaleIngredientLine('250 g de pois chiches', 2), '500 g de pois chiches');
   assert.equal(L.scaleIngredientLine('4 bananes bien mûres', 2), '8 bananes bien mûres');
-  assert.equal(L.scaleIngredientLine('Farine T45 — 70 g', 3), 'Farine T45 — 210 g');
+  assert.equal(L.scaleIngredientLine('Œufs durs — 2', 2), 'Œufs durs — 4');          // compte après tiret
+  assert.equal(L.scaleIngredientLine('Ail — 1 gousse', 2), 'Ail — 2 gousse');        // unité non-poids
+  assert.equal(L.scaleIngredientLine('Concombre — ½', 2), 'Concombre — 1');          // fraction unicode
+  assert.equal(L.scaleIngredientLine('Oignon jaune — ¼', 2), 'Oignon jaune — ½');
+  assert.equal(L.scaleIngredientLine('Yaourt grec — 100 g (0-3%)', 2), 'Yaourt grec — 200 g (0-3%)'); // % épargné
+  assert.equal(L.scaleIngredientLine('Farine T45 — 70 g', 3), 'Farine T45 — 210 g'); // T45 épargné
   assert.equal(L.scaleIngredientLine('Chocolat 70% — 100 g', 2), 'Chocolat 70% — 200 g');
   assert.equal(L.scaleIngredientLine('Sel', 2), 'Sel');
   assert.equal(L.scaleIngredientLine('Pois chiches — 250 g', 1), 'Pois chiches — 250 g');
