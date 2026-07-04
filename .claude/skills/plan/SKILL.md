@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Proposer un menu végétarien hebdomadaire de saison à partir du panier AMAP, le valider repas par repas en conversation, puis l'écrire dans menus.json
+description: Proposer un menu végétarien hebdomadaire de saison à partir du panier AMAP, le valider en bloc en conversation, puis l'écrire dans menus.json
 argument-hint: "<jeudi AAAA-MM-JJ | prochaine>"
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash(python3 *), Bash(git status *), Bash(git diff *), Bash(git add *), Bash(git commit *), Bash(git push *), WebSearch, WebFetch
 ---

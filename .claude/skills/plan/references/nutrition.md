@@ -14,7 +14,7 @@ Règles opératoires, chacune avec sa source ; le détail et les citations compl
 - **Protéines** : **~115 g/j** (cible pratique ; repère haut ~1,6 g/kg ≈ 130 g). Relever la densité protéique : œufs, laitages, légumineuses, tofu/tempeh, soja, skyr/fromage blanc maigres. (§3)
 - **Fer + vitamine C le même jour** ; dissocier les inhibiteurs (calcium/laitages, tanins thé-café, phytates) des repas les plus riches en fer ; ne pas concentrer les laitages sur le repas le plus riche en fer. (§5 ; NIH)
 - **Oméga-3** réguliers (huile de colza/noix/lin, noix, graines de lin/chia) ; **B12, vitamine D, calcium** à surveiller (lacto-ovo). (§4 ; ANSES 2025)
-- **Complémentarité** légumineuses + céréales sur la journée/semaine. (§4, §10)
+- **Complémentarité** légumineuses + céréales sur la journée/semaine. (§10)
 - **Variété** : pas la même protéine dominante deux jours de suite ; varier les féculents. (§10)
 - **Structure/jour** : 2 repas (midi/soir) équilibrés + **fruit de saison** + **entrée optionnelle** ; **sel < 8 g/j**. (§7 ; PNNS)
 - **Collation de récupération** autour du yoga : **mercredi soir** + **samedi matin**. (§7)

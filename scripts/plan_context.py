@@ -30,7 +30,7 @@ cible = next_thursday() if arg == "prochaine" else arg
 
 
 def noms(ingr):
-    return ", ".join(i.split("—")[0].strip() for i in ingr)
+    return " · ".join(i.split("—")[0].strip() for i in ingr)
 
 
 def resume(wid):
