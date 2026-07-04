@@ -149,15 +149,27 @@
   }
 
   /* ---------- Mise à l'échelle des quantités d'un ingrédient (affichage recette selon les couverts) ---------- */
-  function scaleNum(n, factor){ const v=parseFloat(String(n).replace(',','.'))*factor;
-    if(!isFinite(v)) return String(n); return (Math.round(v*100)/100).toString().replace('.',','); }
-  /* Multiplie par `factor` les quantités d'une ligne libre : "X g/kg/ml/cl/l" et un compte de tête ("4 bananes").
-     Ne touche pas aux nombres sans unité en milieu de ligne ni aux "T45"/"70%". factor 1 -> inchangé. */
+  const FRAC_VAL={'¼':0.25,'½':0.5,'¾':0.75,'⅓':1/3,'⅔':2/3,'⅕':0.2,'⅖':0.4,'⅗':0.6,'⅘':0.8,'⅙':1/6,'⅛':0.125,'⅜':0.375,'⅝':0.625,'⅞':0.875};
+  /* Valeur numérique d'un token quantité : entier/décimale, fraction "a/b", fraction unicode "½", ou mixte "1½". */
+  function qtyValue(tok){
+    tok=(''+tok).trim(); let total=0; const last=tok.slice(-1);
+    if(FRAC_VAL[last]!==undefined){ total+=FRAC_VAL[last]; tok=tok.slice(0,-1).trim(); }
+    if(tok){ if(tok.indexOf('/')!==-1){ const p=tok.split('/'); total+=(+p[0])/(+p[1]); }
+      else total+=parseFloat(tok.replace(',','.')); }
+    return total;
+  }
+  /* Met à l'échelle par `factor` TOUTES les quantités d'une ligne d'ingrédient, quelle que soit leur position
+     ("Œufs — 2", "1 gousse", "½ citron", "80 g", "4 bananes"). Épargne les nombres collés à une lettre
+     ("T45") et les pourcentages/températures ("70%", "165°C"). factor 1 -> inchangé. */
   function scaleIngredientLine(line, factor){
     if(!factor || factor===1 || !line) return line;
-    let s=line.replace(/(\d+(?:[.,]\d+)?)(\s*)(kg|mg|ml|cl|g|l)\b/gi, function(m,n,sp,u){ return scaleNum(n,factor)+sp+u; });
-    s=s.replace(/^(\s*)(\d+(?:[.,]\d+)?)(\s+)(?!(?:kg|mg|ml|cl|g|l)\b)/i, function(m,pre,n,sp){ return pre+scaleNum(n,factor)+sp; });
-    return s;
+    return line.replace(/\d+\/\d+|\d+(?:[.,]\d+)?[¼½¾⅓⅔⅕⅖⅗⅘⅙⅛⅜⅝⅞]?|[¼½¾⅓⅔⅕⅖⅗⅘⅙⅛⅜⅝⅞]/g, function(tok, offset, full){
+      const before=full.charAt(offset-1), after=full.slice(offset+tok.length);
+      if(/[A-Za-zÀ-ÿ]/.test(before)) return tok;     // chiffre collé à une lettre (T45, code)
+      if(/^\s*[%°]/.test(after)) return tok;         // pourcentage / température
+      const v=qtyValue(tok); if(!isFinite(v)||v<=0) return tok;
+      return frac(v*factor);
+    });
   }
   /* Agrège les shop[] des repas non supprimés d'une semaine, cumule par clé n|u|r
      (q=null non cumulé), multiplie chaque quantité par les couverts du repas

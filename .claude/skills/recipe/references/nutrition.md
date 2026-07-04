@@ -1,12 +1,12 @@
 # Référentiel nutrition — Obi-Wan Quinoa
 
-Base de connaissances pour la skill `plan`. **Toute recommandation s'appuie sur une source vérifiable citée ci-dessous. Ne jamais inventer de chiffre ni de principe : si une information manque, chercher une source primaire (WebSearch/WebFetch) ou rester qualitatif.** Privilégier les sources institutionnelles (ANSES, Santé publique France / Manger Bouger, Academy of Nutrition and Dietetics, NHS, NIH).
+Base de connaissances pour la skill `recipe`. **Toute recommandation s'appuie sur une source vérifiable citée ci-dessous. Ne jamais inventer de chiffre ni de principe : si une information manque, chercher une source primaire (WebSearch/WebFetch) ou rester qualitatif.** Privilégier les sources institutionnelles (ANSES, Santé publique France / Manger Bouger, Academy of Nutrition and Dietetics, NHS, NIH).
 
 > Avertissement : ce document rassemble des repères nutritionnels généraux. Ce n'est pas un avis médical individualisé. Le profil ci-dessous combine perte de poids (déficit calorique) et pratique sportive, ce qui sort du cadre des repères ANSES (établis pour des adultes en bonne santé, sédentaires). Recommander à l'utilisateur un suivi par un diététicien et un bilan biologique (dont ferritine).
 
 ---
 
-## Cibles & règles (compact — bloc lu par défaut par la skill /plan)
+## Cibles & règles (compact — bloc lu par défaut par la skill /recipe)
 
 Règles opératoires, chacune avec sa source ; le détail et les citations complètes sont dans les sections numérotées en dessous (à lire seulement si une valeur est contestée). **Aucune règle ni chiffre n'est propre à ce bloc : ils viennent des sections détaillées. Ne rien inventer.**
 
