@@ -52,7 +52,6 @@
   .day-card.passe{opacity:.5;}
   .day-card.today{border-color:var(--vert-feuille);box-shadow:0 0 0 1px var(--vert-feuille),var(--ombre);}
   .day-h{font-size:16px;padding:12px 15px 10px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-bottom:1px solid var(--trait);}
-  .badge{font-family:"Helvetica Neue",sans-serif;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:3px 9px;}
 
   .repas-row{width:100%;display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:10px;
     padding:11px 14px;min-height:60px;border-left:4px solid var(--vert-feuille);cursor:pointer;
@@ -230,10 +229,10 @@
 <script>
 /* ============================================================
    OBI-WAN QUINOA
-   Semaine alimentaire à début configurable (profil : weekStart, défaut lundi ; owner = jeudi/AMAP).
+   Semaine alimentaire à début configurable (profil : weekStart, défaut jeudi = rythme AMAP).
    - Marqueur "Semaine du <début>" avant chaque début de semaine, avec les actions Préparer & Courses.
    - Menu et courses indexés par le premier jour de la semaine (wid = idOf(startOfWeek(d, weekStart))).
-   - La liste de courses est CALCULÉE à partir des repas non supprimés, × couverts par repas.
+   - La liste de courses est CALCULÉE à partir des repas non supprimés, x couverts par repas.
    Données : recipes.json (catalogue) + menus.json (planning) ; génération de menus via la skill /plan
    (owner uniquement, intérim phase 1 en attendant le générateur logiciel RecipeSage).
    ============================================================ */
@@ -266,7 +265,7 @@ const coches=loadSet('owq.checked');    // clés "wid§rayon§nom"
 
 /* ---- Profil utilisateur (régime, couverts par défaut, début de semaine) ---- */
 function loadProfile(){ let p={}; const raw=store.get('owq.profile'); if(raw){ try{ p=JSON.parse(raw)||{}; }catch(e){ p={}; } }
-  return { diet: p.diet||'', couverts: (p.couverts>=1?p.couverts:1), weekStart: (p.weekStart>=0&&p.weekStart<=6?p.weekStart:1) }; }
+  return { diet: p.diet||'', couverts: (p.couverts>=1?p.couverts:1), weekStart: (p.weekStart>=0&&p.weekStart<=6?p.weekStart:4) }; } /* défaut jeudi : menus.json est indexé sur le jeudi (AMAP) en phase 1 */
 function saveProfile(p){ store.set('owq.profile', JSON.stringify(p)); }
 let profile=loadProfile();
 function sow(d){ return startOfWeek(d, profile.weekStart); }   // début de semaine selon le profil
@@ -479,7 +478,7 @@ function openRecipe(key){
   if(macros) h+='<div class="macros">'+macros+'</div>';
   const cv=couvertsGet(wid,di,ri);
   h+='<div class="couverts" data-cvkey="'+key+'"><span class="cv-label">Couverts</span>'
-    +'<button class="cv-btn" data-cv="-" aria-label="Moins de couverts">−</button>'
+    +'<button class="cv-btn" data-cv="-" aria-label="Moins de couverts">-</button>'
     +'<span class="cv-val">'+cv+'</span>'
     +'<button class="cv-btn" data-cv="+" aria-label="Plus de couverts">+</button>'
     +'<span class="cv-hint">ajuste les quantités de la liste de courses</span></div>';
@@ -614,7 +613,7 @@ function openSettings(){
 function saveSettings(){
   const diet=(document.getElementById('set-diet')||{}).value||'';
   let cv=parseInt((document.getElementById('set-couverts')||{}).value,10); if(isNaN(cv)||cv<1) cv=1;
-  let ws=parseInt((document.getElementById('set-weekstart')||{}).value,10); if(isNaN(ws)||ws<0||ws>6) ws=1;
+  let ws=parseInt((document.getElementById('set-weekstart')||{}).value,10); if(isNaN(ws)||ws<0||ws>6) ws=4;
   profile={diet:diet, couverts:cv, weekStart:ws}; saveProfile(profile);
   const ok=document.getElementById('set-ok'); if(ok) ok.textContent='Enregistré ✓';
   resetPlanning();
@@ -649,9 +648,9 @@ ovBody.addEventListener('click',function(e){
   if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
   const cvb=e.target.closest('[data-cv]');
   if(cvb){ const cont=cvb.closest('[data-cvkey]');
-    if(cont){ const p=cont.dataset.cvkey.split(':'), wid=p[0], ix=p[1].split('-'), di=+ix[0], ri=+ix[1];
-      let val=couvertsGet(wid,di,ri)+(cvb.dataset.cv==='+'?1:-1); if(val<1) val=1; couvertsSet(wid,di,ri,val);
-      const disp=cont.querySelector('.cv-val'); if(disp) disp.textContent=val; refreshDay(addDays(parseId(wid),di)); }
+    if(cont){ const kk=parseKey(cont.dataset.cvkey);
+      let val=couvertsGet(kk.wid,kk.di,kk.ri)+(cvb.dataset.cv==='+'?1:-1); if(val<1) val=1; couvertsSet(kk.wid,kk.di,kk.ri,val);
+      const disp=cont.querySelector('.cv-val'); if(disp) disp.textContent=val; refreshDay(addDays(parseId(kk.wid),kk.di)); }
     return; }
   const ss=e.target.closest('#set-save');
   if(ss){ saveSettings(); return; }
