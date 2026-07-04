@@ -46,9 +46,94 @@
     else if(e.u==='gousse') s=frac(e.q)+' gousse'+(e.q>1?'s':'');
     else if(e.u==='botte') s=frac(e.q)+' botte'+(e.q>1?'s':'');
     else if(e.u==='tranche') s=Math.round(e.q)+' tranche'+(e.q>1?'s':'');
-    else s=frac(e.q);
+    else s=frac(e.q)+(e.u?' '+e.u:'');
     if(e.note) s = s ? s+' ('+e.note+')' : e.note;
     return s;
+  }
+
+  /* ---------- Ingrédients texte libre (RecipeSage) ---------- */
+  /* Normalisation pour matching (minuscules, sans accents). */
+  function stripAccents(s){ return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  function norm(s){ return stripAccents((s||'').toLowerCase()).replace(/\s+/g,' ').trim(); }
+
+  const FRAC_UNI={'½':'1/2','⅓':'1/3','⅔':'2/3','¼':'1/4','¾':'3/4',
+    '⅕':'1/5','⅖':'2/5','⅗':'3/5','⅘':'4/5','⅙':'1/6','⅛':'1/8','⅜':'3/8','⅝':'5/8','⅞':'7/8'};
+  /* unités reconnues (les plus longues d'abord pour éviter les préfixes) */
+  const UNITS=[['c. à soupe','cs'],['c. à café','cc'],['cuillères à soupe','cs'],['cuillère à soupe','cs'],
+    ['cuillères à café','cc'],['cuillère à café','cc'],['càs','cs'],['càc','cc'],
+    ['kg','kg'],['mg','mg'],['ml','ml'],['cl','cl'],['gousses','gousse'],['gousse','gousse'],
+    ['bottes','botte'],['botte','botte'],['tranches','tranche'],['tranche','tranche'],
+    ['pincées','pincée'],['pincée','pincée'],['sachets','sachet'],['sachet','sachet'],
+    ['boîtes','boîte'],['boîte','boîte'],['boites','boîte'],['boite','boîte'],['pots','pot'],['pot','pot'],['g','g'],['l','l']];
+  /* Parse une ligne d'ingrédient libre -> {qty:number|null, unit, name, raw}. Non parsable -> qty:null, name=ligne brute. */
+  function parseQty(line){
+    const raw=(line||'').replace(/\s+/g,' ').trim();
+    let s=raw;
+    Object.keys(FRAC_UNI).forEach(function(k){ s=s.split(k).join(' '+FRAC_UNI[k]+' '); });
+    s=s.replace(/\s+/g,' ').trim();
+    let qty=null, rest=s;
+    const fr=s.match(/^(\d+)\s*\/\s*(\d+)\b(.*)$/);
+    if(fr){ qty=(+fr[1])/(+fr[2]); rest=fr[3]; }
+    else{ const n=s.match(/^(\d+(?:[.,]\d+)?)(?:\s*(?:-|–|à)\s*\d+(?:[.,]\d+)?)?(.*)$/);
+      if(n){ qty=parseFloat(n[1].replace(',','.')); rest=n[2]; } }
+    rest=rest.replace(/^\s+/,'');
+    let unit='';
+    for(let i=0;i<UNITS.length;i++){ const tok=UNITS[i][0];
+      const re=new RegExp('^'+tok.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![a-zà-ÿ])','i');
+      if(re.test(rest)){ unit=UNITS[i][1]; rest=rest.slice(tok.length); break; } }
+    let name=rest.replace(/^\s*(?:de |d'|d’|des |du |l'|l’)/i,'').replace(/\s+/g,' ').trim();
+    name=name.replace(/\s*\([^)]*\)\s*$/,'').trim();          // retire une note finale entre parenthèses
+    if(!name) name=raw;                                        // secours : ligne brute
+    return { qty:(qty!=null && isFinite(qty)?qty:null), unit:unit, name:name, raw:raw };
+  }
+
+  /* Rayon d'un ingrédient par mots-clés (défaut "aut" = Autres). */
+  const RAYON_KEYWORDS=[
+    ['leg',['haricot vert','pomme de terre','patate','courgette','tomate','carotte','oignon','ail','poivron','aubergine','epinard','salade','concombre','betterave','champignon','brocoli','chou','poireau','celeri','courge','potiron','radis','navet','fenouil','petit pois','pousse','roquette','mache','endive','artichaut','asperge','panais']],
+    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','fromage','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','lentille','pois chiche','haricot rouge','haricot','edamame','soja']],
+    ['fru',['pomme','banane','poire','peche','abricot','fraise','framboise','citron','orange','raisin','kiwi','mangue','ananas','cerise','myrtille','melon','pasteque','figue','datte','clementine']],
+    ['epi',['farine','quinoa','riz','pate','boulgour','semoule','pain','flocon','avoine','chocolat','noix','amande','graine','tahini','conserve','coulis','bouillon','sucre','cassonade']],
+    ['con',['sel','poivre','huile','vinaigre','sauce','epice','curry','cumin','paprika','herbe','basilic','persil','coriandre','moutarde','miel','levure','bicarbonate','vanille']],
+  ];
+  function rayonFor(name){ const n=norm(name);
+    for(let i=0;i<RAYON_KEYWORDS.length;i++){ const kws=RAYON_KEYWORDS[i][1];
+      for(let j=0;j<kws.length;j++){ if(n.indexOf(stripAccents(kws[j]))!==-1) return RAYON_KEYWORDS[i][0]; } }
+    return 'aut';
+  }
+
+  /* ---------- Générateur de menus (sans IA) ---------- */
+  /* Découpe une saisie "1 courgette; 3 tomates" en tokens normalisés (pour le matching). */
+  function tokenize(input){ return (input||'').split(/[;,\n]+/).map(function(part){
+      const p=parseQty(part); return norm(p.name); }).filter(Boolean); }
+  /* Score d'une recette = nb de tokens dispo trouvés dans (titre + ingrédients + labels). */
+  function scoreRecipe(recipe, tokens){ if(!tokens || !tokens.length) return 0;
+    const hay=norm((recipe.titre||'')+' '+((recipe.ingredients||[]).join(' '))+' '+((recipe.labels||[]).join(' ')));
+    let s=0; tokens.forEach(function(t){ if(t && hay.indexOf(t)!==-1) s++; }); return s; }
+  /* Ordonne le pool : meilleur score d'abord, non récemment utilisé, puis aléatoire (rng injectable). */
+  function rankPool(pool, tokens, opts){ opts=opts||{}; const rng=opts.rng||Math.random, hist=opts.history||new Set();
+    return pool.map(function(r){ return { id:r.id, score:scoreRecipe(r,tokens), recent:hist.has(r.id)?1:0, rand:rng() }; })
+      .sort(function(a,b){ return (b.score-a.score) || (a.recent-b.recent) || (a.rand-b.rand); }); }
+  /* Génère un menu (forme menus.json) : days x perDay créneaux, sans répétition tant que le pool suffit
+     (recyclage si le pool est plus petit que le nombre de créneaux). */
+  function generateMenu(pool, tokens, opts){
+    opts=opts||{}; const days=opts.days||7, perDay=opts.perDay||2;
+    const ranked=rankPool(pool, tokens, opts), need=days*perDay, order=[];
+    let idx=0; const used=new Set();
+    while(order.length<need && ranked.length){
+      if(idx>=ranked.length){ idx=0; used.clear(); }          // pool trop petit -> recyclage
+      const c=ranked[idx++]; if(used.has(c.id)) continue; used.add(c.id); order.push(c.id);
+    }
+    const jours=[]; let k=0;
+    for(let d=0; d<days; d++){ const repas=[];
+      for(let s=0; s<perDay && k<order.length; s++){ repas.push({ recipe: order[k++] }); }
+      jours.push({ repas: repas }); }
+    return { jours: jours };
+  }
+  /* Propose une alternative pour un créneau : meilleure recette non déjà utilisée dans la semaine. */
+  function pickAlternative(pool, tokens, excludeIds, opts){
+    const ranked=rankPool(pool, tokens, opts), ex=excludeIds||new Set();
+    for(let i=0;i<ranked.length;i++){ if(!ex.has(ranked[i].id)) return ranked[i].id; }
+    return ranked.length ? ranked[0].id : null;              // tout est exclu -> recycle le meilleur
   }
   /* Agrège les shop[] des repas non supprimés d'une semaine, cumule par clé n|u|r
      (q=null non cumulé), multiplie chaque quantité par les couverts du repas
@@ -76,5 +161,7 @@
   }
 
   return { MOIS, JOURS, pad, idOf, parseId, addDays, startOfWeek, fmt,
-           midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses };
+           midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses,
+           stripAccents, norm, parseQty, rayonFor,
+           tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative };
 });
