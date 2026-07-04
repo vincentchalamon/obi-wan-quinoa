@@ -17,13 +17,12 @@ test('rsMapRecipe : RecipeSage brut -> forme interne (shop dérivé, nutrition s
     recipeLabels: [{ label: { title: 'repas' } }, { label: { title: 'vegan' } }],
     recipeImages: [{ image: { location: 'http://img' } }],
     url: 'http://src',
-    nutritionCalories: null, nutritionProtein: '32 g',
+    nutritionCalories: '1,200', nutritionProtein: '32 g',
   };
   const r = RS.rsMapRecipe(raw);
   assert.equal(r.id, 'x1');
   assert.equal(r.titre, 'Test');
   assert.deepEqual(r.labels, ['repas', 'vegan']);
-  assert.equal(r.image, 'http://img');
   assert.equal(r.ingredients.length, 3);
   assert.equal(r.etapes.length, 2);
 
@@ -32,6 +31,6 @@ test('rsMapRecipe : RecipeSage brut -> forme interne (shop dérivé, nutrition s
   assert.deepEqual(byName('ail'), { n: 'ail', q: 1, u: 'gousse', r: 'leg' });
   assert.deepEqual(byName('Huile d’olive'), { n: 'Huile d’olive', q: null, u: '', r: 'con' });
 
-  assert.equal(r.kcal, undefined);   // nutritionCalories null -> absent
+  assert.equal(r.kcal, 1200);        // "1,200" -> 1200 (séparateur de milliers, pas décimale)
   assert.equal(r.prot, 32);          // "32 g" -> 32
 });

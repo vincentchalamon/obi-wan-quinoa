@@ -161,6 +161,26 @@ test('tokenize : découpe "1 courgette; 3 tomates" en noms normalisés', () => {
   assert.deepEqual(L.tokenize('1 courgette; 3 tomates\n2 oignons'), ['courgette', 'tomates', 'oignons']);
 });
 
+test('splitItems : sépare ; virgule et retour-ligne mais garde la virgule décimale', () => {
+  assert.deepEqual(L.splitItems('1 courgette; 3 tomates\n2 oignons'), ['1 courgette', '3 tomates', '2 oignons']);
+  assert.deepEqual(L.splitItems('courgette, tomate'), ['courgette', 'tomate']);
+  assert.deepEqual(L.splitItems('1,5 kg de tomates'), ['1,5 kg de tomates']);   // virgule décimale non coupée
+});
+
+test('tokenize : virgule décimale préservée (pas coupée en deux items)', () => {
+  assert.deepEqual(L.tokenize('1,5 kg de tomates; courgette'), ['tomates', 'courgette']);
+});
+
+test('scaleIngredientLine : ×couverts sur qté+unité et compte de tête, épargne T45/%', () => {
+  assert.equal(L.scaleIngredientLine('Pois chiches — 250 g', 2), 'Pois chiches — 500 g');
+  assert.equal(L.scaleIngredientLine('250 g de pois chiches', 2), '500 g de pois chiches');
+  assert.equal(L.scaleIngredientLine('4 bananes bien mûres', 2), '8 bananes bien mûres');
+  assert.equal(L.scaleIngredientLine('Farine T45 — 70 g', 3), 'Farine T45 — 210 g');
+  assert.equal(L.scaleIngredientLine('Chocolat 70% — 100 g', 2), 'Chocolat 70% — 200 g');
+  assert.equal(L.scaleIngredientLine('Sel', 2), 'Sel');
+  assert.equal(L.scaleIngredientLine('Pois chiches — 250 g', 1), 'Pois chiches — 250 g');
+});
+
 test('scoreRecipe : compte les aliments dispo présents dans la recette', () => {
   assert.equal(L.scoreRecipe(POOL[0], ['courgette', 'tomate']), 1);   // courgette seule
   assert.equal(L.scoreRecipe(POOL[2], ['courgette', 'tomate']), 1);   // tomate seule

@@ -103,8 +103,9 @@
 
   /* ---------- Générateur de menus (sans IA) ---------- */
   /* Découpe une saisie "1 courgette; 3 tomates" en tokens normalisés (pour le matching). */
-  function tokenize(input){ return (input||'').split(/[;,\n]+/).map(function(part){
-      const p=parseQty(part); return norm(p.name); }).filter(Boolean); }
+  /* Découpe une saisie en items : sépare sur ; retour-ligne et virgule — sauf virgule décimale ("1,5"). */
+  function splitItems(input){ return (input||'').split(/[;\n]+|,(?!\d)/).map(function(x){ return x.trim(); }).filter(Boolean); }
+  function tokenize(input){ return splitItems(input).map(function(part){ return norm(parseQty(part).name); }).filter(Boolean); }
   /* Score d'une recette = nb de tokens dispo trouvés dans (titre + ingrédients + labels). */
   function scoreRecipe(recipe, tokens){ if(!tokens || !tokens.length) return 0;
     const hay=norm((recipe.titre||'')+' '+((recipe.ingredients||[]).join(' '))+' '+((recipe.labels||[]).join(' ')));
@@ -135,6 +136,18 @@
     for(let i=0;i<ranked.length;i++){ if(!ex.has(ranked[i].id)) return ranked[i].id; }
     return ranked.length ? ranked[0].id : null;              // tout est exclu -> recycle le meilleur
   }
+
+  /* ---------- Mise à l'échelle des quantités d'un ingrédient (affichage recette selon les couverts) ---------- */
+  function scaleNum(n, factor){ const v=parseFloat(String(n).replace(',','.'))*factor;
+    if(!isFinite(v)) return String(n); return (Math.round(v*100)/100).toString().replace('.',','); }
+  /* Multiplie par `factor` les quantités d'une ligne libre : "X g/kg/ml/cl/l" et un compte de tête ("4 bananes").
+     Ne touche pas aux nombres sans unité en milieu de ligne ni aux "T45"/"70%". factor 1 -> inchangé. */
+  function scaleIngredientLine(line, factor){
+    if(!factor || factor===1 || !line) return line;
+    let s=line.replace(/(\d+(?:[.,]\d+)?)(\s*)(kg|mg|ml|cl|g|l)\b/gi, function(m,n,sp,u){ return scaleNum(n,factor)+sp+u; });
+    s=s.replace(/^(\s*)(\d+(?:[.,]\d+)?)(\s+)(?!(?:kg|mg|ml|cl|g|l)\b)/i, function(m,pre,n,sp){ return pre+scaleNum(n,factor)+sp; });
+    return s;
+  }
   /* Agrège les shop[] des repas non supprimés d'une semaine, cumule par clé n|u|r
      (q=null non cumulé), multiplie chaque quantité par les couverts du repas
      (couverts(di,ri) -> facteur, défaut 1), groupe par rayon dans l'ordre `rayons`. */
@@ -162,6 +175,6 @@
 
   return { MOIS, JOURS, pad, idOf, parseId, addDays, startOfWeek, fmt,
            midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses,
-           stripAccents, norm, parseQty, rayonFor,
-           tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative };
+           stripAccents, norm, parseQty, rayonFor, scaleIngredientLine,
+           splitItems, tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative };
 });

@@ -189,6 +189,7 @@
   .gen-titre:active{opacity:.6;}
   .gen-reroll{flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);font-size:15px;cursor:pointer;}
   .gen-reroll:active{background:var(--vert-clair);}
+  .gen-reroll svg{width:16px;height:16px;}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
   /* Couverts (vue recette) */
   .couverts{display:flex;align-items:center;gap:10px;margin:0 0 20px;flex-wrap:wrap;}
@@ -343,6 +344,7 @@ const COURSES_SVG='<svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.3a1 1 0 0 0 1
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
+const REROLL_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>';
 
 function nutriMeta(r){ const m=[];
   if(typeof r.kcal==='number') m.push('~'+r.kcal+' kcal');
@@ -481,10 +483,9 @@ mqDesktop.addEventListener('change',function(e){
 });
 if(isDesktop()) showPlaceholder();
 
-function openRecipe(key){
-  if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
+function renderRecipe(key){
   const p=key.split(':'), wid=p[0], idx=p[1].split('-'), di=+idx[0], ri=+idx[1];
-  const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir');
+  const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir'), cv=couvertsGet(wid,di,ri);
   ovTitle.textContent=r.moment;
   let h='<article class="recipe'+(sc?' soir':'')+'">';
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+'</span>';
@@ -494,21 +495,24 @@ function openRecipe(key){
   if(typeof r.prot==='number') macros+='<span class="chip prot">~'+r.prot+' g prot</span>';
   if(r.priorite) macros+='<span class="chip frais">Légumes frais</span>';
   if(macros) h+='<div class="macros">'+macros+'</div>';
-  const cv=couvertsGet(wid,di,ri);
   h+='<div class="couverts" data-cvkey="'+key+'"><span class="cv-label">Couverts</span>'
     +'<button class="cv-btn" data-cv="-" aria-label="Moins de couverts">-</button>'
     +'<span class="cv-val">'+cv+'</span>'
     +'<button class="cv-btn" data-cv="+" aria-label="Plus de couverts">+</button>'
-    +'<span class="cv-hint">ajuste les quantités de la liste de courses</span></div>';
+    +'<span class="cv-hint">ajuste les quantités (recette et courses)</span></div>';
   h+='<div class="recipe-actions">';
-  if('wakeLock' in navigator) h+='<button class="act-btn" data-cook aria-pressed="false" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
+  if('wakeLock' in navigator) h+='<button class="act-btn'+(cookMode?' is-on':'')+'" data-cook aria-pressed="'+(cookMode?'true':'false')+'" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
   h+='</div>';
-  h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+  h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+scaleIngredientLine(i,cv)+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
   const del=deleted.has(key);
   h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
   h+='</article>';
-  ovBody.innerHTML=h; openOverlay();
+  ovBody.innerHTML=h;
+}
+function openRecipe(key){
+  if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
+  renderRecipe(key); openOverlay();
 }
 /* Construit le HTML de la liste de courses (quantités ajustables, cf. qtyGet/qtySet). */
 function coursesInner(wid){
@@ -586,8 +590,8 @@ function openGenerate(wid){
 function loadPool(){
   if(genPoolCache) return Promise.resolve(genPoolCache);
   return rsGetRecipes({}).then(function(lite){
-    let mains=lite.filter(function(r){ return !(r.recipeLabels||[]).some(function(l){ return l.label.title==='dessert'; }); });
-    if(profile.diet){ const d=mains.filter(function(r){ return (r.recipeLabels||[]).some(function(l){ return l.label.title===profile.diet; }); });
+    let mains=lite.filter(function(r){ return !(r.recipeLabels||[]).some(function(l){ return l.label && l.label.title==='dessert'; }); });
+    if(profile.diet){ const d=mains.filter(function(r){ return (r.recipeLabels||[]).some(function(l){ return l.label && l.label.title===profile.diet; }); });
       if(d.length>=4) mains=d; }
     return Promise.all(mains.map(function(r){ return rsGetRecipe(r.id).then(rsMapRecipe).catch(function(){ return null; }); }));
   }).then(function(details){ genPoolCache=details.filter(Boolean); return genPoolCache; });
@@ -599,21 +603,21 @@ function runGenerate(wid){
   loadPool().then(function(pool){
     if(!pool.length){ setGenMsg('Aucune recette exploitable dans le catalogue.'); if(btn) btn.disabled=false; return; }
     const tokens=tokenize(stock), menu=generateMenu(pool, tokens, {history:genHistory(), rng:Math.random});
-    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu, used:usedIdsOf(menu) };
+    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu };
     renderProposal();
   }).catch(function(e){ setGenMsg('Erreur : '+e.message); if(btn) btn.disabled=false; });
 }
 function renderProposal(){
   const wid=genState.wid, m=genState.menu;
   let h='<p class="prep-note">Menu proposé pour la semaine du <span class="prep-week">'+fmt(parseId(wid))+'</span>. '
-    +'Ouvre une recette (lien), remplace un choix (↻), puis valide.</p>';
+    +'Ouvre une recette (lien), remplace un choix, puis valide.</p>';
   m.jours.forEach(function(day,di){ const d=addDays(parseId(wid),di);
     h+='<div class="gen-day"><div class="gen-day-h">'+JOURS[d.getDay()]+' '+fmt(d)+'</div>';
     if(!day.repas.length) h+='<div class="repas-vide">—</div>';
     day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe);
       h+='<div class="gen-repas"><span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
         +'<a class="gen-titre" href="https://recipesage.com/app/recipes/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>'
-        +'<button class="gen-reroll" data-reroll="'+di+'-'+ri+'" aria-label="Proposer une autre recette" title="Proposer une autre">↻</button></div>';
+        +'<button class="gen-reroll" data-reroll="'+di+'-'+ri+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button></div>';
     });
     h+='</div>';
   });
@@ -623,8 +627,8 @@ function renderProposal(){
 }
 function rerollSlot(di,ri){
   if(!genState) return; const ref=genState.menu.jours[di].repas[ri]; if(!ref) return;
-  const alt=pickAlternative(genState.pool, genState.tokens, genState.used, {rng:Math.random});
-  if(alt && alt!==ref.recipe){ ref.recipe=alt; genState.used=usedIdsOf(genState.menu); renderProposal(); }
+  const alt=pickAlternative(genState.pool, genState.tokens, usedIdsOf(genState.menu), {rng:Math.random});
+  if(alt && alt!==ref.recipe){ ref.recipe=alt; renderProposal(); }
 }
 function validateGen(){
   if(!genState) return; const wid=genState.wid, menu=genState.menu, used=usedIdsOf(menu);
@@ -637,13 +641,14 @@ function validateGen(){
   setStatus('Menu généré ✓', true); setTimeout(clearStatus, 3000);
 }
 /* Déduit le stock saisi des quantités à acheter (owq.qty), quand nom + unité concordent. */
-function parseStock(str){ return (str||'').split(/[;,\n]+/).map(function(part){ const p=parseQty(part);
+function parseStock(str){ return splitItems(str).map(function(part){ const p=parseQty(part);
     return { name:norm(p.name), qty:p.qty, unit:p.unit }; }).filter(function(x){ return x.name; }); }
 function deductStock(wid, stockStr){
   const data=coursesFor(wid); if(!data) return; const stock=parseStock(stockStr); if(!stock.length) return;
   data.forEach(function(ray){ ray.items.forEach(function(it){
-    if(typeof it.q!=='number') return; const nn=norm(it.n);
-    const s=stock.find(function(x){ return x.qty!=null && (x.unit||'')===(it.u||'') && (nn.indexOf(x.name)!==-1 || x.name.indexOf(nn)!==-1); });
+    if(typeof it.q!=='number') return; const nn=' '+norm(it.n)+' ';
+    const s=stock.find(function(x){ return x.qty!=null && (x.unit||'')===(it.u||'') &&
+      (nn.indexOf(' '+x.name+' ')!==-1 || (' '+x.name+' ').indexOf(nn)!==-1); });   // concordance par mot entier
     if(s) qtySet(wid, wid+'§'+ray.cls+'§'+it.n, Math.max(0, it.q - s.qty), it.q);
   }); });
 }
@@ -666,6 +671,7 @@ function saveSettings(){
   let cv=parseInt((document.getElementById('set-couverts')||{}).value,10); if(isNaN(cv)||cv<1) cv=1;
   let ws=parseInt((document.getElementById('set-weekstart')||{}).value,10); if(isNaN(ws)||ws<0||ws>6) ws=4;
   profile={diet:diet, couverts:cv, weekStart:ws}; saveProfile(profile);
+  genPoolCache=null;   // le régime a pu changer -> invalider le pool en cache
   const ok=document.getElementById('set-ok'); if(ok) ok.textContent='Enregistré ✓';
   resetPlanning();
 }
@@ -701,9 +707,10 @@ ovBody.addEventListener('click',function(e){
   if(rr){ const rp=rr.dataset.reroll.split('-'); rerollSlot(+rp[0],+rp[1]); return; }
   const cvb=e.target.closest('[data-cv]');
   if(cvb){ const cont=cvb.closest('[data-cvkey]');
-    if(cont){ const kk=parseKey(cont.dataset.cvkey);
+    if(cont){ const key=cont.dataset.cvkey, kk=parseKey(key);
       let val=couvertsGet(kk.wid,kk.di,kk.ri)+(cvb.dataset.cv==='+'?1:-1); if(val<1) val=1; couvertsSet(kk.wid,kk.di,kk.ri,val);
-      const disp=cont.querySelector('.cv-val'); if(disp) disp.textContent=val; refreshDay(addDays(parseId(kk.wid),kk.di)); }
+      refreshDay(addDays(parseId(kk.wid),kk.di));
+      const top=ovBody.scrollTop; renderRecipe(key); ovBody.scrollTop=top; }   // ré-affiche quantités recette + cv-val
     return; }
   const ss=e.target.closest('#set-save');
   if(ss){ saveSettings(); return; }

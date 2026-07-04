@@ -32,7 +32,9 @@
   /* Détail complet d'une recette (ingredients/instructions texte libre, champs nutrition*). */
   function rsGetRecipe(id){ return rsGet('recipes.getRecipe', { id: id }); }
 
-  function firstNum(s){ if(s==null) return undefined; const m=(''+s).match(/\d+(?:[.,]\d+)?/); return m?parseFloat(m[0].replace(',','.')):undefined; }
+  function firstNum(s){ if(s==null) return undefined; const m=(''+s).match(/\d+(?:[.,]\d+)?/); if(!m) return undefined;
+    let raw=m[0]; if(/^\d{1,3}[.,]\d{3}$/.test(raw)) raw=raw.replace(/[.,]/,'');   // separateur de milliers -> entier
+    return parseFloat(raw.replace(',','.')); }
   function splitLines(s){ return (s||'').split(/\r?\n/).map(function(x){ return x.trim(); }).filter(Boolean); }
   function labelsOf(raw){ return (raw.recipeLabels||[]).map(function(l){ return l.label && l.label.title; }).filter(Boolean); }
 
@@ -42,13 +44,11 @@
     const shop = ingredients.map(function(line){ const p = L.parseQty(line);
       return { n:p.name, q:p.qty, u:p.unit, r:L.rayonFor(p.name) }; });
     const rec = { id: raw.id, titre: raw.title || '(sans titre)',
-      ingredients: ingredients, etapes: splitLines(raw.instructions), shop: shop,
-      labels: labelsOf(raw), image: (raw.recipeImages && raw.recipeImages[0] && raw.recipeImages[0].image ? raw.recipeImages[0].image.location : ''),
-      url: raw.url || '' };
+      ingredients: ingredients, etapes: splitLines(raw.instructions), shop: shop, labels: labelsOf(raw) };
     const kc = firstNum(raw.nutritionCalories); if(kc != null) rec.kcal = kc;   // nutrition affichée seulement si présente
     const pr = firstNum(raw.nutritionProtein);  if(pr != null) rec.prot = pr;
     return rec;
   }
 
-  return { OWNER_USER_ID, RS_API: API, rsUrl, rsGetRecipes, rsGetRecipe, rsMapRecipe, firstNum: firstNum };
+  return { OWNER_USER_ID, rsUrl, rsGetRecipes, rsGetRecipe, rsMapRecipe };
 });
