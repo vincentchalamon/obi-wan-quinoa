@@ -433,9 +433,9 @@ function openRecipe(key){
   if(cookMode){ cookMode=false; releaseWake(); }   // nouvelle recette : repartir écran non verrouillé
   const p=key.split(':'), wid=p[0], idx=p[1].split('-'), di=+idx[0], ri=+idx[1];
   const r=MENUS[wid].jours[di].repas[ri], sc=(r.moment==='Soir');
-  ovTitle.textContent=r.moment+' · '+r.heure;
+  ovTitle.textContent=r.moment;
   let h='<article class="recipe'+(sc?' soir':'')+'">';
-  h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+' · '+r.heure+'</span>';
+  h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+'</span>';
   h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
   h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span>'+(r.priorite?'<span class="chip frais">Légumes frais</span>':'')+'</div>';
   h+='<div class="recipe-actions">';
@@ -513,10 +513,8 @@ function ghRepo(){
 function weekLabel(thu){ const j=parseId(thu), mer=addDays(j,6); return 'jeudi '+fmt(j)+' au mercredi '+fmt(mer)+' '+mer.getFullYear(); }
 function buildPrompt(thu){
   const panier=(document.getElementById('owq-panier')||{}).value||'';
-  const don=document.getElementById('owq-don'), donSel=document.getElementById('owq-don-jour');
   let p='/plan '+thu+'\n';
   p+='Panier AMAP : '+(panier.trim()||'(à préciser)')+'\n';
-  p+='Don de plasma/plaquettes : '+(don&&don.checked?donSel.value:'aucun')+'\n';
   const m=MENUS[thu];
   if(m){ p+='\nMenu actuel de cette semaine (ajuste-le plutôt que repartir de zéro) :\n';
     m.jours.forEach(function(day,di){ const d=addDays(parseId(thu),di);
@@ -535,20 +533,14 @@ function savePanier(thu){ store.set('owq.panier.'+thu, (document.getElementById(
 function openPrepare(thu){
   ovTitle.textContent='Préparer la semaine';
   const saved=store.get('owq.panier.'+thu)||'';
-  let jours=''; for(let i=0;i<7;i++){ const d=addDays(parseId(thu),i); const lbl=JOURS[d.getDay()]+' '+fmt(d);
-    jours+='<option value="'+lbl+'">'+lbl+'</option>'; }
   let h='<p class="prep-note">Semaine du <span class="prep-week">'+weekLabel(thu)+'</span>. '
     +'Le bouton ouvre Claude Code sur ton repo avec le contexte pré-rempli : valide repas par repas, la skill publiera la semaine.</p>';
   h+='<div class="field"><label>Panier AMAP</label>'
     +'<textarea id="owq-panier" placeholder="ex. courgettes 1 kg, tomates 500 g, salade, basilic, pêches...">'+saved.replace(/</g,'&lt;')+'</textarea></div>';
-  h+='<div class="field"><div class="row"><input type="checkbox" id="owq-don"><label for="owq-don">Don de plasma/plaquettes cette semaine</label></div></div>';
-  h+='<div class="field"><label>Jour du don</label><select id="owq-don-jour" disabled>'+jours+'</select></div>';
   h+='<button class="btn-primary" data-prep-go="'+thu+'">Générer avec Claude</button>';
   h+='<button class="btn-secondary" data-prep-copy="'+thu+'">Copier le prompt</button>';
   h+='<div class="prep-ok" id="owq-prep-ok"></div>';
   ovBody.innerHTML=h; openOverlay();
-  const cb=document.getElementById('owq-don'), sel=document.getElementById('owq-don-jour');
-  cb.addEventListener('change',function(){ sel.disabled=!cb.checked; });
 }
 function openDeepLink(thu){ savePanier(thu); store.set('owq.pending',thu);
   setStatus('Menu en préparation… valide-le dans Claude, il apparaîtra ici.');
