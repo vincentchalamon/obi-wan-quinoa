@@ -14,7 +14,7 @@
   function idOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
   function parseId(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
   function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);x.setHours(0,0,0,0);return x;}
-  function startOfWeek(d){const x=new Date(d);x.setHours(0,0,0,0);return addDays(x,-((x.getDay()+7-4)%7));}/*jeudi=4*/
+  function startOfWeek(d, ws){const x=new Date(d);x.setHours(0,0,0,0);const w=(ws==null?4:ws);return addDays(x,-((x.getDay()+7-w)%7));}/*ws=jour de début (0=dim..6=sam), défaut jeudi=4*/
   function fmt(d){const j=d.getDate();return (j===1?'1ᵉʳ':j)+' '+MOIS[d.getMonth()];}
 
   /* ---------- Recettes ---------- */
@@ -51,25 +51,27 @@
     return s;
   }
   /* Agrège les shop[] des repas non supprimés d'une semaine, cumule par clé n|u|r
-     (q=null non cumulé), ajoute les extras, groupe par rayon dans l'ordre `rayons`. */
-  function computeCourses(menu, wid, deleted, rayons, extras){
+     (q=null non cumulé), multiplie chaque quantité par les couverts du repas
+     (couverts(di,ri) -> facteur, défaut 1), groupe par rayon dans l'ordre `rayons`. */
+  function computeCourses(menu, wid, deleted, rayons, couverts){
     if(!menu) return null;
+    const cv = couverts || function(){ return 1; };
     const map=new Map(), order=[];
     menu.jours.forEach(function(day,di){
       day.repas.forEach(function(r,ri){
         if(deleted.has(wid+':'+di+'-'+ri)) return;
+        const f = cv(di,ri) || 1;
         (r.shop||[]).forEach(function(s){
           const k=s.n+'|'+(s.u||'')+'|'+s.r;
           if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
           const e=map.get(k);
-          if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q;
+          if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f;
           if(s.note && !e.note) e.note=s.note;
         });
       });
     });
     const byR={}; rayons.forEach(function(x){byR[x[0]]=[];});
     order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, u:e.u, r:e.r, q:e.q, note:e.note, disp:qLabel(e)});});
-    extras.forEach(function(x){ byR[x.r].push({n:x.n, disp:x.disp}); });
     return rayons.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
   }
 
