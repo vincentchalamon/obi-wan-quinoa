@@ -39,7 +39,7 @@ Cibles de l'auteur, appliquées par la skill `/recipe` (détail et sources : [`.
 - `index.html` — la PWA (HTML/CSS/JS, sans dépendance, sans build) : profil, rendu du planning, écran de génération, liste de courses.
 - `logic.js` — logique pure sans DOM (dates, matérialisation des menus, calcul des courses, **parser d'ingrédients FR**, **moteur de génération**), testée en Node (`test/logic.test.js`).
 - `recipesage.js` — client de l'API **tRPC publique** de RecipeSage : `getRecipes` (liste filtrable par labels) et `getRecipe` (détail), mappés vers la forme interne. GET direct (`?input=<json>`), CORS ouvert, aucun secret. Testé (`test/recipesage.test.js`).
-- `recipes.json` / `menus.json` — **graine et repli** embarqués (catalogue et semaines de démonstration de l'auteur). Les recettes sélectionnées et les menus générés sont stockés côté client (`localStorage`, clés `owq.*`) et fusionnés au démarrage.
+- Les recettes sélectionnées et les menus générés sont stockés **côté client** (`localStorage`, clés `owq.*`) et matérialisés au démarrage. Aucune donnée de recettes/menus n'est embarquée dans le dépôt — tout provient de RecipeSage.
 - `sw.js` — service worker : *network-first* sur HTML/JSON, *cache-first* sur les statiques ; précache pour le hors-ligne.
 - `manifest.webmanifest` — métadonnées PWA (installable, hors-ligne).
 - `.claude/skills/recipe/` — la skill d'écriture de recettes (`SKILL.md`) et son référentiel nutrition **sourcé** (`references/nutrition.md`).
@@ -56,7 +56,7 @@ python3 -m http.server 8000   # puis ouvrir http://localhost:8000
 
 ### Validation & CI
 
-- `python3 scripts/validate.py` — valide la graine `recipes.json`/`menus.json` (schéma, ids, références) et l'intégrité statique (manifest, assets).
+- `python3 scripts/validate.py` — valide l'intégrité statique (manifest, assets référencés, liens locaux de `index.html`).
 - `node --test 'test/*.test.js'` — tests unitaires de la logique pure (`logic.js`, `recipesage.js`).
 - CI (`.github/workflows/ci.yml`) sur chaque push/PR : validation des données, syntaxe JS (`sw.js`, `logic.js`, `recipesage.js`, JS inline), tests, scan de secrets. Sans dépendance, aucun secret.
 - Déploiement Pages via `.github/workflows/pages.yml` (source *GitHub Actions*), avec anti-collision (`concurrency`) et retry.

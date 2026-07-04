@@ -251,13 +251,13 @@
    - Marqueur "Semaine du <début>" avant chaque début de semaine, avec les actions Préparer & Courses.
    - Menu et courses indexés par le premier jour de la semaine (wid = idOf(startOfWeek(d, weekStart))).
    - La liste de courses est CALCULÉE à partir des repas non supprimés, x couverts par repas.
-   Données : recipes.json (catalogue) + menus.json (planning) ; génération de menus via la skill /plan
-   (owner uniquement, intérim phase 1 en attendant le générateur logiciel RecipeSage).
+   Données 100 % locales : catalogue et menus générés depuis le catalogue RecipeSage public de l'auteur
+   (voir recipesage.js), stockés en localStorage (owq.recipes / owq.gen) et matérialisés au boot.
    ============================================================ */
 
 /* champ shop : {n:nom, q:quantité|null, u:unité, r:rayon, note?}
    r ∈ prot|leg|epi|con|fru   ·   q=null => pas de cumul (condiment, à l'unité) */
-/* Catalogue chargé depuis recipes.json au boot (voir boot()). */
+/* Catalogue : recettes RecipeSage sélectionnées, en cache localStorage (voir rebuild()). */
 let R = {};
 
 /* midi/soir/resolveRepas/materializeMenus : voir logic.js (materializeMenus(raw, R)). */
@@ -265,8 +265,8 @@ let R = {};
 /* Régimes proposés dans le profil (valeur = label RecipeSage, exploité par le générateur en phase 2) */
 const DIETS=[["","Aucun"],["vegetarien","Végétarien"],["vegan","Vegan"],["lacto-ovo","Lacto-ovo végétarien"],["flexitarien","Flexitarien"]];
 
-let RAW_MENUS = {}; /* données brutes de menus.json (avant matérialisation), base des overrides */
-let MENUS = {};   /* peuplé au boot depuis menus.json (clé = le JEUDI) */
+let RAW_MENUS = {}; /* menus générés bruts (avant matérialisation), clé = début de semaine ; base des overrides */
+let MENUS = {};   /* menus matérialisés (recettes résolues) */
 
 /* ============================ Dates ============================ */
 /* MOIS/JOURS/pad/idOf/parseId/addDays/startOfWeek/fmt : voir logic.js. */
@@ -283,7 +283,7 @@ const coches=loadSet('owq.checked');    // clés "wid§rayon§nom"
 
 /* ---- Profil utilisateur (régime, couverts par défaut, début de semaine) ---- */
 function loadProfile(){ let p={}; const raw=store.get('owq.profile'); if(raw){ try{ p=JSON.parse(raw)||{}; }catch(e){ p={}; } }
-  return { diet: p.diet||'', couverts: (p.couverts>=1?p.couverts:1), weekStart: (p.weekStart>=0&&p.weekStart<=6?p.weekStart:4) }; } /* défaut jeudi : menus.json est indexé sur le jeudi (AMAP) en phase 1 */
+  return { diet: p.diet||'', couverts: (p.couverts>=1?p.couverts:1), weekStart: (p.weekStart>=0&&p.weekStart<=6?p.weekStart:4) }; } /* défaut jeudi : rythme AMAP de l'auteur (modifiable dans le profil) */
 function saveProfile(p){ store.set('owq.profile', JSON.stringify(p)); }
 let profile=loadProfile();
 function sow(d){ return startOfWeek(d, profile.weekStart); }   // début de semaine selon le profil
@@ -297,14 +297,13 @@ function couvertsSet(wid,di,ri,val){ const k=wid+':'+di+'-'+ri; val=Math.max(1,M
   store.set('owq.couverts', JSON.stringify(couvertsMap)); }
 
 /* ---- Catalogue RecipeSage sélectionné + menus générés (persistés localStorage, dispo hors-ligne) ---- */
-let seedRecipes={}, seedMenus={};   // recipes.json / menus.json (graine, pour la comparaison au refresh)
 function loadRecipesCache(){ const raw=store.get('owq.recipes'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
 function saveRecipesCache(o){ store.set('owq.recipes', JSON.stringify(o)); }
 function loadGenMenus(){ const raw=store.get('owq.gen'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
 function saveGenMenus(o){ store.set('owq.gen', JSON.stringify(o)); }
-/* Fusionne la graine (JSON du dépôt) avec les données générées (localStorage), puis matérialise. */
-function rebuild(){ R=Object.assign({}, seedRecipes, loadRecipesCache());
-  RAW_MENUS=Object.assign({}, seedMenus, loadGenMenus());
+/* Reconstruit le catalogue et les menus depuis le cache local (recettes RecipeSage sélectionnées + menus générés). */
+function rebuild(){ R=loadRecipesCache();
+  RAW_MENUS=loadGenMenus();
   MENUS=materializeMenus(applyOverrides(RAW_MENUS), R); }
 
 /* ============================ Overrides de menu (édition à la volée) ============================ */
@@ -397,14 +396,8 @@ let cursor=sow(today), daysRendered=0;
 const MAX_DAYS=30*7;
 function appendDays(n){ let h=''; for(let i=0;i<n && daysRendered<MAX_DAYS;i++){ h+=renderDay(cursor); cursor=addDays(cursor,1); daysRendered++; } planning.insertAdjacentHTML('beforeend',h); }
 
-async function boot(){
-  try {
-    const [recipes, menus] = await Promise.all([
-      fetch('recipes.json').then(function(r){ return r.json(); }),
-      fetch('menus.json').then(function(r){ return r.json(); })
-    ]);
-    seedRecipes = recipes; seedMenus = menus; rebuild();
-  } catch(e){ seedRecipes = {}; seedMenus = {}; rebuild(); }
+function boot(){
+  rebuild();
   appendDays(21);
   const el = document.getElementById('day-'+idOf(today));
   if(el) el.scrollIntoView({block:'start'});
@@ -417,24 +410,11 @@ window.addEventListener('scroll',function(){
   if(window.innerHeight+window.scrollY>=document.body.offsetHeight-800){ loading=true; appendDays(7); setTimeout(function(){loading=false;},60); }
 });
 
-/* ============================ Rafraîchissement au retour dans l'app + statut ============================ */
+/* ============================ Statut ============================ */
 function setStatus(msg,ok){ const s=document.getElementById('owq-status'); if(!s) return; s.textContent=msg; s.className=ok?'ok':''; s.hidden=false; }
 function clearStatus(){ const s=document.getElementById('owq-status'); if(s) s.hidden=true; }
 function rerenderPlanning(){ const cards=planning.querySelectorAll('.day-card');
   cards.forEach(function(c){ refreshDay(parseId(c.id.replace('day-',''))); }); }
-async function refreshMenus(){
-  try{
-    const res=await Promise.all([
-      fetch('recipes.json',{cache:'no-store'}).then(function(r){ return r.json(); }),
-      fetch('menus.json',{cache:'no-store'}).then(function(r){ return r.json(); })
-    ]);
-    if(JSON.stringify(res[0])!==JSON.stringify(seedRecipes) || JSON.stringify(res[1])!==JSON.stringify(seedMenus)){
-      seedRecipes=res[0]; seedMenus=res[1]; rebuild(); rerenderPlanning();
-    }
-  }catch(e){}
-}
-document.addEventListener('visibilitychange',function(){ if(!document.hidden) refreshMenus(); });
-window.addEventListener('focus',function(){ refreshMenus(); });
 
 /* ============================ Suppression de repas ============================ */
 function updateRow(row,del){
