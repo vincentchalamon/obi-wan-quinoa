@@ -14,16 +14,12 @@ Application web personnelle (PWA) pour planifier mes **menus végétariens de la
 - **Produits de saison** privilégiés (et le contenu réel du panier AMAP).
 - Sel limité (< 8 g/j, PNNS).
 
-### Avant un don de plasma/plaquettes
-
-Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don : un repas trop gras rend le plasma laiteux (lipémique), bouche les filtres et fausse les analyses, ce qui fait écarter le don. Garder fer + vitamine C, **ne pas venir à jeun**, bien s'hydrater. (Sources EFS / Croix-Rouge.)
-
 ## Comment je l'utilise
 
 **Depuis le mobile** (mardi soir, au retour de l'AMAP) :
 
-1. Dans l'app, sur la carte du **mardi**, je touche **« Préparer »** et je saisis le **panier AMAP** (et un éventuel **jour de don**).
-2. **« Générer avec Claude »** ouvre **Claude Code** sur le repo (deep link `claude://code/new`), le contexte pré-rempli.
+1. Dans l'app, sur la carte du **mardi**, je touche **« Préparer »** et je saisis le **panier AMAP**.
+2. **« Générer avec Claude »** ouvre **Claude Code** sur le repo (deep link `claude://code/new`), le contexte pré-rempli. Choisir le modèle **Sonnet** : la skill est fortement scriptée (référentiel nutrition + validations), Sonnet suffit et coûte moins qu'Opus ; garder la session légère (pas de serveurs MCP hors-sujet).
 3. La skill `/plan` propose **toute la semaine** (de saison, équilibrée, sourcée) ; je **demande des changements** autant que besoin, puis je **valide en bloc**.
 4. La skill écrit la semaine dans `menus.json` (+ éventuelles nouvelles recettes dans `recipes.json`) et **pousse directement sur `main`** (pas de PR) ; GitHub Pages publie. De retour dans l'app, la semaine apparaît (rafraîchissement automatique).
 
@@ -43,11 +39,12 @@ Repas **équilibré et pauvre en graisses** dans les ~12-20 h précédant le don
 
 - `index.html` — la PWA (HTML/CSS/JS, sans dépendance). Charge les données au démarrage et calcule la liste de courses à partir des repas conservés.
 - `logic.js` — logique pure sans DOM (dates, matérialisation des menus, calcul de la liste de courses), extraite d'`index.html` pour être testée en Node. Chargée comme script classique (fonctions exposées en global) et couverte par `test/logic.test.js` (`node --test`).
-- `recipes.json` — catalogue de recettes (source de vérité, portions pour 1 personne). Champs : `moment`, `heure`, `titre`, `kcal`, `prot`, `priorite?`, `ingredients[]`, `etapes[]`, `shop[]` (`{n, q, u, r, note?}`, rayon `r ∈ prot|leg|epi|con|fru`).
+- `recipes.json` — catalogue de recettes (source de vérité, portions pour 1 personne). Champs : `moment`, `titre`, `kcal`, `prot`, `priorite?`, `ingredients[]`, `etapes[]`, `shop[]` (`{n, q, u, r, note?}`, rayon `r ∈ prot|leg|epi|con|fru`).
 - `menus.json` — planning par semaine. Clé = date du **jeudi** ; 7 jours (jeudi→mercredi) ; chaque repas référence une recette par son identifiant (`{"recipe":"buddha"}`), résolu en midi/soir selon sa position.
 - `sw.js` — service worker : *network-first* sur le HTML et les JSON (pour voir les nouveaux menus en ligne), *cache-first* sur les icônes ; précache pour l'usage hors-ligne.
 - `manifest.webmanifest` — métadonnées PWA (installable, hors-ligne).
 - `scripts/build_recipe_pages.py` — génère une page publique `r/<id>.html` par recette (JSON-LD `schema.org/Recipe` + rendu lisible), pour le partage et l'import RecipeSage. **Générées en CI** au déploiement (non commitées, cf. `.gitignore`).
+- `scripts/plan_context.py` — projette un **catalogue compact** de `recipes.json` (sans `etapes`/`shop`, noms d'ingrédients sans quantités) + clés/semaines de `menus.json`, consommé par la skill `/plan` pour réduire les tokens. Non utilisé par l'app ni la CI.
 - `.claude/skills/plan/` — la skill de génération (`SKILL.md`) et son référentiel nutrition **sourcé** (`references/nutrition.md`).
 
 Aucune clé d'API ni serveur : la génération passe par **Claude Code** (abonnement, en local ou via l'app mobile) qui écrit puis pousse les données ; le site reste 100 % statique. Chaque utilisateur agit avec **son propre** compte Claude/GitHub, et **aucun secret n'est stocké dans le dépôt** (le deep link ne transporte aucun identifiant).
@@ -69,8 +66,8 @@ python3 -m http.server 8000   # puis ouvrir http://localhost:8000
 
 ## Sources nutritionnelles
 
-Les principes nutritionnels et leurs références sont rassemblés dans [`.claude/skills/plan/references/nutrition.md`](.claude/skills/plan/references/nutrition.md) : ANSES (repères végétariens 2025), Santé publique France / Manger Bouger (PNNS), EFS (alimentation du donneur, don de plasma), Academy of Nutrition and Dietetics (2025), NHS, NIH (fer), ADEME (saisonnalité), formule de Mifflin-St Jeor.
+Les principes nutritionnels et leurs références sont rassemblés dans [`.claude/skills/plan/references/nutrition.md`](.claude/skills/plan/references/nutrition.md) : ANSES (repères végétariens 2025), Santé publique France / Manger Bouger (PNNS), Academy of Nutrition and Dietetics (2025), NHS, NIH (fer), ADEME (saisonnalité), formule de Mifflin-St Jeor.
 
 ## Avertissement
 
-Projet **personnel**. Les repères nutritionnels présentés sont des informations générales issues de sources publiques, **pas un avis médical individualisé**. Pour un objectif de perte de poids combiné à des dons du sang réguliers et à une activité physique, consulter un diététicien / médecin et suivre les consignes de l'EFS (un bilan de la ferritine est recommandé).
+Projet **personnel**. Les repères nutritionnels présentés sont des informations générales issues de sources publiques, **pas un avis médical individualisé**. Pour un objectif de perte de poids combiné à une activité physique, consulter un diététicien / médecin (un bilan de la ferritine est recommandé).

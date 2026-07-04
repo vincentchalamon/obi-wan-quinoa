@@ -3,7 +3,7 @@
 
 Sans dependance (stdlib uniquement). Usage : python3 scripts/validate.py
 Verifie les invariants de la skill /plan (voir .claude/skills/plan/SKILL.md) :
-- recipes.json : schema de chaque recette (moment, kcal/prot, ingredients, etapes, shop)
+- recipes.json : schema de chaque recette (titre, moment, kcal/prot, ingredients, etapes, shop)
 - menus.json  : cle = un jeudi, 7 jours, <=2 repas/jour, chaque recette existe
 - statique    : manifest valide + assets references presents
 """
@@ -51,6 +51,8 @@ def validate_recipes(recipes):
         if not isinstance(r, dict):
             err(f"{c}: doit etre un objet")
             continue
+        if not isinstance(r.get("titre"), str) or not r["titre"].strip():
+            err(f"{c}: titre manquant (chaine non vide requise, cf. build_recipe_pages.py)")
         if r.get("moment") not in MOMENT_OK:
             err(f"{c}: moment invalide ({r.get('moment')!r})")
         for k in ("kcal", "prot"):

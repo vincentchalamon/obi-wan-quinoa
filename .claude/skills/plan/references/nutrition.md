@@ -1,8 +1,25 @@
 # Référentiel nutrition — Obi-Wan Quinoa
 
-Base de connaissances pour la skill `plan`. **Toute recommandation s'appuie sur une source vérifiable citée ci-dessous. Ne jamais inventer de chiffre ni de principe : si une information manque, chercher une source primaire (WebSearch/WebFetch) ou rester qualitatif.** Privilégier les sources institutionnelles (ANSES, Santé publique France / Manger Bouger, EFS, Academy of Nutrition and Dietetics, NHS, NIH).
+Base de connaissances pour la skill `plan`. **Toute recommandation s'appuie sur une source vérifiable citée ci-dessous. Ne jamais inventer de chiffre ni de principe : si une information manque, chercher une source primaire (WebSearch/WebFetch) ou rester qualitatif.** Privilégier les sources institutionnelles (ANSES, Santé publique France / Manger Bouger, Academy of Nutrition and Dietetics, NHS, NIH).
 
-> Avertissement : ce document rassemble des repères nutritionnels généraux. Ce n'est pas un avis médical individualisé. Le profil ci-dessous combine perte de poids (déficit calorique), pratique sportive et dons de plasma/plaquettes réguliers, ce qui sort du cadre des repères ANSES (établis pour des adultes en bonne santé, sédentaires). Recommander à l'utilisateur un suivi par un diététicien et un bilan biologique (dont ferritine).
+> Avertissement : ce document rassemble des repères nutritionnels généraux. Ce n'est pas un avis médical individualisé. Le profil ci-dessous combine perte de poids (déficit calorique) et pratique sportive, ce qui sort du cadre des repères ANSES (établis pour des adultes en bonne santé, sédentaires). Recommander à l'utilisateur un suivi par un diététicien et un bilan biologique (dont ferritine).
+
+---
+
+## Cibles & règles (compact — bloc lu par défaut par la skill /plan)
+
+Règles opératoires, chacune avec sa source ; le détail et les citations complètes sont dans les sections numérotées en dessous (à lire seulement si une valeur est contestée). **Aucune règle ni chiffre n'est propre à ce bloc : ils viennent des sections détaillées. Ne rien inventer.**
+
+- **Énergie** : viser **~1900 kcal/j** (déficit léger ~500 kcal ; Mifflin-St Jeor + activité légère). Ce n'est pas un avis médical. (§2 ; Mifflin-St Jeor 1990)
+- **Protéines** : **~115 g/j** (cible pratique ; repère haut ~1,6 g/kg ≈ 130 g). Relever la densité protéique : œufs, laitages, légumineuses, tofu/tempeh, soja, skyr/fromage blanc maigres. (§3)
+- **Fer + vitamine C le même jour** ; dissocier les inhibiteurs (calcium/laitages, tanins thé-café, phytates) des repas les plus riches en fer ; ne pas concentrer les laitages sur le repas le plus riche en fer. (§5 ; NIH)
+- **Oméga-3** réguliers (huile de colza/noix/lin, noix, graines de lin/chia) ; **B12, vitamine D, calcium** à surveiller (lacto-ovo). (§4 ; ANSES 2025)
+- **Complémentarité** légumineuses + céréales sur la journée/semaine. (§4, §10)
+- **Variété** : pas la même protéine dominante deux jours de suite ; varier les féculents. (§10)
+- **Structure/jour** : 2 repas (midi/soir) équilibrés + **fruit de saison** + **entrée optionnelle** ; **sel < 8 g/j**. (§7 ; PNNS)
+- **Collation de récupération** autour du yoga : **mercredi soir** + **samedi matin**. (§7)
+- **Autour du panier AMAP** + produits de saison ; frais en début de semaine ; **mercredi = placard/conserves** (jour de courses). (§9, §10)
+- **Boissons** : rooibos, tisanes, infusions (pauvres en tanins) ; éviter thé/café aux repas riches en fer. (§6 ; NIH)
 
 ---
 
@@ -11,7 +28,6 @@ Base de connaissances pour la skill `plan`. **Toute recommandation s'appuie sur 
 - Homme, 1,78 m, ~82 kg, 39 ans ; objectif 76 kg.
 - Lacto-ovo végétarien (œufs + produits laitiers : féta, yaourt grec, ricotta, parmesan, cheddar).
 - Activité : travail sédentaire (développeur), déplacements à vélo/à pied, yoga 2x/semaine (**mercredi soir** + **samedi matin**).
-- Dons de plasma/plaquettes ~toutes les 2 semaines.
 - Boissons : rooibos, tisanes, infusions (évite café et thé).
 - 2 repas/jour (midi ~12 h 30, soir ~19 h) + collation possible. Pas de cadrage « jeûne intermittent » : la perte de poids vient d'un déficit léger + activité.
 
@@ -50,17 +66,9 @@ L'ANSES a publié le 13/03/2025 ses **premiers repères alimentaires pour les ad
 ## 6. Boissons
 
 - Privilégier **rooibos, tisanes, infusions** : très pauvres en tanins, ils n'inhibent pas significativement l'absorption du fer (contrairement au thé et au café, riches en tanins). Cohérent avec la préférence de l'utilisateur.
-- Éviter thé/café surtout aux repas riches en fer (les tanins réduisent l'absorption — établi, EFS et NIH).
+- Éviter thé/café surtout aux repas riches en fer (les tanins réduisent l'absorption — établi, NIH).
 
-## 7. Dons de plasma/plaquettes
-
-- En aphérèse (plasma/plaquettes), les globules rouges sont **restitués** : pas de sur-besoin en fer comparable à un don de sang total (EFS). Un bon statut martial reste néanmoins utile et bénéfique.
-- **Avant un don** : repas **équilibré et pauvre en graisses**. Un repas gras provoque un **plasma lipémique** (laiteux) qui bouche les filtres de plasmaphérèse et fausse les analyses → don écarté (vécu par l'utilisateur après un repas très fromager). Sources : EFS (dépliant Plasma : « limiter les aliments gras » avant de venir) ; Croix-Rouge (avoid fats, *fats can interfere with testing*).
-  - Concrètement : dans la fenêtre **~12-20 h avant le don** (repas du soir de la veille si don le matin, et/ou repas de midi), éviter fromage en quantité, charcuterie/faux-lardons gras, fritures, crème, beurre, plats très gras ; privilégier cuisson au four/grillée/vapeur, légumineuses, légumes, féculents.
-  - Garder fer + vitamine C, **ne pas être à jeun**, et **bien s'hydrater** (rooibos/tisanes/eau).
-- Disclaimer : suivre les consignes de l'EFS et du médecin de collecte.
-
-## 8. Structure d'une journée
+## 7. Structure d'une journée
 
 - 2 repas (midi + soir) **équilibrés** : féculent/céréale + légumineuse ou source protéique (œufs/laitages/tofu/tempeh/soja) + légumes + matière grasse de qualité (huile colza/olive, oléagineux).
 - **Fruit** chaque jour (dessert ou collation), de saison.
@@ -71,7 +79,7 @@ L'ANSES a publié le 13/03/2025 ses **premiers repères alimentaires pour les ad
 - Viser l'**équilibre kcal sur la journée** (~1900 kcal en déficit léger), pas seulement par repas.
 - **Sel** : limiter (< 8 g/j chez l'adulte, PNNS).
 
-## 9. Repères chiffrés ANSES — adulte lacto-ovo végétarien (par jour)
+## 8. Repères chiffrés ANSES — adulte lacto-ovo végétarien (par jour)
 
 À utiliser comme garde-fous de composition (source : ANSES 2025) :
 - Féculents et pains : **170 g/j** dont au moins **120 g** complets ou source de fibres.
@@ -80,7 +88,7 @@ L'ANSES a publié le 13/03/2025 ses **premiers repères alimentaires pour les ad
 - Levure alimentaire / levure de bière : **10 g/j**.
 - Légumes et fruits abondants ; légumes secs réguliers.
 
-## 10. Saisonnalité (France) — sources : Manger Bouger (PNNS), ADEME
+## 9. Saisonnalité (France) — sources : Manger Bouger (PNNS), ADEME
 
 Adapter les plats à la saison (pas de plat lourd type tartiflette en été). Privilégier le panier AMAP + ces produits :
 
@@ -90,7 +98,7 @@ Adapter les plats à la saison (pas de plat lourd type tartiflette en été). Pr
 - **Hiver** : poireau, courge, chou (toutes sortes), endive, mâche, betterave, carotte, panais, navet, topinambour, pomme de terre ; agrumes (orange, clémentine, mandarine, pamplemousse), pomme, poire, kiwi.
 - Légumes « de garde » disponibles une grande partie de l'année : carotte, pomme de terre, oignon, chou, betterave, poireau.
 
-## 11. Règles de composition pour la skill
+## 10. Règles de composition pour la skill
 
 1. Construire la semaine **autour du panier AMAP** saisi, complété par l'épicerie/protéines ; produits frais en début de semaine, **mercredi = placard/conserves** (jour de courses).
 2. Chaque jour : 2 repas + fruit + entrée optionnelle ; viser ~1900 kcal et **relever les protéines** (~115 g/j, cf. §3) via laitages/œufs/légumineuses/soja.
@@ -98,15 +106,12 @@ Adapter les plats à la saison (pas de plat lourd type tartiflette en été). Pr
 4. **Complémentarité** légumineuses + céréales sur la journée/semaine ; **oméga-3** réguliers (noix, graines, huile de colza).
 5. **Variété** : ne pas répéter la même protéine dominante deux jours de suite ; varier les féculents.
 6. **Yoga** (mercredi soir, samedi matin) : prévoir une collation de récupération.
-7. **Don** (si renseigné) : repas pauvres en graisses dans la fenêtre ~12-20 h avant ; hydratation.
-8. Plats **de saison**. Toujours **citer les sources** des principes invoqués dans la justification proposée à l'utilisateur.
+7. Plats **de saison**. Toujours **citer les sources** des principes invoqués dans la justification proposée à l'utilisateur.
 
-## 12. Sources
+## 11. Sources
 
 - **ANSES** — *Régimes végétariens : effets sur la santé et repères alimentaires*, publié le 13/03/2025. https://www.anses.fr/fr/content/r%C3%A9gimes-v%C3%A9g%C3%A9tariens (version EN : https://www.anses.fr/en/content/health-effects-vegetarian-diets-and-associated-dietary-guidelines)
 - **Santé publique France / Manger Bouger (PNNS)** — recommandations alimentaires adultes ; page « Peut-on être végétarien ou végétalien sans risque pour sa santé ? » ; calendrier de saison. https://www.mangerbouger.fr/ — sel < 8 g/j.
-- **EFS** — *L'alimentation du donneur* : https://dondesang.efs.sante.fr/articles/don-de-sang-et-alimentation-quelques-conseils ; *Don de plasma* et dépliant Plasma 2022 (limiter les aliments gras avant le don) : https://dondesang.efs.sante.fr/don-de-plasma
-- **Croix-Rouge américaine** — *Tips for a Successful Platelet Donation* (avoid fats, fats can interfere with testing) : https://www.redcrossblood.org/
 - **Academy of Nutrition and Dietetics** — *Vegetarian Dietary Patterns for Adults: A Position Paper* (2025) : https://www.jandonline.org/article/S2212-2672(25)00042-5/fulltext (PubMed PMID 39923894). Un régime végétarien bien planifié est nutritionnellement adéquat.
 - **NHS** — *The vegetarian diet* : https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/the-vegetarian-diet/
 - **NIH Office of Dietary Supplements** — *Iron — Health Professional Fact Sheet* : https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/ (biodisponibilité fer héminique vs non héminique ; vitamine C ; inhibiteurs).

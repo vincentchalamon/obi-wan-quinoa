@@ -18,8 +18,8 @@
   function fmt(d){const j=d.getDate();return (j===1?'1ᵉʳ':j)+' '+MOIS[d.getMonth()];}
 
   /* ---------- Recettes ---------- */
-  function midi(r){ return Object.assign({}, r, {moment:"Midi", heure:"12 h 30"}); }
-  function soir(r){ return Object.assign({}, r, {moment:"Soir", heure:"19 h"}); }
+  function midi(r){ return Object.assign({}, r, {moment:"Midi"}); }
+  function soir(r){ return Object.assign({}, r, {moment:"Soir"}); }
   /* Résout une référence {recipe:id} en objet recette ; midi/soir selon la position (slot 0 = midi, 1 = soir). */
   function resolveRepas(ref, slot, R){ const base = R[ref.recipe]; if(!base) return null;
     const o = slot===0 ? midi(base) : soir(base); o.id = ref.recipe; return o; }
