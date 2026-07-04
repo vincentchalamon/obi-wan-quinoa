@@ -116,15 +116,16 @@ test('computeCourses : les couverts multiplient les quantités (q:null inchangé
   assert.equal(sel.q, null);                            // condiment (q:null) jamais multiplié
 });
 
-test('computeCourses : cumul insensible à la casse/aux accents', () => {
+test('computeCourses : cumul insensible à la casse, accents préservés', () => {
   const menu = { jours: [
-    { repas: [{ shop: [{ n: 'Tomate', q: 2, u: '', r: 'leg' }] }] },
-    { repas: [{ shop: [{ n: 'tomate', q: 3, u: '', r: 'leg' }] }] },
+    { repas: [{ shop: [{ n: 'Tomate', q: 2, u: '', r: 'leg' }, { n: 'Pâte', q: 100, u: 'g', r: 'epi' }] }] },
+    { repas: [{ shop: [{ n: 'tomate', q: 3, u: '', r: 'leg' }, { n: 'Pâté', q: 50, u: 'g', r: 'epi' }] }] },
   ] };
   const data = L.computeCourses(menu, '2026-07-02', new Set(), RAYONS);
   const leg = data.find((s) => s.cls === 'leg');
-  assert.equal(leg.items.length, 1);        // "Tomate" et "tomate" fusionnés
-  assert.equal(leg.items[0].q, 5);
+  assert.equal(leg.items.length, 1); assert.equal(leg.items[0].q, 5);   // "Tomate"/"tomate" fusionnés (casse)
+  const epi = data.find((s) => s.cls === 'epi');
+  assert.equal(epi.items.length, 2);                                    // "Pâte"/"Pâté" distincts (accent préservé)
 });
 
 test('computeCourses : menu absent -> null', () => {
@@ -168,6 +169,8 @@ test('rayonFor : classification par mots-clés, défaut aut', () => {
   assert.equal(L.rayonFor('chèvre frais'), 'prot');
   assert.equal(L.rayonFor('noisettes'), 'epi');
   assert.equal(L.rayonFor('thym'), 'con');
+  assert.equal(L.rayonFor('maïs doux'), 'leg');       // "maïs" reconnu (mot entier + pluriel)
+  assert.equal(L.rayonFor('pesto maison'), 'aut');    // mais pas "maison" (pas de faux positif de sous-chaîne)
   assert.equal(L.rayonFor('objet mystère'), 'aut');
 });
 

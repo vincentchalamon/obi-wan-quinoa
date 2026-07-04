@@ -96,9 +96,13 @@
     ['epi',['farine','maizena','fecule','quinoa','riz','pate','nouille','spaghetti','penne','tagliatelle','vermicelle','couscous','boulgour','semoule','polenta','ble','orge','epeautre','sarrasin','pain','chapelure','flocon','avoine','chocolat','cacao','noix','noisette','amande','graine','tahini','conserve','coulis','concentre de tomate','bouillon','sucre','cassonade','sirop','confiture','pate feuilletee','pate brisee']],
     ['con',['sel','poivre','huile','vinaigre','sauce soja','tamari','sauce','harissa','epice','curry','cumin','paprika','curcuma','cannelle','muscade','herbe','thym','romarin','laurier','origan','basilic','persil','coriandre','estragon','ciboulette','moutarde','miel','levure','bicarbonate','vanille']],
   ];
+  /* Regex compilées : mot entier + pluriel éventuel (s/x). Évite les faux positifs de sous-chaîne
+     ("mais" dans "maison") tout en acceptant les pluriels ("courgette" -> "courgettes"). */
+  const RAYON_RE = RAYON_KEYWORDS.map(function(g){ return [g[0], g[1].map(function(kw){
+    return new RegExp('\\b'+stripAccents(kw).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:s|x)?\\b'); })]; });
   function rayonFor(name){ const n=norm(name);
-    for(let i=0;i<RAYON_KEYWORDS.length;i++){ const kws=RAYON_KEYWORDS[i][1];
-      for(let j=0;j<kws.length;j++){ if(n.indexOf(stripAccents(kws[j]))!==-1) return RAYON_KEYWORDS[i][0]; } }
+    for(let i=0;i<RAYON_RE.length;i++){ const res=RAYON_RE[i][1];
+      for(let j=0;j<res.length;j++){ if(res[j].test(n)) return RAYON_RE[i][0]; } }
     return 'aut';
   }
 
@@ -167,7 +171,7 @@
         if(deleted.has(wid+':'+di+'-'+ri)) return;
         const f = cv(di,ri) || 1;
         (r.shop||[]).forEach(function(s){
-          const k=norm(s.n)+'|'+(s.u||'')+'|'+s.r;          // cumul insensible à la casse/aux accents
+          const k=s.n.toLowerCase().replace(/\s+/g,' ').trim()+'|'+(s.u||'')+'|'+s.r;   // cumul insensible à la casse (accents préservés)
           if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
           const e=map.get(k);
           if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f;
