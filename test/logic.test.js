@@ -17,7 +17,7 @@ test('addDays normalise à minuit et décale', () => {
   assert.equal(d.getHours(), 0);
 });
 
-test('startOfWeek renvoie le jeudi (weekday 4) de la semaine AMAP', () => {
+test('startOfWeek : défaut jeudi (weekday 4) de la semaine AMAP', () => {
   // vendredi 3 juillet 2026 -> jeudi 2 juillet
   assert.equal(L.idOf(L.startOfWeek(new Date(2026, 6, 3))), '2026-07-02');
   // jeudi 2 juillet -> lui-même
@@ -25,6 +25,14 @@ test('startOfWeek renvoie le jeudi (weekday 4) de la semaine AMAP', () => {
   // mercredi 8 juillet -> jeudi 2 juillet (dernier jour de la semaine AMAP)
   assert.equal(L.idOf(L.startOfWeek(new Date(2026, 6, 8))), '2026-07-02');
   assert.equal(L.startOfWeek(new Date(2026, 6, 2)).getDay(), 4);
+});
+
+test('startOfWeek : début de semaine paramétrable (ws)', () => {
+  // vendredi 3 juillet 2026, semaine démarrant le lundi (1) -> lundi 29 juin
+  assert.equal(L.idOf(L.startOfWeek(new Date(2026, 6, 3), 1)), '2026-06-29');
+  assert.equal(L.startOfWeek(new Date(2026, 6, 3), 1).getDay(), 1);
+  // même jour, semaine démarrant le dimanche (0) -> dimanche 28 juin
+  assert.equal(L.idOf(L.startOfWeek(new Date(2026, 6, 3), 0)), '2026-06-28');
 });
 
 test('fmt : 1er abrégé et mois en toutes lettres', () => {
@@ -72,7 +80,7 @@ test('computeCourses : cumul par clé n|u|r, q:null non cumulé, groupement par 
       { n: 'Huile d’olive', q: null, u: '', r: 'con' }, // reste null
     ] }] },
   ] };
-  const data = L.computeCourses(menu, '2026-07-02', new Set(), RAYONS, []);
+  const data = L.computeCourses(menu, '2026-07-02', new Set(), RAYONS);
   const leg = data.find((s) => s.cls === 'leg');
   const courgette = leg.items.find((i) => i.n === 'Courgettes');
   assert.equal(courgette.q, 3);
@@ -81,19 +89,33 @@ test('computeCourses : cumul par clé n|u|r, q:null non cumulé, groupement par 
   assert.equal(con.items[0].disp, '');   // q null -> pas de quantité
 });
 
-test('computeCourses : repas supprimé exclu, rayons vides omis, extras ajoutés', () => {
+test('computeCourses : repas supprimé exclu, rayons vides omis', () => {
   const menu = { jours: [
     { repas: [{ shop: [{ n: 'Tofu', q: 200, u: 'g', r: 'prot' }] }] },
     { repas: [{ shop: [{ n: 'Tomates', q: 2, u: '', r: 'leg' }] }] },
   ] };
   const deleted = new Set(['2026-07-02:0-0']); // supprime le tofu
-  const data = L.computeCourses(menu, '2026-07-02', deleted, RAYONS, [{ r: 'fru', n: 'Pommes', disp: '~7' }]);
+  const data = L.computeCourses(menu, '2026-07-02', deleted, RAYONS);
   assert.ok(!data.find((s) => s.cls === 'prot'));      // rayon prot vide -> omis
   assert.ok(data.find((s) => s.cls === 'leg'));
-  const fru = data.find((s) => s.cls === 'fru');
-  assert.equal(fru.items[0].n, 'Pommes');
+});
+
+test('computeCourses : les couverts multiplient les quantités (q:null inchangé)', () => {
+  const menu = { jours: [
+    { repas: [{ shop: [
+      { n: 'Quinoa', q: 80, u: 'g', r: 'epi' },
+      { n: 'Sel', q: null, u: '', r: 'con' },
+    ] }] },                                            // di=0 ri=0 -> 2 couverts
+    { repas: [{ shop: [{ n: 'Quinoa', q: 80, u: 'g', r: 'epi' }] }] }, // di=1 ri=0 -> 1 couvert
+  ] };
+  const couverts = (di) => (di === 0 ? 2 : 1);
+  const data = L.computeCourses(menu, '2026-07-02', new Set(), RAYONS, couverts);
+  const quinoa = data.find((s) => s.cls === 'epi').items.find((i) => i.n === 'Quinoa');
+  assert.equal(quinoa.q, 240);                          // 80*2 + 80*1
+  const sel = data.find((s) => s.cls === 'con').items[0];
+  assert.equal(sel.q, null);                            // condiment (q:null) jamais multiplié
 });
 
 test('computeCourses : menu absent -> null', () => {
-  assert.equal(L.computeCourses(null, '2026-07-02', new Set(), RAYONS, []), null);
+  assert.equal(L.computeCourses(null, '2026-07-02', new Set(), RAYONS), null);
 });

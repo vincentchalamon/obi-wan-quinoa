@@ -23,15 +23,20 @@
 
   /* ---------- Header (sobre, slim) ---------- */
   .app-header{position:sticky;top:0;z-index:20;background:var(--vert-fonce);color:#fff;
-    padding:max(9px,env(safe-area-inset-top)) 16px 10px;box-shadow:var(--ombre);}
+    padding:max(9px,env(safe-area-inset-top)) 16px 10px;box-shadow:var(--ombre);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .app-header .brand{font-family:Georgia,serif;font-size:17px;font-weight:700;line-height:1.1;letter-spacing:.01em;}
   .app-header .slogan{font-size:11.5px;opacity:.82;margin-top:2px;font-style:italic;}
+  .app-settings-btn{flex:0 0 auto;border:none;background:rgba(255,255,255,.14);color:#fff;
+    width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .app-settings-btn svg{width:20px;height:20px;}
+  .app-settings-btn:active{background:rgba(255,255,255,.28);}
 
   /* ---------- Planning ---------- */
   #planning{max-width:720px;margin:0 auto;padding:6px 16px calc(48px + env(safe-area-inset-bottom));}
 
-  /* Marqueur de semaine — sobre, NON fixe, avant chaque lundi */
-  .week-marker{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+  /* Marqueur de semaine — sobre, NON fixe, avant chaque début de semaine (actions Préparer/Courses) */
+  .week-marker{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;
     margin:28px 2px 14px;padding:0 2px 8px;border-bottom:1px solid var(--trait);scroll-margin-top:70px;}
   .week-marker:first-child{margin-top:10px;}
   .wm-name{font-family:Georgia,serif;font-size:15px;color:var(--vert-fonce);font-weight:700;}
@@ -40,10 +45,7 @@
     display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;}
   .courses-btn svg,.prep-btn svg{width:15px;height:15px;stroke:var(--vert-feuille);fill:none;stroke-width:1.7;}
   .courses-btn:active,.prep-btn:active{background:var(--vert-clair);}
-  .day-h .courses-btn,.day-h .prep-btn{margin-left:auto;}
-
-  /* Badge AMAP — sur le mardi (jour de récupération du panier) */
-  .badge.amap{color:var(--vert-fonce);background:var(--vert-clair);}
+  .wm-actions{display:flex;gap:8px;align-items:center;flex:0 0 auto;}
 
   .day-card{background:var(--carte);border:1px solid var(--trait);border-radius:12px;
     box-shadow:var(--ombre);margin-bottom:12px;overflow:hidden;scroll-margin-top:70px;}
@@ -176,7 +178,14 @@
   .btn-secondary:active{background:var(--vert-clair);}
   .prep-ok{color:var(--vert-feuille);font-size:13px;text-align:center;margin-top:10px;min-height:18px;}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
-  .day-total .pt-ok{color:var(--vert-feuille);font-weight:700;}
+  /* Couverts (vue recette) */
+  .couverts{display:flex;align-items:center;gap:10px;margin:0 0 20px;flex-wrap:wrap;}
+  .couverts .cv-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ardoise);}
+  .cv-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);
+    font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .cv-btn:active{background:var(--vert-clair);}
+  .cv-val{min-width:20px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums;}
+  .cv-hint{font-size:12px;color:var(--ardoise);flex:1 1 100%;}
   #owq-status{background:var(--betterave-clair);color:var(--betterave);font-size:12.5px;text-align:center;padding:8px 14px;}
   #owq-status.ok{background:var(--vert-clair);color:var(--vert-fonce);}
   #owq-status[hidden]{display:none;}
@@ -197,8 +206,11 @@
 <body>
 
 <header class="app-header">
-  <div class="brand">Obi-Wan Quinoa</div>
-  <div class="slogan">Que la graine soit avec toi, padawan !</div>
+  <div>
+    <div class="brand">Obi-Wan Quinoa</div>
+    <div class="slogan">Que la graine soit avec toi, padawan !</div>
+  </div>
+  <button id="owq-settings" class="app-settings-btn" aria-label="Réglages" title="Réglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
 <div id="owq-status" hidden></div>
 
@@ -218,12 +230,12 @@
 <script>
 /* ============================================================
    OBI-WAN QUINOA
-   Semaine alimentaire JEUDI -> MERCREDI (rythme AMAP) ; affichage par semaine civile (démarre au lundi courant).
-   - Marqueur "Semaine du <lundi>" : entête de semaine civile, avant chaque lundi.
-   - Badge "AMAP" : sur chaque mardi (récupération du panier).
-   - Bouton "Courses" : sur le mercredi (jour des courses) ; ouvre la semaine AMAP qui démarre le jeudi suivant.
-   La liste de courses est CALCULÉE à partir des repas non supprimés.
-   Données : recipes.json (catalogue) + menus.json (planning, clé = le jeudi) ; génération via la skill /plan.
+   Semaine alimentaire à début configurable (profil : weekStart, défaut lundi ; owner = jeudi/AMAP).
+   - Marqueur "Semaine du <début>" avant chaque début de semaine, avec les actions Préparer & Courses.
+   - Menu et courses indexés par le premier jour de la semaine (wid = idOf(startOfWeek(d, weekStart))).
+   - La liste de courses est CALCULÉE à partir des repas non supprimés, × couverts par repas.
+   Données : recipes.json (catalogue) + menus.json (planning) ; génération de menus via la skill /plan
+   (owner uniquement, intérim phase 1 en attendant le générateur logiciel RecipeSage).
    ============================================================ */
 
 /* champ shop : {n:nom, q:quantité|null, u:unité, r:rayon, note?}
@@ -233,10 +245,8 @@ let R = {};
 
 /* midi/soir/resolveRepas/materializeMenus : voir logic.js (materializeMenus(raw, R)). */
 
-/* Toujours ajoutés à la liste, quels que soient les repas */
-/* saisonnier (fruit de dessert quotidien), à revoir via /plan selon la saison */
-const EXTRAS = [ {r:"fru", n:"Pêches jaunes / pommes", disp:"~7 (desserts)"} ];
-const PROT_CIBLE = 115;   /* seuil "objectif protéines atteint" par jour (préférence utilisateur) */
+/* Régimes proposés dans le profil (valeur = label RecipeSage, exploité par le générateur en phase 2) */
+const DIETS=[["","Aucun"],["vegetarien","Végétarien"],["vegan","Vegan"],["lacto-ovo","Lacto-ovo végétarien"],["flexitarien","Flexitarien"]];
 
 let RAW_MENUS = {}; /* données brutes de menus.json (avant matérialisation), base des overrides */
 let MENUS = {};   /* peuplé au boot depuis menus.json (clé = le JEUDI) */
@@ -253,6 +263,21 @@ function loadSet(k){const raw=store.get(k);if(!raw)return new Set();try{return n
 function saveSet(k,s){store.set(k,JSON.stringify(Array.from(s)));}
 const deleted=loadSet('owq.deleted');   // clés "wid:di-ri"
 const coches=loadSet('owq.checked');    // clés "wid§rayon§nom"
+
+/* ---- Profil utilisateur (régime, couverts par défaut, début de semaine) ---- */
+function loadProfile(){ let p={}; const raw=store.get('owq.profile'); if(raw){ try{ p=JSON.parse(raw)||{}; }catch(e){ p={}; } }
+  return { diet: p.diet||'', couverts: (p.couverts>=1?p.couverts:1), weekStart: (p.weekStart>=0&&p.weekStart<=6?p.weekStart:1) }; }
+function saveProfile(p){ store.set('owq.profile', JSON.stringify(p)); }
+let profile=loadProfile();
+function sow(d){ return startOfWeek(d, profile.weekStart); }   // début de semaine selon le profil
+
+/* ---- Couverts par repas (override du défaut profil), clé "wid:di-ri" ---- */
+function loadCouverts(){ const raw=store.get('owq.couverts'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
+let couvertsMap=loadCouverts();
+function couvertsGet(wid,di,ri){ const k=wid+':'+di+'-'+ri; return (k in couvertsMap)?couvertsMap[k]:profile.couverts; }
+function couvertsSet(wid,di,ri,val){ const k=wid+':'+di+'-'+ri; val=Math.max(1,Math.round(val||1));
+  if(val===profile.couverts) delete couvertsMap[k]; else couvertsMap[k]=val;
+  store.set('owq.couverts', JSON.stringify(couvertsMap)); }
 
 /* ============================ Overrides de menu (édition à la volée) ============================ */
 function loadOverrides(){ const raw=store.get('owq.menu'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
@@ -272,7 +297,7 @@ function applyOverrides(raw){
 /* ============================ Liste de courses calculée ============================ */
 const RAYONS=[["prot","Protéines & laitages"],["leg","Légumes"],["epi","Épicerie & féculents"],["con","Condiments & épices"],["fru","Fruits"]];
 /* frac/qLabel/computeCourses : voir logic.js. Wrapper local pour l'app : */
-function coursesFor(wid){ return computeCourses(MENUS[wid], wid, deleted, RAYONS, EXTRAS); }
+function coursesFor(wid){ return computeCourses(MENUS[wid], wid, deleted, RAYONS, function(di,ri){ return couvertsGet(wid,di,ri); }); }
 
 /* Quantités "à acheter" ajustées (j'ai déjà X, je n'achète que Y), par semaine.
    Réinitialisées à la régénération de la semaine (empreinte du brut, comme les overrides). */
@@ -296,41 +321,51 @@ const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
 const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6l-6.8 3.9"/></svg>';
 
+function nutriMeta(r){ const m=[];
+  if(typeof r.kcal==='number') m.push('~'+r.kcal+' kcal');
+  if(typeof r.prot==='number') m.push(r.prot+' g prot');
+  return m; }
 function repasRow(wid,di,ri,r){
-  const key=wid+':'+di+'-'+ri, del=deleted.has(key);
+  const key=wid+':'+di+'-'+ri, del=deleted.has(key), cv=couvertsGet(wid,di,ri);
+  const meta=nutriMeta(r); if(cv>1) meta.push(cv+' couverts');
   return '<div class="repas-row '+(r.moment==='Soir'?'soir':'midi')+(del?' supprime':'')+'" data-key="'+key+'">'
     +'<span class="repas-main repas-row-moment">'+r.moment+'</span>'
     +'<span class="repas-main"><span class="repas-row-titre">'+r.titre+'</span>'
-    +'<span class="repas-row-meta">~'+r.kcal+' kcal · '+r.prot+' g prot'+(r.priorite?'<span class="frais-pill">frais</span>':'')+'</span></span>'
+    +'<span class="repas-row-meta">'+meta.join(' · ')+(r.priorite?'<span class="frais-pill">frais</span>':'')+'</span></span>'
     +'<button class="row-action" data-action="toggle" aria-label="'+(del?'Rétablir':'Supprimer')+' ce repas">'+(del?'↩':'✕')+'</button>'
     +'</div>';
 }
-function dayTotal(kc,pr){ return '<div class="day-total">Total du jour ~'+Math.round(kc)+' kcal · <span class="'+(pr>=PROT_CIBLE?'pt-ok':'')+'">'+Math.round(pr)+' g protéines</span></div>'; }
+function dayTotal(kc,pr){ const parts=[];
+  if(kc>0) parts.push('~'+Math.round(kc)+' kcal');
+  if(pr>0) parts.push(Math.round(pr)+' g protéines');
+  return parts.length ? '<div class="day-total">Total du jour '+parts.join(' · ')+'</div>' : ''; }
 function dayCard(d){
-  const wid=idOf(startOfWeek(d)), menu=MENUS[wid];
-  const di=Math.round((d-startOfWeek(d))/86400000);
-  const past=d<today, isToday=(+d===+today), amap=(d.getDay()===2), courses=(d.getDay()===3);
+  const ws=sow(d), wid=idOf(ws), menu=MENUS[wid];
+  const di=Math.round((d-ws)/86400000);
+  const past=d<today, isToday=(+d===+today);
   let h='<div class="day-card'+(past?' passe':'')+(isToday?' today':'')+'" id="day-'+idOf(d)+'">';
-  h+='<div class="day-h">'+JOURS[d.getDay()]+' '+fmt(d)
-    +(amap?'<span class="badge amap">AMAP</span>':'')
-    +(amap?'<button class="prep-btn" data-prepare="'+idOf(addDays(d,2))+'">'+PREPARE_SVG+'Préparer</button>':'')
-    +(courses?'<button class="courses-btn" data-courses="'+idOf(addDays(d,1))+'">'+COURSES_SVG+'Courses</button>':'')+'</div>';
+  h+='<div class="day-h">'+JOURS[d.getDay()]+' '+fmt(d)+'</div>';
   if(menu){ let kc=0,pr=0,n=0;
     menu.jours[di].repas.forEach(function(r,ri){ h+=repasRow(wid,di,ri,r);
-      if(!deleted.has(wid+':'+di+'-'+ri)){ kc+=r.kcal; pr+=r.prot; n++; } });
+      if(!deleted.has(wid+':'+di+'-'+ri)){ if(typeof r.kcal==='number')kc+=r.kcal; if(typeof r.prot==='number')pr+=r.prot; n++; } });
     if(n) h+=dayTotal(kc,pr); }
   else { h+='<div class="repas-vide">Menu à définir</div>'; }
   h+='</div>'; return h;
 }
 function renderDay(d){
   let h='';
-  if(d.getDay()===1){                                                          // lundi : entête semaine civile
-    h+='<div class="week-marker"><span class="wm-name">Semaine du '+fmt(d)+'</span></div>';
+  if(+d===+sow(d)){                                                            // premier jour de la semaine alimentaire : entête + actions
+    const wid=idOf(d);
+    h+='<div class="week-marker"><span class="wm-name">Semaine du '+fmt(d)+'</span>'
+      +'<span class="wm-actions">'
+      +'<button class="prep-btn" data-prepare="'+wid+'">'+PREPARE_SVG+'Préparer</button>'
+      +'<button class="courses-btn" data-courses="'+wid+'">'+COURSES_SVG+'Courses</button>'
+      +'</span></div>';
   }
   h+=dayCard(d); return h;
 }
 
-let cursor=addDays(today,-((today.getDay()+6)%7)), daysRendered=0;
+let cursor=sow(today), daysRendered=0;
 const MAX_DAYS=30*7;
 function appendDays(n){ let h=''; for(let i=0;i<n && daysRendered<MAX_DAYS;i++){ h+=renderDay(cursor); cursor=addDays(cursor,1); daysRendered++; } planning.insertAdjacentHTML('beforeend',h); }
 
@@ -437,7 +472,17 @@ function openRecipe(key){
   let h='<article class="recipe'+(sc?' soir':'')+'">';
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+'</span>';
   h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
-  h+='<div class="macros"><span class="chip kcal">~'+r.kcal+' kcal</span><span class="chip prot">~'+r.prot+' g prot</span>'+(r.priorite?'<span class="chip frais">Légumes frais</span>':'')+'</div>';
+  let macros='';
+  if(typeof r.kcal==='number') macros+='<span class="chip kcal">~'+r.kcal+' kcal</span>';
+  if(typeof r.prot==='number') macros+='<span class="chip prot">~'+r.prot+' g prot</span>';
+  if(r.priorite) macros+='<span class="chip frais">Légumes frais</span>';
+  if(macros) h+='<div class="macros">'+macros+'</div>';
+  const cv=couvertsGet(wid,di,ri);
+  h+='<div class="couverts" data-cvkey="'+key+'"><span class="cv-label">Couverts</span>'
+    +'<button class="cv-btn" data-cv="-" aria-label="Moins de couverts">−</button>'
+    +'<span class="cv-val">'+cv+'</span>'
+    +'<button class="cv-btn" data-cv="+" aria-label="Plus de couverts">+</button>'
+    +'<span class="cv-hint">ajuste les quantités de la liste de courses</span></div>';
   h+='<div class="recipe-actions">';
   if('wakeLock' in navigator) h+='<button class="act-btn" data-cook aria-pressed="false" aria-label="Mode cuisine (garder l’écran allumé)" title="Mode cuisine">'+COOK_SVG+'</button>';
   if(r.id) h+='<button class="act-btn" data-share="'+r.id+'" aria-label="Partager la recette" title="Partager">'+SHARE_SVG+'</button>';
@@ -483,8 +528,7 @@ function coursesInner(wid){
   return h;
 }
 function openCourses(wid){
-  const monday=addDays(parseId(wid),-3);
-  ovTitle.textContent='Courses · sem. du '+fmt(monday);
+  ovTitle.textContent='Courses · sem. du '+fmt(parseId(wid));
   const h=coursesInner(wid);
   ovBody.innerHTML = h===null ? '<p class="hint">Liste à définir une fois le menu de cette semaine choisi.</p>' : h;
   openOverlay();
@@ -554,6 +598,34 @@ function copyPrompt(thu){
   catch(e){ fallback(); }
 }
 
+/* ============================ Réglages (profil utilisateur) ============================ */
+function openSettings(){
+  ovTitle.textContent='Réglages';
+  const dietOpts=DIETS.map(function(d){ return '<option value="'+d[0]+'"'+(d[0]===profile.diet?' selected':'')+'>'+d[1]+'</option>'; }).join('');
+  const dayOpts=JOURS.map(function(name,idx){ return '<option value="'+idx+'"'+(idx===profile.weekStart?' selected':'')+'>'+name+'</option>'; }).join('');
+  let h='<p class="prep-note">Ces réglages personnalisent l’application et sont enregistrés sur cet appareil.</p>';
+  h+='<div class="field"><label>Régime alimentaire</label><select id="set-diet">'+dietOpts+'</select></div>';
+  h+='<div class="field"><label>Couverts par défaut</label><input id="set-couverts" type="number" min="1" step="1" inputmode="numeric" value="'+profile.couverts+'"></div>';
+  h+='<div class="field"><label>Début de la semaine alimentaire</label><select id="set-weekstart">'+dayOpts+'</select></div>';
+  h+='<button class="btn-primary" id="set-save">Enregistrer</button>';
+  h+='<div class="prep-ok" id="set-ok"></div>';
+  ovBody.innerHTML=h; openOverlay();
+}
+function saveSettings(){
+  const diet=(document.getElementById('set-diet')||{}).value||'';
+  let cv=parseInt((document.getElementById('set-couverts')||{}).value,10); if(isNaN(cv)||cv<1) cv=1;
+  let ws=parseInt((document.getElementById('set-weekstart')||{}).value,10); if(isNaN(ws)||ws<0||ws>6) ws=1;
+  profile={diet:diet, couverts:cv, weekStart:ws}; saveProfile(profile);
+  const ok=document.getElementById('set-ok'); if(ok) ok.textContent='Enregistré ✓';
+  resetPlanning();
+}
+/* Ré-affiche tout le planning (après changement de début de semaine). */
+function resetPlanning(){
+  planning.innerHTML=''; daysRendered=0; loading=false; cursor=sow(today);
+  appendDays(21);
+  const el=document.getElementById('day-'+idOf(today)); if(el) el.scrollIntoView({block:'start'});
+}
+
 /* ============================ Événements ============================ */
 planning.addEventListener('click',function(e){
   if(suppressClick) return;
@@ -575,6 +647,14 @@ ovBody.addEventListener('click',function(e){
   if(pg){ openDeepLink(pg.dataset.prepGo); return; }
   const pc=e.target.closest('[data-prep-copy]');
   if(pc){ copyPrompt(pc.dataset.prepCopy); return; }
+  const cvb=e.target.closest('[data-cv]');
+  if(cvb){ const cont=cvb.closest('[data-cvkey]');
+    if(cont){ const p=cont.dataset.cvkey.split(':'), wid=p[0], ix=p[1].split('-'), di=+ix[0], ri=+ix[1];
+      let val=couvertsGet(wid,di,ri)+(cvb.dataset.cv==='+'?1:-1); if(val<1) val=1; couvertsSet(wid,di,ri,val);
+      const disp=cont.querySelector('.cv-val'); if(disp) disp.textContent=val; refreshDay(addDays(parseId(wid),di)); }
+    return; }
+  const ss=e.target.closest('#set-save');
+  if(ss){ saveSettings(); return; }
   const qe=e.target.closest('[data-qedit]');
   if(qe){ startQtyEdit(qe); return; }                          // éditer la quantité
   if(e.target.closest('.q-edit')) return;                      // clic dans l'éditeur : ne pas cocher
@@ -591,6 +671,9 @@ document.getElementById('today-fab').addEventListener('click',function(){
   const el=document.getElementById('day-'+idOf(today));
   if(el) el.scrollIntoView({block:'start',behavior:'smooth'});
 });
+
+/* Réglages (profil) */
+document.getElementById('owq-settings').addEventListener('click',openSettings);
 
 /* ============================ Édition à la volée : drag'n'drop (échange de positions) ============================ */
 function parseKey(k){ const p=k.split(':'), idx=p[1].split('-'); return {wid:p[0], di:+idx[0], ri:+idx[1]}; }
