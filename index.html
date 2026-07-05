@@ -74,8 +74,8 @@
   .repas-row.supprime .row-action{color:var(--vert-feuille);border-color:var(--vert-feuille);}
   .repas-vide{padding:16px 15px;color:var(--ardoise);font-size:13.5px;font-style:italic;}
 
-  /* Drag'n'drop (appui long sur la ligne entière) */
-  .repas-grip{display:inline-flex;align-items:center;justify-content:center;color:var(--ardoise);opacity:.3;pointer-events:none;}
+  /* Drag'n'drop : glisser depuis la poignée (icône) */
+  .repas-grip{display:inline-flex;align-items:center;justify-content:center;color:var(--ardoise);opacity:.3;cursor:grab;touch-action:none;}
   .repas-grip svg{width:15px;height:15px;}
   .repas-row.dragging{opacity:.35;}
   .repas-row.drop-target{background:var(--vert-clair);box-shadow:inset 0 0 0 2px var(--vert-feuille);}
@@ -186,9 +186,11 @@
   /* Génération de menu (proposition RecipeSage) */
   .src-note{color:var(--ardoise);font-size:12.5px;margin:-8px 0 16px;}
   .src-note a{color:var(--vert-feuille);}
-  .gen-day{margin-bottom:14px;}
-  .gen-day-h{font-size:13px;font-weight:700;color:var(--vert-fonce);margin:0 0 6px;}
-  .gen-repas{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dotted var(--trait);}
+  .gen-day{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);margin-bottom:12px;overflow:hidden;}
+  .gen-day-h{font-size:16px;padding:12px 15px 10px;color:var(--vert-fonce);font-weight:700;border-bottom:1px solid var(--trait);}
+  .gen-repas{display:flex;align-items:center;gap:10px;padding:11px 12px;min-height:56px;border-left:4px solid var(--vert-feuille);}
+  .gen-repas + .gen-repas{border-top:1px solid var(--trait);}
+  .gen-repas.soir{border-left-color:var(--betterave);}
   .gen-moment{flex:0 0 auto;width:36px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--vert-feuille);}
   .gen-moment.soir{color:var(--betterave);}
   .gen-titre{flex:1 1 auto;color:var(--encre);text-decoration:none;font-size:14px;}
@@ -613,7 +615,7 @@ function renderProposal(){
     h+='<div class="gen-day"><div class="gen-day-h">'+JOURS[d.getDay()]+' '+fmt(d)+'</div>';
     if(!day.repas.length) h+='<div class="repas-vide">—</div>';
     day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe); const gk=di+'-'+ri, del=genState.deleted.has(gk);
-      h+='<div class="gen-repas'+(del?' supprime':'')+'" data-gkey="'+gk+'">'
+      h+='<div class="gen-repas'+(ri===0?'':' soir')+(del?' supprime':'')+'" data-gkey="'+gk+'">'
         +(del?'':'<button class="gen-handle" aria-label="Déplacer ce repas" title="Déplacer">'+GRIP_SVG+'</button>')
         +'<span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
         +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>';
@@ -781,13 +783,14 @@ function armDrag(x,y){
   drag.row.classList.add('dragging'); document.body.classList.add('dragging-active');
   moveGhost(x,y); if(navigator.vibrate){ try{ navigator.vibrate(25); }catch(e){} }
 }
-/* Appui long sur une ligne = déplacer ; tap = ouvrir la recette ; glissement avant l'appui long = scroll. */
+/* Glisser depuis la poignée (icône) uniquement ; tap sur la ligne = ouvrir la recette. */
 planning.addEventListener('pointerdown',function(e){
   if(e.pointerType==='mouse' && e.button!==0) return;
-  if(e.target.closest('.row-action')) return;
-  const row=e.target.closest('.repas-row'); if(!row) return;
+  const grip=e.target.closest('.repas-grip'); if(!grip) return;
+  const row=grip.closest('.repas-row'); if(!row) return;
+  e.preventDefault();
   drag={row:row, key:row.dataset.key, x:e.clientX, y:e.clientY, armed:false};
-  dragTimer=setTimeout(function(){ armDrag(e.clientX,e.clientY); }, LONGPRESS);
+  armDrag(e.clientX,e.clientY);
 });
 window.addEventListener('pointermove',function(e){
   if(!drag) return;
