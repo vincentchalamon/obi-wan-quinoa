@@ -75,7 +75,7 @@
   .repas-vide{padding:16px 15px;color:var(--ardoise);font-size:13.5px;font-style:italic;}
 
   /* Drag'n'drop : glisser depuis la poignée (icône) */
-  .repas-grip{display:inline-flex;align-items:center;justify-content:center;color:var(--ardoise);opacity:.3;cursor:grab;touch-action:none;}
+  .repas-grip{display:inline-flex;align-items:center;justify-content:center;border:none;background:none;padding:0;color:var(--ardoise);opacity:.3;cursor:grab;touch-action:none;}
   .repas-grip svg{width:15px;height:15px;}
   .repas-row.dragging{opacity:.35;}
   .repas-row.drop-target{background:var(--vert-clair);box-shadow:inset 0 0 0 2px var(--vert-feuille);}
@@ -368,7 +368,7 @@ function repasRow(wid,di,ri,r){
   const key=wid+':'+di+'-'+ri, del=deleted.has(key), cv=couvertsGet(wid,di,ri);
   const meta=nutriMeta(r); if(cv>1) meta.push(cv+' couverts');
   return '<div class="repas-row '+(r.moment==='Soir'?'soir':'midi')+(del?' supprime':'')+'" data-key="'+key+'">'
-    +'<span class="repas-grip" aria-hidden="true">'+GRIP_SVG+'</span>'
+    +'<button class="repas-grip" aria-label="Déplacer ce repas" title="Déplacer">'+GRIP_SVG+'</button>'
     +'<span class="repas-main repas-row-moment">'+r.moment+'</span>'
     +'<span class="repas-main"><span class="repas-row-titre">'+r.titre+'</span>'
     +'<span class="repas-row-meta">'+meta.join(' · ')+(r.priorite?'<span class="frais-pill">frais</span>':'')+'</span></span>'
@@ -769,52 +769,40 @@ function doSwap(srcKey,tgtKey){
   MENUS=materializeMenus(applyOverrides(RAW_MENUS), R);
   refreshDay(addDays(parseId(wid),a.di)); if(b.di!==a.di) refreshDay(addDays(parseId(wid),b.di));
 }
-let drag=null, dragTimer=null, suppressClick=false;
-const LONGPRESS=320, MOVE_CANCEL=10;
+let drag=null, suppressClick=false;
 function targetRowAt(x,y){ const el=document.elementFromPoint(x,y); return el?el.closest('.repas-row'):null; }
 function moveGhost(x,y){ if(drag&&drag.ghost) drag.ghost.style.transform='translate('+(x+8)+'px,'+(y-16)+'px)'; }
 function setDropTarget(t){ const prev=planning.querySelector('.drop-target'); if(prev&&prev!==t) prev.classList.remove('drop-target'); if(t&&drag&&t!==drag.row) t.classList.add('drop-target'); }
 function endDragCleanup(){ if(!drag) return; if(drag.ghost) drag.ghost.remove(); if(drag.row) drag.row.classList.remove('dragging'); const dt=planning.querySelector('.drop-target'); if(dt) dt.classList.remove('drop-target'); document.body.classList.remove('dragging-active'); drag=null; }
-function armDrag(x,y){
-  if(!drag) return; drag.armed=true; dragTimer=null;
-  const g=document.createElement('div'); g.className='drag-ghost';
-  const t=drag.row.querySelector('.repas-row-titre'); g.textContent=t?t.textContent:'';
-  document.body.appendChild(g); drag.ghost=g;
-  drag.row.classList.add('dragging'); document.body.classList.add('dragging-active');
-  moveGhost(x,y); if(navigator.vibrate){ try{ navigator.vibrate(25); }catch(e){} }
-}
 /* Glisser depuis la poignée (icône) uniquement ; tap sur la ligne = ouvrir la recette. */
 planning.addEventListener('pointerdown',function(e){
   if(e.pointerType==='mouse' && e.button!==0) return;
   const grip=e.target.closest('.repas-grip'); if(!grip) return;
   const row=grip.closest('.repas-row'); if(!row) return;
   e.preventDefault();
-  drag={row:row, key:row.dataset.key, x:e.clientX, y:e.clientY, armed:false};
-  armDrag(e.clientX,e.clientY);
+  drag={row:row, key:row.dataset.key};
+  const g=document.createElement('div'); g.className='drag-ghost';
+  const t=row.querySelector('.repas-row-titre'); g.textContent=t?t.textContent:'';
+  document.body.appendChild(g); drag.ghost=g;
+  row.classList.add('dragging'); document.body.classList.add('dragging-active');
+  moveGhost(e.clientX,e.clientY); if(navigator.vibrate){ try{ navigator.vibrate(25); }catch(err){} }
 });
 window.addEventListener('pointermove',function(e){
   if(!drag) return;
-  if(!drag.armed){
-    if(Math.abs(e.clientX-drag.x)>MOVE_CANCEL || Math.abs(e.clientY-drag.y)>MOVE_CANCEL){ clearTimeout(dragTimer); dragTimer=null; drag=null; }
-    return;
-  }
   moveGhost(e.clientX,e.clientY);
   setDropTarget(targetRowAt(e.clientX,e.clientY));
   const m=70, h=window.innerHeight;
   if(e.clientY<m) window.scrollBy(0,-14); else if(e.clientY>h-m) window.scrollBy(0,14);
 });
-/* Sur tactile, seul preventDefault sur touchmove bloque le scroll natif pendant le drag (touch-action ne suffit pas une fois le geste commence). */
-window.addEventListener('touchmove',function(e){ if(drag&&drag.armed) e.preventDefault(); },{passive:false});
+/* Sur tactile, preventDefault sur touchmove bloque le scroll natif pendant le drag. */
+window.addEventListener('touchmove',function(e){ if(drag) e.preventDefault(); },{passive:false});
 window.addEventListener('pointerup',function(e){
   if(!drag) return;
-  if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; }
-  if(drag.armed){
-    const src=drag.key, t=targetRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.key)||null;
-    endDragCleanup(); suppressClick=true; setTimeout(function(){ suppressClick=false; },60);
-    if(tgt && tgt!==src) doSwap(src,tgt);
-  } else { drag=null; }
+  const src=drag.key, t=targetRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.key)||null;
+  endDragCleanup(); suppressClick=true; setTimeout(function(){ suppressClick=false; },60);
+  if(tgt && tgt!==src) doSwap(src,tgt);
 });
-window.addEventListener('pointercancel',function(){ if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; } endDragCleanup(); });
+window.addEventListener('pointercancel',endDragCleanup);
 
 /* ===== Drag'n'drop dans la proposition de menu (poignée) : échange deux créneaux ===== */
 function doSwapGen(srcKey,tgtKey){
