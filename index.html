@@ -191,9 +191,14 @@
   .gen-moment.soir{color:var(--betterave);}
   .gen-titre{flex:1 1 auto;color:var(--encre);text-decoration:none;font-size:14px;}
   .gen-titre:active{opacity:.6;}
-  .gen-reroll{flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);font-size:15px;cursor:pointer;}
-  .gen-reroll:active{background:var(--vert-clair);}
-  .gen-reroll svg{width:16px;height:16px;}
+  .gen-reroll,.gen-del,.gen-handle{flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);font-size:15px;line-height:1;cursor:pointer;}
+  .gen-reroll:active,.gen-del:active,.gen-handle:active{background:var(--vert-clair);}
+  .gen-reroll svg,.gen-handle svg{width:16px;height:16px;}
+  .gen-handle{cursor:grab;color:var(--ardoise);touch-action:none;}
+  .gen-repas.supprime{opacity:.55;}
+  .gen-repas.supprime .gen-titre{text-decoration:line-through;color:var(--ardoise);pointer-events:none;}
+  .gen-repas.dragging{opacity:.4;}
+  .gen-repas.drop-target{background:var(--vert-clair);box-shadow:inset 0 0 0 2px var(--vert-feuille);border-radius:6px;}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
   /* Couverts (vue recette) */
   .couverts{display:flex;align-items:center;gap:10px;margin:0 0 20px;flex-wrap:wrap;}
@@ -348,6 +353,7 @@ const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
 const REROLL_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>';
+const GRIP_SVG='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="9" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="19" r="1.6"/><circle cx="15" cy="19" r="1.6"/></svg>';
 
 function nutriMeta(r){ const m=[];
   if(typeof r.kcal==='number') m.push('~'+r.kcal+' kcal');
@@ -591,7 +597,7 @@ function runGenerate(wid){
   loadPool().then(function(pool){
     if(!pool.length){ setGenMsg('Aucune recette exploitable dans le catalogue.'); if(btn) btn.disabled=false; return; }
     const tokens=tokenize(stock), menu=generateMenu(pool, tokens, {history:genHistory(), rng:Math.random});
-    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu };
+    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu, deleted:new Set() };
     renderProposal();
   }).catch(function(e){ setGenMsg('Erreur : '+e.message); if(btn) btn.disabled=false; });
 }
@@ -602,10 +608,14 @@ function renderProposal(){
   m.jours.forEach(function(day,di){ const d=addDays(parseId(wid),di);
     h+='<div class="gen-day"><div class="gen-day-h">'+JOURS[d.getDay()]+' '+fmt(d)+'</div>';
     if(!day.repas.length) h+='<div class="repas-vide">—</div>';
-    day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe);
-      h+='<div class="gen-repas"><span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
-        +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>'
-        +'<button class="gen-reroll" data-reroll="'+di+'-'+ri+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button></div>';
+    day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe); const gk=di+'-'+ri, del=genState.deleted.has(gk);
+      h+='<div class="gen-repas'+(del?' supprime':'')+'" data-gkey="'+gk+'"><span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
+        +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>';
+      if(del){ h+='<button class="gen-del" data-gdel="'+gk+'" aria-label="Rétablir ce repas" title="Rétablir">↩</button>'; }
+      else { h+='<button class="gen-reroll" data-reroll="'+gk+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button>'
+        +'<button class="gen-del" data-gdel="'+gk+'" aria-label="Supprimer ce repas" title="Supprimer">✕</button>'
+        +'<button class="gen-handle" aria-label="Déplacer ce repas" title="Déplacer">'+GRIP_SVG+'</button>'; }
+      h+='</div>';
     });
     h+='</div>';
   });
@@ -619,10 +629,14 @@ function rerollSlot(di,ri){
   if(alt && alt!==ref.recipe){ ref.recipe=alt; renderProposal(); }
 }
 function validateGen(){
-  if(!genState) return; const wid=genState.wid, menu=genState.menu, used=usedIdsOf(menu);
+  if(!genState) return; const wid=genState.wid, menu=genState.menu, del=genState.deleted, used=usedIdsOf(menu);
   const cache=loadRecipesCache(); used.forEach(function(id){ const r=recipeById(id); if(r) cache[id]=r; }); saveRecipesCache(cache);
   const gen=loadGenMenus(); gen[wid]={jours:menu.jours}; saveGenMenus(gen);
-  pushHistory(Array.from(used));
+  Array.from(deleted).forEach(function(k){ if(k.indexOf(wid+':')===0) deleted.delete(k); });   // repart de la proposition
+  const kept=[]; menu.jours.forEach(function(day,di){ day.repas.forEach(function(ref,ri){
+    if(del.has(di+'-'+ri)) deleted.add(wid+':'+di+'-'+ri); else kept.push(ref.recipe); }); });
+  saveSet('owq.deleted', deleted);
+  pushHistory(Array.from(new Set(kept)));
   rebuild();
   deductStock(wid, store.get('owq.panier.'+wid)||'');       // pré-déduit le stock saisi de la liste de courses
   rerenderPlanning(); genState=null; closeOverlay();
@@ -693,6 +707,8 @@ ovBody.addEventListener('click',function(e){
   if(gbk){ if(genState) openGenerate(genState.wid); return; }
   const rr=e.target.closest('[data-reroll]');
   if(rr){ const rp=rr.dataset.reroll.split('-'); rerollSlot(+rp[0],+rp[1]); return; }
+  const gd=e.target.closest('[data-gdel]');
+  if(gd){ if(genState){ const k=gd.dataset.gdel; if(genState.deleted.has(k)) genState.deleted.delete(k); else genState.deleted.add(k); renderProposal(); } return; }
   const cvb=e.target.closest('[data-cv]');
   if(cvb){ const cont=cvb.closest('[data-cvkey]');
     if(cont){ const key=cont.dataset.cvkey, kk=parseKey(key);
@@ -791,6 +807,46 @@ window.addEventListener('pointerup',function(e){
   } else { drag=null; }
 });
 window.addEventListener('pointercancel',function(){ if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; } endDragCleanup(); });
+
+/* ===== Drag'n'drop dans la proposition de menu (poignée) : échange deux créneaux ===== */
+function doSwapGen(srcKey,tgtKey){
+  if(!genState) return;
+  const a=srcKey.split('-'), b=tgtKey.split('-'), ad=+a[0],ar=+a[1],bd=+b[0],br=+b[1];
+  const A=genState.menu.jours[ad]&&genState.menu.jours[ad].repas[ar], B=genState.menu.jours[bd]&&genState.menu.jours[bd].repas[br];
+  if(!A||!B) return;
+  const t=A.recipe; A.recipe=B.recipe; B.recipe=t;                       // échange les recettes, garde les créneaux
+  const ka=ad+'-'+ar, kb=bd+'-'+br, da=genState.deleted.has(ka), db=genState.deleted.has(kb);
+  if(da!==db){ if(da){genState.deleted.delete(ka);genState.deleted.add(kb);} else {genState.deleted.delete(kb);genState.deleted.add(ka);} }
+  renderProposal();
+}
+let gdrag=null;
+function genRowAt(x,y){ const el=document.elementFromPoint(x,y); return el?el.closest('.gen-repas'):null; }
+function moveGhostGen(x,y){ if(gdrag&&gdrag.ghost) gdrag.ghost.style.transform='translate('+(x+8)+'px,'+(y-16)+'px)'; }
+function genDropTarget(t){ const prev=ovBody.querySelector('.gen-repas.drop-target'); if(prev&&prev!==t) prev.classList.remove('drop-target'); if(t&&gdrag&&t!==gdrag.row) t.classList.add('drop-target'); }
+function endGenDrag(){ if(!gdrag) return; if(gdrag.ghost) gdrag.ghost.remove(); if(gdrag.row) gdrag.row.classList.remove('dragging'); const dt=ovBody.querySelector('.gen-repas.drop-target'); if(dt) dt.classList.remove('drop-target'); document.body.classList.remove('dragging-active'); gdrag=null; }
+ovBody.addEventListener('pointerdown',function(e){
+  const hnd=e.target.closest('.gen-handle'); if(!hnd) return;
+  if(e.pointerType==='mouse' && e.button!==0) return;
+  const row=hnd.closest('.gen-repas'); if(!row) return;
+  e.preventDefault();
+  gdrag={row:row, key:row.dataset.gkey};
+  const g=document.createElement('div'); g.className='drag-ghost'; const t=row.querySelector('.gen-titre'); g.textContent=t?t.textContent:''; document.body.appendChild(g); gdrag.ghost=g;
+  row.classList.add('dragging'); document.body.classList.add('dragging-active');
+  moveGhostGen(e.clientX,e.clientY); if(navigator.vibrate){ try{ navigator.vibrate(20); }catch(err){} }
+});
+window.addEventListener('pointermove',function(e){
+  if(!gdrag) return;
+  moveGhostGen(e.clientX,e.clientY); genDropTarget(genRowAt(e.clientX,e.clientY));
+  const m=70,h=window.innerHeight; if(e.clientY<m) ovBody.scrollBy(0,-14); else if(e.clientY>h-m) ovBody.scrollBy(0,14);
+});
+window.addEventListener('touchmove',function(e){ if(gdrag) e.preventDefault(); },{passive:false});
+window.addEventListener('pointerup',function(e){
+  if(!gdrag) return;
+  const src=gdrag.key, t=genRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.gkey)||null;
+  endGenDrag();
+  if(tgt && tgt!==src) doSwapGen(src,tgt);
+});
+window.addEventListener('pointercancel',function(){ endGenDrag(); });
 
 /* Service worker (HTTPS uniquement, ex. GitHub Pages) */
 if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
