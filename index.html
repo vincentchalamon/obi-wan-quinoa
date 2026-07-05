@@ -54,7 +54,7 @@
   .day-card.today{border-color:var(--vert-feuille);box-shadow:0 0 0 1px var(--vert-feuille),var(--ombre);}
   .day-h{font-size:16px;padding:12px 15px 10px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-bottom:1px solid var(--trait);}
 
-  .repas-row{width:100%;display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:10px;
+  .repas-row{width:100%;display:grid;grid-template-columns:15px 46px 1fr auto;align-items:center;gap:10px;
     padding:11px 14px;min-height:60px;border-left:4px solid var(--vert-feuille);cursor:pointer;
     user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
   .repas-row + .repas-row{border-top:1px solid var(--trait);}
@@ -74,7 +74,9 @@
   .repas-row.supprime .row-action{color:var(--vert-feuille);border-color:var(--vert-feuille);}
   .repas-vide{padding:16px 15px;color:var(--ardoise);font-size:13.5px;font-style:italic;}
 
-  /* Drag'n'drop (appui long sur la ligne entière) */
+  /* Drag'n'drop : glisser depuis la poignée (icône) */
+  .repas-grip{display:inline-flex;align-items:center;justify-content:center;border:none;background:none;padding:0;color:var(--ardoise);opacity:.3;cursor:grab;touch-action:none;}
+  .repas-grip svg{width:15px;height:15px;}
   .repas-row.dragging{opacity:.35;}
   .repas-row.drop-target{background:var(--vert-clair);box-shadow:inset 0 0 0 2px var(--vert-feuille);}
   body.dragging-active{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grabbing;}
@@ -184,16 +186,24 @@
   /* Génération de menu (proposition RecipeSage) */
   .src-note{color:var(--ardoise);font-size:12.5px;margin:-8px 0 16px;}
   .src-note a{color:var(--vert-feuille);}
-  .gen-day{margin-bottom:14px;}
-  .gen-day-h{font-size:13px;font-weight:700;color:var(--vert-fonce);margin:0 0 6px;}
-  .gen-repas{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dotted var(--trait);}
+  .gen-day{background:var(--carte);border:1px solid var(--trait);border-radius:12px;box-shadow:var(--ombre);margin-bottom:12px;overflow:hidden;}
+  .gen-day-h{font-size:16px;padding:12px 15px 10px;color:var(--vert-fonce);font-weight:700;border-bottom:1px solid var(--trait);}
+  .gen-repas{display:flex;align-items:center;gap:10px;padding:11px 12px;min-height:56px;border-left:4px solid var(--vert-feuille);}
+  .gen-repas + .gen-repas{border-top:1px solid var(--trait);}
+  .gen-repas.soir{border-left-color:var(--betterave);}
   .gen-moment{flex:0 0 auto;width:36px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--vert-feuille);}
   .gen-moment.soir{color:var(--betterave);}
   .gen-titre{flex:1 1 auto;color:var(--encre);text-decoration:none;font-size:14px;}
   .gen-titre:active{opacity:.6;}
-  .gen-reroll{flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);font-size:15px;cursor:pointer;}
-  .gen-reroll:active{background:var(--vert-clair);}
+  .gen-reroll,.gen-del{flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--trait);background:#fff;color:var(--vert-fonce);font-size:15px;line-height:1;cursor:pointer;}
+  .gen-reroll:active,.gen-del:active{background:var(--vert-clair);}
   .gen-reroll svg{width:16px;height:16px;}
+  .gen-handle{flex:0 0 auto;border:none;background:none;padding:0;color:var(--ardoise);opacity:.35;cursor:grab;touch-action:none;display:inline-flex;align-items:center;}
+  .gen-handle svg{width:16px;height:16px;}
+  .gen-repas.supprime{opacity:.55;}
+  .gen-repas.supprime .gen-titre{text-decoration:line-through;color:var(--ardoise);pointer-events:none;}
+  .gen-repas.dragging{opacity:.4;}
+  .gen-repas.drop-target{background:var(--vert-clair);box-shadow:inset 0 0 0 2px var(--vert-feuille);border-radius:6px;}
   .day-total{padding:8px 15px;font-size:12px;color:var(--ardoise);border-top:1px solid var(--trait);background:#FBFCF9;font-variant-numeric:tabular-nums;}
   /* Couverts (vue recette) */
   .couverts{display:flex;align-items:center;gap:10px;margin:0 0 20px;flex-wrap:wrap;}
@@ -348,6 +358,7 @@ const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"
 const PREPARE_SVG='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 const COOK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M2 10h20"/><path d="M9.5 6.5c0-1 1-1 1-2M14.5 6.5c0-1 1-1 1-2"/></svg>';
 const REROLL_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>';
+const GRIP_SVG='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="9" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="19" r="1.6"/><circle cx="15" cy="19" r="1.6"/></svg>';
 
 function nutriMeta(r){ const m=[];
   if(typeof r.kcal==='number') m.push('~'+r.kcal+' kcal');
@@ -357,6 +368,7 @@ function repasRow(wid,di,ri,r){
   const key=wid+':'+di+'-'+ri, del=deleted.has(key), cv=couvertsGet(wid,di,ri);
   const meta=nutriMeta(r); if(cv>1) meta.push(cv+' couverts');
   return '<div class="repas-row '+(r.moment==='Soir'?'soir':'midi')+(del?' supprime':'')+'" data-key="'+key+'">'
+    +'<button class="repas-grip" aria-label="Déplacer ce repas" title="Déplacer">'+GRIP_SVG+'</button>'
     +'<span class="repas-main repas-row-moment">'+r.moment+'</span>'
     +'<span class="repas-main"><span class="repas-row-titre">'+r.titre+'</span>'
     +'<span class="repas-row-meta">'+meta.join(' · ')+(r.priorite?'<span class="frais-pill">frais</span>':'')+'</span></span>'
@@ -591,7 +603,7 @@ function runGenerate(wid){
   loadPool().then(function(pool){
     if(!pool.length){ setGenMsg('Aucune recette exploitable dans le catalogue.'); if(btn) btn.disabled=false; return; }
     const tokens=tokenize(stock), menu=generateMenu(pool, tokens, {history:genHistory(), rng:Math.random});
-    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu };
+    genState={ wid:wid, tokens:tokens, pool:pool, menu:menu, deleted:new Set() };
     renderProposal();
   }).catch(function(e){ setGenMsg('Erreur : '+e.message); if(btn) btn.disabled=false; });
 }
@@ -602,10 +614,15 @@ function renderProposal(){
   m.jours.forEach(function(day,di){ const d=addDays(parseId(wid),di);
     h+='<div class="gen-day"><div class="gen-day-h">'+JOURS[d.getDay()]+' '+fmt(d)+'</div>';
     if(!day.repas.length) h+='<div class="repas-vide">—</div>';
-    day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe);
-      h+='<div class="gen-repas"><span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
-        +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>'
-        +'<button class="gen-reroll" data-reroll="'+di+'-'+ri+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button></div>';
+    day.repas.forEach(function(ref,ri){ const r=recipeById(ref.recipe); const gk=di+'-'+ri, del=genState.deleted.has(gk);
+      h+='<div class="gen-repas'+(ri===0?'':' soir')+(del?' supprime':'')+'" data-gkey="'+gk+'">'
+        +(del?'':'<button class="gen-handle" aria-label="Déplacer ce repas" title="Déplacer">'+GRIP_SVG+'</button>')
+        +'<span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
+        +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>';
+      if(del){ h+='<button class="gen-del" data-gdel="'+gk+'" aria-label="Rétablir ce repas" title="Rétablir">↩</button>'; }
+      else { h+='<button class="gen-reroll" data-reroll="'+gk+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button>'
+        +'<button class="gen-del" data-gdel="'+gk+'" aria-label="Supprimer ce repas" title="Supprimer">✕</button>'; }
+      h+='</div>';
     });
     h+='</div>';
   });
@@ -619,10 +636,14 @@ function rerollSlot(di,ri){
   if(alt && alt!==ref.recipe){ ref.recipe=alt; renderProposal(); }
 }
 function validateGen(){
-  if(!genState) return; const wid=genState.wid, menu=genState.menu, used=usedIdsOf(menu);
+  if(!genState) return; const wid=genState.wid, menu=genState.menu, del=genState.deleted, used=usedIdsOf(menu);
   const cache=loadRecipesCache(); used.forEach(function(id){ const r=recipeById(id); if(r) cache[id]=r; }); saveRecipesCache(cache);
   const gen=loadGenMenus(); gen[wid]={jours:menu.jours}; saveGenMenus(gen);
-  pushHistory(Array.from(used));
+  Array.from(deleted).forEach(function(k){ if(k.indexOf(wid+':')===0) deleted.delete(k); });   // repart de la proposition
+  const kept=[]; menu.jours.forEach(function(day,di){ day.repas.forEach(function(ref,ri){
+    if(del.has(di+'-'+ri)) deleted.add(wid+':'+di+'-'+ri); else kept.push(ref.recipe); }); });
+  saveSet('owq.deleted', deleted);
+  pushHistory(Array.from(new Set(kept)));
   rebuild();
   deductStock(wid, store.get('owq.panier.'+wid)||'');       // pré-déduit le stock saisi de la liste de courses
   rerenderPlanning(); genState=null; closeOverlay();
@@ -693,6 +714,8 @@ ovBody.addEventListener('click',function(e){
   if(gbk){ if(genState) openGenerate(genState.wid); return; }
   const rr=e.target.closest('[data-reroll]');
   if(rr){ const rp=rr.dataset.reroll.split('-'); rerollSlot(+rp[0],+rp[1]); return; }
+  const gd=e.target.closest('[data-gdel]');
+  if(gd){ if(genState){ const k=gd.dataset.gdel; if(genState.deleted.has(k)) genState.deleted.delete(k); else genState.deleted.add(k); renderProposal(); } return; }
   const cvb=e.target.closest('[data-cv]');
   if(cvb){ const cont=cvb.closest('[data-cvkey]');
     if(cont){ const key=cont.dataset.cvkey, kk=parseKey(key);
@@ -746,51 +769,80 @@ function doSwap(srcKey,tgtKey){
   MENUS=materializeMenus(applyOverrides(RAW_MENUS), R);
   refreshDay(addDays(parseId(wid),a.di)); if(b.di!==a.di) refreshDay(addDays(parseId(wid),b.di));
 }
-let drag=null, dragTimer=null, suppressClick=false;
-const LONGPRESS=320, MOVE_CANCEL=10;
+let drag=null, suppressClick=false;
 function targetRowAt(x,y){ const el=document.elementFromPoint(x,y); return el?el.closest('.repas-row'):null; }
 function moveGhost(x,y){ if(drag&&drag.ghost) drag.ghost.style.transform='translate('+(x+8)+'px,'+(y-16)+'px)'; }
 function setDropTarget(t){ const prev=planning.querySelector('.drop-target'); if(prev&&prev!==t) prev.classList.remove('drop-target'); if(t&&drag&&t!==drag.row) t.classList.add('drop-target'); }
 function endDragCleanup(){ if(!drag) return; if(drag.ghost) drag.ghost.remove(); if(drag.row) drag.row.classList.remove('dragging'); const dt=planning.querySelector('.drop-target'); if(dt) dt.classList.remove('drop-target'); document.body.classList.remove('dragging-active'); drag=null; }
-function armDrag(x,y){
-  if(!drag) return; drag.armed=true; dragTimer=null;
-  const g=document.createElement('div'); g.className='drag-ghost';
-  const t=drag.row.querySelector('.repas-row-titre'); g.textContent=t?t.textContent:'';
-  document.body.appendChild(g); drag.ghost=g;
-  drag.row.classList.add('dragging'); document.body.classList.add('dragging-active');
-  moveGhost(x,y); if(navigator.vibrate){ try{ navigator.vibrate(25); }catch(e){} }
-}
-/* Appui long sur une ligne = déplacer ; tap = ouvrir la recette ; glissement avant l'appui long = scroll. */
+/* Glisser depuis la poignée (icône) uniquement ; tap sur la ligne = ouvrir la recette. */
 planning.addEventListener('pointerdown',function(e){
   if(e.pointerType==='mouse' && e.button!==0) return;
-  if(e.target.closest('.row-action')) return;
-  const row=e.target.closest('.repas-row'); if(!row) return;
-  drag={row:row, key:row.dataset.key, x:e.clientX, y:e.clientY, armed:false};
-  dragTimer=setTimeout(function(){ armDrag(e.clientX,e.clientY); }, LONGPRESS);
+  const grip=e.target.closest('.repas-grip'); if(!grip) return;
+  const row=grip.closest('.repas-row'); if(!row) return;
+  e.preventDefault();
+  drag={row:row, key:row.dataset.key};
+  const g=document.createElement('div'); g.className='drag-ghost';
+  const t=row.querySelector('.repas-row-titre'); g.textContent=t?t.textContent:'';
+  document.body.appendChild(g); drag.ghost=g;
+  row.classList.add('dragging'); document.body.classList.add('dragging-active');
+  moveGhost(e.clientX,e.clientY); if(navigator.vibrate){ try{ navigator.vibrate(25); }catch(err){} }
 });
 window.addEventListener('pointermove',function(e){
   if(!drag) return;
-  if(!drag.armed){
-    if(Math.abs(e.clientX-drag.x)>MOVE_CANCEL || Math.abs(e.clientY-drag.y)>MOVE_CANCEL){ clearTimeout(dragTimer); dragTimer=null; drag=null; }
-    return;
-  }
   moveGhost(e.clientX,e.clientY);
   setDropTarget(targetRowAt(e.clientX,e.clientY));
   const m=70, h=window.innerHeight;
   if(e.clientY<m) window.scrollBy(0,-14); else if(e.clientY>h-m) window.scrollBy(0,14);
 });
-/* Sur tactile, seul preventDefault sur touchmove bloque le scroll natif pendant le drag (touch-action ne suffit pas une fois le geste commence). */
-window.addEventListener('touchmove',function(e){ if(drag&&drag.armed) e.preventDefault(); },{passive:false});
+/* Sur tactile, preventDefault sur touchmove bloque le scroll natif pendant le drag. */
+window.addEventListener('touchmove',function(e){ if(drag) e.preventDefault(); },{passive:false});
 window.addEventListener('pointerup',function(e){
   if(!drag) return;
-  if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; }
-  if(drag.armed){
-    const src=drag.key, t=targetRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.key)||null;
-    endDragCleanup(); suppressClick=true; setTimeout(function(){ suppressClick=false; },60);
-    if(tgt && tgt!==src) doSwap(src,tgt);
-  } else { drag=null; }
+  const src=drag.key, t=targetRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.key)||null;
+  endDragCleanup(); suppressClick=true; setTimeout(function(){ suppressClick=false; },60);
+  if(tgt && tgt!==src) doSwap(src,tgt);
 });
-window.addEventListener('pointercancel',function(){ if(dragTimer){ clearTimeout(dragTimer); dragTimer=null; } endDragCleanup(); });
+window.addEventListener('pointercancel',endDragCleanup);
+
+/* ===== Drag'n'drop dans la proposition de menu (poignée) : échange deux créneaux ===== */
+function doSwapGen(srcKey,tgtKey){
+  if(!genState) return;
+  const a=srcKey.split('-'), b=tgtKey.split('-'), ad=+a[0],ar=+a[1],bd=+b[0],br=+b[1];
+  const A=genState.menu.jours[ad]&&genState.menu.jours[ad].repas[ar], B=genState.menu.jours[bd]&&genState.menu.jours[bd].repas[br];
+  if(!A||!B) return;
+  const t=A.recipe; A.recipe=B.recipe; B.recipe=t;                       // échange les recettes, garde les créneaux
+  const ka=ad+'-'+ar, kb=bd+'-'+br, da=genState.deleted.has(ka), db=genState.deleted.has(kb);
+  if(da!==db){ if(da){genState.deleted.delete(ka);genState.deleted.add(kb);} else {genState.deleted.delete(kb);genState.deleted.add(ka);} }
+  renderProposal();
+}
+let gdrag=null;
+function genRowAt(x,y){ const el=document.elementFromPoint(x,y); return el?el.closest('.gen-repas'):null; }
+function moveGhostGen(x,y){ if(gdrag&&gdrag.ghost) gdrag.ghost.style.transform='translate('+(x+8)+'px,'+(y-16)+'px)'; }
+function genDropTarget(t){ const prev=ovBody.querySelector('.gen-repas.drop-target'); if(prev&&prev!==t) prev.classList.remove('drop-target'); if(t&&gdrag&&t!==gdrag.row) t.classList.add('drop-target'); }
+function endGenDrag(){ if(!gdrag) return; if(gdrag.ghost) gdrag.ghost.remove(); if(gdrag.row) gdrag.row.classList.remove('dragging'); const dt=ovBody.querySelector('.gen-repas.drop-target'); if(dt) dt.classList.remove('drop-target'); document.body.classList.remove('dragging-active'); gdrag=null; }
+ovBody.addEventListener('pointerdown',function(e){
+  const hnd=e.target.closest('.gen-handle'); if(!hnd) return;
+  if(e.pointerType==='mouse' && e.button!==0) return;
+  const row=hnd.closest('.gen-repas'); if(!row) return;
+  e.preventDefault();
+  gdrag={row:row, key:row.dataset.gkey};
+  const g=document.createElement('div'); g.className='drag-ghost'; const t=row.querySelector('.gen-titre'); g.textContent=t?t.textContent:''; document.body.appendChild(g); gdrag.ghost=g;
+  row.classList.add('dragging'); document.body.classList.add('dragging-active');
+  moveGhostGen(e.clientX,e.clientY); if(navigator.vibrate){ try{ navigator.vibrate(20); }catch(err){} }
+});
+window.addEventListener('pointermove',function(e){
+  if(!gdrag) return;
+  moveGhostGen(e.clientX,e.clientY); genDropTarget(genRowAt(e.clientX,e.clientY));
+  const m=70,h=window.innerHeight; if(e.clientY<m) ovBody.scrollBy(0,-14); else if(e.clientY>h-m) ovBody.scrollBy(0,14);
+});
+window.addEventListener('touchmove',function(e){ if(gdrag) e.preventDefault(); },{passive:false});
+window.addEventListener('pointerup',function(e){
+  if(!gdrag) return;
+  const src=gdrag.key, t=genRowAt(e.clientX,e.clientY), tgt=(t&&t.dataset.gkey)||null;
+  endGenDrag();
+  if(tgt && tgt!==src) doSwapGen(src,tgt);
+});
+window.addEventListener('pointercancel',function(){ endGenDrag(); });
 
 /* Service worker (HTTPS uniquement, ex. GitHub Pages) */
 if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
