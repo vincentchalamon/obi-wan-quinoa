@@ -264,7 +264,7 @@ let R = {};
 /* midi/soir/resolveRepas/materializeMenus : voir logic.js (materializeMenus(raw, R)). */
 
 /* Régimes proposés dans le profil (valeur = label RecipeSage, exploité par le générateur en phase 2) */
-const DIETS=[["","Aucun"],["vegetarien","Végétarien"],["vegan","Vegan"],["lacto-ovo","Lacto-ovo végétarien"],["flexitarien","Flexitarien"]];
+const DIETS=[["","Aucun"],["vegetarien","Végétarien"],["vegan","Vegan"]];
 
 let RAW_MENUS = {}; /* menus générés bruts (avant matérialisation), clé = début de semaine ; base des overrides */
 let MENUS = {};   /* menus matérialisés (recettes résolues) */
@@ -572,12 +572,13 @@ function openGenerate(wid){
   h+='<div class="prep-ok" id="gen-msg">'+(off?'Connexion requise pour générer le menu.':'')+'</div>';
   ovBody.innerHTML=h; openOverlay();
 }
-/* Pool = plats (hors "dessert") du catalogue owner, détaillés puis mappés. Filtre régime souple. */
+/* Pool = recettes étiquetées "repas" du catalogue owner (base/accompagnement/dessert/non étiqueté exclus),
+   détaillées puis mappées. Filtre régime souple. */
 function loadPool(){
   if(genPoolCache && genPoolCache.length) return Promise.resolve(genPoolCache);   // ne pas re-servir un pool vide (échec réseau)
   function labelIs(r, val){ return (r.recipeLabels||[]).some(function(l){ return l.label && norm(l.label.title)===val; }); }
   return rsGetRecipes({}).then(function(lite){
-    let mains=lite.filter(function(r){ return !labelIs(r,'dessert'); });
+    let mains=lite.filter(function(r){ return labelIs(r,'repas'); });
     if(profile.diet){ const d=mains.filter(function(r){ return labelIs(r, profile.diet); });
       if(d.length>=4) mains=d; }                          // filtre régime souple (évite un pool vide)
     return Promise.all(mains.map(function(r){ return rsGetRecipe(r.id).then(rsMapRecipe).catch(function(){ return null; }); }));
