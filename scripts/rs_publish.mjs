@@ -76,4 +76,4 @@ if (!CONFIRM) { console.log('\n[dry-run] relance avec --confirm pour publier dan
 
 const out = await post('recipes.createRecipe', payload);
 console.log('\nPubliée ✓  id=' + out.id);
-console.log('https://recipesage.com/#/recipe/' + out.id);
+console.log('https://recipesage.com/app/recipe/' + out.id);
