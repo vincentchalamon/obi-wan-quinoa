@@ -35,8 +35,8 @@
 
   /* ---------- Liste de courses ---------- */
   function frac(x){const w=Math.floor(x+1e-6),r=x-w;let f='';
-    if(Math.abs(r-0.25)<.02)f='¼';else if(Math.abs(r-0.5)<.02)f='½';else if(Math.abs(r-0.75)<.02)f='¾';
-    if(f)return (w>0?w:'')+f;
+    if(Math.abs(r-0.25)<.02)f='1/4';else if(Math.abs(r-0.5)<.02)f='1/2';else if(Math.abs(r-0.75)<.02)f='3/4';
+    if(f)return w>0?(w+' '+f):f;
     return (Math.round(x*10)/10).toString().replace('.',',');}
   function qLabel(e){
     let s;
@@ -53,7 +53,7 @@
 
   /* ---------- Ingrédients texte libre (RecipeSage) ---------- */
   /* Normalisation pour matching (minuscules, sans accents). */
-  function stripAccents(s){ return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  function stripAccents(s){ return (s||'').replace(/œ/g,'oe').replace(/Œ/g,'Oe').normalize('NFD').replace(/[̀-ͯ]/g,''); }
   function norm(s){ return stripAccents((s||'').toLowerCase()).replace(/\s+/g,' ').trim(); }
 
   const FRAC_UNI={'½':'1/2','⅓':'1/3','⅔':'2/3','¼':'1/4','¾':'3/4',
@@ -61,6 +61,7 @@
   /* unités reconnues (les plus longues d'abord pour éviter les préfixes) */
   const UNITS=[['c. à soupe','cs'],['c. à café','cc'],['cuillères à soupe','cs'],['cuillère à soupe','cs'],
     ['cuillères à café','cc'],['cuillère à café','cc'],['càs','cs'],['càc','cc'],
+    ['c. à s.','cs'],['c. à c.','cc'],['c. à s','cs'],['c. à c','cc'],['c à s','cs'],['c à c','cc'],
     ['kg','kg'],['mg','mg'],['ml','ml'],['cl','cl'],['gousses','gousse'],['gousse','gousse'],
     ['bottes','botte'],['botte','botte'],['tranches','tranche'],['tranche','tranche'],
     ['pincées','pincée'],['pincée','pincée'],['sachets','sachet'],['sachet','sachet'],
@@ -90,11 +91,11 @@
 
   /* Rayon d'un ingrédient par mots-clés (défaut "aut" = Autres). */
   const RAYON_KEYWORDS=[
-    ['leg',['haricot vert','pomme de terre','patate douce','patate','courgette','tomate','carotte','oignon','echalote','ail','poivron','piment','aubergine','epinard','salade','laitue','roquette','mache','concombre','betterave','champignon','brocoli','chou-fleur','chou fleur','chou','romanesco','poireau','celeri','courge','potimarron','butternut','potiron','citrouille','radis','navet','rutabaga','fenouil','petit pois','pousse','endive','artichaut','asperge','panais','blette','cresson','mais','gingembre','avocat','courgette jaune']],
-    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','chevre','roquefort','gruyere','comte','emmental','halloumi','fromage','lentille','pois chiche','pois casse','haricot rouge','haricot blanc','haricot noir','feve','haricot','edamame','soja']],
+    ['leg',['haricot vert','haricots verts','pomme de terre','pommes de terre','patate douce','patate','courgette','tomate','carotte','oignon','echalote','ail','poivron','piment','aubergine','epinard','salade','laitue','roquette','mache','concombre','betterave','champignon','brocoli','chou-fleur','chou fleur','chou','romanesco','poireau','celeri','courge','potimarron','butternut','potiron','citrouille','radis','navet','rutabaga','fenouil','petit pois','petits pois','pousse','endive','artichaut','asperge','panais','blette','cresson','mais','gingembre','avocat','courgette jaune']],
+    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','chevre','roquefort','gruyere','comte','emmental','halloumi','cheddar','vieux-lille','chorizo','fromage','lentille','pois chiche','pois casse','haricot rouge','haricot blanc','haricot noir','feve','haricot','edamame','soja']],
     ['fru',['pomme','banane','poire','peche','nectarine','abricot','prune','fraise','framboise','mure','groseille','citron','orange','pamplemousse','clementine','raisin','kiwi','mangue','ananas','cerise','myrtille','melon','pasteque','figue','datte','grenade','rhubarbe']],
-    ['epi',['farine','maizena','fecule','quinoa','riz','pate','nouille','spaghetti','penne','tagliatelle','vermicelle','couscous','boulgour','semoule','polenta','ble','orge','epeautre','sarrasin','pain','chapelure','flocon','avoine','chocolat','cacao','noix','noisette','amande','graine','tahini','conserve','coulis','concentre de tomate','bouillon','sucre','cassonade','sirop','confiture','pate feuilletee','pate brisee']],
-    ['con',['sel','poivre','huile','vinaigre','sauce soja','tamari','sauce','harissa','epice','curry','cumin','paprika','curcuma','cannelle','muscade','herbe','thym','romarin','laurier','origan','basilic','persil','coriandre','estragon','ciboulette','moutarde','miel','levure','bicarbonate','vanille']],
+    ['epi',['farine','maizena','fecule','quinoa','riz','pate','nouille','spaghetti','penne','tagliatelle','vermicelle','coquillette','couscous','boulgour','semoule','polenta','ble','orge','epeautre','sarrasin','pain','chapelure','flocon','avoine','chocolat','cacao','noix','noisette','amande','pignon','graine','tahini','conserve','coulis','concentre de tomate','bouillon','sucre','cassonade','sirop','confiture','pate feuilletee','pate brisee']],
+    ['con',['sel','poivre','huile','beurre','margarine','vinaigre','sauce soja','tamari','sauce','harissa','epice','curry','cumin','paprika','curcuma','cannelle','muscade','herbe','thym','romarin','laurier','origan','basilic','persil','coriandre','estragon','ciboulette','moutarde','miel','levure','bicarbonate','vanille']],
   ];
   /* Regex compilées : mot entier + pluriel éventuel (s/x). Évite les faux positifs de sous-chaîne
      ("mais" dans "maison") tout en acceptant les pluriels ("courgette" -> "courgettes"). */

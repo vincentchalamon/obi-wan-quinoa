@@ -40,11 +40,11 @@ test('fmt : 1er abrégé et mois en toutes lettres', () => {
   assert.equal(L.fmt(new Date(2026, 6, 3)), '3 juillet');
 });
 
-test('frac : fractions unicode et décimales à la française', () => {
+test('frac : fractions ASCII lisibles et décimales à la française', () => {
   assert.equal(L.frac(1), '1');
-  assert.equal(L.frac(0.5), '½');
-  assert.equal(L.frac(0.25), '¼');
-  assert.equal(L.frac(1.75), '1¾');
+  assert.equal(L.frac(0.5), '1/2');
+  assert.equal(L.frac(0.25), '1/4');
+  assert.equal(L.frac(1.75), '1 3/4');
   assert.equal(L.frac(0.3), '0,3');
 });
 
@@ -54,7 +54,7 @@ test('qLabel : unités, pluriels et note', () => {
   assert.equal(L.qLabel({ q: 1, u: 'gousse' }), '1 gousse');
   assert.equal(L.qLabel({ q: 2, u: 'gousse' }), '2 gousses');
   assert.equal(L.qLabel({ q: null, u: '', note: 'option' }), 'option');
-  assert.equal(L.qLabel({ q: 0.5, u: '' }), '½');
+  assert.equal(L.qLabel({ q: 0.5, u: '' }), '1/2');
 });
 
 test('materializeMenus : slot 0 = Midi, slot 1 = Soir, référence inconnue filtrée', () => {
@@ -201,7 +201,7 @@ test('scaleIngredientLine : ×couverts sur TOUTES les quantités, épargne T45/%
   assert.equal(L.scaleIngredientLine('Œufs durs — 2', 2), 'Œufs durs — 4');          // compte après tiret
   assert.equal(L.scaleIngredientLine('Ail — 1 gousse', 2), 'Ail — 2 gousse');        // unité non-poids
   assert.equal(L.scaleIngredientLine('Concombre — ½', 2), 'Concombre — 1');          // fraction unicode
-  assert.equal(L.scaleIngredientLine('Oignon jaune — ¼', 2), 'Oignon jaune — ½');
+  assert.equal(L.scaleIngredientLine('Oignon jaune — ¼', 2), 'Oignon jaune — 1/2');
   assert.equal(L.scaleIngredientLine('Yaourt grec — 100 g (0-3%)', 2), 'Yaourt grec — 200 g (0-3%)'); // % épargné
   assert.equal(L.scaleIngredientLine('Farine T45 — 70 g', 3), 'Farine T45 — 210 g'); // T45 épargné
   assert.equal(L.scaleIngredientLine('Chocolat 70% — 100 g', 2), 'Chocolat 70% — 200 g');
@@ -239,4 +239,28 @@ test('generateMenu : respecte les labels midi/soir quand présents', () => {
   const menu = L.generateMenu(pool, [], { rng: () => 0.5, days: 1, perDay: 2 });
   assert.equal(menu.jours[0].repas[0].recipe, 'm1');   // créneau midi -> recette labellisée "midi"
   assert.equal(menu.jours[0].repas[1].recipe, 's1');   // créneau soir -> recette labellisée "soir"
+});
+
+test('rayonFor : ligature œ et pluriel "petits pois" classés correctement', () => {
+  assert.equal(L.rayonFor('Œufs'), 'prot');            // ligature œ -> oe
+  assert.equal(L.rayonFor('oeuf'), 'prot');
+  assert.equal(L.rayonFor('petits pois'), 'leg');      // pluriel des deux mots
+  assert.equal(L.rayonFor('petit pois'), 'leg');
+  assert.equal(L.rayonFor('haricots verts'), 'leg');   // pluriel 1er mot d'un mot-clé composé
+  assert.equal(L.rayonFor('pommes de terre'), 'leg');
+  assert.equal(L.rayonFor('coquillettes'), 'epi');
+  assert.equal(L.rayonFor('cheddar râpé'), 'prot');
+  assert.equal(L.rayonFor('beurre'), 'con');
+});
+
+test('parseQty : cuillères abrégées (c. à s. / c à s) reconnues', () => {
+  assert.equal(L.parseQty('2 c. à s. de sauce soja').unit, 'cs');
+  assert.equal(L.parseQty('1 c. à c. de paprika').unit, 'cc');
+  assert.equal(L.parseQty('1 c à s huile').unit, 'cs');
+});
+
+test('scaleIngredientLine : fractions ASCII en entrée et sortie', () => {
+  assert.equal(L.scaleIngredientLine('1/2 citron', 2), '1 citron');
+  assert.equal(L.scaleIngredientLine('1/4 oignon', 2), '1/2 oignon');
+  assert.equal(L.scaleIngredientLine('1 oignon', 0.5), '1/2 oignon');
 });

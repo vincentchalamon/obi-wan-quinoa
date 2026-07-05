@@ -22,9 +22,9 @@ Le catalogue-source est le RecipeSage **de l'auteur** (son `userId` est codé en
 
 ## Enrichir le catalogue (auteur)
 
-Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en héberge aucune. Pour ajouter une recette, l'auteur utilise la skill **Claude Code `/recipe`** (en CLI/desktop, hors application) : elle rédige une recette équilibrée et sourcée, puis la produit **au format prêt à coller** dans le formulaire « nouvelle recette » de RecipeSage (ingrédients, étapes, **labels** dont les ingrédients-clés qui pilotent le matching, valeurs nutritionnelles à renseigner). L'import est **manuel**. Plus le catalogue est étiqueté et fourni, meilleures sont les propositions.
+Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en héberge aucune. Pour ajouter une recette, l'auteur utilise la skill **Claude Code `/recipe`** (en CLI/desktop, hors application) : elle rédige une recette équilibrée et sourcée (ingrédients au format `quantité unité nom`, une ligne par ingrédient, pour 1 personne ; étapes ; **labels** de type et de régime ; valeurs nutritionnelles), puis la produit **au format prêt à coller** dans le formulaire « nouvelle recette » de RecipeSage. Plus le catalogue est étiqueté et fourni, meilleures sont les propositions.
 
-**Convention de labels** : `dessert` (exclu de la génération de menus), `midi` / `soir` (place la recette dans le créneau correspondant), le régime (`vegetarien`, `vegan`, `lacto-ovo`), et les **ingrédients-clés** (`courgette`, `lentilles`, `tofu`…) qui orientent le matching anti-gaspi.
+**Convention de labels** : un label de **type** — `repas` (seules ces recettes entrent dans la génération de menus), `base`, `accompagnement`, `dessert` — et un ou plusieurs labels de **régime** — `vegetarien`, `vegan` (additif : un plat vegan porte aussi `vegetarien`), `viande`, `poisson` — plus les allergènes `sans-gluten` / `sans-lactose` le cas échéant. Pas de label par ingrédient : le matching anti-gaspi lit déjà le texte des ingrédients.
 
 ### Équilibre alimentaire visé (référence d'écriture des recettes)
 
