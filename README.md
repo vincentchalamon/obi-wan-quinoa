@@ -6,6 +6,21 @@ Application web (PWA) pour composer ses **menus végétariens de la semaine** et
 
 Le catalogue-source est le RecipeSage **de l'auteur** (son `userId` est codé en dur). Pour utiliser votre propre catalogue, **forkez** le projet et remplacez cet identifiant dans `recipesage.js`.
 
+## Aperçu
+
+<table>
+<tr>
+<td align="center" width="33%"><img src="docs/screenshots/menu-semaine.jpg" width="220" alt="Semaine de menus"><br><sub>Menu de la semaine</sub></td>
+<td align="center" width="33%"><img src="docs/screenshots/generer-menu.jpg" width="220" alt="Génération du menu"><br><sub>Génération anti-gaspi</sub></td>
+<td align="center" width="33%"><img src="docs/screenshots/liste-courses.jpg" width="220" alt="Liste de courses"><br><sub>Liste de courses</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/screenshots/recette-detail.jpg" width="220" alt="Détail d'une recette"><br><sub>Détail d'une recette</sub></td>
+<td align="center"><img src="docs/screenshots/recette-preparation.jpg" width="220" alt="Étapes de préparation"><br><sub>Étapes de préparation</sub></td>
+<td align="center"><img src="docs/screenshots/reglages.jpg" width="220" alt="Réglages"><br><sub>Réglages</sub></td>
+</tr>
+</table>
+
 ## Comment ça marche
 
 1. **Profil** (icône ⚙ dans l'en-tête) : régime alimentaire, nombre de **couverts** par défaut, **début de la semaine** alimentaire (les données de démonstration sont calées sur le jeudi, rythme AMAP).
