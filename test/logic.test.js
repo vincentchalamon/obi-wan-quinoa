@@ -292,4 +292,7 @@ test('rayonFor : safran (con), lardons/faux lardons (prot)', () => {
   assert.equal(L.rayonFor('safran'), 'con');
   assert.equal(L.rayonFor('faux lardons'), 'prot');
   assert.equal(L.rayonFor('lardons fumés'), 'prot');
+  assert.equal(L.rayonFor('menthe'), 'con');
+  assert.equal(L.rayonFor('vin blanc sec'), 'epi');
+  assert.equal(L.rayonFor('vinaigre de vin'), 'con');   // pas de collision avec le mot-clé "vin blanc"
 });
