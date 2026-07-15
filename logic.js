@@ -56,6 +56,16 @@
   function stripAccents(s){ return (s||'').replace(/œ/g,'oe').replace(/Œ/g,'Oe').normalize('NFD').replace(/[̀-ͯ]/g,''); }
   function norm(s){ return stripAccents((s||'').toLowerCase()).replace(/\s+/g,' ').trim(); }
 
+  /* Invariables au pluriel (noms/adjectifs en -s/-x, source : Lexique 3.83, colonne "nombre" vide).
+     Évitent les faux stems de la singularisation (ananas -> anana, noix -> noi). Régénérable via le
+     vocabulaire du catalogue (scripts/rs_lint.mjs --vocab) recoupé au lexique. Voir README « Sources ». */
+  const SINGULARS = new Set(['ananas','anis','brebis','cassis','couscous','doux','faux','frais','maïs','noix','pois','radis','vieux']);
+  function singular(w){ return (w.length>=4 && /[sx]$/.test(w) && !SINGULARS.has(w)) ? w.slice(0,-1) : w; }
+  /* Forme canonique d'un nom pour le cumul : minuscule + ligature œ->oe + espaces normalisés,
+     ACCENTS PRÉSERVÉS (donc "Pâte" != "Pâté"), puis singularisation régulière -s/-x par mot (sauf
+     invariables). Fusionne oeuf/oeufs, tomate/tomates, pomme de terre/pommes de terre. */
+  function canonName(n){ return (n||'').toLowerCase().replace(/œ/g,'oe').replace(/\s+/g,' ').trim().split(' ').map(singular).join(' '); }
+
   const FRAC_UNI={'½':'1/2','⅓':'1/3','⅔':'2/3','¼':'1/4','¾':'3/4',
     '⅕':'1/5','⅖':'2/5','⅗':'3/5','⅘':'4/5','⅙':'1/6','⅛':'1/8','⅜':'3/8','⅝':'5/8','⅞':'7/8'};
   /* unités reconnues (les plus longues d'abord pour éviter les préfixes) */
@@ -92,10 +102,10 @@
   /* Rayon d'un ingrédient par mots-clés (défaut "aut" = Autres). */
   const RAYON_KEYWORDS=[
     ['leg',['haricot vert','haricots verts','pomme de terre','pommes de terre','patate douce','patate','courgette','tomate','carotte','oignon','echalote','ail','poivron','piment','aubergine','epinard','salade','laitue','roquette','mache','concombre','betterave','champignon','brocoli','chou-fleur','chou fleur','chou','romanesco','poireau','celeri','courge','potimarron','butternut','potiron','citrouille','radis','navet','rutabaga','fenouil','petit pois','petits pois','pousse','endive','artichaut','asperge','panais','blette','cresson','mais','gingembre','avocat','courgette jaune']],
-    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','chevre','roquefort','gruyere','comte','emmental','halloumi','cheddar','vieux-lille','chorizo','fromage','lentille','pois chiche','pois casse','haricot rouge','haricot blanc','haricot noir','feve','haricot','edamame','soja']],
+    ['prot',['tofu','tempeh','seitan','oeuf','œuf','yaourt','skyr','lait','creme','feta','mozzarella','parmesan','ricotta','chevre','roquefort','gruyere','comte','emmental','halloumi','cheddar','vieux-lille','chorizo','fromage','lentille','pois chiche','pois casse','haricot rouge','haricot blanc','haricot noir','feve','haricot','edamame','soja','lardon']],
     ['fru',['pomme','banane','poire','peche','nectarine','abricot','prune','fraise','framboise','mure','groseille','citron','orange','pamplemousse','clementine','raisin','kiwi','mangue','ananas','cerise','myrtille','melon','pasteque','figue','datte','grenade','rhubarbe']],
     ['epi',['farine','maizena','fecule','quinoa','riz','pate','nouille','spaghetti','penne','tagliatelle','vermicelle','coquillette','couscous','boulgour','semoule','polenta','ble','orge','epeautre','sarrasin','pain','chapelure','flocon','avoine','chocolat','cacao','noix','noisette','amande','pignon','graine','tahini','conserve','coulis','concentre de tomate','bouillon','sucre','cassonade','sirop','confiture','pate feuilletee','pate brisee']],
-    ['con',['sel','poivre','huile','beurre','margarine','vinaigre','sauce soja','tamari','sauce','harissa','epice','curry','cumin','paprika','curcuma','cannelle','muscade','herbe','thym','romarin','laurier','origan','basilic','persil','coriandre','estragon','ciboulette','moutarde','miel','levure','bicarbonate','vanille']],
+    ['con',['sel','poivre','huile','beurre','margarine','vinaigre','sauce soja','tamari','sauce','harissa','epice','curry','cumin','paprika','curcuma','safran','cannelle','muscade','herbe','thym','romarin','laurier','origan','basilic','persil','coriandre','estragon','ciboulette','moutarde','miel','levure','bicarbonate','vanille']],
   ];
   /* Regex compilées : mot entier + pluriel éventuel (s/x). Évite les faux positifs de sous-chaîne
      ("mais" dans "maison") tout en acceptant les pluriels ("courgette" -> "courgettes"). */
@@ -184,7 +194,7 @@
         if(deleted.has(wid+':'+di+'-'+ri)) return;
         const f = cv(di,ri) || 1;
         (r.shop||[]).forEach(function(s){
-          const k=s.n.toLowerCase().replace(/\s+/g,' ').trim()+'|'+(s.u||'')+'|'+s.r;   // cumul insensible à la casse (accents préservés)
+          const k=canonName(s.n)+'|'+(s.u||'')+'|'+s.r;   // cumul insensible casse + singulier/pluriel (accents préservés)
           if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
           const e=map.get(k);
           if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f;
@@ -199,6 +209,6 @@
 
   return { MOIS, JOURS, pad, idOf, parseId, addDays, startOfWeek, fmt,
            midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses,
-           stripAccents, norm, parseQty, rayonFor, scaleIngredientLine,
+           stripAccents, norm, canonName, parseQty, rayonFor, scaleIngredientLine,
            splitItems, tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative };
 });

@@ -36,3 +36,14 @@ test('rsMapRecipe : RecipeSage brut -> forme interne (shop dérivé, nutrition s
   assert.equal(r.kcal, 1200);        // "1,200" -> 1200 (séparateur de milliers, pas décimale)
   assert.equal(r.prot, 32);          // "32 g" -> 32
 });
+
+test('rsMapRecipe : "eau" exclue du shop mais conservée dans les ingrédients', () => {
+  const raw = { id: 'x2', title: 'T', instructions: 'x',
+    ingredients: '200 g quinoa\n25 ml eau\neau\n1 cl eau de fleur d’oranger' };
+  const r = RS.rsMapRecipe(raw);
+  assert.equal(r.ingredients.length, 4);                          // affichage recette inchangé
+  const names = r.shop.map((s) => s.n);
+  assert.ok(!names.includes('eau'));                              // les deux lignes "eau" retirées du shop
+  assert.ok(names.includes('quinoa'));
+  assert.ok(names.includes('eau de fleur d’oranger'));            // arôme conservé (pas "eau" seul)
+});

@@ -49,7 +49,8 @@
   function rsMapRecipe(raw){
     const ingredients = splitLines(raw.ingredients);
     const shop = ingredients.map(function(line){ const p = L.parseQty(line);
-      return { n:p.name, q:p.qty, u:p.unit, r:L.rayonFor(p.name) }; });
+      return { n:p.name, q:p.qty, u:p.unit, r:L.rayonFor(p.name) }; })
+      .filter(function(it){ return L.norm(it.n) !== 'eau'; });   // l'eau ne va pas sur la liste de courses (garde "eau de fleur d'oranger", etc.)
     const rec = { id: raw.id, titre: raw.title || '(sans titre)',
       ingredients: ingredients, etapes: splitLines(raw.instructions), shop: shop, labels: labelsOf(raw) };
     const img = (raw.recipeImages && raw.recipeImages[0] && raw.recipeImages[0].image) ? raw.recipeImages[0].image.location : '';
