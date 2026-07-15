@@ -16,7 +16,7 @@ Règles opératoires, chacune avec sa source ; le détail et les citations compl
 - **Oméga-3** réguliers (huile de colza/noix/lin, noix, graines de lin/chia) ; **B12, vitamine D, calcium** à surveiller (lacto-ovo). (§4 ; ANSES 2025)
 - **Complémentarité** légumineuses + céréales sur la journée/semaine. (§10)
 - **Variété** : pas la même protéine dominante deux jours de suite ; varier les féculents. (§10)
-- **Structure/jour** : 2 repas (midi/soir) équilibrés + **fruit de saison** + **entrée optionnelle** ; **sel < 8 g/j**. (§7 ; PNNS)
+- **Structure/jour** : 2 repas (midi/soir) équilibrés + **fruit de saison** + **entrée optionnelle** ; **sel < 5 g/j** (< 2 g de sodium). (§7 ; OMS / Santé publique France 2019)
 - **Collation de récupération** autour du yoga : **mercredi soir** + **samedi matin**. (§7)
 - **Autour du panier AMAP** + produits de saison ; frais en début de semaine ; **mercredi = placard/conserves** (jour de courses). (§9, §10)
 - **Boissons** : rooibos, tisanes, infusions (pauvres en tanins) ; éviter thé/café aux repas riches en fer. (§6 ; NIH)
@@ -44,7 +44,7 @@ Les recettes existantes (~900-1000 kcal/repas, ~1800-2000 kcal/j sur 2 repas) so
 ## 3. Protéines
 
 - Pour préserver la masse maigre pendant un déficit + activité : le repère théorique haut est **~1,6 g/kg/j** (≈ 130 g/j pour 82 kg), fourchette 1,2-2 g/kg selon littérature de nutrition sportive.
-- **Cible pratique retenue : ~115 g/j** (bas de la fourchette 1,2-2 g/kg, soutenable au quotidien), atteinte via les variantes protéinées (`_p`, ~2×55 g/repas) et les desserts laitiers maigres (skyr, fromage blanc). C'est nettement plus que les ~30 g/repas des recettes de base (~60 g/j) : **relever la densité protéique** (œufs, laitages, légumineuses, tofu/tempeh, protéine de soja). La collation sert notamment à compléter l'apport protéique.
+- **Cible pratique retenue : ~115 g/j** (≈ 1,4 g/kg — soutenable au quotidien, sous le repère haut ~1,6 g/kg ≈ 130 g), atteinte via les variantes protéinées (`_p`, ~2×55 g/repas) et les desserts laitiers maigres (skyr, fromage blanc). C'est nettement plus que les ~30 g/repas des recettes de base (~60 g/j) : **relever la densité protéique** (œufs, laitages, légumineuses, tofu/tempeh, protéine de soja). La collation sert notamment à compléter l'apport protéique.
 
 ## 4. Nutriments d'attention (régime lacto-ovo) — d'après l'ANSES 2025
 
@@ -57,7 +57,7 @@ L'ANSES a publié le 13/03/2025 ses **premiers repères alimentaires pour les ad
 
 ## 5. Fer
 
-- Pour un **homme** végétarien, la cible (~14 mg/j ; repère de l'**Institute of Medicine / US**, qui applique un facteur ×1,8 vs omnivores pour tenir compte de la moindre biodisponibilité du fer non héminique — repère débattu, **pas une recommandation OMS**) est atteignable par l'alimentation. L'enjeu principal est donc l'**absorption**, pas la quantité.
+- Pour un **homme** végétarien, la cible (~14 mg/j ; repère de l'**Institute of Medicine / US**, qui applique un facteur ×1,8 vs omnivores pour tenir compte de la moindre biodisponibilité du fer non héminique — repère débattu, **pas une recommandation OMS**) est atteignable par l'alimentation. À titre de comparaison, la référence **UE/France est plus basse : EFSA PRI / ANSES RNP = 11 mg/j** pour l'homme adulte (la quantité est donc déjà couverte selon la norme européenne). L'enjeu principal est donc l'**absorption**, pas la quantité.
 - **Améliorer l'absorption du fer non héminique** : associer une source de **vitamine C** au même repas (agrumes, kiwi, poivron, tomate, fraise, persil).
 - **Inhibiteurs à dissocier** des repas les plus riches en fer : **calcium / produits laitiers**, **tanins** (thé, café), **phytates** (légumineuses et céréales complètes — atténués par trempage, germination, fermentation/levain).
 - Sources de fer végétal : légumineuses (lentilles, pois chiches, haricots), tofu/tempeh, graines (courge, sésame), flocons d'avoine, légumes verts.
@@ -77,14 +77,14 @@ L'ANSES a publié le 13/03/2025 ses **premiers repères alimentaires pour les ad
   - **mercredi soir** (yoga) : le repas du soir, à base de placard (jour de courses), soutient la récupération ;
   - **samedi matin** (yoga) : collation post-séance avant le déjeuner (ex. skyr/fromage blanc + fruit + oléagineux).
 - Viser l'**équilibre kcal sur la journée** (~1900 kcal en déficit léger), pas seulement par repas.
-- **Sel** : limiter (< 8 g/j chez l'adulte, PNNS).
+- **Sel** : limiter à **< 5 g/j** (< 2 g de sodium) chez l'adulte — OMS, Santé publique France (Manger Bouger, 2019), EFSA 2019. (L'ancien repère « 8 g/j » était une cible de *moyenne de population* du PNNS 3, pas une limite individuelle.)
 
 ## 8. Repères chiffrés ANSES — adulte lacto-ovo végétarien (par jour)
 
 À utiliser comme garde-fous de composition (source : ANSES 2025) :
 - Féculents et pains : **170 g/j** dont au moins **120 g** complets ou source de fibres.
 - Oléagineux (noix, amandes, graines) : **65 g/j**.
-- Produits laitiers : lait **450 ml/j**, œufs **30 g/j** (~½ œuf en moyenne, donc concentrer sur certains repas), fromage **50 g/j**, et analogues/laitages frais ~**350 g/j**.
+- Produits laitiers : lait **450 ml/j**, œufs **30 g/j** (~½ œuf en moyenne, donc concentrer sur certains repas), fromage **50 g/j**, et analogues/laitages frais **300-350 g/j**.
 - Levure alimentaire / levure de bière : **10 g/j**.
 - Légumes et fruits abondants ; légumes secs réguliers.
 
@@ -108,10 +108,23 @@ Adapter les plats à la saison (pas de plat lourd type tartiflette en été). Pr
 6. **Yoga** (mercredi soir, samedi matin) : prévoir une collation de récupération.
 7. Plats **de saison**. Toujours **citer les sources** des principes invoqués dans la justification proposée à l'utilisateur.
 
-## 11. Sources
+## 11. Grammages par portion adulte — GEM-RCN v2.0 (2015)
 
-- **ANSES** — *Régimes végétariens : effets sur la santé et repères alimentaires*, publié le 13/03/2025. https://www.anses.fr/fr/content/r%C3%A9gimes-v%C3%A9g%C3%A9tariens (version EN : https://www.anses.fr/en/content/health-effects-vegetarian-diets-and-associated-dietary-guidelines)
-- **Santé publique France / Manger Bouger (PNNS)** — recommandations alimentaires adultes ; page « Peut-on être végétarien ou végétalien sans risque pour sa santé ? » ; calendrier de saison. https://www.mangerbouger.fr/ — sel < 8 g/j.
+Repères de portions (restauration collective, colonne « adolescents/adultes », **poids prêts à consommer / cuits**). Garde-fous pour dimensionner une recette « pour 1 personne ». Le GEM-RCN n'a plus de valeur réglementaire contraignante depuis 2021 mais reste la référence pratique de calibrage.
+
+- Féculents cuits (riz, pâtes, pommes de terre) : **200-250 g** (soit ~**80-100 g secs** ; ratio cru→cuit ~1:2,5-3 — donnée culinaire, hors GEM-RCN).
+- Légumes cuits : **150 g** ; légumes secs cuits : **200-250 g**.
+- Matière grasse (assaisonnement/sauces) : **8 g**.
+- Plats composés (lasagnes, raviolis, gratins) : **250-300 g** (denrée protidique 100-120 g).
+- Équivalences protéiques végétales (**hors GEM-RCN**, tables nutritionnelles) : ~100 g de viande ≈ 150 g de tofu ferme ≈ 200 g de légumineuses cuites ≈ 2 œufs + 30 g de fromage.
+
+## 12. Sources
+
+- **ANSES** — *Régimes végétariens : effets sur la santé et repères alimentaires*, publié le 13/03/2025. https://www.anses.fr/fr/content/regimes-vegetariens-effets-sur-la-sante-et-reperes-alimentaires (avis primaire PDF : https://www.anses.fr/fr/system/files/NUT2019-SA-0118.pdf ; version EN : https://www.anses.fr/en/content/health-effects-vegetarian-diets-and-associated-dietary-guidelines)
+- **Santé publique France / Manger Bouger (PNNS)** — recommandations alimentaires adultes (2019) ; page « Peut-on être végétarien ou végétalien sans risque pour sa santé ? » ; calendrier de saison. https://www.mangerbouger.fr/ — **sel < 5 g/j** (< 2 g de sodium).
+- **OMS** — *Sodium reduction* (< 2 g de sodium/j, soit < 5 g de sel/j). https://www.who.int/news-room/fact-sheets/detail/sodium-reduction
+- **EFSA** — *Dietary reference values* : sodium (2019, https://www.efsa.europa.eu/en/efsajournal/pub/5778) et fer (2015, PRI homme 11 mg/j, https://www.efsa.europa.eu/en/efsajournal/pub/4254).
+- **GEM-RCN** — *Recommandation Nutrition* v2.0 (juillet 2015), grammages par portion en restauration collective. https://www.economie.gouv.fr/daj/recommandation-nutrition (miroir : http://cantines.nice.fr/files/reco-nutrition-gemrcn-v2.0-juillet-2015.pdf)
 - **Academy of Nutrition and Dietetics** — *Vegetarian Dietary Patterns for Adults: A Position Paper* (2025) : https://www.jandonline.org/article/S2212-2672(25)00042-5/fulltext (PubMed PMID 39923894). Un régime végétarien bien planifié est nutritionnellement adéquat.
 - **NHS** — *The vegetarian diet* : https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/the-vegetarian-diet/
 - **NIH Office of Dietary Supplements** — *Iron — Health Professional Fact Sheet* : https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/ (biodisponibilité fer héminique vs non héminique ; vitamine C ; inhibiteurs).
