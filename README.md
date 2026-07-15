@@ -37,7 +37,7 @@ Le catalogue-source est le RecipeSage **de l'auteur** (son `userId` est codé en
 
 ## Enrichir le catalogue (auteur)
 
-Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en héberge aucune. Pour ajouter une recette, l'auteur utilise la skill **Claude Code `/recipe`** (en CLI/desktop, hors application) : elle rédige une recette équilibrée et sourcée (ingrédients au format `quantité unité nom`, une ligne par ingrédient, pour 1 personne ; étapes ; **labels** de type et de régime ; valeurs nutritionnelles), puis la **publie directement** dans RecipeSage via l'API après validation (cf. `scripts/rs_publish.mjs`). Plus le catalogue est étiqueté et fourni, meilleures sont les propositions.
+Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en héberge aucune. Pour ajouter une recette, l'auteur utilise la skill **Claude Code `/recipe`** (en CLI/desktop, hors application) : elle rédige une recette équilibrée et sourcée (ingrédients au format `quantité unité nom`, une ligne par ingrédient, pour 1 personne ; étapes ; **labels** de type et de régime ; valeurs nutritionnelles), puis la **publie directement** dans RecipeSage via l'API après validation (cf. `scripts/rs_publish.mjs`). Pour **harmoniser une recette existante** (format des ingrédients, portions), `scripts/rs_update.mjs` la met à jour en préservant labels, images et nutrition (aperçu par défaut, `--confirm` pour publier). Plus le catalogue est étiqueté et fourni, meilleures sont les propositions.
 
 **Convention de labels** : un label de **type** — `repas` (seules ces recettes entrent dans la génération de menus), `base`, `accompagnement`, `dessert` — et un ou plusieurs labels de **régime** — `vegetarien`, `vegan` (additif : un plat vegan porte aussi `vegetarien`), `viande`, `poisson` — plus les allergènes `sans-gluten` / `sans-lactose` le cas échéant. Pas de label par ingrédient : le matching anti-gaspi lit déjà le texte des ingrédients.
 
@@ -47,7 +47,7 @@ Cibles de l'auteur, appliquées par la skill `/recipe` (détail et sources : [`.
 
 - **~1900 kcal/j** (déficit léger ~500 kcal ; Mifflin-St Jeor) et **~115 g de protéines/j** (repère théorique haut ~1,6 g/kg ≈ 130 g).
 - Régime **lacto-ovo** : veiller oméga-3 (EPA/DHA), vitamine D, **B12**, calcium ; **fer + vitamine C** le même jour, éloigner les inhibiteurs (calcium, tanins thé/café).
-- **Produits de saison**, sel limité (< 8 g/j, PNNS).
+- **Produits de saison**, sel limité (**< 5 g/j**, soit < 2 g de sodium ; OMS / Santé publique France 2019).
 
 ## Fonctionnement technique
 
@@ -73,8 +73,19 @@ python3 -m http.server 8000   # puis ouvrir http://localhost:8000
 
 - `python3 scripts/validate.py` — valide l'intégrité statique (manifest, assets référencés, liens locaux de `index.html`).
 - `node --test 'test/*.test.js'` — tests unitaires de la logique pure (`logic.js`, `recipesage.js`).
+- `node scripts/rs_lint.mjs` — audit **lecture seule** du catalogue (doublons singulier/pluriel, unités parasites, classification par rayon, portions suspectes) pour l'hygiène de la liste de courses.
 - CI (`.github/workflows/ci.yml`) sur chaque push/PR : validation des données, syntaxe JS (`sw.js`, `logic.js`, `recipesage.js`, JS inline), tests, scan de secrets. Sans dépendance, aucun secret.
 - Déploiement Pages via `.github/workflows/pages.yml` (source *GitHub Actions*), avec anti-collision (`concurrency`) et retry.
+
+## Sources
+
+Le projet s'appuie sur des sources publiques et vérifiables :
+
+- **Recettes / données** : [RecipeSage](https://recipesage.com) — API tRPC publique (catalogue de l'auteur).
+- **Singulier/pluriel des ingrédients** (dédoublonnage de la liste de courses) : [Lexique 3.83](http://www.lexique.org/) (openlexicon, CC-BY-SA 4.0) ; alternative [Morphalou 3.1](https://www.ortolang.fr/market/lexicons/morphalou) (ATILF/CNRTL, LGPL-LR).
+- **Noms canoniques d'ingrédients** : [taxonomie *ingredients* d'Open Food Facts](https://github.com/openfoodfacts/openfoodfacts-server/tree/main/taxonomies) (ODbL).
+- **Grammages par portion** : [GEM-RCN — *Recommandation Nutrition* v2.0 (2015)](https://www.economie.gouv.fr/daj/recommandation-nutrition).
+- **Repères nutritionnels** (détail et citations dans [`nutrition.md`](.claude/skills/recipe/references/nutrition.md)) : [ANSES 2025 — repères végétariens](https://www.anses.fr/fr/content/regimes-vegetariens-effets-sur-la-sante-et-reperes-alimentaires), [Santé publique France / Manger Bouger (PNNS)](https://www.mangerbouger.fr/), [OMS — sodium](https://www.who.int/news-room/fact-sheets/detail/sodium-reduction), [EFSA](https://www.efsa.europa.eu/) (sel, fer), [NIH ODS — fer](https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/), Academy of Nutrition and Dietetics, [NHS](https://www.nhs.uk/live-well/eat-well/), Mifflin-St Jeor (1990), [ADEME](https://www.ademe.fr/) (saisonnalité).
 
 ## Avertissement
 

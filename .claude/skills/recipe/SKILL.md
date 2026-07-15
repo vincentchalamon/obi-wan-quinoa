@@ -19,7 +19,7 @@ Demande cible : `$ARGUMENTS` (idée de plat, contrainte, ou ingrédients à valo
 1. **Recueillir** : si `$ARGUMENTS` ne le précise pas, **demander ce dont l'auteur dispose** (panier AMAP, placard, contraintes, saison, objectif) — la recette doit d'abord valoriser ces ingrédients.
 2. **Éviter les doublons** : lister le catalogue existant avec `node scripts/rs_catalog.mjs` et vérifier que la recette envisagée n'y figure pas déjà (titre ou concept proche). Si c'est trop proche d'une recette existante, proposer une variante distincte ou demander confirmation avant de continuer.
 3. **Cadrer** : proposer un titre et un concept (saison, panier, objectif protéines) en 2-3 lignes. Itérer avec l'auteur si besoin.
-4. **Composer** : ingrédients (quantités réalistes pour 1 personne) et étapes claires.
+4. **Composer** : ingrédients **pour 1 personne**, calibrés sur les grammages par portion de `references/nutrition.md` §11 (GEM-RCN) et le budget/repas (~800-950 kcal, ~55 g protéines, sel < 2,5 g) ; étapes claires.
 5. **Chiffrer** : estimer `kcal` et `protéines` (méthode/source).
 6. **Étiqueter** : un label de **type** — `repas` (seule catégorie générée en menu), `base`, `accompagnement` ou `dessert` — et le(s) label(s) de **régime** (additifs) : `vegetarien` (+ `vegan` si aucun produit animal ; un vegan porte aussi `vegetarien`), plus `sans-gluten`/`sans-lactose` si applicable. **Pas de label par ingrédient** ni `midi`/`soir` (inutiles au générateur).
 7. **Publier** : présenter le bloc de validation ci-dessous, puis publier **après accord explicite** de l'auteur (action externe) :
@@ -31,6 +31,8 @@ Demande cible : `$ARGUMENTS` (idée de plat, contrainte, ou ingrédients à valo
 ## Sortie — bloc de validation (avant publication)
 Format **exact** — grammaire compatible avec l'app : **quantité + unité en tête de ligne**, **une ligne par ingrédient** (jamais deux sur la même ligne), fractions en **ASCII** (`1/2`, pas `½`) et sans nombre mixte (`1,5` plutôt que `1 1/2`), cuillères en toutes lettres (`cuillère à soupe`/`cuillère à café`), unités métriques ; **jamais** le format `Nom — quantité`. Une ligne par étape.
 
+**Un seul ingrédient atomique par ligne** — jamais d'énumération (`sel, poivre` → deux lignes) ni de sous-recette (`vinaigrette : moutarde, huile, citron…` → lister chaque composant sur sa ligne). **Noms canoniques** au singulier générique (`oignon`, `carotte` — pas `oignon jaune`/`petites carottes`, sauf variété essentielle type `citron vert`). **Unités autorisées** : `g`, `kg`, `ml`, `cl`, `l`, `cuillère à soupe`/`café`, `gousse`, `botte`, `tranche`, `pincée`, `sachet`, `boîte`, `pot` — **proscrire** `cm`, `verre`, `branche`, `bouquet`, `goutte` (convertir en métrique ou en quantité comptable). Pas de préfixe `Optionnel :` (mettre l'option en note entre parenthèses). Aucune entité HTML (`&amp;` → `&`).
+
 ```
 Titre : <titre>
 Rendement : 1 personne
@@ -38,7 +40,7 @@ Labels : <type: repas|base|accompagnement|dessert>, vegetarien[, vegan][, sans-g
 
 Ingrédients :
 <quantité> <unité> <nom>        (ex. "80 g quinoa", "1 gousse ail", "1/2 citron")
-                                (à éviter : "Quinoa — 80 g", "½ citron", "2 c. à s. sauce soja")
+                                (à éviter : "Quinoa — 80 g", "½ citron", "2 c. à s. sauce soja", "sel, poivre", "1 cm gingembre")
 ...
 
 Instructions :

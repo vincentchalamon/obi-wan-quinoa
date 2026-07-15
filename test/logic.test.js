@@ -264,3 +264,35 @@ test('scaleIngredientLine : fractions ASCII en entrée et sortie', () => {
   assert.equal(L.scaleIngredientLine('1/4 oignon', 2), '1/2 oignon');
   assert.equal(L.scaleIngredientLine('1 oignon', 0.5), '1/2 oignon');
 });
+
+test('canonName : singulier/pluriel + ligature œ, accents préservés, invariables (Lexique)', () => {
+  assert.equal(L.canonName('Oeufs'), 'oeuf');
+  assert.equal(L.canonName('Œufs'), 'oeuf');            // ligature œ -> oe
+  assert.equal(L.canonName('Tomates'), 'tomate');
+  assert.equal(L.canonName('pommes de terre'), 'pomme de terre');
+  assert.equal(L.canonName('Pâtes'), 'pâte');
+  assert.equal(L.canonName('Pâté'), 'pâté');            // accent préservé -> distinct de "pâte"
+  ['radis', 'ananas', 'maïs', 'noix', 'pois', 'couscous'].forEach((w) =>
+    assert.equal(L.canonName(w), w));                   // invariables : non tronquées (pas "anana")
+});
+
+test('computeCourses : fusionne singulier/pluriel et ligature œ', () => {
+  const menu = { jours: [
+    { repas: [{ shop: [{ n: 'Tomate', q: 2, u: '', r: 'leg' }, { n: 'Œufs', q: 1, u: '', r: 'prot' }] }] },
+    { repas: [{ shop: [{ n: 'Tomates', q: 3, u: '', r: 'leg' }, { n: 'oeuf', q: 2, u: '', r: 'prot' }] }] },
+  ] };
+  const data = L.computeCourses(menu, '2026-07-02', new Set(), RAYONS);
+  const leg = data.find((s) => s.cls === 'leg');
+  assert.equal(leg.items.length, 1); assert.equal(leg.items[0].q, 5);   // Tomate + Tomates fusionnés
+  const prot = data.find((s) => s.cls === 'prot');
+  assert.equal(prot.items.length, 1); assert.equal(prot.items[0].q, 3); // Œufs + oeuf fusionnés
+});
+
+test('rayonFor : safran (con), lardons/faux lardons (prot)', () => {
+  assert.equal(L.rayonFor('safran'), 'con');
+  assert.equal(L.rayonFor('faux lardons'), 'prot');
+  assert.equal(L.rayonFor('lardons fumés'), 'prot');
+  assert.equal(L.rayonFor('menthe'), 'con');
+  assert.equal(L.rayonFor('vin blanc sec'), 'epi');
+  assert.equal(L.rayonFor('vinaigre de vin'), 'con');   // pas de collision avec le mot-clé "vin blanc"
+});
