@@ -207,8 +207,37 @@
     return rayons.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
   }
 
+  /* ---------- Mode IA : prompt de rédaction de recette ---------- */
+  /* Le deep link ouvre Claude Code AVEC le dépôt : la skill y est lisible, donc le prompt la
+     pointe au lieu de recopier ses règles (grammaire d'ingrédients, labels, nutrition, format).
+     Deux gardes indispensables : le dépôt est en écriture, et rs_publish.mjs n'a pas de token. */
+  const IA_REPO='vincentchalamon/obi-wan-quinoa';
+  const IA_SKILL='.claude/skills/recipe/SKILL.md';
+  function buildRecipePrompt(demande, opts){
+    opts=opts||{};
+    const d=(demande||'').trim();
+    return [
+      'Applique la skill '+IA_SKILL+' de ce dépôt (repères nutritionnels : .claude/skills/recipe/references/nutrition.md) '
+        +'pour me rédiger UNE recette. Si tu ne peux pas la lire : https://raw.githubusercontent.com/'+IA_REPO+'/main/'+IA_SKILL,
+      '',
+      'Ma demande : '+(d || 'à toi de choisir, surprends-moi avec un produit de saison'),
+      'Saison : '+(opts.mois||'')+'. Régime : '+(opts.diet==='vegan'
+        ? 'strictement vegan, aucun produit animal'
+        : 'lacto-ovo végétarien, oeufs et laitages autorisés')+'.',
+      '',
+      'Deux contraintes propres à cette session mobile : ne modifie pas le dépôt, et ne publie pas la recette '
+        +'(rs_publish.mjs n’a pas de token ici) — je la copierai moi-même dans RecipeSage.',
+      'Si node scripts/rs_catalog.mjs échoue, les titres déjà publiés sont lisibles en JSON sur '+(opts.catalogUrl||''),
+      '',
+      'Une fois la recette validée, redonne-la en blocs de code séparés, un par champ RecipeSage '
+        +'(Titre, Rendement, Ingrédients, Instructions, Labels, Calories, Protéines), sans commentaire dans les blocs, '
+        +'pour que je puisse copier chaque champ d’un seul geste.'
+    ].join('\n');
+  }
+
   return { MOIS, JOURS, pad, idOf, parseId, addDays, startOfWeek, fmt,
            midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses,
            stripAccents, norm, canonName, parseQty, rayonFor, scaleIngredientLine,
-           splitItems, tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative };
+           splitItems, tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative,
+           buildRecipePrompt };
 });
