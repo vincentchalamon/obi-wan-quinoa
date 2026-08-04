@@ -296,3 +296,38 @@ test('rayonFor : safran (con), lardons/faux lardons (prot)', () => {
   assert.equal(L.rayonFor('vin blanc sec'), 'epi');
   assert.equal(L.rayonFor('vinaigre de vin'), 'con');   // pas de collision avec le mot-clé "vin blanc"
 });
+
+const CATALOG_URL = 'https://api.recipesage.com/trpc/recipes.getRecipes?input=%7B%22userIds%22%3A%5B%22u%22%5D%7D';
+
+test('buildRecipePrompt : demande, saison, skill du dépôt et URL de catalogue', () => {
+  const p = L.buildRecipePrompt('plat au potimarron', { mois: 'octobre', diet: '', catalogUrl: CATALOG_URL });
+  assert.ok(p.includes('plat au potimarron'));
+  assert.ok(p.includes('Saison : octobre'));
+  assert.ok(p.includes('.claude/skills/recipe/SKILL.md'));
+  assert.ok(p.includes(CATALOG_URL));                     // anti-doublons : URL API JSON, pas la SPA RecipeSage
+  assert.ok(p.includes('lacto-ovo'));
+});
+
+test('buildRecipePrompt : gardes de session (dépôt en écriture, pas de token de publication)', () => {
+  const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: '', catalogUrl: CATALOG_URL });
+  assert.ok(p.includes('ne modifie pas le dépôt'));
+  assert.ok(p.includes('ne publie pas la recette'));
+});
+
+test('buildRecipePrompt : export par blocs de code, un par champ RecipeSage', () => {
+  const p = L.buildRecipePrompt('tarte', { mois: 'juin', diet: '', catalogUrl: CATALOG_URL });
+  assert.ok(p.includes('blocs de code'));
+  ['Titre', 'Ingrédients', 'Instructions', 'Labels', 'Calories', 'Protéines'].forEach((champ) =>
+    assert.ok(p.includes(champ), champ));
+});
+
+test('buildRecipePrompt : régime vegan durcit la consigne', () => {
+  const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: 'vegan', catalogUrl: CATALOG_URL });
+  assert.ok(p.includes('strictement vegan'));
+  assert.ok(!p.includes('laitages autorisés'));
+});
+
+test('buildRecipePrompt : demande vide -> consigne de repli', () => {
+  const p = L.buildRecipePrompt('  ', { mois: 'mai', diet: '', catalogUrl: CATALOG_URL });
+  assert.ok(p.includes('surprends-moi'));
+});

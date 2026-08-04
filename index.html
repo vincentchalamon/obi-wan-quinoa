@@ -25,13 +25,16 @@
   /* ---------- Header (sobre, slim) ---------- */
   .app-header{position:sticky;top:0;z-index:20;background:var(--vert-fonce);color:#fff;
     padding:max(9px,env(safe-area-inset-top)) 16px 10px;box-shadow:var(--ombre);
-    display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}  /* 7 touchers : ni sélection, ni loupe */
+  #owq-brand{flex:1 1 auto;}   /* absorbe l'espace : les pastilles restent à droite (3 enfants flex) */
   .app-header .brand{font-family:Georgia,serif;font-size:17px;font-weight:700;line-height:1.1;letter-spacing:.01em;}
   .app-header .slogan{font-size:11.5px;opacity:.82;margin-top:2px;font-style:italic;}
   .app-settings-btn{flex:0 0 auto;border:none;background:rgba(255,255,255,.14);color:#fff;
     width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .app-settings-btn svg{width:20px;height:20px;}
   .app-settings-btn:active{background:rgba(255,255,255,.28);}
+  .app-settings-btn[hidden]{display:none;}   /* display:flex ci-dessus écrase le [hidden] de l'UA */
 
   /* ---------- Planning ---------- */
   #planning{max-width:720px;margin:0 auto;padding:6px 16px calc(48px + env(safe-area-inset-bottom));}
@@ -123,7 +126,7 @@
   .del-btn{margin-top:6px;width:100%;padding:13px;border-radius:10px;border:1px solid var(--trait);background:#fff;
     color:var(--betterave);font:inherit;font-weight:600;cursor:pointer;}
   .del-btn.is-del{color:var(--vert-fonce);border-color:var(--vert-feuille);background:var(--vert-clair);}
-  /* Barre d'actions recette (icônes) : mode cuisine, partager, RecipeSage */
+  /* Barre d'actions recette (icônes) : mode cuisine */
   .recipe-actions{display:flex;gap:8px;margin:0 0 22px;}
   .act-btn{flex:1 1 0;height:46px;border:1px solid var(--trait);background:#fff;border-radius:10px;
     color:var(--vert-fonce);display:flex;align-items:center;justify-content:center;cursor:pointer;}
@@ -233,10 +236,11 @@
 <body>
 
 <header class="app-header">
-  <div>
+  <div id="owq-brand">
     <div class="brand">Obi-Wan Quinoa</div>
     <div class="slogan">Que la graine soit avec toi, padawan !</div>
   </div>
+  <button id="owq-ia" class="app-settings-btn" hidden aria-label="Rédiger une recette avec l’IA" title="Recette IA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5l1.7 4.3 4.3 1.7-4.3 1.7L10 15.5 8.3 11.2 4 9.5l4.3-1.7z"/><path d="M17.5 14l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg></button>
   <button id="owq-settings" class="app-settings-btn" aria-label="Réglages" title="Réglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
 <div id="owq-status" hidden></div>
@@ -320,7 +324,7 @@ function rebuild(){ R=loadRecipesCache();
 /* ============================ Overrides de menu (édition à la volée) ============================ */
 function loadOverrides(){ const raw=store.get('owq.menu'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
 function saveOverrides(o){ store.set('owq.menu', JSON.stringify(o)); }
-/* Applique les overrides valides sur le brut ; purge ceux dont la source a changé (régénération Claude). */
+/* Applique les overrides valides sur le brut ; purge ceux dont la source a changé (régénération du menu). */
 function applyOverrides(raw){
   const ov=loadOverrides(); let changed=false; const eff={};
   Object.keys(raw).forEach(function(w){ eff[w]=raw[w]; });
@@ -691,6 +695,47 @@ function resetPlanning(){
   const el=document.getElementById('day-'+idOf(today)); if(el) el.scrollIntoView({block:'start'});
 }
 
+/* ============================ Mode IA (caché : 7 touchers sur l'en-tête) ============================ */
+/* Rédaction de recette assistée, sur le modèle du mode développeur Android. Aller simple : l'app
+   construit le prompt (buildRecipePrompt) et le passe à Claude Code, qui s'ouvre avec le dépôt lié ;
+   rien ne revient ici, l'auteur copie la recette validée dans RecipeSage. */
+const IA_TAPS=7;
+/* Canal validé sur Android : ce scheme est le seul qui ouvre l'app AVEC le dépôt ET le prompt
+   (claude://new?q= n'a transmis ni l'un ni l'autre, https://claude.ai/new?q= le prompt sans le dépôt). */
+const IA_LINK='claude://code/new?repo=vincentchalamon/obi-wan-quinoa&q=';
+/* Catalogue en JSON : l'URL web recipesage.com est une SPA illisible par un fetch. */
+const IA_CATALOG=rsUrl('recipes.getRecipes',{userIds:[OWNER_USER_ID],folder:'main',
+  orderBy:'title',orderDirection:'asc',offset:0,limit:200});
+let iaMode=store.get('owq.ia')==='1', iaTaps=0, iaLast=0, iaTimer=null;
+/* Un seul timer : un setTimeout par toucher effacerait le message final. */
+function iaToast(msg){ setStatus(msg,true); clearTimeout(iaTimer); iaTimer=setTimeout(clearStatus,2500); }
+function renderIaBtn(){ document.getElementById('owq-ia').hidden=!iaMode; setHeadH(); }
+/* Compteur à la Android : décompte affiché sur les 3 derniers, bascule au 7e, reset après 1,5 s d'inactivité. */
+function tapBrand(){
+  const now=Date.now(); if(now-iaLast>1500) iaTaps=0; iaLast=now; iaTaps++;
+  const reste=IA_TAPS-iaTaps;
+  if(reste>0){ if(reste<=3) iaToast('Plus que '+reste+' toucher'+(reste>1?'s':'')+'…'); return; }
+  iaTaps=0; iaMode=!iaMode; store.set('owq.ia', iaMode?'1':'0'); renderIaBtn();
+  iaToast(iaMode?'Mode IA activé ✓':'Mode IA désactivé');
+  if(navigator.vibrate){ try{ navigator.vibrate(30); }catch(e){} }
+}
+function openRecipeAI(){
+  ovTitle.textContent='Recette IA';
+  const saved=(store.get('owq.ia.demande')||'').replace(/</g,'&lt;');
+  let h='<p class="prep-note">Décris ce que tu veux cuisiner : Claude rédige la recette au format du catalogue, tu la colles ensuite dans RecipeSage.</p>';
+  h+='<div class="field"><label>Ta demande</label>'
+    +'<textarea id="owq-ia-demande" placeholder="ex. plat au potimarron et pois chiches, riche en protéines, sans gluten, 30 min">'+saved+'</textarea></div>';
+  h+='<button class="btn-primary" id="ia-go">Générer une recette</button>';
+  ovBody.innerHTML=h; openOverlay();
+}
+/* La demande est persistée avant de quitter la PWA : Android peut la recycler pendant la conversation. */
+function sendRecipePrompt(){
+  const ta=document.getElementById('owq-ia-demande'), d=ta?ta.value:'';
+  store.set('owq.ia.demande', d);
+  location.assign(IA_LINK+encodeURIComponent(buildRecipePrompt(d,
+    {mois:MOIS[new Date().getMonth()], diet:profile.diet, catalogUrl:IA_CATALOG})));
+}
+
 /* ============================ Événements ============================ */
 planning.addEventListener('click',function(e){
   if(suppressClick) return;
@@ -725,6 +770,8 @@ ovBody.addEventListener('click',function(e){
     return; }
   const ss=e.target.closest('#set-save');
   if(ss){ saveSettings(); return; }
+  const ig=e.target.closest('#ia-go');
+  if(ig){ sendRecipePrompt(); return; }
   const qe=e.target.closest('[data-qedit]');
   if(qe){ startQtyEdit(qe); return; }                          // éditer la quantité
   if(e.target.closest('.q-edit')) return;                      // clic dans l'éditeur : ne pas cocher
@@ -744,6 +791,12 @@ document.getElementById('today-fab').addEventListener('click',function(){
 
 /* Réglages (profil) */
 document.getElementById('owq-settings').addEventListener('click',openSettings);
+
+/* Mode IA : 7 touchers sur le titre le révèlent (cf. tapBrand). Le listener est sur #owq-brand
+   et non sur .app-header, sinon les touchers ouvriraient aussi les Réglages. */
+document.getElementById('owq-brand').addEventListener('click',tapBrand);
+document.getElementById('owq-ia').addEventListener('click',openRecipeAI);
+renderIaBtn();
 
 /* ============================ Édition à la volée : drag'n'drop (échange de positions) ============================ */
 function parseKey(k){ const p=k.split(':'), idx=p[1].split('-'); return {wid:p[0], di:+idx[0], ri:+idx[1]}; }
