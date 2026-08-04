@@ -126,7 +126,7 @@
   .del-btn{margin-top:6px;width:100%;padding:13px;border-radius:10px;border:1px solid var(--trait);background:#fff;
     color:var(--betterave);font:inherit;font-weight:600;cursor:pointer;}
   .del-btn.is-del{color:var(--vert-fonce);border-color:var(--vert-feuille);background:var(--vert-clair);}
-  /* Barre d'actions recette (icônes) : mode cuisine, partager, RecipeSage */
+  /* Barre d'actions recette (icônes) : mode cuisine */
   .recipe-actions{display:flex;gap:8px;margin:0 0 22px;}
   .act-btn{flex:1 1 0;height:46px;border:1px solid var(--trait);background:#fff;border-radius:10px;
     color:var(--vert-fonce);display:flex;align-items:center;justify-content:center;cursor:pointer;}
@@ -324,7 +324,7 @@ function rebuild(){ R=loadRecipesCache();
 /* ============================ Overrides de menu (édition à la volée) ============================ */
 function loadOverrides(){ const raw=store.get('owq.menu'); if(!raw) return {}; try{ return JSON.parse(raw)||{}; }catch(e){ return {}; } }
 function saveOverrides(o){ store.set('owq.menu', JSON.stringify(o)); }
-/* Applique les overrides valides sur le brut ; purge ceux dont la source a changé (régénération Claude). */
+/* Applique les overrides valides sur le brut ; purge ceux dont la source a changé (régénération du menu). */
 function applyOverrides(raw){
   const ov=loadOverrides(); let changed=false; const eff={};
   Object.keys(raw).forEach(function(w){ eff[w]=raw[w]; });

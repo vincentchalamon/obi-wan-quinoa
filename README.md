@@ -39,6 +39,10 @@ Le catalogue-source est le RecipeSage **de l'auteur** (son `userId` est codé en
 
 Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en héberge aucune. Pour ajouter une recette, l'auteur utilise la skill **Claude Code `/recipe`** (en CLI/desktop, hors application) : elle rédige une recette équilibrée et sourcée (ingrédients au format `quantité unité nom`, une ligne par ingrédient, pour 1 personne ; étapes ; **labels** de type et de régime ; valeurs nutritionnelles), puis la **publie directement** dans RecipeSage via l'API après validation (cf. `scripts/rs_publish.mjs`). Pour **harmoniser une recette existante** (format des ingrédients, portions), `scripts/rs_update.mjs` la met à jour en préservant labels, images et nutrition (aperçu par défaut, `--confirm` pour publier). Plus le catalogue est étiqueté et fourni, meilleures sont les propositions.
 
+**Depuis le mobile** : l'app expose un **mode IA** masqué par défaut — 7 touchers sur le titre de l'en-tête (comme le mode développeur Android) révèlent un bouton ✨ à gauche de la roue crantée, et le mode reste mémorisé sur l'appareil (7 nouveaux touchers le désactivent). Ce bouton ouvre un écran où l'on décrit ce qu'on veut cuisiner ; l'app construit le prompt et l'ouvre dans **Claude Code mobile** avec le dépôt lié, de sorte que la skill `/recipe` s'applique et que la recette puisse être affinée dans la conversation. La recette validée est ensuite **recopiée à la main** dans RecipeSage : `rs_publish.mjs` n'a pas de token dans cette session, aussi le prompt demande la recette en blocs de code, un par champ RecipeSage, pour un copier-coller au doigt.
+
+Le canal utilisé est `claude://code/new?repo=<owner/repo>&q=<prompt>`, retenu après essai des quatre candidats sur Android : c'est le seul qui transmette **à la fois** le dépôt et le prompt (`claude://new?q=` n'a transmis ni l'un ni l'autre, `https://claude.ai/new?q=` le prompt sans le dépôt, `https://claude.ai/new?prompt=` rien).
+
 **Convention de labels** : un label de **type** — `repas` (seules ces recettes entrent dans la génération de menus), `base`, `accompagnement`, `dessert` — et un ou plusieurs labels de **régime** — `vegetarien`, `vegan` (additif : un plat vegan porte aussi `vegetarien`), `viande`, `poisson` — plus les allergènes `sans-gluten` / `sans-lactose` le cas échéant. Pas de label par ingrédient : le matching anti-gaspi lit déjà le texte des ingrédients.
 
 ### Équilibre alimentaire visé (référence d'écriture des recettes)
@@ -51,8 +55,8 @@ Cibles de l'auteur, appliquées par la skill `/recipe` (détail et sources : [`.
 
 ## Fonctionnement technique
 
-- `index.html` — la PWA (HTML/CSS/JS, sans dépendance, sans build) : profil, rendu du planning, écran de génération, liste de courses.
-- `logic.js` — logique pure sans DOM (dates, matérialisation des menus, calcul des courses, **parser d'ingrédients FR**, **moteur de génération**), testée en Node (`test/logic.test.js`).
+- `index.html` — la PWA (HTML/CSS/JS, sans dépendance, sans build) : profil, rendu du planning, écran de génération, liste de courses, mode IA.
+- `logic.js` — logique pure sans DOM (dates, matérialisation des menus, calcul des courses, **parser d'ingrédients FR**, **moteur de génération**, **prompt de rédaction de recette**), testée en Node (`test/logic.test.js`).
 - `recipesage.js` — client de l'API **tRPC publique** de RecipeSage : `getRecipes` (liste filtrable par labels) et `getRecipe` (détail), mappés vers la forme interne. GET direct (`?input=<json>`), CORS ouvert, aucun secret. Testé (`test/recipesage.test.js`).
 - Les recettes sélectionnées et les menus générés sont stockés **côté client** (`localStorage`, clés `owq.*`) et matérialisés au démarrage. Aucune donnée de recettes/menus n'est embarquée dans le dépôt — tout provient de RecipeSage.
 - `sw.js` — service worker : *network-first* sur HTML/JSON, *cache-first* sur les statiques ; précache pour le hors-ligne.
