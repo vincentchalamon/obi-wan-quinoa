@@ -43,6 +43,8 @@ Les recettes vivent dans **RecipeSage** (source de vérité unique) ; l'app n'en
 
 Le canal utilisé est `claude://code/new?repo=<owner/repo>&q=<prompt>`, retenu après essai des quatre candidats sur Android : c'est le seul qui transmette **à la fois** le dépôt et le prompt (`claude://new?q=` n'a transmis ni l'un ni l'autre, `https://claude.ai/new?q=` le prompt sans le dépôt, `https://claude.ai/new?prompt=` rien).
 
+L'anti-doublons de la skill (`node scripts/rs_catalog.mjs`) est en revanche **infaisable dans cette session** : le sandbox n'atteint ni ce script ni `api.recipesage.com` (403 au proxy). C'est donc l'app qui embarque les titres du catalogue dans le prompt — elle a l'accès réseau — et qui interdit explicitement les deux tentatives condamnées. Hors-ligne, le prompt le signale au lieu de laisser croire à une vérification.
+
 **Convention de labels** : un label de **type** — `repas` (seules ces recettes entrent dans la génération de menus), `base`, `accompagnement`, `dessert` — et un ou plusieurs labels de **régime** — `vegetarien`, `vegan` (additif : un plat vegan porte aussi `vegetarien`), `viande`, `poisson` — plus les allergènes `sans-gluten` / `sans-lactose` le cas échéant. Pas de label par ingrédient : le matching anti-gaspi lit déjà le texte des ingrédients.
 
 ### Équilibre alimentaire visé (référence d'écriture des recettes)

@@ -297,37 +297,52 @@ test('rayonFor : safran (con), lardons/faux lardons (prot)', () => {
   assert.equal(L.rayonFor('vinaigre de vin'), 'con');   // pas de collision avec le mot-clé "vin blanc"
 });
 
-const CATALOG_URL = 'https://api.recipesage.com/trpc/recipes.getRecipes?input=%7B%22userIds%22%3A%5B%22u%22%5D%7D';
+const TITRES = ['Chicon gratin', 'Chili sin carne haricots rouges & soja, riz'];
 
-test('buildRecipePrompt : demande, saison, skill du dépôt et URL de catalogue', () => {
-  const p = L.buildRecipePrompt('plat au potimarron', { mois: 'octobre', diet: '', catalogUrl: CATALOG_URL });
+test('buildRecipePrompt : demande, saison et skill du dépôt', () => {
+  const p = L.buildRecipePrompt('plat au potimarron', { mois: 'octobre', diet: '', titres: TITRES });
   assert.ok(p.includes('plat au potimarron'));
   assert.ok(p.includes('Saison : octobre'));
   assert.ok(p.includes('.claude/skills/recipe/SKILL.md'));
-  assert.ok(p.includes(CATALOG_URL));                     // anti-doublons : URL API JSON, pas la SPA RecipeSage
   assert.ok(p.includes('lacto-ovo'));
 });
 
 test('buildRecipePrompt : gardes de session (dépôt en écriture, pas de token de publication)', () => {
-  const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: '', catalogUrl: CATALOG_URL });
+  const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: '', titres: TITRES });
   assert.ok(p.includes('ne modifie pas le dépôt'));
   assert.ok(p.includes('ne publie pas la recette'));
 });
 
+/* Le sandbox mobile n'atteint ni rs_catalog.mjs ni api.recipesage.com (403) : l'app embarque les
+   titres et interdit les deux tentatives, sinon Claude les retente à chaque génération. */
+test('buildRecipePrompt : anti-doublons par titres embarqués, sans appel réseau condamné', () => {
+  const p = L.buildRecipePrompt('gratin', { mois: 'janvier', diet: '', titres: TITRES });
+  assert.ok(p.includes('Chicon gratin') && p.includes('Chili sin carne haricots rouges & soja, riz'));
+  assert.ok(p.includes('2 recettes déjà au catalogue'));
+  assert.ok(/N’essaie ni node scripts\/rs_catalog\.mjs ni api\.recipesage\.com/.test(p));
+});
+
+test('buildRecipePrompt : sans titres (hors-ligne), le prompt le dit au lieu de mentir', () => {
+  const p = L.buildRecipePrompt('gratin', { mois: 'janvier', diet: '' });
+  assert.ok(p.includes('pas pu joindre le catalogue'));
+  assert.ok(!p.includes('rs_catalog.mjs'));
+  assert.ok(!p.includes('recettes déjà au catalogue'));
+});
+
 test('buildRecipePrompt : export par blocs de code, un par champ RecipeSage', () => {
-  const p = L.buildRecipePrompt('tarte', { mois: 'juin', diet: '', catalogUrl: CATALOG_URL });
+  const p = L.buildRecipePrompt('tarte', { mois: 'juin', diet: '', titres: TITRES });
   assert.ok(p.includes('blocs de code'));
   ['Titre', 'Ingrédients', 'Instructions', 'Labels', 'Calories', 'Protéines'].forEach((champ) =>
     assert.ok(p.includes(champ), champ));
 });
 
 test('buildRecipePrompt : régime vegan durcit la consigne', () => {
-  const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: 'vegan', catalogUrl: CATALOG_URL });
+  const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: 'vegan', titres: TITRES });
   assert.ok(p.includes('strictement vegan'));
   assert.ok(!p.includes('laitages autorisés'));
 });
 
 test('buildRecipePrompt : demande vide -> consigne de repli', () => {
-  const p = L.buildRecipePrompt('  ', { mois: 'mai', diet: '', catalogUrl: CATALOG_URL });
+  const p = L.buildRecipePrompt('  ', { mois: 'mai', diet: '', titres: TITRES });
   assert.ok(p.includes('surprends-moi'));
 });

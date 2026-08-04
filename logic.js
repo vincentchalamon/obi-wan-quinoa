@@ -213,6 +213,15 @@
      Deux gardes indispensables : le dépôt est en écriture, et rs_publish.mjs n'a pas de token. */
   const IA_REPO='vincentchalamon/obi-wan-quinoa';
   const IA_SKILL='.claude/skills/recipe/SKILL.md';
+  /* L'anti-doublons de la skill (étape 2) est infaisable dans la session mobile : rs_catalog.mjs et
+     api.recipesage.com y renvoient 403 (proxy). L'app a l'accès réseau, elle : elle embarque les
+     titres et coupe court aux deux tentatives condamnées. */
+  function iaDoublons(titres){
+    if(!titres || !titres.length)
+      return 'Je n’ai pas pu joindre le catalogue : dis-moi si le plat ressemble à une recette que j’aurais déjà.';
+    return 'N’essaie ni node scripts/rs_catalog.mjs ni api.recipesage.com (403 dans cette session) : voici les '
+      +titres.length+' recettes déjà au catalogue, n’en redéveloppe aucune — '+titres.join(' · ')+'.';
+  }
   function buildRecipePrompt(demande, opts){
     opts=opts||{};
     const d=(demande||'').trim();
@@ -227,7 +236,7 @@
       '',
       'Deux contraintes propres à cette session mobile : ne modifie pas le dépôt, et ne publie pas la recette '
         +'(rs_publish.mjs n’a pas de token ici) — je la copierai moi-même dans RecipeSage.',
-      'Si node scripts/rs_catalog.mjs échoue, les titres déjà publiés sont lisibles en JSON sur '+(opts.catalogUrl||''),
+      iaDoublons(opts.titres),
       '',
       'Une fois la recette validée, redonne-la en blocs de code séparés, un par champ RecipeSage '
         +'(Titre, Rendement, Ingrédients, Instructions, Labels, Calories, Protéines), sans commentaire dans les blocs, '

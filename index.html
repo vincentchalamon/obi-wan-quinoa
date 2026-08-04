@@ -703,10 +703,17 @@ const IA_TAPS=7;
 /* Canal validé sur Android : ce scheme est le seul qui ouvre l'app AVEC le dépôt ET le prompt
    (claude://new?q= n'a transmis ni l'un ni l'autre, https://claude.ai/new?q= le prompt sans le dépôt). */
 const IA_LINK='claude://code/new?repo=vincentchalamon/obi-wan-quinoa&q=';
-/* Catalogue en JSON : l'URL web recipesage.com est une SPA illisible par un fetch. */
-const IA_CATALOG=rsUrl('recipes.getRecipes',{userIds:[OWNER_USER_ID],folder:'main',
-  orderBy:'title',orderDirection:'asc',offset:0,limit:200});
 let iaMode=store.get('owq.ia')==='1', iaTaps=0, iaLast=0, iaTimer=null;
+/* Titres du catalogue, embarqués dans le prompt pour l'anti-doublons : la session Claude n'atteint
+   pas api.recipesage.com (403 au proxy), l'app si. Cache session, best-effort : hors-ligne ou en
+   cas d'échec le prompt le signale et Claude s'en passe. */
+let iaTitres=null;
+function loadIaTitres(){
+  if(iaTitres || !navigator.onLine) return;
+  rsGetRecipes({}).then(function(lite){
+    iaTitres=lite.map(function(r){ return r.title; }).filter(Boolean).sort();
+  }).catch(function(){});
+}
 /* Un seul timer : un setTimeout par toucher effacerait le message final. */
 function iaToast(msg){ setStatus(msg,true); clearTimeout(iaTimer); iaTimer=setTimeout(clearStatus,2500); }
 function renderIaBtn(){ document.getElementById('owq-ia').hidden=!iaMode; setHeadH(); }
@@ -721,6 +728,7 @@ function tapBrand(){
 }
 function openRecipeAI(){
   ovTitle.textContent='Recette IA';
+  loadIaTitres();   // en fond : prêts le temps que la demande soit saisie
   const saved=(store.get('owq.ia.demande')||'').replace(/</g,'&lt;');
   let h='<p class="prep-note">Décris ce que tu veux cuisiner : Claude rédige la recette au format du catalogue, tu la colles ensuite dans RecipeSage.</p>';
   h+='<div class="field"><label>Ta demande</label>'
@@ -733,7 +741,7 @@ function sendRecipePrompt(){
   const ta=document.getElementById('owq-ia-demande'), d=ta?ta.value:'';
   store.set('owq.ia.demande', d);
   location.assign(IA_LINK+encodeURIComponent(buildRecipePrompt(d,
-    {mois:MOIS[new Date().getMonth()], diet:profile.diet, catalogUrl:IA_CATALOG})));
+    {mois:MOIS[new Date().getMonth()], diet:profile.diet, titres:iaTitres})));
 }
 
 /* ============================ Événements ============================ */
