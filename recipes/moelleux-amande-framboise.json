@@ -1,7 +1,7 @@
 {
   "id": "moelleux-amande-framboise",
   "titre": "Moelleux amande-framboise",
-  "portions": 1,
+  "portions": 7,
   "ingredients": [
     "150 g Poudre d'amandes",
     "3 Œufs (moyens)",
@@ -27,5 +27,7 @@
     "lait",
     "oeuf",
     "fruits-a-coque"
-  ]
+  ],
+  "kcal": 295,
+  "prot": 8
 }

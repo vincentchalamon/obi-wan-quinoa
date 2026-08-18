@@ -33,5 +33,7 @@
     "lait",
     "soja"
   ],
+  "kcal": 115,
+  "prot": 3,
   "image": "recipes/images/pancakes-vegan.jpg"
 }

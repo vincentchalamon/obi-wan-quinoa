@@ -1,7 +1,7 @@
 {
   "id": "madeleines-legeres-au-citron",
   "titre": "Madeleines légères au citron",
-  "portions": 1,
+  "portions": 4,
   "ingredients": [
     "2 œufs (gros)",
     "50 g sucre",
@@ -35,5 +35,7 @@
     "oeuf",
     "soja"
   ],
+  "kcal": 350,
+  "prot": 7,
   "image": "recipes/images/madeleines-legeres-au-citron.jpg"
 }

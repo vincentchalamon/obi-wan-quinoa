@@ -1,7 +1,7 @@
 {
   "id": "cheesecake-a-la-banane-et-beurre-de-cacahuete",
   "titre": "Cheesecake à la banane et beurre de cacahuète",
-  "portions": 1,
+  "portions": 16,
   "ingredients": [
     "250g de biscuits (type Graham Crackers ou Digestives)",
     "90g de beurre fondu",
@@ -40,5 +40,7 @@
     "oeuf",
     "arachide"
   ],
+  "kcal": 325,
+  "prot": 6,
   "image": "recipes/images/cheesecake-a-la-banane-et-beurre-de-cacahuete.jpg"
 }

@@ -1,7 +1,7 @@
 {
   "id": "muffins-moelleux-coeur-de-pomme-et-zeste-de-citron",
   "titre": "Muffins Moelleux \"Cœur de Pomme\" et Zeste de Citron",
-  "portions": 1,
+  "portions": 10,
   "ingredients": [
     "3 pommes",
     "Jus de citron jaune",
@@ -12,13 +12,13 @@
     "1 pincée de sel",
     "2 œufs",
     "125g fromage blanc (3% pour une onctuosité sans gras)",
-    "2 à 4 cuillères à soupe de miel ou sirops d'agave, ou 1 cuillère à soupe de cassonade",
+    "2 à 4 cuillères à soupe de miel (ou sirop d'agave, ou 1 cuillère à soupe de cassonade)",
     "1 cuillère à café d'extrait de vanille",
     "12 moules à muffins (6x3cm)",
-    "Optionnel : zestes d'1 citron",
-    "Optionnel : 1 pincée de cannelle ou de cardamome (pour sublimer la pomme ou le citron)",
-    "Optionnel : amandes effilées ou éclats (à poser dessus avant cuisson)",
-    "Optionnel : sucre glace (pour la déco post-cuisson)"
+    "Zeste de citron (optionnel)",
+    "1 pincée de cannelle (ou cardamome, optionnel, pour sublimer la pomme ou le citron)",
+    "Amandes effilées (ou éclats, optionnel, à poser dessus avant cuisson)",
+    "Sucre glace (optionnel, pour la déco post-cuisson)"
   ],
   "etapes": [
     "Préchauffer le four à 180°C.",
@@ -49,5 +49,7 @@
     "oeuf",
     "fruits-a-coque"
   ],
+  "kcal": 150,
+  "prot": 4,
   "image": "recipes/images/muffins-moelleux-coeur-de-pomme-et-zeste-de-citron.jpg"
 }

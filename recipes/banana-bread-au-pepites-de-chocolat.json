@@ -1,7 +1,7 @@
 {
   "id": "banana-bread-au-pepites-de-chocolat",
   "titre": "Banana Bread Au Pépites De Chocolat",
-  "portions": 1,
+  "portions": 14,
   "ingredients": [
     "4 bananes bien mûres (+ 1 pour le décor)",
     "80 g de yaourt à la grecque (0-3% pour la légèreté)",
@@ -45,5 +45,7 @@
     "oeuf",
     "fruits-a-coque"
   ],
+  "kcal": 295,
+  "prot": 6,
   "image": "recipes/images/banana-bread-au-pepites-de-chocolat.jpg"
 }

@@ -33,5 +33,7 @@
     "lait",
     "oeuf"
   ],
+  "kcal": 235,
+  "prot": 5,
   "image": "recipes/images/muffins-aux-myrtilles.jpg"
 }

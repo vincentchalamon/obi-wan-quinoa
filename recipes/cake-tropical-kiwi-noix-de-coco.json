@@ -1,7 +1,7 @@
 {
   "id": "cake-tropical-kiwi-noix-de-coco",
   "titre": "Cake tropical kiwi & noix de coco",
-  "portions": 1,
+  "portions": 11,
   "ingredients": [
     "180g de farine T55",
     "50g de fécule de maïs",
@@ -38,5 +38,7 @@
     "soja",
     "fruits-a-coque"
   ],
+  "kcal": 225,
+  "prot": 5,
   "image": "recipes/images/cake-tropical-kiwi-noix-de-coco.jpg"
 }

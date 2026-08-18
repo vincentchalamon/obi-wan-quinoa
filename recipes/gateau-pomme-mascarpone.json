@@ -1,7 +1,7 @@
 {
   "id": "gateau-pomme-mascarpone",
   "titre": "Gâteau Pomme Mascarpone",
-  "portions": 1,
+  "portions": 14,
   "ingredients": [
     "4 pommes",
     "250 g mascarpone",
@@ -39,5 +39,7 @@
     "oeuf",
     "fruits-a-coque"
   ],
+  "kcal": 200,
+  "prot": 4,
   "image": "recipes/images/gateau-pomme-mascarpone.jpg"
 }

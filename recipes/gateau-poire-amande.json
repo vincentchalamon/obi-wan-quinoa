@@ -1,7 +1,7 @@
 {
   "id": "gateau-poire-amande",
   "titre": "Gâteau Poire Amande",
-  "portions": 1,
+  "portions": 16,
   "ingredients": [
     "8 Poires",
     "90 g Amande en poudre",
@@ -36,5 +36,7 @@
     "oeuf",
     "fruits-a-coque"
   ],
+  "kcal": 235,
+  "prot": 5,
   "image": "recipes/images/gateau-poire-amande.jpg"
 }

@@ -1,7 +1,7 @@
 {
   "id": "carotte-cake",
   "titre": "Carotte Cake",
-  "portions": 1,
+  "portions": 16,
   "ingredients": [
     "4 œufs",
     "250g de farine",
@@ -40,5 +40,7 @@
     "oeuf",
     "fruits-a-coque"
   ],
+  "kcal": 425,
+  "prot": 5,
   "image": "recipes/images/carotte-cake.jpg"
 }

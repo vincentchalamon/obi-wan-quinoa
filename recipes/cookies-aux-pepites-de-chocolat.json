@@ -1,7 +1,7 @@
 {
   "id": "cookies-aux-pepites-de-chocolat",
   "titre": "Cookies aux pépites de chocolat",
-  "portions": 1,
+  "portions": 8,
   "ingredients": [
     "300 g de farine T55",
     "15 g de Maïzena (Fécule de maïs)",
@@ -33,5 +33,7 @@
     "lait",
     "oeuf"
   ],
+  "kcal": 425,
+  "prot": 7,
   "image": "recipes/images/cookies-aux-pepites-de-chocolat.jpg"
 }

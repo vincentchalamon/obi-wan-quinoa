@@ -1,7 +1,7 @@
 {
   "id": "gateau-leger-aux-framboises",
   "titre": "Gâteau léger aux framboises",
-  "portions": 1,
+  "portions": 9,
   "ingredients": [
     "4 oeufs",
     "200 g de sucre",
@@ -31,5 +31,7 @@
     "lait",
     "oeuf"
   ],
+  "kcal": 270,
+  "prot": 5,
   "image": "recipes/images/gateau-leger-aux-framboises.jpg"
 }

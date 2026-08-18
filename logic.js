@@ -84,7 +84,8 @@
   const UNITS=[['c. à soupe','cs'],['c. à café','cc'],['cuillères à soupe','cs'],['cuillère à soupe','cs'],
     ['cuillères à café','cc'],['cuillère à café','cc'],['càs','cs'],['càc','cc'],
     ['c. à s.','cs'],['c. à c.','cc'],['c. à s','cs'],['c. à c','cc'],['c à s','cs'],['c à c','cc'],
-    ['kg','kg'],['mg','mg'],['ml','ml'],['cl','cl'],['gousses','gousse'],['gousse','gousse'],
+    ['kg','kg'],['mg','mg'],['grammes','g'],['gramme','g'],['gr','g'],   // alias "gramme(s)"/"gr" -> g (recettes hétérogènes)
+    ['millilitres','ml'],['millilitre','ml'],['ml','ml'],['cl','cl'],['gousses','gousse'],['gousse','gousse'],
     ['bottes','botte'],['botte','botte'],['tranches','tranche'],['tranche','tranche'],
     ['pincées','pincée'],['pincée','pincée'],['sachets','sachet'],['sachet','sachet'],
     ['boîtes','boîte'],['boîte','boîte'],['boites','boîte'],['boite','boîte'],['pots','pot'],['pot','pot'],['g','g'],['l','l']];

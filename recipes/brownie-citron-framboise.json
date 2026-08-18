@@ -1,7 +1,7 @@
 {
   "id": "brownie-citron-framboise",
   "titre": "Brownie Citron Framboise",
-  "portions": 1,
+  "portions": 8,
   "ingredients": [
     "120 gramme sucre",
     "160 gramme beurre",
@@ -31,5 +31,7 @@
     "gluten",
     "lait",
     "oeuf"
-  ]
+  ],
+  "kcal": 405,
+  "prot": 5
 }

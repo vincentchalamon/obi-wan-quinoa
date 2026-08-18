@@ -1,12 +1,12 @@
 {
   "id": "crepes",
   "titre": "Crêpes",
-  "portions": 1,
+  "portions": 10,
   "ingredients": [
     "250 g de farine de blé (T55, 65 ou même T80, demi-complète, avec plus de fibres)",
     "4 oeufs frais (bio de préférence)",
     "450 ml de lait légèrement tiède",
-    "2 c. à soupe de rhum ambré ou de fleur d'oranger, ou 1/2 verre de bière blonde",
+    "2 c. à soupe de rhum ambré (ou fleur d'oranger, ou 1/2 verre de bière blonde)",
     "1 c. à soupe d' extrait de vanille ou 1 sachet de sucre vanillé",
     "2 c. à soupe de sucre",
     "1 pincée de sel",
@@ -30,5 +30,7 @@
     "lait",
     "oeuf"
   ],
+  "kcal": 195,
+  "prot": 7,
   "image": "recipes/images/crepes.jpg"
 }

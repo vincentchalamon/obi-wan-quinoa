@@ -40,5 +40,7 @@
     "lait",
     "oeuf"
   ],
+  "kcal": 490,
+  "prot": 10,
   "image": "recipes/images/moelleux-aux-abricots.jpg"
 }
