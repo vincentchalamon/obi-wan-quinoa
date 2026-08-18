@@ -43,7 +43,7 @@ export function suggestAllergenes(ingredients) {
 export function ingredientIssue(line) {
   const p = L.parseQty(line);
   if (!p.name) return 'ligne non parseable';
-  if (/[:,&]| et /.test(p.name)) return 'ligne composee (enumeration / sous-recette)';
+  if (/[:,&]| et | \+ /.test(p.name)) return 'ligne composee (enumeration / sous-recette)';
   return null;
 }
 

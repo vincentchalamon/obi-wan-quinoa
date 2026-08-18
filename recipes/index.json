@@ -1,5 +1,5 @@
 {
-  "version": "1e95452aea4a1a94",
+  "version": "5afb590ed7832693",
   "recipes": [
     {
       "id": "banana-bread-au-pepites-de-chocolat",
@@ -14,7 +14,7 @@
         "oeuf",
         "fruits-a-coque"
       ],
-      "search": "banana bread au pepites de chocolat 4 bananes bien mures (+ 1 pour le decor) 80 g de yaourt a la grecque (0-3% pour la legerete) 50 g de cassonade 50 g de sucre en poudre 110 g de beurre mou 1 c. a cafe d’extrait de vanille 3 oeufs moyen 320 g de farine (t45 ou t55) 1 c. a cafe bombee de levure chimique 1 c. a cafe de bicarbonate de soude 1 pincee de sel 100 g de pepites de chocolat noir (70% de cacao) 80g de cerneaux de noix (optionnel) confiture d'abricot ou miel liquide (pour le \"sirop brillance\")",
+      "search": "banana bread au pepites de chocolat 4 bananes bien mures (+ 1 pour le decor) 80 g de yaourt a la grecque (0-3% pour la legerete) 50 g de cassonade 50 g de sucre en poudre 110 g de beurre mou 1 c. a cafe d'extrait de vanille 3 oeufs moyen 320 g de farine (t45 ou t55) 1 c. a cafe bombee de levure chimique 1 c. a cafe de bicarbonate de soude 1 pincee de sel 100 g de pepites de chocolat noir (70% de cacao) 80g de cerneaux de noix (optionnel) confiture d'abricot ou miel liquide (pour le \"sirop brillance\")",
       "hash": "e349898273d63122"
     },
     {
@@ -142,8 +142,8 @@
         "oeuf",
         "arachide"
       ],
-      "search": "cheesecake a la banane et beurre de cacahuete 250g de biscuits (type graham crackers ou digestives) 90g de beurre fondu 700g de cream cheese (type philadelphia) 250g de ricotta 150g de sucre blanc 3 oeufs + 1 jaune d'oeuf 25g de fecule de mais (maizena) 3 bananes tres mures 100g de beurre de cacahuete 1 c. a soupe de jus de citron",
-      "hash": "19bdafb76fb0bb2b"
+      "search": "cheesecake a la banane et beurre de cacahuete 250g de biscuits (type graham crackers ou digestives) 90g de beurre fondu 700g de cream cheese (type philadelphia) 250g de ricotta 150g de sucre blanc 3 oeufs 1 jaune d'oeuf 25g de fecule de mais (maizena) 3 bananes tres mures 100g de beurre de cacahuete 1 c. a soupe de jus de citron",
+      "hash": "b700484bdf7b2c5c"
     },
     {
       "id": "chicon-gratin",
@@ -372,7 +372,7 @@
         "oeuf",
         "fruits-a-coque"
       ],
-      "search": "gateau a l’ananas 200 gr beurre 230 gr sucre 5 oeufs 250 gr farine a gateaux francine 1 boite ananas en tranches 1 c. a cafe amande amere liquide 1 c. a cafe vanille liquide 30 gr sucre de canne",
+      "search": "gateau a l'ananas 200 gr beurre 230 gr sucre 5 oeufs 250 gr farine a gateaux francine 1 boite ananas en tranches 1 c. a cafe amande amere liquide 1 c. a cafe vanille liquide 30 gr sucre de canne",
       "hash": "d6a396e4133f6d85"
     },
     {
@@ -404,7 +404,7 @@
         "oeuf",
         "arachide"
       ],
-      "search": "gateau au yaourt 1 yaourt 3 oeufs 2 pots de sucre 3 pots de farine 1 sachet levure 1 sachet sucre vanille 1 pot d’huile d’arachide 1 gousse vanille 20 g beurre pour le moule",
+      "search": "gateau au yaourt 1 yaourt 3 oeufs 2 pots de sucre 3 pots de farine 1 sachet levure 1 sachet sucre vanille 1 pot d'huile d'arachide 1 gousse vanille 20 g beurre pour le moule",
       "hash": "08cb8938105274f9"
     },
     {
@@ -751,7 +751,7 @@
         "gluten",
         "lait"
       ],
-      "search": "orzotto d’orge, feves & petits pois, parmesan 80 g orge perle (sec) 1/2 courgette 100 g feves ecossees 80 g petits pois 30 g parmesan vegetarien 1/4 oignon bouillon de legumes huile d’olive",
+      "search": "orzotto d'orge, feves & petits pois, parmesan 80 g orge perle (sec) 1/2 courgette 100 g feves ecossees 80 g petits pois 30 g parmesan vegetarien 1/4 oignon bouillon de legumes huile d'olive",
       "hash": "b6d13122d7607aee"
     },
     {
@@ -874,7 +874,7 @@
         "soja",
         "fruits-a-coque"
       ],
-      "search": "pates courgette & faux-lardons 90 g pates (seches) 120 g faux lardons de soja 1 courgette 1/2 oignon 1 gousse ail huile d’olive amandes effilees (option)",
+      "search": "pates courgette & faux-lardons 90 g pates (seches) 120 g faux lardons de soja 1 courgette 1/2 oignon 1 gousse ail huile d'olive amandes effilees (option)",
       "hash": "2460ce4b4d704b92"
     },
     {

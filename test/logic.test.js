@@ -394,3 +394,46 @@ test('computeCourses : créneau vide ignoré', () => {
   const data = L.computeCourses(menu, 'w', new Set(), RAY, () => 1);
   assert.equal([].concat(...data.map((s) => s.items)).length, 1);
 });
+
+/* ---------- Correspondance des ingrédients (liste de courses) ---------- */
+test('canonUnit : poids/volumes -> base (kg->g, l/cl->ml), cuillères inchangées', () => {
+  assert.deepEqual(L.canonUnit(2, 'kg'), { qty: 2000, unit: 'g' });
+  assert.deepEqual(L.canonUnit(1, 'l'), { qty: 1000, unit: 'ml' });
+  assert.deepEqual(L.canonUnit(20, 'cl'), { qty: 200, unit: 'ml' });
+  assert.deepEqual(L.canonUnit(2, 'cs'), { qty: 2, unit: 'cs' });
+  assert.deepEqual(L.canonUnit(null, 'g'), { qty: null, unit: 'g' });
+});
+
+test('shopCanon : variantes du même produit fusionnées, produits distincts préservés', () => {
+  // apostrophe droite/courbe -> même clé
+  assert.equal(L.shopCanon("huile d'olive"), L.shopCanon('huile d’olive'));
+  // variantes -> produit de base
+  ['farine T55', 'farine de blé', 'Farine de blé T55'].forEach((f) => assert.equal(L.shopCanon(f), L.shopCanon('farine')));
+  ['sucre en poudre', 'sucre blanc'].forEach((s) => assert.equal(L.shopCanon(s), L.shopCanon('sucre')));
+  ['beurre doux', 'beurre fondu', 'beurre mou'].forEach((b) => assert.equal(L.shopCanon(b), L.shopCanon('beurre')));
+  assert.equal(L.shopCanon('oignons jaunes'), L.shopCanon('oignon'));
+  assert.equal(L.shopCanon('pois chiches égouttés'), L.shopCanon('pois chiche'));
+  // distinctions PRÉSERVÉES
+  const base = L.shopCanon('sucre');
+  ['sucre glace', 'sucre vanillé', 'sucre de canne'].forEach((s) => assert.notEqual(L.shopCanon(s), base));
+  assert.notEqual(L.shopCanon('beurre demi-sel'), L.shopCanon('beurre'));
+  assert.notEqual(L.shopCanon("huile d'olive"), L.shopCanon('huile végétale'));
+  assert.notEqual(L.shopCanon('lait de coco'), L.shopCanon('lait'));
+  assert.notEqual(L.shopCanon('riz basmati'), L.shopCanon('riz'));
+  assert.notEqual(L.shopCanon('citron vert'), L.shopCanon('citron'));
+});
+
+test('computeCourses : variantes du même produit cumulées sur une seule ligne', () => {
+  const RAY = [['epi', 'Épicerie'], ['con', 'Condiments']];
+  const menu = { jours: [{ repas: [
+    { shop: [{ n: 'farine T55', q: 200, u: 'g', r: 'epi' }, { n: "huile d'olive", q: 30, u: 'ml', r: 'con' }] },
+    { shop: [{ n: 'farine de blé', q: 100, u: 'g', r: 'epi' }, { n: 'huile d’olive', q: 20, u: 'ml', r: 'con' }] },
+  ] }] };
+  const data = L.computeCourses(menu, 'w', new Set(), RAY, () => 1);
+  const epi = data.find((s) => s.cls === 'epi');
+  assert.equal(epi.items.length, 1);          // farine T55 + farine de blé -> 1 ligne
+  assert.equal(epi.items[0].q, 300);
+  const con = data.find((s) => s.cls === 'con');
+  assert.equal(con.items.length, 1);          // huile d'olive (droite + courbe) -> 1 ligne
+  assert.equal(con.items[0].q, 50);
+});

@@ -929,8 +929,8 @@ function validateGen(){
   setStatus('Menu généré ✓', true); setTimeout(clearStatus, 3000);
 }
 /* Déduit le stock saisi des quantités à acheter (owq.qty), quand nom + unité concordent. */
-function parseStock(str){ return splitItems(str).map(function(part){ const p=parseQty(part);
-    return { name:norm(p.name), qty:p.qty, unit:p.unit }; }).filter(function(x){ return x.name; }); }
+function parseStock(str){ return splitItems(str).map(function(part){ const p=parseQty(part), cu=canonUnit(p.qty,p.unit);
+    return { name:norm(p.name), qty:cu.qty, unit:cu.unit }; }).filter(function(x){ return x.name; }); }
 function deductStock(wid, stockStr){
   const data=coursesFor(wid); if(!data) return; const stock=parseStock(stockStr); if(!stock.length) return;
   data.forEach(function(ray){ ray.items.forEach(function(it){

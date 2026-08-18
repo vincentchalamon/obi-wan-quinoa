@@ -26,8 +26,8 @@
      l'eau exclue des courses (mais gardée dans les ingrédients). Mêmes champs qu'avant + allergenes. */
   function catMapRecipe(raw){
     const ingredients = raw.ingredients || [];
-    const shop = ingredients.map(function(line){ const p = L.parseQty(line);
-      return { n:p.name, q:p.qty, u:p.unit, r:L.rayonFor(p.name) }; })
+    const shop = ingredients.map(function(line){ const p = L.parseQty(line); const cu = L.canonUnit(p.qty, p.unit);
+      return { n:p.name, q:cu.qty, u:cu.unit, r:L.rayonFor(p.name) }; })
       .filter(function(it){ return L.norm(it.n) !== 'eau'; });
     const rec = { id: raw.id, titre: raw.titre || '(sans titre)',
       ingredients: ingredients, etapes: raw.etapes || [], shop: shop,

@@ -58,7 +58,8 @@
   /* ---------- Ingrédients texte libre ---------- */
   /* Normalisation pour matching (minuscules, sans accents). */
   function stripAccents(s){ return (s||'').replace(/œ/g,'oe').replace(/Œ/g,'Oe').normalize('NFD').replace(/[̀-ͯ]/g,''); }
-  function norm(s){ return stripAccents((s||'').toLowerCase()).replace(/\s+/g,' ').trim(); }
+  /* Apostrophes typographiques unifiées ('’‘`´ -> ') pour que "huile d'olive" == "huile d’olive". */
+  function norm(s){ return stripAccents((s||'').toLowerCase()).replace(/['’‘`´]/g,"'").replace(/\s+/g,' ').trim(); }
 
   /* Invariables au pluriel (noms/adjectifs en -s/-x, source : Lexique 3.83, colonne "nombre" vide).
      Évitent les faux stems de la singularisation (ananas -> anana, noix -> noi). Régénérable via le
@@ -68,7 +69,46 @@
   /* Forme canonique d'un nom pour le cumul : minuscule + ligature œ->oe + espaces normalisés,
      ACCENTS PRÉSERVÉS (donc "Pâte" != "Pâté"), puis singularisation régulière -s/-x par mot (sauf
      invariables). Fusionne oeuf/oeufs, tomate/tomates, pomme de terre/pommes de terre. */
-  function canonName(n){ return (n||'').toLowerCase().replace(/œ/g,'oe').replace(/\s+/g,' ').trim().split(' ').map(singular).join(' '); }
+  function canonName(n){ return (n||'').toLowerCase().replace(/œ/g,'oe').replace(/['’‘`´]/g,"'").replace(/\s+/g,' ').trim().split(' ').map(singular).join(' '); }
+
+  /* Synonymes de COURSES : variantes d'un même produit d'achat -> une clé canonique commune (pour cumuler
+     dans la liste de courses). Le nom AFFICHÉ reste celui de la recette (aucune modification des recettes).
+     On ne fusionne QUE des produits identiques ; les vraies distinctions sont préservées (sucre != sucre
+     glace/vanillé/de canne ; beurre != demi-sel/allégé/cacahuète ; huile d'olive/sésame distinctes ;
+     lait != coco/végétal/soja ; riz != basmati/risotto ; crème bare laissée telle quelle car ambiguë). */
+  const SHOP_SYNONYMS = {
+    'farine t55':'farine','farine de blé':'farine','farine de blé t55':'farine','farine à gâteau francine':'farine',
+    'sucre en poudre':'sucre','sucre blanc':'sucre','sucre pour faire dégorger les pêche':'sucre',
+    'beurre doux':'beurre','beurre fondu':'beurre','beurre mou':'beurre','beurre pour le moule':'beurre',
+    'huile neutre':'huile végétale',
+    'oeuf moyen':'oeuf','oeuf frais':'oeuf','oeuf extra-frai':'oeuf',
+    'lait légèrement tiède':'lait',
+    'crème liquide entière':'crème liquide','crème fraîche épaisse':'crème fraîche',
+    'yaourt à la grecque':'yaourt grec','yaourt grec ou fromage blanc épai':'yaourt grec',
+    'tomate ronde':'tomate',
+    'citron non traité':'citron','citron bio':'citron','citron jaune non traité':'citron',
+    'oignon jaune':'oignon','oignon blanc':'oignon',
+    'pois chiche égoutté':'pois chiche','pois chiche cuit':'pois chiche',
+    'haricot rouge égoutté':'haricot rouge','haricot rouge cuit':'haricot rouge',
+    'parmesan râpé':'parmesan','parmesan végétarien':'parmesan',
+    'zeste citron':'zeste de citron','zeste de citron jaune non traité':'zeste de citron',
+    'banane bien mûre':'banane','banane trè mûre':'banane',
+    'bicarbonate alimentaire':'bicarbonate de soude',
+    'fromage râpé allégé':'fromage râpé',
+    'persil plat':'persil','basilic frais':'basilic','cannelle en poudre':'cannelle','champignon de pari':'champignon',
+  };
+  /* Clé de cumul d'un ingrédient dans la liste de courses (canonName + synonymes de produit). */
+  function shopCanon(name){ const c=canonName(name); return SHOP_SYNONYMS[c] || c; }
+
+  /* Normalise l'unité de cumul : poids -> g, volumes -> ml (conversions EXACTES uniquement, pas les
+     cuillères qui sont approximatives). Fusionne "2 kg" et "300 g", "1 l"/"20 cl" et "500 ml". */
+  function canonUnit(qty, unit){
+    if(qty==null) return { qty:qty, unit:unit };
+    if(unit==='kg') return { qty:qty*1000, unit:'g' };
+    if(unit==='l')  return { qty:qty*1000, unit:'ml' };
+    if(unit==='cl') return { qty:qty*10,   unit:'ml' };
+    return { qty:qty, unit:unit };
+  }
 
   /* Slug d'identité d'une recette (nom de fichier). Sert UNIQUEMENT à la création : un renommage
      conserve le slug d'origine. Sans accents, [a-z0-9] et tirets, sans tiret de bord. */
@@ -88,7 +128,9 @@
     ['millilitres','ml'],['millilitre','ml'],['ml','ml'],['cl','cl'],['gousses','gousse'],['gousse','gousse'],
     ['bottes','botte'],['botte','botte'],['tranches','tranche'],['tranche','tranche'],
     ['pincées','pincée'],['pincée','pincée'],['sachets','sachet'],['sachet','sachet'],
-    ['boîtes','boîte'],['boîte','boîte'],['boites','boîte'],['boite','boîte'],['pots','pot'],['pot','pot'],['g','g'],['l','l']];
+    ['boîtes','boîte'],['boîte','boîte'],['boites','boîte'],['boite','boîte'],['pots','pot'],['pot','pot'],
+    ['pièces',''],['pièce',''],   // "pièce(s)" = à l'unité (retire le mot parasite du nom : "pièce(s) oeuf" -> "oeuf")
+    ['g','g'],['l','l']];
   /* Parse une ligne d'ingrédient libre -> {qty:number|null, unit, name, raw}. Non parsable -> qty:null, name=ligne brute. */
   function parseQty(line){
     const raw=(line||'').replace(/\s+/g,' ').trim();
@@ -195,12 +237,17 @@
       return frac(v*factor);
     });
   }
-  /* Agrège les shop[] des repas non supprimés d'une semaine, cumule par clé n|u|r
-     (q=null non cumulé), multiplie chaque quantité par les couverts du repas
-     (couverts(di,ri) -> facteur, défaut 1), groupe par rayon dans l'ordre `rayons`. */
-  /* Parcourt TOUS les repas (créneaux vides ignorés : shop vide) en séparant conservés / exclus.
-     Un article dont AUCUN repas conservé ne le porte est marqué exclu:true (grisé, non compté) et sa
-     quantité affichée = celle des repas exclus (info). Un article partagé garde q = somme des conservés. */
+  /* Agrège les shop[] d'une semaine en UNE ligne par produit et par rayon (clé shopCanon|rayon : les
+     variantes du même produit et ses différentes unités ne se dédoublent plus). Les quantités sont
+     cumulées PAR UNITÉ (couverts appliqués), puis affichées combinées ("430 g + 2 c. à soupe").
+     Repas supprimés séparés : un produit sans aucune contribution conservée est marqué exclu:true (grisé).
+     Une ligne à UNE seule unité numérique reste éditable (q/u) ; sinon q=null (affichage combiné). */
+  function addUnit(m, u, q, f){ if(q==null){ if(!m.has(u)) m.set(u,null); } else m.set(u, (m.get(u)==null?0:m.get(u)) + q*f); }
+  function dispUnits(m, note){
+    const parts=[]; m.forEach(function(q,u){ if(q!=null) parts.push(qLabel({q:q,u:u})); });
+    if(parts.length) return parts.join(' + ');
+    return note || '';   // que des q:null (condiment) -> note éventuelle
+  }
   function computeCourses(menu, wid, deleted, rayons, couverts){
     if(!menu) return null;
     const cv = couverts || function(){ return 1; };
@@ -210,19 +257,23 @@
         const del = deleted.has(wid+':'+di+'-'+ri);
         const f = cv(di,ri) || 1;
         (r.shop||[]).forEach(function(s){
-          const k=canonName(s.n)+'|'+(s.u||'')+'|'+s.r;   // cumul insensible casse + singulier/pluriel (accents préservés)
-          if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),qExcl:(s.q==null?null:0),kept:false,note:s.note||''});order.push(k);}
+          const k=shopCanon(s.n)+'|'+s.r;   // UNE ligne par produit+rayon (unité hors clé)
+          if(!map.has(k)){map.set(k,{n:s.n,r:s.r,note:s.note||'',kept:false,keptU:new Map(),exclU:new Map()});order.push(k);}
           const e=map.get(k);
-          if(del){ if(s.q!=null) e.qExcl=(e.qExcl==null?0:e.qExcl)+s.q*f; }
-          else { e.kept=true; if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f; }
+          if(del) addUnit(e.exclU, s.u||'', s.q, f);
+          else { e.kept=true; addUnit(e.keptU, s.u||'', s.q, f); }
           if(s.note && !e.note) e.note=s.note;
         });
       });
     });
     const byR={}; rayons.forEach(function(x){byR[x[0]]=[];});
-    order.forEach(function(k){const e=map.get(k); const exclu=!e.kept;
-      byR[e.r].push({n:e.n, u:e.u, r:e.r, q:e.q, exclu:exclu, note:e.note,
-        disp:qLabel(exclu?{q:e.qExcl,u:e.u,note:e.note}:{q:e.q,u:e.u,note:e.note})});});
+    order.forEach(function(k){ const e=map.get(k); const exclu=!e.kept;
+      const buckets = exclu ? e.exclU : e.keptU;
+      const numeric = []; buckets.forEach(function(q,u){ if(q!=null) numeric.push([u,q]); });
+      const single = (!exclu && numeric.length===1 && buckets.size===1) ? numeric[0] : null;   // éditable si 1 seule unité
+      byR[e.r].push({ n:e.n, r:e.r, exclu:exclu, note:e.note,
+        u: single?single[0]:'', q: single?single[1]:null, disp: dispUnits(buckets, e.note) });
+    });
     return rayons.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
   }
 
@@ -294,7 +345,7 @@
 
   return { MOIS, JOURS, pad, idOf, parseId, addDays, startOfWeek, fmt,
            midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses,
-           stripAccents, norm, canonName, slugify, ALLERGENES, parseQty, rayonFor, scaleIngredientLine,
+           stripAccents, norm, canonName, shopCanon, canonUnit, slugify, ALLERGENES, parseQty, rayonFor, scaleIngredientLine,
            splitItems, tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative,
            catalogueFilter, diffCatalogue, pickSlotRecipe, buildRecipePrompt };
 });
