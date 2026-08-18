@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+
+# Sauvegardes locales brutes RecipeSage (obsoletes : le catalogue vit dans recipes/)
+.rs_backups/
