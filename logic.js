@@ -55,14 +55,14 @@
     return s;
   }
 
-  /* ---------- Ingrédients texte libre (RecipeSage) ---------- */
+  /* ---------- Ingrédients texte libre ---------- */
   /* Normalisation pour matching (minuscules, sans accents). */
   function stripAccents(s){ return (s||'').replace(/œ/g,'oe').replace(/Œ/g,'Oe').normalize('NFD').replace(/[̀-ͯ]/g,''); }
   function norm(s){ return stripAccents((s||'').toLowerCase()).replace(/\s+/g,' ').trim(); }
 
   /* Invariables au pluriel (noms/adjectifs en -s/-x, source : Lexique 3.83, colonne "nombre" vide).
      Évitent les faux stems de la singularisation (ananas -> anana, noix -> noi). Régénérable via le
-     vocabulaire du catalogue (scripts/rs_lint.mjs --vocab) recoupé au lexique. Voir README « Sources ». */
+     vocabulaire du catalogue (scripts/lint_recipes.mjs --vocab) recoupé au lexique. Voir README « Sources ». */
   const SINGULARS = new Set(['ananas','anis','brebis','cassis','couscous','doux','faux','frais','maïs','noix','pois','radis','vieux']);
   function singular(w){ return (w.length>=4 && /[sx]$/.test(w) && !SINGULARS.has(w)) ? w.slice(0,-1) : w; }
   /* Forme canonique d'un nom pour le cumul : minuscule + ligature œ->oe + espaces normalisés,

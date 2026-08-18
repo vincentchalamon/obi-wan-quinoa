@@ -1,0 +1,112 @@
+{
+ "id": "7afc241a-0c26-4bf1-ac50-ca6436104080",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Salade de lentilles vertes, œufs durs & skyr",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "",
+ "totalTime": "",
+ "source": "",
+ "url": "",
+ "folder": "main",
+ "ingredients": "80 g lentilles vertes (sèches)\n3 oeufs\n1/2 botte radis\n1/2 concombre\n15 g noix\n1 échalote\npersil\n1 tranche pain de mie complet\n100 g skyr\nvinaigrette : moutarde, huile, vinaigre, sel, poivre",
+ "instructions": "Rincer les lentilles vertes et les cuire 18-20 min à l’eau bouillante non salée jusqu’à ce qu’elles soient tendres mais encore fermes, puis égoutter et laisser tiédir.\nPlonger les œufs dans l’eau bouillante 9 min pour des œufs durs, les refroidir sous l’eau froide, les écaler et les couper en deux.\nCouper les radis en rondelles, le concombre en dés et ciseler finement l’échalote.\nPréparer la vinaigrette en émulsionnant moutarde, vinaigre, sel et poivre puis l’huile d’olive.\nMélanger les lentilles tièdes, les légumes et la vinaigrette pour bien les imprégner.\nDresser avec les œufs, les noix et le persil ciselé, le pain de mie complet et le skyr à côté.",
+ "notes": "",
+ "createdAt": "2026-07-05T13:44:50.859Z",
+ "updatedAt": "2026-07-05T16:14:09.277Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 850,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 56,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "da2a8d8d-0391-4b82-ac3b-2f72614cd662",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "7afc241a-0c26-4bf1-ac50-ca6436104080",
+   "createdAt": "2026-07-05T16:14:09.277Z",
+   "updatedAt": "2026-07-05T16:14:09.277Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "1e1cd861-9191-4bad-970e-17861faa5801",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "7afc241a-0c26-4bf1-ac50-ca6436104080",
+   "createdAt": "2026-07-05T16:14:09.277Z",
+   "updatedAt": "2026-07-05T16:14:09.277Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,164 @@
+{
+ "id": "ab7778f6-7545-4fd6-bf76-256f652c26f4",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Mijoté de lentilles vertes, blettes & faux lardons, crème de soja, pommes de terre",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "20 min",
+ "totalTime": "40 min",
+ "source": "Obi-Wan Quinoa",
+ "url": "",
+ "folder": "main",
+ "ingredients": "90 g lentilles vertes (sèches)\n200 g blettes (feuilles et côtes)\n50 g faux lardons (végétaux)\n50 g crème de soja\n250 g pomme de terre\n60 g oignon jaune\n1 gousse ail\n10 g huile d'olive\n1 pincée muscade\nsel, poivre",
+ "instructions": "Rincer les lentilles vertes et les cuire 20-25 min à l'eau bouillante non salée jusqu'à tendreté, égoutter.\nCuire les pommes de terre coupées en morceaux à l'eau ou à la vapeur 15-20 min jusqu'à tendreté.\nÉmincer l'oignon et l'ail, les faire revenir dans l'huile d'olive 3-4 min.\nAjouter les blettes émincées (côtes puis feuilles) et les faux lardons, faire suer 5-6 min jusqu'à ce que les blettes soient fondantes.\nAjouter les lentilles cuites et la crème de soja, mélanger, saler, poivrer, ajouter la muscade. Réchauffer 2-3 min à feu doux.\nServir avec les pommes de terre.",
+ "notes": "",
+ "createdAt": "2026-07-06T07:42:07.977Z",
+ "updatedAt": "2026-07-06T07:42:07.977Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 790,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 42,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "8ab83fb8-6539-40c7-bd1f-006aaadf6ddf",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "ab7778f6-7545-4fd6-bf76-256f652c26f4",
+   "createdAt": "2026-07-06T07:42:07.977Z",
+   "updatedAt": "2026-07-06T07:42:07.977Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "331f8344-89af-4e3c-9d1d-3de7b7b02a08",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "ab7778f6-7545-4fd6-bf76-256f652c26f4",
+   "createdAt": "2026-07-06T07:42:07.977Z",
+   "updatedAt": "2026-07-06T07:42:07.977Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "9527ac44-6120-47b5-8e4d-af544153c81b",
+   "labelId": "a4826e91-9555-4a25-8ac0-ab3dca0a36c1",
+   "recipeId": "ab7778f6-7545-4fd6-bf76-256f652c26f4",
+   "createdAt": "2026-07-06T07:42:07.977Z",
+   "updatedAt": "2026-07-06T07:42:07.977Z",
+   "label": {
+    "id": "a4826e91-9555-4a25-8ac0-ab3dca0a36c1",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "vegan",
+    "createdAt": "2026-02-16T10:50:32.577Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 12
+    }
+   }
+  },
+  {
+   "id": "ab5e70fe-f478-46a9-a5f3-f0b9919a79a9",
+   "labelId": "5116d3fd-d5ff-41c9-b5c2-47c7b874e981",
+   "recipeId": "ab7778f6-7545-4fd6-bf76-256f652c26f4",
+   "createdAt": "2026-07-06T07:42:07.977Z",
+   "updatedAt": "2026-07-06T07:42:07.977Z",
+   "label": {
+    "id": "5116d3fd-d5ff-41c9-b5c2-47c7b874e981",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-lactose",
+    "createdAt": "2026-07-05T15:08:19.155Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 17
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "id": "4da162ba-fe47-4ae4-a4b3-35813819a923",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Salade de pâtes pois chiches, œufs durs & féta",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "",
+ "totalTime": "",
+ "source": "",
+ "url": "",
+ "folder": "main",
+ "ingredients": "80 g pâtes (sèches)\n130 g pois chiches égouttés\n3 oeufs\n40 g féta\n150 g tomates cerises\n1/2 concombre\n1 carotte\n1/4 oignon rouge\n10 g noix\nbasilic\nvinaigrette : moutarde, huile, 1/2 citron, sel, poivre",
+ "instructions": "Cuire les pâtes à l’eau bouillante salée al dente, puis les égoutter et les rafraîchir sous l’eau froide pour stopper la cuisson.\nPlonger les œufs dans l’eau bouillante 9 min pour des œufs durs, les refroidir sous l’eau froide, les écaler et les couper en quartiers.\nCouper les tomates cerises en deux, le concombre en dés, râper la carotte et émincer finement l’oignon rouge.\nPréparer la vinaigrette en émulsionnant moutarde, jus d’un demi-citron, sel et poivre puis l’huile d’olive.\nMélanger les pâtes, les pois chiches, les légumes et la vinaigrette dans un grand saladier.\nAjouter par-dessus la féta émiettée, les quartiers d’œufs, les noix et le basilic ciselé, puis servir bien frais.",
+ "notes": "",
+ "createdAt": "2026-07-05T13:43:28.017Z",
+ "updatedAt": "2026-07-07T13:48:49.991Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 980,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 55,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "f72a104e-6032-421b-b11b-fc43b556524c",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "4da162ba-fe47-4ae4-a4b3-35813819a923",
+   "createdAt": "2026-07-07T13:48:49.991Z",
+   "updatedAt": "2026-07-07T13:48:49.991Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "c3044b15-89b9-4066-aec3-b84e1438b1a1",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "4da162ba-fe47-4ae4-a4b3-35813819a923",
+   "createdAt": "2026-07-07T13:48:49.991Z",
+   "updatedAt": "2026-07-07T13:48:49.991Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  }
+ ],
+ "recipeImages": [
+  {
+   "id": "8855f0fc-1832-4109-9311-afd5a26db265",
+   "order": 0,
+   "imageId": "3917bbbb-5801-47b0-8fb9-dd463aa2cb27",
+   "image": {
+    "id": "3917bbbb-5801-47b0-8fb9-dd463aa2cb27",
+    "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1783432101410-4e27c3f978f0cd"
+   }
+  }
+ ],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

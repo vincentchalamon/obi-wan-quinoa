@@ -1,4 +1,4 @@
-/* Client du catalogue LOCAL d'Obi-Wan Quinoa (remplace recipesage.js — plus aucune dépendance réseau tierce).
+/* Client du catalogue LOCAL d'Obi-Wan Quinoa (plus aucune dépendance réseau tierce).
    Chargé comme <script> classique par index.html (après logic.js) et require()-able par les tests.
    Les recettes vivent dans le dépôt : recipes/index.json (liste allégée) + recipes/<id>.json (détail). */
 (function(root, factory){

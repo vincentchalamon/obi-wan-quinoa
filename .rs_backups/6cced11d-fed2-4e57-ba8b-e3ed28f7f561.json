@@ -1,0 +1,138 @@
+{
+ "id": "6cced11d-fed2-4e57-ba8b-e3ed28f7f561",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Salade tiède de riz basmati, pêches rôties & haricots rouges, oignon rouge et quenelle de fromage blanc",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "20 min",
+ "totalTime": "30 min",
+ "source": "Obi-Wan Quinoa",
+ "url": "",
+ "folder": "main",
+ "ingredients": "70 g riz basmati\n180 g haricots rouges cuits (conserve, égouttés)\n2 pêche\n1/2 oignon rouge\n30 g radis\n80 g tomate cerise\n20 g huile d'olive\n1 cuillère à soupe vinaigre de vin\n80 g fromage blanc\nquelques brins ciboulette\nsel, poivre",
+ "instructions": "Cuire le riz basmati dans l'eau bouillante salée selon les indications du paquet, égoutter et laisser tiédir.\nCouper les pêches en quartiers et les poêler 3-4 min dans la moitié de l'huile d'olive à feu vif, jusqu'à légère caramélisation. Réserver.\nÉmincer finement l'oignon rouge, couper les radis en fines rondelles et les tomates cerises en deux.\nMélanger le riz tiède avec les haricots rouges égouttés, l'oignon rouge, les radis, les tomates cerises, le reste d'huile d'olive et le vinaigre. Saler, poivrer.\nCiseler la ciboulette et l'incorporer au fromage blanc.\nDresser la salade tiède, disposer les quartiers de pêche rôtis dessus et ajouter une quenelle de fromage blanc à la ciboulette.",
+ "notes": "",
+ "createdAt": "2026-07-06T07:30:52.535Z",
+ "updatedAt": "2026-07-06T07:30:52.535Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 860,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 28,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "856fb3ec-61c4-45aa-84ea-29b4e2f98bd8",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "6cced11d-fed2-4e57-ba8b-e3ed28f7f561",
+   "createdAt": "2026-07-06T07:30:52.535Z",
+   "updatedAt": "2026-07-06T07:30:52.535Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "3f50f014-dfa0-4af6-a411-c936ef3ce2a3",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "6cced11d-fed2-4e57-ba8b-e3ed28f7f561",
+   "createdAt": "2026-07-06T07:30:52.535Z",
+   "updatedAt": "2026-07-06T07:30:52.535Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "844f0d17-4e23-4742-bacb-3a8b83be63a8",
+   "labelId": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+   "recipeId": "6cced11d-fed2-4e57-ba8b-e3ed28f7f561",
+   "createdAt": "2026-07-06T07:30:52.535Z",
+   "updatedAt": "2026-07-06T07:30:52.535Z",
+   "label": {
+    "id": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-gluten",
+    "createdAt": "2026-07-05T15:08:11.655Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 20
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

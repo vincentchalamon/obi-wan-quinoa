@@ -1,9 +1,2 @@
 __pycache__/
 *.pyc
-
-# Token de session RecipeSage (jamais committé) — cf. scripts/rs_publish.mjs
-.rs_token
-*.rs_token
-
-# Sauvegardes locales avant mise à jour de recettes — cf. scripts/rs_update.mjs
-.rs_backups/

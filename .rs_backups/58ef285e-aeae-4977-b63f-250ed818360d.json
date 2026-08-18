@@ -1,0 +1,112 @@
+{
+ "id": "58ef285e-aeae-4977-b63f-250ed818360d",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Pâtes alla norma (aubergine), ricotta, parmesan & pois chiches",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "",
+ "totalTime": "",
+ "source": "",
+ "url": "",
+ "folder": "main",
+ "ingredients": "80 g pâtes (sèches)\n1 aubergine\n300 g tomates\n2 gousses ail\n1/2 oignon rouge\n150 g ricotta\n35 g parmesan végétarien\n130 g pois chiches égouttés\nbasilic\nhuile d’olive\nsel, poivre",
+ "instructions": "Couper l’aubergine en dés, les mélanger avec un filet d’huile d’olive, du sel, et les rôtir au four préchauffé à 200 °C pendant 20-25 min jusqu’à ce qu’ils soient dorés et fondants.\nÉmincer l’oignon rouge et l’ail, les faire revenir 3 min à feu moyen dans l’huile jusqu’à ce qu’ils soient translucides.\nAjouter les tomates coupées en morceaux, saler, poivrer et laisser mijoter 10-12 min à feu doux jusqu’à ce que la sauce épaississe.\nIncorporer les dés d’aubergine rôtie et les pois chiches, poursuivre 3-4 min pour lier les saveurs.\nCuire les pâtes al dente à l’eau bouillante salée, les égoutter et les mélanger à la sauce.\nServir avec la ricotta en quenelles, le parmesan végétarien râpé et le basilic ciselé.",
+ "notes": "",
+ "createdAt": "2026-07-05T13:46:05.168Z",
+ "updatedAt": "2026-07-05T16:14:05.257Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 1010,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 54,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "f76ed91d-48f5-4791-a9a4-eabe21364d29",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "58ef285e-aeae-4977-b63f-250ed818360d",
+   "createdAt": "2026-07-05T16:14:05.257Z",
+   "updatedAt": "2026-07-05T16:14:05.257Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "6f683414-46fd-4f3b-9e02-8724ef632b74",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "58ef285e-aeae-4977-b63f-250ed818360d",
+   "createdAt": "2026-07-05T16:14:05.257Z",
+   "updatedAt": "2026-07-05T16:14:05.257Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

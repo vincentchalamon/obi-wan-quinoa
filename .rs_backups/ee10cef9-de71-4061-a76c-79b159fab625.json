@@ -1,0 +1,131 @@
+{
+ "id": "ee10cef9-de71-4061-a76c-79b159fab625",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Risotto Milanais",
+ "description": "",
+ "yield": "",
+ "activeTime": "",
+ "totalTime": "",
+ "source": "",
+ "url": "",
+ "folder": "main",
+ "ingredients": "1 oignon rouge\n500 g de ris\n1 verre de vin blanc\n2 bouillons\nHuile\nSafran\n15 g de beurre\n300 g de parmesan",
+ "instructions": "Couper grossièrement en morceaux l'oignon et le faire frémir dans une grande poêle avec de l'huile.\nÉgrainer et faire revenir le riz dans la poêle.\nAjouter le vin blanc à niveau sur le riz.\nAjouter 3 louches d'eau chaude pour ne pas laisser le riz s'assécher.\nAjouter les bouillons pour parfumer.\nLaisser mijoter.\nAjouter le safran, et laisser cuire 15/20 minutes selon le goût.\nAjouter les croûtes de parmesan brutes.\nAjouter le beurre après avoir retiré les plus gros morceaux d'oignons.\nL'eau doit être épaisse, le riz crémeux : ne pas retirer l'eau.\nAjouter 1/3 du parmesan rapé et bien mélanger.\nDéguster chaud avec le reste de parmesan, accompagné de vin blanc.",
+ "notes": "Recette notée lors de mon voyage à Milan chez un couple de Couchsurfers. On sent la touche \"impro\" dans la recette...et surtout très calorique !",
+ "createdAt": "2026-07-06T08:45:37.535Z",
+ "updatedAt": "2026-07-06T08:45:37.535Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": null,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": null,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "4b21bd2a-aed8-4333-8cd7-0431ad124a41",
+   "labelId": "d179630b-4f7a-45d0-be26-8f926f26a6bb",
+   "recipeId": "ee10cef9-de71-4061-a76c-79b159fab625",
+   "createdAt": "2026-07-06T08:45:37.535Z",
+   "updatedAt": "2026-07-06T08:45:37.535Z",
+   "label": {
+    "id": "d179630b-4f7a-45d0-be26-8f926f26a6bb",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "à optimiser",
+    "createdAt": "2026-02-16T10:55:14.484Z",
+    "updatedAt": "2026-02-16T10:55:14.484Z",
+    "labelGroupId": null,
+    "labelGroup": null,
+    "_count": {
+     "recipeLabels": 9
+    }
+   }
+  },
+  {
+   "id": "74fbf61d-e6a7-448b-9dee-aa40173b993c",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "ee10cef9-de71-4061-a76c-79b159fab625",
+   "createdAt": "2026-07-06T08:45:37.535Z",
+   "updatedAt": "2026-07-06T08:45:37.535Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "19688fc5-138d-4978-a4c4-a725eb63d2a8",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "ee10cef9-de71-4061-a76c-79b159fab625",
+   "createdAt": "2026-07-06T08:45:37.535Z",
+   "updatedAt": "2026-07-06T08:45:37.535Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

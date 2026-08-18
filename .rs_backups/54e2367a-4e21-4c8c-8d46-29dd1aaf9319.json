@@ -1,0 +1,138 @@
+{
+ "id": "54e2367a-4e21-4c8c-8d46-29dd1aaf9319",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Wraps de laitue, tofu fumé poêlé, concombre & radis, sauce yaourt-ciboulette",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "15 min",
+ "totalTime": "15 min",
+ "source": "Obi-Wan Quinoa",
+ "url": "",
+ "folder": "main",
+ "ingredients": "150 g laitue (feuilles entières)\n200 g tofu fumé\n100 g concombre\n40 g radis\n80 g tomate cerise\n30 g oignon rouge\n100 g yaourt à la grecque\nquelques brins ciboulette\n10 g huile d'olive\n1 cuillère à café vinaigre de cidre\nsel, poivre",
+ "instructions": "Couper le tofu fumé en lamelles, le faire dorer 4-5 min à la poêle dans l'huile d'olive jusqu'à légèrement croustillant.\nLaver et essorer les feuilles de laitue, les disposer en éventail.\nCouper le concombre en bâtonnets, les radis et les tomates cerises en fines rondelles, émincer l'oignon rouge.\nCiseler la ciboulette et l'incorporer au yaourt à la grecque avec le vinaigre, sel et poivre.\nGarnir chaque feuille de laitue de tofu fumé, concombre, radis, tomates cerises et oignon rouge, napper de sauce.\nRouler ou plier les feuilles et servir aussitôt.",
+ "notes": "",
+ "createdAt": "2026-07-06T07:42:53.671Z",
+ "updatedAt": "2026-07-06T07:42:53.671Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 570,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 38,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "b8e726a2-ee63-48ba-8969-5b9a119b76fe",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "54e2367a-4e21-4c8c-8d46-29dd1aaf9319",
+   "createdAt": "2026-07-06T07:42:53.671Z",
+   "updatedAt": "2026-07-06T07:42:53.671Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "882e3e2e-952f-4757-be75-b13a904f9352",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "54e2367a-4e21-4c8c-8d46-29dd1aaf9319",
+   "createdAt": "2026-07-06T07:42:53.671Z",
+   "updatedAt": "2026-07-06T07:42:53.671Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "28872ed6-14d8-4c38-a419-ba94f039ca14",
+   "labelId": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+   "recipeId": "54e2367a-4e21-4c8c-8d46-29dd1aaf9319",
+   "createdAt": "2026-07-06T07:42:53.671Z",
+   "updatedAt": "2026-07-06T07:42:53.671Z",
+   "label": {
+    "id": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-gluten",
+    "createdAt": "2026-07-05T15:08:11.655Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 20
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

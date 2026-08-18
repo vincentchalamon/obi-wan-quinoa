@@ -1,0 +1,112 @@
+{
+ "id": "18219c49-09bc-4b37-a335-d7dea24372a8",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Risotto de coquillettes, courgette, petits pois, pois chiches & parmesan",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "",
+ "totalTime": "",
+ "source": "",
+ "url": "",
+ "folder": "main",
+ "ingredients": "90 g coquillettes (sèches)\n1/2 courgette\n100 g petits pois\n150 g pois chiches égouttés\n40 g parmesan végétarien\n1/2 oignon\n1 gousse ail\nbouillon de légumes\nhuile d’olive\n150 g fromage blanc 0%\nsel, poivre",
+ "instructions": "Émincer l’oignon et couper la courgette en petits dés, les faire revenir 5 min à feu moyen dans l’huile avec l’ail écrasé jusqu’à ce qu’ils soient translucides.\nAjouter les coquillettes, les petits pois et les pois chiches, remuer 1 min à feu vif pour nacrer les pâtes.\nMouiller avec le bouillon de légumes chaud, louche par louche, en remuant souvent pendant 12-15 min jusqu’à ce que les coquillettes soient cuites et la texture crémeuse.\nHors du feu, incorporer le parmesan végétarien râpé, poivrer et laisser reposer 1 min.\nServir bien crémeux.",
+ "notes": "",
+ "createdAt": "2026-07-05T13:42:44.611Z",
+ "updatedAt": "2026-07-05T16:13:52.476Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 920,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 54,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "6aa1ba62-15a6-4267-9a14-7caf773f032b",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "18219c49-09bc-4b37-a335-d7dea24372a8",
+   "createdAt": "2026-07-05T16:13:52.476Z",
+   "updatedAt": "2026-07-05T16:13:52.476Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "16b76e66-58ef-4607-ac44-3037b9fcb2d8",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "18219c49-09bc-4b37-a335-d7dea24372a8",
+   "createdAt": "2026-07-05T16:13:52.476Z",
+   "updatedAt": "2026-07-05T16:13:52.476Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

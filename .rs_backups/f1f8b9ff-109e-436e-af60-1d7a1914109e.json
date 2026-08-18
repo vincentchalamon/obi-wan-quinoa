@@ -1,0 +1,190 @@
+{
+ "id": "f1f8b9ff-109e-436e-af60-1d7a1914109e",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Tajine de pois chiches, poivron & pomme aux épices douces, riz basmati",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "15 min",
+ "totalTime": "35 min",
+ "source": "Obi-Wan Quinoa",
+ "url": "",
+ "folder": "main",
+ "ingredients": "250 g pois chiches cuits (conserve, égouttés)\n100 g poivron\n1 pomme\n80 g oignon jaune\n1 gousse ail\n100 g tomate concassée (boîte)\n15 g huile d'olive\n1 pincée cannelle\n1 cuillère à café gingembre moulu\n1 cuillère à café cumin\n1 cuillère à café paprika doux\n70 g riz basmati\nsel, poivre",
+ "instructions": "Émincer l'oignon et l'ail, les faire revenir dans l'huile d'olive 3 min avec la cannelle, le gingembre, le cumin et le paprika.\nAjouter le poivron coupé en lamelles, cuire 4-5 min.\nAjouter la tomate concassée, les pois chiches égouttés et la pomme coupée en dés. Mijoter à couvert 20 min à feu doux, en ajoutant un peu d'eau si nécessaire. Saler, poivrer.\nPendant ce temps, cuire le riz basmati dans l'eau bouillante salée selon les indications du paquet.\nServir le tajine sur le riz basmati.",
+ "notes": "",
+ "createdAt": "2026-07-06T07:43:05.260Z",
+ "updatedAt": "2026-07-06T07:43:05.260Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 800,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 26,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "d085ef02-54b1-4038-9326-e5b435351bee",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "f1f8b9ff-109e-436e-af60-1d7a1914109e",
+   "createdAt": "2026-07-06T07:43:05.260Z",
+   "updatedAt": "2026-07-06T07:43:05.260Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "3814c1cf-54ed-44de-a4c0-89b7979ad60b",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "f1f8b9ff-109e-436e-af60-1d7a1914109e",
+   "createdAt": "2026-07-06T07:43:05.260Z",
+   "updatedAt": "2026-07-06T07:43:05.260Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "252c6630-4735-427f-b3af-8bc347f8aca1",
+   "labelId": "a4826e91-9555-4a25-8ac0-ab3dca0a36c1",
+   "recipeId": "f1f8b9ff-109e-436e-af60-1d7a1914109e",
+   "createdAt": "2026-07-06T07:43:05.260Z",
+   "updatedAt": "2026-07-06T07:43:05.260Z",
+   "label": {
+    "id": "a4826e91-9555-4a25-8ac0-ab3dca0a36c1",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "vegan",
+    "createdAt": "2026-02-16T10:50:32.577Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 12
+    }
+   }
+  },
+  {
+   "id": "2258b5e1-da37-49da-b486-193c3ac028cf",
+   "labelId": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+   "recipeId": "f1f8b9ff-109e-436e-af60-1d7a1914109e",
+   "createdAt": "2026-07-06T07:43:05.260Z",
+   "updatedAt": "2026-07-06T07:43:05.260Z",
+   "label": {
+    "id": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-gluten",
+    "createdAt": "2026-07-05T15:08:11.655Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 20
+    }
+   }
+  },
+  {
+   "id": "b52f5e31-c6a1-4c89-8f38-9f56dfde8613",
+   "labelId": "5116d3fd-d5ff-41c9-b5c2-47c7b874e981",
+   "recipeId": "f1f8b9ff-109e-436e-af60-1d7a1914109e",
+   "createdAt": "2026-07-06T07:43:05.260Z",
+   "updatedAt": "2026-07-06T07:43:05.260Z",
+   "label": {
+    "id": "5116d3fd-d5ff-41c9-b5c2-47c7b874e981",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-lactose",
+    "createdAt": "2026-07-05T15:08:19.155Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 17
+    }
+   }
+  }
+ ],
+ "recipeImages": [],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

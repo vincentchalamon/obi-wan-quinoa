@@ -1,0 +1,148 @@
+{
+ "id": "3aa29197-11b3-4098-bd6d-bd87feed2511",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Hachis Parmentier Végétarien",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "30 min",
+ "totalTime": "1 h",
+ "source": "",
+ "url": "https://www.cuisineaz.com/recettes/hachis-parmentier-vegetarien-101326.aspx",
+ "folder": "main",
+ "ingredients": "2 pommes de terre\n2 champignons de Paris\n1/2 carotte\n1/2 branche céleri\n1/4 blanc de poireau\n1/2 oignon jaune\n1/2 gousse ail\n25 ml crème liquide\n1/2 cuillère à soupe huile d'olive\nmuscade\nsel\npoivre",
+ "instructions": "Pour réaliser cette recette végétarienne de hachis parmentier aux légumes, commencez par préparer les pommes de terre. Épluchez-les et coupez-les en petits morceaux. Faites-les cuire dans de l'eau chaude ou à la vapeur pendant 20 minutes jusqu'à ce qu'elles soient fondantes.\nPendant ce temps préparez le reste des légumes. Pour cela coupez la base des pieds des champignons, lavez-les. Puis coupez-les en morceaux. Réservez. Épluchez, les carottes, coupez-leurs extrémités puis coupez-les en morceaux. Réservez. Épluchez et coupez les oignons jaunes et gousses d'ail également. Réservez.\nPour le blanc de poireau, coupez les extrémités puis coupez-les dans la longueur et passez-les sous l'eau pour enlever l'excédent de terre éventuel. Coupez-les en morceaux et réservez. Enfin, épluchez vos branches de céleri avec un économe et coupez-les en morceaux. Versez tous ces légumes dans le mixeur et mixez rapidement pour conserver assez de morceaux et garder un texture un peu ferme.\nFaites chauffer une sauteuse et versez de l'huile d'olive. Versez vos légumes mixés, puis faites cuire ceux-ci pendant 15 minutes environ. Assaisonnez vos légumes, salez, poivrez, puis ajoutez la crème liquide. Mélangez vos légumes et réservez.\nPréchauffez le four à 220°C.\nDans un plat à gratin, versez la couche de légumes avec les oignons, céleri et blanc de poireau émincé. Étalez en couche uniforme. Réalisez maintenant votre purée de pommes de terre après les avoir cuites à l'eau. Versez vos morceaux de pommes de terre dans un presse purée.\nOu écrasez avec le dos d'une fourchette pour obtenir une purée épaisse, mélangez avec un peu de muscade si besoin. Rectifiez l'assaisonnement en sel et poivre selon vos goûts. Versez la couche de pommes de terre en purée épaisse sur le hachis parmentier végétarien et enfournez pendant 30 à 35 minutes. La cuisson terminée, servez une part de hachis avec un peu de salade et dégustez.",
+ "notes": "",
+ "createdAt": "2025-12-08T17:22:35.711Z",
+ "updatedAt": "2026-07-05T16:14:01.788Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 450,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 10,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "e15c31e6-19eb-48cc-bd01-7eb086f5cafb",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "3aa29197-11b3-4098-bd6d-bd87feed2511",
+   "createdAt": "2026-07-05T16:14:01.788Z",
+   "updatedAt": "2026-07-05T16:14:01.788Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "ffd09fc2-c4e1-4100-8137-8c8e742e3033",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "3aa29197-11b3-4098-bd6d-bd87feed2511",
+   "createdAt": "2026-07-05T16:14:01.788Z",
+   "updatedAt": "2026-07-05T16:14:01.788Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "b972ac62-0b9b-4b38-88ee-ad07cbefed80",
+   "labelId": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+   "recipeId": "3aa29197-11b3-4098-bd6d-bd87feed2511",
+   "createdAt": "2026-07-05T16:14:01.788Z",
+   "updatedAt": "2026-07-05T16:14:01.788Z",
+   "label": {
+    "id": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-gluten",
+    "createdAt": "2026-07-05T15:08:11.655Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 20
+    }
+   }
+  }
+ ],
+ "recipeImages": [
+  {
+   "id": "13a59b58-a093-450c-b46a-efbfc76a9e03",
+   "order": 0,
+   "imageId": "80d4d5ff-9b69-4de9-8d01-c601f07f3aa6",
+   "image": {
+    "id": "80d4d5ff-9b69-4de9-8d01-c601f07f3aa6",
+    "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1765214551672-f48e9be86ec05c"
+   }
+  }
+ ],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,174 @@
+{
+ "id": "4d9054a2-1012-4b08-9bdb-94b019918330",
+ "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+ "fromUserId": null,
+ "title": "Pad Thaï Végétarien Aux Fèves Et Tofu Fumé",
+ "description": "",
+ "yield": "1 personne",
+ "activeTime": "25 min",
+ "totalTime": "30 min",
+ "source": "la cerise sur le maillot",
+ "url": "https://lacerisesurlemaillot.fr/pad-thai-veggie/#recette",
+ "folder": "main",
+ "ingredients": "50 g nouilles de riz\n1/2 oignon tige\n1/2 gousse ail\n1 cm gingembre\n50 g tofu fumé\n50 g fèves\n1 oeuf\n1 cuillère à café pâte de tamarin\n1 cuillère à soupe sauce soja\n25 ml eau\n1/4 citron vert\n1/4 bouquet coriandre\n20 g noix de cajou\n1 cuillère à café huile d'olive\nsauce sriracha (facultatif)",
+ "instructions": "Peler et émincer les oignons et les gousses d’ail.\nPeler et râper le gingembre.\nCouper le tofu en dés.\nConcasser les noix de cajou ou les cacahuètes.\nDans un bol, mélanger le tamarin (ou la sauce worcestershire) avec la sauce soja et l’eau.\nPrécuire les fèves 3 minutes dans l’eau bouillante puis les égoutter.\nFaire tremper les nouilles de riz 3 minutes dans de l’eau très chaude. Les égoutter.\nDans un wok ou à défaut une sauteuse, faire revenir l’ail, l’oignon et le gingembre 1 minute avec l’huile d’olive.\nAjouter le tofu et les fèves, mélanger et cuire 1 minute en remuant.\nMettre ces ingrédients sur le côté du wok ou les réserver dans un saladier.\nCasser les œufs dans le wok, les brouiller.\nMélanger tous les ingrédients avec les œufs.\nAjouter les nouilles et le mélange tamarin et soja.\nPoursuivre la cuisson 2-3 minutes en mélangeant jusqu’à évaporation de la sauce.\nRépartir dans des bols. Parsemer de noix de cajou ou cacahuètes concassées, de coriandre ciselée et proposer un quart de citron vert et de la sauce sriracha.",
+ "notes": "",
+ "createdAt": "2025-12-08T17:12:49.843Z",
+ "updatedAt": "2026-07-05T16:14:03.527Z",
+ "lastMadeAt": null,
+ "rating": null,
+ "nutritionServingSize": null,
+ "nutritionCalories": 530,
+ "nutritionTotalFat": null,
+ "nutritionSaturatedFat": null,
+ "nutritionTransFat": null,
+ "nutritionPolyunsaturatedFat": null,
+ "nutritionMonounsaturatedFat": null,
+ "nutritionCholesterol": null,
+ "nutritionSodium": null,
+ "nutritionTotalCarbs": null,
+ "nutritionDietaryFiber": null,
+ "nutritionTotalSugars": null,
+ "nutritionAddedSugars": null,
+ "nutritionProtein": 23,
+ "nutritionVitaminD": null,
+ "nutritionCalcium": null,
+ "nutritionIron": null,
+ "nutritionPotassium": null,
+ "nutritionOtherDetails": null,
+ "recipeLabels": [
+  {
+   "id": "38de2581-1695-462b-8d84-42d95daca9f5",
+   "labelId": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+   "recipeId": "4d9054a2-1012-4b08-9bdb-94b019918330",
+   "createdAt": "2026-07-05T16:14:03.527Z",
+   "updatedAt": "2026-07-05T16:14:03.527Z",
+   "label": {
+    "id": "2bc4e5c2-93c1-4d5d-ad63-b2862e2eb889",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "repas",
+    "createdAt": "2026-02-16T10:52:30.792Z",
+    "updatedAt": "2026-07-05T15:39:35.659Z",
+    "labelGroupId": "6d389aac-c687-4967-843f-3d926dfdc642",
+    "labelGroup": {
+     "id": "6d389aac-c687-4967-843f-3d926dfdc642",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Type",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:39:35.653Z",
+     "updatedAt": "2026-07-05T15:39:35.653Z"
+    },
+    "_count": {
+     "recipeLabels": 42
+    }
+   }
+  },
+  {
+   "id": "dc3f1646-e712-427a-a5e6-f8d567a26c3c",
+   "labelId": "26c126dc-68d5-4689-804c-c310647bb2d7",
+   "recipeId": "4d9054a2-1012-4b08-9bdb-94b019918330",
+   "createdAt": "2026-07-05T16:14:03.527Z",
+   "updatedAt": "2026-07-05T16:14:03.527Z",
+   "label": {
+    "id": "26c126dc-68d5-4689-804c-c310647bb2d7",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "végétarien",
+    "createdAt": "2026-07-05T15:06:39.111Z",
+    "updatedAt": "2026-07-05T15:09:44.666Z",
+    "labelGroupId": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+    "labelGroup": {
+     "id": "4ca5dc50-07fe-476c-972b-c09deb5360d5",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Régime",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:44.661Z",
+     "updatedAt": "2026-07-05T15:09:44.661Z"
+    },
+    "_count": {
+     "recipeLabels": 68
+    }
+   }
+  },
+  {
+   "id": "82350174-75de-49c1-8dde-fbb668c7ec35",
+   "labelId": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+   "recipeId": "4d9054a2-1012-4b08-9bdb-94b019918330",
+   "createdAt": "2026-07-05T16:14:03.527Z",
+   "updatedAt": "2026-07-05T16:14:03.527Z",
+   "label": {
+    "id": "92bfb3d5-da18-4bee-a3d3-583765014b51",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-gluten",
+    "createdAt": "2026-07-05T15:08:11.655Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 20
+    }
+   }
+  },
+  {
+   "id": "6e52d661-802a-45ce-a031-02f75f5d468e",
+   "labelId": "5116d3fd-d5ff-41c9-b5c2-47c7b874e981",
+   "recipeId": "4d9054a2-1012-4b08-9bdb-94b019918330",
+   "createdAt": "2026-07-05T16:14:03.527Z",
+   "updatedAt": "2026-07-05T16:14:03.527Z",
+   "label": {
+    "id": "5116d3fd-d5ff-41c9-b5c2-47c7b874e981",
+    "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+    "title": "sans-lactose",
+    "createdAt": "2026-07-05T15:08:19.155Z",
+    "updatedAt": "2026-07-05T15:09:16.204Z",
+    "labelGroupId": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+    "labelGroup": {
+     "id": "d5e0ddd1-d46a-4e3f-82e9-9ce4d48a8730",
+     "userId": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+     "title": "Allergènes",
+     "warnWhenNotPresent": false,
+     "createdAt": "2026-07-05T15:09:16.196Z",
+     "updatedAt": "2026-07-05T15:09:16.196Z"
+    },
+    "_count": {
+     "recipeLabels": 17
+    }
+   }
+  }
+ ],
+ "recipeImages": [
+  {
+   "id": "f93b964c-fb8e-4e11-9539-680bf252e1f8",
+   "order": 0,
+   "imageId": "ade1574a-f301-4e0a-8cb6-4dbc7df26f09",
+   "image": {
+    "id": "ade1574a-f301-4e0a-8cb6-4dbc7df26f09",
+    "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1765213969310-16245ec80ba3d9"
+   }
+  }
+ ],
+ "recipeLinks": [],
+ "fromUser": null,
+ "user": {
+  "id": "4f329051-c9e5-45fb-9a61-069e3853ba61",
+  "name": "Vincent",
+  "handle": "vincentchalamon",
+  "enableProfile": true,
+  "profileImages": [
+   {
+    "order": 0,
+    "imageId": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+    "image": {
+     "id": "b561240c-66ec-494c-a03b-01ea8ef656d3",
+     "location": "https://chefbook-prod.s3.us-west-2.amazonaws.com/1781449294710-56fe1bd072e83f"
+    }
+   }
+  ]
+ }
+}
