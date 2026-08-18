@@ -72,7 +72,7 @@ export function buildIndex(recipes) {
 export const serializeIndex = (index) => JSON.stringify(index, null, 2) + '\n';
 /* Serialisation canonique d'un fichier recette (ordre de cles fixe, octets stables pour le hash). */
 export function serializeRecipe(obj) {
-  const o = { id: obj.id, titre: obj.titre, ingredients: obj.ingredients, etapes: obj.etapes, labels: obj.labels, allergenes: obj.allergenes };
+  const o = { id: obj.id, titre: obj.titre, portions: obj.portions || 1, ingredients: obj.ingredients, etapes: obj.etapes, labels: obj.labels, allergenes: obj.allergenes };
   if (typeof obj.kcal === 'number') o.kcal = obj.kcal;
   if (typeof obj.prot === 'number') o.prot = obj.prot;
   if (obj.image) o.image = obj.image;

@@ -1,5 +1,5 @@
 {
-  "version": "68ce5968eadda20a",
+  "version": "21ed19297e09090b",
   "recipes": [
     {
       "id": "banana-bread-au-pepites-de-chocolat",
@@ -15,7 +15,7 @@
         "fruits-a-coque"
       ],
       "search": "banana bread au pepites de chocolat 4 bananes bien mures (+ 1 pour le decor) 80 g de yaourt a la grecque (0-3% pour la legerete) 50 g de cassonade 50 g de sucre en poudre 110 g de beurre mou 1 c. a cafe d’extrait de vanille 3 oeufs moyen 320 g de farine (t45 ou t55) 1 c. a cafe bombee de levure chimique 1 c. a cafe de bicarbonate de soude 1 pincee de sel 100 g de pepites de chocolat noir (70% de cacao) 80g de cerneaux de noix (optionnel) confiture d'abricot ou miel liquide (pour le \"sirop brillance\")",
-      "hash": "e9393a2ac492a567"
+      "hash": "2213d6d44bbc08e3"
     },
     {
       "id": "bouchees-moelleuses-aux-pommes",
@@ -31,7 +31,7 @@
         "oeuf"
       ],
       "search": "bouchees moelleuses aux pommes 190 g farine 150 g sucre 3 unite oeuf 1/2 paquet levure 15 cl creme liquide 75 g beurre 2 pommes",
-      "hash": "7a86ae34a10babdf"
+      "hash": "41d5bfbe74c2fb40"
     },
     {
       "id": "boulgour-aux-legumes-d-ete-rotis",
@@ -46,7 +46,7 @@
         "oeuf"
       ],
       "search": "boulgour aux legumes d'ete rotis 60 g boulgour 1/2 boite pois chiche 1/2 fenouil 1/2 courgette 1 tomate 1 echalote 1 gousse ail 1 oeuf 40 g feta 1 cuillere a soupe huile d'olive 1/2 citron 1/2 cuillere a cafe cumin 1 pincee paprika 1 pincee sel 1 pincee poivre",
-      "hash": "e31a964db81ea833"
+      "hash": "410ea9708ef4658f"
     },
     {
       "id": "brownie-citron-framboise",
@@ -60,7 +60,7 @@
         "oeuf"
       ],
       "search": "brownie citron framboise 120 gramme sucre 160 gramme beurre 50 millilitre jus de citron zeste citron 250 gramme farine 1 sachet levure 2 oeuf 80 gramme framboise 120 gramme sucre glace",
-      "hash": "30dd4f77e2f27eaa"
+      "hash": "c1680e3dda16b97f"
     },
     {
       "id": "buddha-bowl-quinoa-tofu-grille-sauce-tahini",
@@ -77,7 +77,7 @@
         "sesame"
       ],
       "search": "buddha bowl quinoa & tofu grille, sauce tahini 80 g quinoa (sec) 150 g tofu ferme 150 g haricots verts 1 petite betterave cuite 30 g jeunes pousses sauce soja huile d'olive tahini 1/2 citron 1 gousse ail graines de courge (option)",
-      "hash": "33cd99ccde9aaed7"
+      "hash": "fe3b7363ff496b19"
     },
     {
       "id": "cake-tropical-kiwi-noix-de-coco",
@@ -94,7 +94,7 @@
         "fruits-a-coque"
       ],
       "search": "cake tropical kiwi & noix de coco 180g de farine t55 50g de fecule de mais 1 sachet de levure 1 pincee de fleur de sel 60g de noix de coco rapee torrefiee 3 oeufs 75g de sucre muscovado zestes d'un citron vert 120g de yaourt de soja ou grec 55g de beurre doux 5 kiwis bio",
-      "hash": "5dfd42a8e53e1c91"
+      "hash": "a7430a023aa77c92"
     },
     {
       "id": "cake-yaourt-peches",
@@ -110,7 +110,7 @@
         "fruits-a-coque"
       ],
       "search": "cake yaourt peches 300 g peches mures mais fermes (pelees, en des) 1 c. a cafe sucre (pour faire degorger les peches) 1 c. a cafe farine (pour enrober les peches) 125 g yaourt nature 65 g sucre (pour la pate) 140 g farine 40 g maizena (fecule de mais) 45 ml huile neutre (tournesol, pepins de raisin) 3 oeufs (blancs et jaunes separes) 8 g levure chimique 1 c. a cafe extrait de vanille 1 citron non traite (zeste seulement) 1 pincee de sel 30 g amandes effilees",
-      "hash": "9d58a17f2a105b34"
+      "hash": "5331789bf35683b9"
     },
     {
       "id": "carotte-cake",
@@ -126,7 +126,7 @@
         "fruits-a-coque"
       ],
       "search": "carotte cake 4 oeufs 250g de farine 200g de sucre brun 300g de carottes rapees 200ml d'huile vegetale 2 cuilleres a cafe de levure chimique 1 cuillere a cafe de bicarbonate de soude 1 pincee de sel 2 cuilleres a cafe de cannelle en poudre 100g de noix concassees (optionnel) 1 cuillere a cafe d'extrait de vanille 100g de beurre mou 300g de fromage a la creme (type philadelphia) 150g de sucre glace 1 cuillere a cafe d'extrait de vanille carottes en sucre",
-      "hash": "06fce5059a46dfa6"
+      "hash": "0eb43cb1053198ae"
     },
     {
       "id": "cheesecake-a-la-banane-et-beurre-de-cacahuete",
@@ -143,7 +143,7 @@
         "arachide"
       ],
       "search": "cheesecake a la banane et beurre de cacahuete 250g de biscuits (type graham crackers ou digestives) 90g de beurre fondu 700g de cream cheese (type philadelphia) 250g de ricotta 150g de sucre blanc 3 oeufs + 1 jaune d'oeuf 25g de fecule de mais (maizena) 3 bananes tres mures 100g de beurre de cacahuete 1 c. a soupe de jus de citron",
-      "hash": "0ef91bb85cdb882b"
+      "hash": "16ef0657dce8876d"
     },
     {
       "id": "chicon-gratin",
@@ -157,7 +157,7 @@
         "lait"
       ],
       "search": "chicon gratin 6 endives 50 g de beurre 50 g de farine 50 cl de lait 6 tranches de jambon 1 vieux lille (optionnel)",
-      "hash": "8bb544ea8273cd61"
+      "hash": "1539f6c58ed4d16b"
     },
     {
       "id": "chili-sin-carne-haricots-rouges-soja-riz",
@@ -172,7 +172,7 @@
         "soja"
       ],
       "search": "chili sin carne haricots rouges & soja, riz 150 g haricots rouges egouttes 25 g proteine de soja texturee (seche) 200 g tomates concassees 70 g riz (sec) 1 poivron 1/2 oignon 1 gousse ail 1 cuillere a cafe cumin 1 cuillere a cafe paprika 1 cuillere a cafe origan 1 pincee piment 20 g cheddar vegetarien (ou yaourt) huile d'olive",
-      "hash": "f722a3c95ca5b1b2"
+      "hash": "b3607bd46f38394d"
     },
     {
       "id": "chou-vert-mijote-aux-petits-legumes",
@@ -190,7 +190,7 @@
         "celeri"
       ],
       "search": "chou vert mijote aux petits legumes 1/4 chou vert 1/4 carotte 1/4 branche celeri 1/4 oignon 1/4 gousse ail 1/2 cuillere a soupe sauce soja 1 cuillere a cafe huile de sesame toaste 1 cuillere a cafe graines de sesame (ou gomasio) huile d'olive",
-      "hash": "fadaaacb1d924788"
+      "hash": "8f0bf221a45039ed"
     },
     {
       "id": "cookies-aux-pepites-de-chocolat",
@@ -205,7 +205,7 @@
         "oeuf"
       ],
       "search": "cookies aux pepites de chocolat 300 g de farine t55 15 g de maizena (fecule de mais) 105 g de beurre demi-sel (mou, pommade) 90 g de cassonade 45 g de sucre blanc 2 oeufs (1 oeuf entier + 1 jaune) 1 sachet de levure chimique 1 cuillere a soupe d'extrait de vanille liquide 1 pincee de bicarbonate alimentaire 150g de pepites de chocolat",
-      "hash": "1cb85e089b8f844e"
+      "hash": "7516f1c44c1b697a"
     },
     {
       "id": "courge-eight-ball-farcie-aux-eminces-de-soja-et-riz-salade-de-radis",
@@ -222,7 +222,7 @@
         "fruits-a-coque"
       ],
       "search": "courge eight ball farcie aux eminces de soja et riz, salade de radis 1 courge eight ball 35 g eminces de soja deshydrates 60 g riz 1 tomate 1 echalote 1 gousse ail 4 radis 50 g salade verte 15 g noix 1 cuillere a soupe huile d'olive 1 cuillere a cafe vinaigre 1 cuillere a cafe herbes de provence 1 pincee sel 1 pincee poivre",
-      "hash": "51f43351e7c4e0ed"
+      "hash": "ad15e01b1af41687"
     },
     {
       "id": "courge-shiatsu-farcie-au-riz-et-chorizo",
@@ -236,7 +236,7 @@
         "lait"
       ],
       "search": "courge shiatsu farcie au riz et chorizo 1/4 courge shiatsu (~500 g) 40 g riz basmati (sec) 1/4 oignon 1 cuillere a cafe huile d'olive 1/2 cuillere a cafe melange d'epices guacamole 1/4 cuillere a cafe paprika 50 g chorizo 100 g tomate concassee (en boite) 25 g cheddar rape persil plat",
-      "hash": "ca030e2a4b67ed76"
+      "hash": "7b1ebd530160b8b8"
     },
     {
       "id": "creme-de-courgettes",
@@ -250,7 +250,7 @@
         "lait"
       ],
       "search": "creme de courgettes ! 3/4 courgette 38 g creme fraiche epaisse 20 g gruyere 1/4 oignon 88 g pates sel poivre",
-      "hash": "afba0a6ed4302911"
+      "hash": "39d52f1897749b59"
     },
     {
       "id": "crepes",
@@ -265,7 +265,7 @@
         "oeuf"
       ],
       "search": "crepes 250 g de farine de ble (t55, 65 ou meme t80, demi-complete, avec plus de fibres) 4 oeufs frais (bio de preference) 450 ml de lait legerement tiede 2 c. a soupe de rhum ambre ou de fleur d'oranger, ou 1/2 verre de biere blonde 1 c. a soupe d' extrait de vanille ou 1 sachet de sucre vanille 2 c. a soupe de sucre 1 pincee de sel 50 g de beurre fondu (+ beurre pour la poele)",
-      "hash": "95ebfe0302b8b520"
+      "hash": "e2e0b0026a701e7a"
     },
     {
       "id": "croquettes-de-poireaux-au-roquefort",
@@ -280,7 +280,7 @@
         "oeuf"
       ],
       "search": "croquettes de poireaux au roquefort 1/2 poireau 1/2 oeuf 25 g farine 25 g chapelure 30 g roquefort sel poivre huile d'olive",
-      "hash": "7878477d46ca9057"
+      "hash": "6d8f19ff893baab7"
     },
     {
       "id": "curry-de-lentilles-corail-tofu-epinards-riz-yaourt",
@@ -295,7 +295,7 @@
         "soja"
       ],
       "search": "curry de lentilles corail & tofu, epinards, riz & yaourt 80 g lentilles corail (seches) 130 g tofu ferme 150 g epinards frais 60 ml lait de coco 70 g riz basmati (sec) 1/2 oignon 1 gousse ail 5 g gingembre 1 cuillere a cafe curcuma 1 cuillere a cafe cumin huile d'olive 100 g yaourt grec 1/2 citron",
-      "hash": "a457e30b95acf5fa"
+      "hash": "13290ed06bc03d03"
     },
     {
       "id": "falafels-au-four-taboule-de-boulgour-tzatziki",
@@ -309,7 +309,7 @@
         "lait"
       ],
       "search": "falafels au four, taboule de boulgour & tzatziki 250 g pois chiches egouttes 70 g boulgour (sec) 100 g yaourt grec 1/2 concombre 1 tomate 1/4 oignon 1 gousse ail persil menthe 1 cuillere a cafe cumin 1 cuillere a cafe coriandre moulue huile d'olive 1/2 citron",
-      "hash": "8cd079df3b0b59f2"
+      "hash": "e7b1537ddbac8860"
     },
     {
       "id": "galettes-de-carottes-au-fromage",
@@ -324,7 +324,7 @@
         "oeuf"
       ],
       "search": "galettes de carottes au fromage 3/4 oeuf 2,5 cl creme liquide 13 g farine 63 g carottes rapees 25 g gruyere rape",
-      "hash": "6c552838ec89cfbc"
+      "hash": "5ce7982ae3765ea5"
     },
     {
       "id": "galettes-de-chou-romanesco",
@@ -340,7 +340,7 @@
         "fruits-a-coque"
       ],
       "search": "galettes de chou romanesco 200 g chou romanesco 20 g farine 1/4 oeuf 1 cuillere a soupe lait 1/2 cuillere a soupe creme 13 g fromage rape huile d'olive sel poivre noix de muscade",
-      "hash": "85ce03e189f4a6c9"
+      "hash": "9c73191e98d764e3"
     },
     {
       "id": "gaspacho-de-legumes-d-ete-pois-chiches-tofu-fume-croustillants-pommes-de-terre-roties",
@@ -356,7 +356,7 @@
         "soja"
       ],
       "search": "gaspacho de legumes d'ete, pois chiches & tofu fume croustillants, pommes de terre roties 150 g concombre 100 g poivron rouge 150 g tomate ronde 50 g tomate cerise 20 g echalote 1/2 gousse ail 30 g huile d'olive 1 cuillere a soupe vinaigre de vin 150 g pois chiches cuits (conserve, egouttes) 100 g tofu fume 200 g pomme de terre 30 g radis 1 pincee paprika fume ciboulette sel poivre",
-      "hash": "a31c97fd85c4a219"
+      "hash": "e6789536f8b20b5d"
     },
     {
       "id": "gateau-a-l-ananas",
@@ -373,7 +373,7 @@
         "fruits-a-coque"
       ],
       "search": "gateau a l’ananas 200 gr beurre 230 gr sucre 5 oeufs 250 gr farine a gateaux francine 1 boite ananas en tranches 1 c. a cafe amande amere liquide 1 c. a cafe vanille liquide 30 gr sucre de canne",
-      "hash": "49b9df206ebd3f39"
+      "hash": "3b129512540a5884"
     },
     {
       "id": "gateau-a-la-mandarine",
@@ -388,7 +388,7 @@
         "oeuf"
       ],
       "search": "gateau a la mandarine 6 mandarines 5 oeufs 210g de beurre 250g de farine 80g de maizena 200g de sucre 1,5 sachet de levure 1 pincee de sel",
-      "hash": "f9be558311b67d4e"
+      "hash": "dad9bc9cbe4a0c59"
     },
     {
       "id": "gateau-au-yaourt",
@@ -405,7 +405,7 @@
         "arachide"
       ],
       "search": "gateau au yaourt 1 yaourt 3 oeufs 2 pots de sucre 3 pots de farine 1 sachet levure 1 sachet sucre vanille 1 pot d’huile d’arachide 1 gousse vanille 20 g beurre pour le moule",
-      "hash": "0342cd8a799df097"
+      "hash": "1ce2d61536495832"
     },
     {
       "id": "gateau-invisible-sale-courgette-aubergine-lentilles-vertes-feta",
@@ -420,7 +420,7 @@
         "oeuf"
       ],
       "search": "gateau invisible sale courgette-aubergine, lentilles vertes & feta 65 g lentille verte 200 g courgette 150 g aubergine 60 g oignon tige 1 gousse ail 2 oeuf 35 g farine 100 ml lait 40 g feta 20 g parmesan 1 cuillere a soupe huile d'olive 1 cuillere a cafe origan 5 g basilic 1 pincee sel 1 pincee poivre 150 g tomate 1/2 citron",
-      "hash": "6a0bfe4550dc3dd6"
+      "hash": "7cebe98c7435a8ad"
     },
     {
       "id": "gateau-leger-aux-framboises",
@@ -436,7 +436,7 @@
         "oeuf"
       ],
       "search": "gateau leger aux framboises 4 oeufs 200 g de sucre 200 g de farine 250 g de framboises 65 g de beurre (demi-sel de preference) le zeste d'un citron sucre glace",
-      "hash": "3c040691d76d4ab1"
+      "hash": "b66a1ef065d40a21"
     },
     {
       "id": "gateau-poire-amande",
@@ -452,7 +452,7 @@
         "fruits-a-coque"
       ],
       "search": "gateau poire amande 8 poires 90 g amande en poudre 180 g farine 4 oeuf(s) 150 ml lait 120 g beurre 90 g sucre 30 g amandes effilees 15 g sucre vanille 1.5 sachet levure chimique 7 gouttes essence d'amande amere",
-      "hash": "36d33b3e9fdeb738"
+      "hash": "e77c4fe786c13454"
     },
     {
       "id": "gateau-pomme-mascarpone",
@@ -468,7 +468,7 @@
         "fruits-a-coque"
       ],
       "search": "gateau pomme mascarpone 4 pommes 250 g mascarpone 200 g farine 100 g sucre en poudre 4 oeuf(s) 40 g cassonade 2 c. a cafe sucre glace 1 sachet levure chimique 1 c. a cafe cannelle 1 noisette beurre",
-      "hash": "8ff2f81874296aac"
+      "hash": "39753ac3d4f61ef8"
     },
     {
       "id": "gratin-d-endives-au-fromage",
@@ -480,7 +480,7 @@
       ],
       "allergenes": [],
       "search": "gratin d'endives au fromage 167 g endives 33 g vieux-lille 83 g pommes de terre 5 g margarine sel poivre",
-      "hash": "1ac5076bd9b40533"
+      "hash": "f181df4d5675bc6f"
     },
     {
       "id": "gratin-de-blettes-a-la-ricotta-salade-et-pain",
@@ -495,7 +495,7 @@
         "oeuf"
       ],
       "search": "gratin de blettes a la ricotta, salade et pain 250 g blettes 150 g ricotta 2 oeufs 20 g parmesan vegetarien 1 gousse ail muscade 1 tranche pain complet 30 g salade verte huile d'olive",
-      "hash": "87dc3b362ecea8b9"
+      "hash": "ba0f4d34f3f732c3"
     },
     {
       "id": "hachis-parmentier-vegetarien",
@@ -510,7 +510,7 @@
         "celeri"
       ],
       "search": "hachis parmentier vegetarien 2 pommes de terre 2 champignons de paris 1/2 carotte 40 g celeri 1/4 blanc de poireau 1/2 oignon 1/2 gousse ail 25 ml creme liquide 1/2 cuillere a soupe huile d'olive muscade sel poivre",
-      "hash": "909cf83fcbc15e9f"
+      "hash": "dc8de97c589158ad"
     },
     {
       "id": "kugel-de-courgette-aubergine-rotie-feta-menthe-et-graines-de-courge-yaourt-a-l-ail",
@@ -525,7 +525,7 @@
         "oeuf"
       ],
       "search": "kugel de courgette & aubergine rotie, feta-menthe et graines de courge, yaourt a l'ail 250 g aubergine 1 cuillere a soupe huile d'olive 1/2 cuillere a cafe paprika fume 3 pincees sel 250 g courgette 4 oeufs 150 g yaourt grec 50 g farine 2 gousses ail 1 pincee poivre 60 g oignon 20 g oignon tige 30 g feta 10 g persil 5 g menthe 15 g graines de courge 40 g oignon rouge 1/2 citron",
-      "hash": "d5bec891f46b2897"
+      "hash": "234d08a32f782f24"
     },
     {
       "id": "lasagne-a-la-ricotta-et-aux-epinards",
@@ -539,7 +539,7 @@
         "lait"
       ],
       "search": "lasagne a la ricotta et aux epinards 2 pates a lasagne 55 g ricotta 30 g mozzarella 9 g parmesan rape 50 g bebes epinards 1/8 oignon 1/2 gousse ail 1/2 cuillere a soupe huile d'olive 200 g tomates concassees (en boite) 8 ml creme liquide (35%) origan muscade",
-      "hash": "5706bc6edb758fb3"
+      "hash": "0a0eb3189ee8b400"
     },
     {
       "id": "lasagnes-au-potimarron-chevre-et-noisette",
@@ -554,7 +554,7 @@
         "fruits-a-coque"
       ],
       "search": "lasagnes au potimarron, chevre et noisette 2 pates a lasagne 200 g potimarron 1 oignon 1/2 gousse ail 30 g buche de chevre 25 g noisettes grillees 8 g beurre 8 g farine 7 cl lait huile d'olive thym sel poivre",
-      "hash": "5a0bb82f144b781c"
+      "hash": "7258cd034a711440"
     },
     {
       "id": "lasagnes-d-ete-aux-legumes-du-soleil",
@@ -569,7 +569,7 @@
         "soja"
       ],
       "search": "lasagnes d'ete aux legumes du soleil 6 feuilles de lasagne aux oeufs frais 3 courgettes 1 aubergine 1 poivron 600 g tomates 80 g eminces de soja deshydrates 1 oignon 2 gousses ail 250 g ricotta 1 oeuf 60 g parmesan 3 cuilleres a soupe huile d'olive 10 feuilles basilic frais 1 cuillere a cafe herbes de provence 1/2 cuillere a cafe sel 1 pincee poivre",
-      "hash": "c729ed42cdfcec65"
+      "hash": "e1c0b31cd4735e5a"
     },
     {
       "id": "madeleines-legeres-au-citron",
@@ -585,7 +585,7 @@
         "soja"
       ],
       "search": "madeleines legeres au citron 2 oeufs (gros) 50 g sucre 20 g miel 120 g farine 5 g levure chimique 65 g beurre 40 ml creme de soja 1 citron bio (zeste) 22 ml jus de citron (ou eau de fleur d'oranger) 1 g sel",
-      "hash": "d8ad452cb6c8d081"
+      "hash": "ec69d33003621acd"
     },
     {
       "id": "mijote-de-lentilles-vertes-blettes-faux-lardons-creme-de-soja-pommes-de-terre",
@@ -601,7 +601,7 @@
         "soja"
       ],
       "search": "mijote de lentilles vertes, blettes & faux lardons, creme de soja, pommes de terre 90 g lentilles vertes (seches) 200 g blettes (feuilles et cotes) 50 g faux lardons (vegetaux) 50 g creme de soja 250 g pomme de terre 60 g oignon 1 gousse ail 10 g huile d'olive 1 pincee muscade sel poivre",
-      "hash": "e7b481f11a2a9f30"
+      "hash": "08c7066417c6c824"
     },
     {
       "id": "mini-souffles-au-chou-fleur",
@@ -617,7 +617,7 @@
         "fruits-a-coque"
       ],
       "search": "mini souffles au chou-fleur 100 g chou-fleur 15 g fromage rape allege 1 oeuf 10 g beurre allege 2,5 cl lait ecreme 1 pincee noix de muscade sel poivre",
-      "hash": "676b8b7ee0ccf509"
+      "hash": "5d3b9d2080ad7357"
     },
     {
       "id": "moelleux-amande-framboise",
@@ -631,7 +631,7 @@
         "fruits-a-coque"
       ],
       "search": "moelleux amande-framboise 150 g poudre d'amandes 3 oeufs (moyens) 80 g beurre doux 40 g sucre de canne blond (ou 30 g de miel) 6 g levure chimique 1 pincee sel fin 1 zeste de citron jaune non traite (facultatif) 250 g framboises surgelees",
-      "hash": "609558aeff7a18a2"
+      "hash": "d93e6b9779e8325d"
     },
     {
       "id": "moelleux-aux-abricots",
@@ -647,7 +647,7 @@
         "oeuf"
       ],
       "search": "moelleux aux abricots 20 abricots 150 g de beurre 100 g de sucre 4 oeufs 200 g de farine 1 sachet de levure chimique 1 zeste de citron 1 sachet de sucre vanille",
-      "hash": "3776372eaad87dda"
+      "hash": "460f958948b4ff8f"
     },
     {
       "id": "moussaka-bulgare",
@@ -662,7 +662,7 @@
         "oeuf"
       ],
       "search": "moussaka bulgare 500 g de viande hachee (boeuf + porc) 2 oignons jaunes 3 cuilleres a soupe d'huile vegetale 1 kg de pommes de terre 2 tomates 2 oeufs 1 cuillere a soupe de farine 400 g de yaourt a la grecque herbes aromatiques huile sel",
-      "hash": "0da79bdc6165ff95"
+      "hash": "8ab848d397a9439b"
     },
     {
       "id": "muffins-aux-myrtilles",
@@ -677,7 +677,7 @@
         "oeuf"
       ],
       "search": "muffins aux myrtilles 2 oeufs 150 g myrtilles (fraiches ou surgelees) 150 g sucre 75 g beurre fondu 2 c. a cafe levure chimique 25 cl lait (entier) 1 sachet sucre vanille 350 g farine (tamisee) 1 pincee sel",
-      "hash": "9050262b78311478"
+      "hash": "e359dbb2d93138f4"
     },
     {
       "id": "muffins-aux-peches-blanches-coeur-de-compote-croute-d-amandes",
@@ -692,7 +692,7 @@
         "fruits-a-coque"
       ],
       "search": "muffins aux peches blanches, coeur de compote & croute d'amandes 240 grammes farine t55 60 grammes poudre d'amandes 1.5 cuillere a cafe levure chimique 0.3 cuillere a cafe bicarbonate de soude 0.3 cuillere a cafe sel fin 2 gros oeufs 80 grammes sucre de canne blond 1 cuillere a cafe sucre pour faire degorger les peches 1 cuillere a cafe miel liquide 130 grammes yaourt grec ou fromage blanc epais 65 grammes huile neutre (tournesol, pepins de raisin) 1 cuillere a cafe extrait de vanille 1 citron jaune non traite (zeste + jus) 5 peches blanches bien mures 3 cuillere a cafe amandes effilees 2 cuillere a cafe eclats d'amandes 3 cuillere a cafe pralin",
-      "hash": "0657e1efedca6d3f"
+      "hash": "cf2bfa0f437df7ec"
     },
     {
       "id": "muffins-groseilles-chocolat-blanc",
@@ -707,7 +707,7 @@
         "oeuf"
       ],
       "search": "muffins groseilles chocolat blanc 200g groseilles 200g chocolat blanc 250g farine 80g sucre 11g levure 80g huile 120g lait 2 oeufs sel",
-      "hash": "a897b3af5565b128"
+      "hash": "c33d4b3cead82965"
     },
     {
       "id": "muffins-moelleux-coeur-de-pomme-et-zeste-de-citron",
@@ -723,7 +723,7 @@
         "fruits-a-coque"
       ],
       "search": "muffins moelleux \"coeur de pomme\" et zeste de citron 3 pommes jus de citron jaune 200g de farine t55 50g de sucre en poudre 1 sachet de levure chimique 1/2 cuillere a cafe de bicarbonate de soude 1 pincee de sel 2 oeufs 125g fromage blanc (3% pour une onctuosite sans gras) 2 a 4 cuilleres a soupe de miel ou sirops d'agave, ou 1 cuillere a soupe de cassonade 1 cuillere a cafe d'extrait de vanille 12 moules a muffins (6x3cm) optionnel : zestes d'1 citron optionnel : 1 pincee de cannelle ou de cardamome (pour sublimer la pomme ou le citron) optionnel : amandes effilees ou eclats (a poser dessus avant cuisson) optionnel : sucre glace (pour la deco post-cuisson)",
-      "hash": "96406e45bb41e5b7"
+      "hash": "9fec60c67402e733"
     },
     {
       "id": "omelette-aux-blettes-feta-salade-et-pain",
@@ -738,7 +738,7 @@
         "oeuf"
       ],
       "search": "omelette aux blettes & feta, salade et pain 3 oeufs 200 g blettes (vert + cotes) 50 g feta 1/2 oignon huile d'olive 1 tranche pain complet 30 g salade verte sel poivre",
-      "hash": "911ceea046292b46"
+      "hash": "462b770eabbb7b55"
     },
     {
       "id": "orzotto-d-orge-feves-petits-pois-parmesan",
@@ -752,7 +752,7 @@
         "lait"
       ],
       "search": "orzotto d’orge, feves & petits pois, parmesan 80 g orge perle (sec) 1/2 courgette 100 g feves ecossees 80 g petits pois 30 g parmesan vegetarien 1/4 oignon bouillon de legumes huile d’olive",
-      "hash": "7698c55bab1a960f"
+      "hash": "b6d13122d7607aee"
     },
     {
       "id": "pad-thai-vegetarien-aux-feves-et-tofu-fume",
@@ -770,7 +770,7 @@
         "fruits-a-coque"
       ],
       "search": "pad thai vegetarien aux feves et tofu fume 50 g nouilles de riz 1/2 oignon tige 1/2 gousse ail 5 g gingembre 50 g tofu fume 50 g feves 1 oeuf 1 cuillere a cafe pate de tamarin 1 cuillere a soupe sauce soja 1/4 citron vert 5 g coriandre 20 g noix de cajou 1 cuillere a cafe huile d'olive sauce sriracha (facultatif)",
-      "hash": "73a3269c6a42c821"
+      "hash": "ab836bbcac9311d2"
     },
     {
       "id": "pancakes-lettons",
@@ -786,7 +786,7 @@
         "oeuf"
       ],
       "search": "pancakes lettons 10 pommes de terre 2 oeufs 1 oignon 1 gousse d'ail poivre huile sel epices",
-      "hash": "31d31b4e3cefa6d2"
+      "hash": "8415a6dee8798870"
     },
     {
       "id": "pancakes-vegan",
@@ -803,7 +803,7 @@
         "soja"
       ],
       "search": "pancakes vegan 170 g farine de ble 50 g sucre 7 g levure chimique 50 g yaourt de soja 1 c. a cafe extrait de vanille 190 ml lait vegetal 20 g huile 1 c. a soupe vinaigre de pommes 1 pincee sel",
-      "hash": "fae05f74b699085a"
+      "hash": "93c0fcd638e9d488"
     },
     {
       "id": "pates-a-la-carbonara",
@@ -816,7 +816,7 @@
         "oeuf"
       ],
       "search": "pates a la carbonara 400 g de linguines 4 oeufs 200 g de pecorino 150 g de guanciale sel poivre huile vegetale",
-      "hash": "cca58e18302834db"
+      "hash": "2b08892fa5b3e1db"
     },
     {
       "id": "pates-alla-norma-aubergine-ricotta-parmesan-pois-chiches",
@@ -830,7 +830,7 @@
         "lait"
       ],
       "search": "pates alla norma (aubergine), ricotta, parmesan & pois chiches 80 g pates (seches) 1 aubergine 300 g tomates 2 gousses ail 1/2 oignon rouge 150 g ricotta 35 g parmesan vegetarien 130 g pois chiches egouttes basilic huile d'olive sel poivre",
-      "hash": "9dc79a098b784950"
+      "hash": "eef77fec9c954fdd"
     },
     {
       "id": "pates-au-pesto",
@@ -845,7 +845,7 @@
         "fruits-a-coque"
       ],
       "search": "pates au pesto 80 g pates (seches) 17 g roquette (ou basilic) 5 g coriandre 1/2 gousse ail 8 g parmesan rape 8 g pignons de pin (ou amandes) 10 g tomates sechees huile d'olive sel",
-      "hash": "5ebb8774c155f82b"
+      "hash": "83b1be3d94928f1d"
     },
     {
       "id": "pates-aux-oeufs-frais",
@@ -860,7 +860,7 @@
         "oeuf"
       ],
       "search": "pates aux oeufs frais 75 g farine 1/4 oeuf extra-frais 1 jaune d'oeuf 8 ml huile d'olive eau",
-      "hash": "24dec159096a6000"
+      "hash": "89b4f6946fce655a"
     },
     {
       "id": "pates-courgette-faux-lardons",
@@ -875,7 +875,7 @@
         "fruits-a-coque"
       ],
       "search": "pates courgette & faux-lardons 90 g pates (seches) 120 g faux lardons de soja 1 courgette 1/2 oignon 1 gousse ail huile d’olive amandes effilees (option)",
-      "hash": "856613e7d3c7137b"
+      "hash": "2460ce4b4d704b92"
     },
     {
       "id": "pennes-a-la-fondue-de-poireaux-moutarde-et-parmesan",
@@ -891,7 +891,7 @@
         "moutarde"
       ],
       "search": "pennes a la fondue de poireaux, moutarde et parmesan 1/2 oignon 1/2 poireau (gros) 90 g pennes (poids cru) 1/2 cuillere a soupe moutarde 10 cl creme de soja 20 g parmesan rape huile d'olive pignons de pin sel poivre",
-      "hash": "e8e048f85808ccb0"
+      "hash": "0040d94bb57f2b13"
     },
     {
       "id": "poivrons-farcis-a-la-russe",
@@ -906,7 +906,7 @@
         "celeri"
       ],
       "search": "poivrons farcis a la russe 2 oignons 400 g de boeuf 6 poivons 1 kg de tomates 2 celeris 1 oignon rouge 3 carottes 400 g de riz huile sel herbes aromatiques epices",
-      "hash": "db5449b9504ab3e2"
+      "hash": "7a7fe1add6b3d83a"
     },
     {
       "id": "quiche-aux-epinards-et-chevre",
@@ -921,7 +921,7 @@
         "oeuf"
       ],
       "search": "quiche aux epinards et chevre 115 g epinards surgeles 1/4 pate brisee 1 oeuf 8 cl creme fraiche 1 cuillere a soupe parmesan rape 1/4 buche de chevre muscade sel poivre",
-      "hash": "2ec572f4c90c7376"
+      "hash": "111db8a44f5d2d71"
     },
     {
       "id": "ratatouille-proteinee-au-boulgour-aubergine-courgette-poivron",
@@ -937,7 +937,7 @@
         "soja"
       ],
       "search": "ratatouille proteinee au boulgour, aubergine, courgette & poivron 150 g aubergine 200 g courgette 100 g poivron 200 g tomate concassee (boite) 100 g tomate ronde 80 g oignon 1 gousse ail 40 g proteine de soja texturee (seche) 90 g boulgour 15 g huile d'olive 1 cuillere a cafe herbes de provence sel poivre",
-      "hash": "595f79f8f2b78a7b"
+      "hash": "439d6db5bd03bd73"
     },
     {
       "id": "risotto-aux-champignons-et-safran",
@@ -950,7 +950,7 @@
         "lait"
       ],
       "search": "risotto aux champignons et safran 100 g riz a risotto (arborio, sec) 1 cuillere a cafe huile d'olive 1 pincee safran 25 g parmesan 2 cl vin blanc sec 15 cl bouillon de legumes 50 g champignons",
-      "hash": "08823ab91cd80d07"
+      "hash": "15f76fdcebc303cb"
     },
     {
       "id": "risotto-de-coquillettes-courgette-petits-pois-pois-chiches-parmesan",
@@ -964,7 +964,7 @@
         "lait"
       ],
       "search": "risotto de coquillettes, courgette, petits pois, pois chiches & parmesan 90 g coquillettes (seches) 1/2 courgette 100 g petits pois 150 g pois chiches egouttes 40 g parmesan vegetarien 1/2 oignon 1 gousse ail bouillon de legumes huile d'olive 150 g fromage blanc sel poivre",
-      "hash": "ae6119f392c9e21f"
+      "hash": "8c96835ab89db0e7"
     },
     {
       "id": "risotto-milanais",
@@ -978,7 +978,7 @@
         "lait"
       ],
       "search": "risotto milanais 1/4 oignon 100 g riz a risotto (arborio, sec) 3 cl vin blanc 40 cl bouillon de legumes huile d'olive 1 pincee safran 10 g beurre 40 g parmesan",
-      "hash": "72fac44c6f095015"
+      "hash": "fd4fc272ac7262ee"
     },
     {
       "id": "salade-de-lentilles-vertes-oeufs-durs-skyr",
@@ -995,7 +995,7 @@
         "moutarde"
       ],
       "search": "salade de lentilles vertes, oeufs durs & skyr 80 g lentilles vertes (seches) 3 oeufs 1/2 botte radis 1/2 concombre 15 g noix 1 echalote persil 1 tranche pain de mie complet 100 g skyr 1 cuillere a cafe moutarde 1 cuillere a soupe huile d'olive 1 cuillere a cafe vinaigre sel poivre",
-      "hash": "c621aa5f885736df"
+      "hash": "1f1209f917d5383e"
     },
     {
       "id": "salade-de-pates-pois-chiches-oeufs-durs-feta",
@@ -1012,7 +1012,7 @@
         "moutarde"
       ],
       "search": "salade de pates pois chiches, oeufs durs & feta 80 g pates (seches) 130 g pois chiches egouttes 3 oeufs 40 g feta 150 g tomates cerises 1/2 concombre 1 carotte 1/4 oignon rouge 10 g noix basilic 1 cuillere a cafe moutarde 1 cuillere a soupe huile d'olive 1/2 citron sel poivre",
-      "hash": "cebdbab71916cecf"
+      "hash": "fe8118dce395654d"
     },
     {
       "id": "salade-mexicaine-de-haricots-rouges-mais-poivron-concombre-oeuf-et-feta",
@@ -1027,7 +1027,7 @@
         "oeuf"
       ],
       "search": "salade mexicaine de haricots rouges, mais, poivron & concombre, oeuf et feta 1 boite haricots rouges 80 g mais 1/2 poivron 1/2 concombre 1 tomate 1 echalote 1 oeuf 40 g feta 1 cuillere a soupe huile d'olive 1/2 citron vert 1 cuillere a soupe coriandre 1/2 cuillere a cafe cumin 1 pincee paprika 1 pincee sel 1 pincee poivre",
-      "hash": "cbc75f0e122ceb55"
+      "hash": "bb9a4b1b84272488"
     },
     {
       "id": "salade-tiede-de-riz-basmati-peches-roties-haricots-rouges-oignon-rouge-et-quenelle-de-fromage-blanc",
@@ -1041,7 +1041,7 @@
         "lait"
       ],
       "search": "salade tiede de riz basmati, peches roties & haricots rouges, oignon rouge et quenelle de fromage blanc 70 g riz basmati 180 g haricots rouges cuits (conserve, egouttes) 2 peches 1/2 oignon rouge 30 g radis 80 g tomate cerise 20 g huile d'olive 1 cuillere a soupe vinaigre de vin 80 g fromage blanc ciboulette sel poivre",
-      "hash": "d790cd945e55b4e9"
+      "hash": "582fff073fd37333"
     },
     {
       "id": "sauce-tomate-au-basilic",
@@ -1055,7 +1055,7 @@
       ],
       "allergenes": [],
       "search": "sauce tomate au basilic 1 kg tomates 1 oignon 1 gousse ail 2 cuilleres a soupe huile d'olive 20 feuilles basilic frais 1/2 cuillere a cafe sel 1 pincee poivre",
-      "hash": "02844c3292d57616"
+      "hash": "3e5e70284592d13c"
     },
     {
       "id": "sauce-tomate-aux-poivrons-fondants",
@@ -1069,7 +1069,7 @@
       ],
       "allergenes": [],
       "search": "sauce tomate aux poivrons fondants 1 kg tomates 2 poivrons 1 oignon 1 gousse ail 2 cuilleres a soupe huile d'olive 1/2 cuillere a cafe sel 1 pincee poivre",
-      "hash": "f85576835acd1fdc"
+      "hash": "a3ced371389ae628"
     },
     {
       "id": "shakshuka-aux-oeufs-pain-yaourt",
@@ -1084,7 +1084,7 @@
         "oeuf"
       ],
       "search": "shakshuka aux oeufs, pain & yaourt 3 oeufs 400 g tomates concassees 1 poivron 1/2 oignon 1 gousse ail 1 cuillere a cafe cumin 1 cuillere a cafe paprika huile d'olive 2 tranches pain complet 100 g yaourt grec 30 g salade verte",
-      "hash": "ef1342b03ecd02f4"
+      "hash": "83602a7547573eaf"
     },
     {
       "id": "taboule-de-semoule-proteine-de-soja-crudites",
@@ -1102,7 +1102,7 @@
         "moutarde"
       ],
       "search": "taboule de semoule, proteine de soja & crudites 80 g semoule (seche) 30 g proteine de soja texturee (seche) 1/2 concombre 2 carottes 80 g petits pois 1/4 oignon 20 g noix 30 g salade verte 1 cuillere a cafe moutarde 1 cuillere a soupe huile d'olive 1 cuillere a cafe vinaigre sel poivre 1 cuillere a cafe cumin 1 cuillere a cafe paprika",
-      "hash": "fbd07cfd3913cfd1"
+      "hash": "a9811ae98d1251a2"
     },
     {
       "id": "tajine-de-pois-chiches-poivron-pomme-aux-epices-douces-riz-basmati",
@@ -1116,7 +1116,7 @@
       ],
       "allergenes": [],
       "search": "tajine de pois chiches, poivron & pomme aux epices douces, riz basmati 250 g pois chiches cuits (conserve, egouttes) 100 g poivron 1 pomme 80 g oignon 1 gousse ail 100 g tomate concassee (boite) 15 g huile d'olive 1 pincee cannelle 1 cuillere a cafe gingembre moulu 1 cuillere a cafe cumin 1 cuillere a cafe paprika doux 70 g riz basmati sel poivre",
-      "hash": "44376f5749f107db"
+      "hash": "645dab782339afb0"
     },
     {
       "id": "tarte-a-l-oignon",
@@ -1132,7 +1132,7 @@
         "fruits-a-coque"
       ],
       "search": "tarte a l'oignon 600 g d'oignons blancs 2 jaunes d'oeufs 15 cl de lait 15 cl de creme liquide entiere 60 g de farine noix de muscade sel poivre beurre 1 pate brisee",
-      "hash": "6447d4eb9715c13d"
+      "hash": "ce1f99545768b2fe"
     },
     {
       "id": "tartelettes-aux-framboises",
@@ -1146,7 +1146,7 @@
         "oeuf"
       ],
       "search": "tartelettes aux framboises 1 pate sablee 25 cl de lait 1 gousse de vanille 2 jaunes d'oeuf 60 gr de sucre 20 gr de maizena 250 gr de framboises sucre glace",
-      "hash": "10695b3878e681af"
+      "hash": "aad4c9062925f131"
     },
     {
       "id": "tartelettes-normandes",
@@ -1163,7 +1163,7 @@
         "fruits-a-coque"
       ],
       "search": "tartelettes normandes 150 g beurre doux 100 g sucre glace 1 piece(s) oeuf(s) 250 g farine de ble t55 50 g poudre d'amande 4 piece(s) pomme(s) 100 g sucre en poudre 25 cl creme liquide entiere 4 piece(s) oeuf(s) 50 g sucre glace 10 g beurre doux",
-      "hash": "829cc4165fed96fc"
+      "hash": "71f9aa3eae8082e7"
     },
     {
       "id": "tempeh-teriyaki-nouilles-courgette-edamame-skyr",
@@ -1179,7 +1179,7 @@
         "sesame"
       ],
       "search": "tempeh teriyaki, nouilles, courgette & edamame, skyr 120 g tempeh 80 g nouilles (ble/soba) (seches) 1 courgette 80 g petits pois 90 g edamame ecosses sauce soja sirop d'erable 1 gousse ail 5 g gingembre huile de sesame graines de sesame 100 g skyr",
-      "hash": "7ba5136b89a1d61e"
+      "hash": "ee7d8ce51649ffb4"
     },
     {
       "id": "tian-de-courgettes-tomates-tofu-marine-lit-de-lentilles-vertes-feta",
@@ -1193,7 +1193,7 @@
         "soja"
       ],
       "search": "tian de courgettes, tomates & tofu marine, lit de lentilles vertes, feta 80 g lentille verte 150 g tofu ferme 200 g courgette 200 g tomate 50 g oignon 1 gousse ail 40 g feta 15 g graine de courge 1 cuillere a soupe huile d'olive 1 cuillere a cafe sauce soja 1/2 citron 1 cuillere a cafe origan seche 1 feuille laurier 5 g basilic frais 1 pincee poivre",
-      "hash": "594d070af7ceaaf0"
+      "hash": "568417ecc55da15a"
     },
     {
       "id": "tofu-brouille-aux-courgettes-tomates-pain-complet",
@@ -1208,7 +1208,7 @@
         "soja"
       ],
       "search": "tofu brouille aux courgettes & tomates, pain complet 200 g tofu ferme 1/2 courgette 1 tomate 1/4 oignon curcuma huile d'olive 1 tranche pain complet 100 g yaourt grec (option) sel poivre ciboulette",
-      "hash": "71dab98acd8a2941"
+      "hash": "07d56b8b596fa70d"
     },
     {
       "id": "tortilla-pommes-de-terre-oignons-feta-salade",
@@ -1224,7 +1224,7 @@
         "oeuf"
       ],
       "search": "tortilla pommes de terre & oignons, feta, salade 2 oeufs 150 g pommes de terre 1/2 oignon 30 g feta huile d'olive 30 g salade verte sel poivre",
-      "hash": "86ad5d074e9edd1c"
+      "hash": "0bdc4a18dec614e9"
     },
     {
       "id": "veloute-de-lentilles-corail-tomates-au-lait-de-soja-courgettes-roties",
@@ -1241,7 +1241,7 @@
         "soja"
       ],
       "search": "veloute de lentilles corail & tomates au lait de soja, courgettes roties 100 g lentilles corail (seches) 200 g tomate concassee (boite) 200 ml lait de soja 150 g courgette 60 g oignon 1 gousse ail 20 g huile d'olive 1 cuillere a cafe cumin 1 cuillere a cafe curcuma ciboulette sel poivre",
-      "hash": "91082ad2b0ed5385"
+      "hash": "1f38dc7f7b2187f2"
     },
     {
       "id": "wraps-de-laitue-tofu-fume-poele-concombre-radis-sauce-yaourt-ciboulette",
@@ -1256,7 +1256,7 @@
         "soja"
       ],
       "search": "wraps de laitue, tofu fume poele, concombre & radis, sauce yaourt-ciboulette 150 g laitue (feuilles entieres) 200 g tofu fume 100 g concombre 40 g radis 80 g tomate cerise 30 g oignon rouge 100 g yaourt a la grecque ciboulette 10 g huile d'olive 1 cuillere a cafe vinaigre de cidre sel poivre",
-      "hash": "e72e9e2289fe9a5c"
+      "hash": "3c827406f4aa2fc5"
     }
   ]
 }

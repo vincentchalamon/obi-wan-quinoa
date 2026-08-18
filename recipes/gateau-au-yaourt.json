@@ -1,6 +1,7 @@
 {
   "id": "gateau-au-yaourt",
   "titre": "Gâteau Au Yaourt",
+  "portions": 6,
   "ingredients": [
     "1 Yaourt",
     "3 Oeufs",

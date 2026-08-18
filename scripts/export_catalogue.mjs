@@ -43,7 +43,7 @@ const EXT = { 'image/jpeg': 'jpg', 'image/jpg': 'jpg', 'image/png': 'png', 'imag
 /* Recette RecipeSage brute -> schema interne du depot (copie autonome de rsMapRecipe, SANS shop ni url). */
 function mapRecipe(raw, id) {
   const ingredients = splitLines(raw.ingredients);
-  const o = { id, titre: raw.title || '(sans titre)', ingredients, etapes: splitLines(raw.instructions), labels: labelsOf(raw), allergenes: suggestAllergenes(ingredients) };
+  const o = { id, titre: raw.title || '(sans titre)', portions: firstNum(raw.yield) || 1, ingredients, etapes: splitLines(raw.instructions), labels: labelsOf(raw), allergenes: suggestAllergenes(ingredients) };
   const kc = firstNum(raw.nutritionCalories); if (kc != null) o.kcal = kc;
   const pr = firstNum(raw.nutritionProtein); if (pr != null) o.prot = pr;
   return o;
