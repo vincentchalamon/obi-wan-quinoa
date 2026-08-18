@@ -258,7 +258,7 @@
 <button id="today-fab" aria-label="Revenir à aujourd’hui" title="Aujourd’hui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></button>
 
 <script src="logic.js"></script>
-<script src="recipesage.js"></script>
+<script src="catalogue.js"></script>
 <script>
 /* ============================================================
    OBI-WAN QUINOA
@@ -413,7 +413,18 @@ let cursor=sow(today), daysRendered=0;
 const MAX_DAYS=30*7;
 function appendDays(n){ let h=''; for(let i=0;i<n && daysRendered<MAX_DAYS;i++){ h+=renderDay(cursor); cursor=addDays(cursor,1); daysRendered++; } planning.insertAdjacentHTML('beforeend',h); }
 
+/* Migration du stockage : les ids sont passés des UUID RecipeSage aux slugs -> les anciennes réfs
+   ne résolvent plus. On purge le cache dépendant des ids (recettes/menus/historique/overrides/quantités) ;
+   profil, panier, couverts et repas exclus (clés wid:di-ri) sont conservés. */
+const STORE_VERSION='2';
+function migrateStore(){
+  if(store.get('owq.storev')===STORE_VERSION) return;
+  ['owq.recipes','owq.gen','owq.history','owq.menu'].forEach(function(k){ try{ localStorage.removeItem(k); }catch(e){} });
+  try{ Object.keys(localStorage).filter(function(k){ return k.indexOf('owq.qty.')===0; }).forEach(function(k){ localStorage.removeItem(k); }); }catch(e){}
+  store.set('owq.storev', STORE_VERSION);
+}
 function boot(){
+  migrateStore();
   rebuild();
   appendDays(21);
   const el = document.getElementById('day-'+idOf(today));
@@ -490,7 +501,7 @@ function renderRecipe(key){
   let h='<article class="recipe'+(sc?' soir':'')+'">';
   h+='<span class="recipe-tag'+(sc?' soir':'')+'">'+r.moment+'</span>';
   h+='<h2 class="recipe-titre">'+r.titre+'</h2>';
-  if(r.image && /^https?:\/\//i.test(r.image)) h+='<img class="recipe-img" src="'+r.image+'" alt="" loading="lazy">';
+  if(r.image) h+='<img class="recipe-img" src="'+r.image+'" alt="" loading="lazy">';
   let macros='';
   if(typeof r.kcal==='number') macros+='<span class="chip kcal">~'+r.kcal+' kcal</span>';
   if(typeof r.prot==='number') macros+='<span class="chip prot">~'+r.prot+' g prot</span>';
@@ -506,7 +517,6 @@ function renderRecipe(key){
   h+='</div>';
   h+='<div class="bloc"><h3>Ingrédients</h3><ul class="ingr">'+r.ingredients.map(function(i){return '<li>'+scaleIngredientLine(i,cv)+'</li>';}).join('')+'</ul></div>';
   h+='<div class="bloc"><h3>Préparation</h3><ol class="etapes">'+r.etapes.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></div>';
-  if(r.url && /^https?:\/\//i.test(r.url)) h+='<p class="recipe-src"><a href="'+r.url+'" target="_blank" rel="noopener">Voir la recette d’origine</a></p>';
   const del=deleted.has(key);
   h+='<button class="del-btn'+(del?' is-del':'')+'" data-delkey="'+key+'">'+(del?'↩ Rétablir ce repas':'✕ Je mange à l’extérieur — retirer ce repas')+'</button>';
   h+='</article>';
@@ -571,37 +581,31 @@ function pushHistory(ids){ const raw=store.get('owq.history'); let a=[]; if(raw)
 function usedIdsOf(menu){ const s=new Set(); menu.jours.forEach(function(d){ d.repas.forEach(function(r){ s.add(r.recipe); }); }); return s; }
 function recipeById(id){ return genState&&genState.pool ? genState.pool.find(function(r){ return r.id===id; }) : null; }
 function setGenMsg(t){ const el=document.getElementById('gen-msg'); if(el) el.textContent=t||''; }
-function updateGenOffline(){ const b=document.getElementById('gen-go'); if(!b) return;
-  b.disabled=!navigator.onLine; if(!navigator.onLine) setGenMsg('Connexion requise pour générer le menu.'); }
-window.addEventListener('online',updateGenOffline);
-window.addEventListener('offline',updateGenOffline);
 
 function openGenerate(wid){
   ovTitle.textContent='Générer le menu';
-  const saved=store.get('owq.panier.'+wid)||'', off=!navigator.onLine;
+  const saved=store.get('owq.panier.'+wid)||'';
   let h='<p class="prep-note">Semaine du <span class="prep-week">'+fmt(parseId(wid))+'</span>. '
     +'Indique ce que tu as déjà (panier, placard) : le menu privilégiera les recettes qui les utilisent.</p>';
-  h+='<p class="src-note">Recettes issues du <a href="https://recipesage.com/app/list/main?userId='+OWNER_USER_ID+'" target="_blank" rel="noopener">catalogue RecipeSage</a> de l’auteur.</p>';
   h+='<div class="field"><label>Ingrédients disponibles</label>'
     +'<textarea id="owq-panier" placeholder="ex. 1 courgette; 3 tomates; 200 g de lentilles">'+saved.replace(/</g,'&lt;')+'</textarea></div>';
-  h+='<button class="btn-primary" id="gen-go"'+(off?' disabled':'')+' data-wid="'+wid+'">Générer le menu</button>';
-  h+='<div class="prep-ok" id="gen-msg">'+(off?'Connexion requise pour générer le menu.':'')+'</div>';
+  h+='<button class="btn-primary" id="gen-go" data-wid="'+wid+'">Générer le menu</button>';
+  h+='<div class="prep-ok" id="gen-msg"></div>';
   ovBody.innerHTML=h; openOverlay();
 }
 /* Pool = recettes étiquetées "repas" du catalogue owner (base/accompagnement/dessert/non étiqueté exclus),
    détaillées puis mappées. Filtre régime souple. */
 function loadPool(){
   if(genPoolCache && genPoolCache.length) return Promise.resolve(genPoolCache);   // ne pas re-servir un pool vide (échec réseau)
-  function labelIs(r, val){ return (r.recipeLabels||[]).some(function(l){ return l.label && norm(l.label.title)===val; }); }
-  return rsGetRecipes({}).then(function(lite){
+  function labelIs(r, val){ return (r.labels||[]).some(function(t){ return norm(t)===val; }); }
+  return catGetRecipes().then(function(lite){
     let mains=lite.filter(function(r){ return labelIs(r,'repas'); });
     if(profile.diet){ const d=mains.filter(function(r){ return labelIs(r, profile.diet); });
       if(d.length>=4) mains=d; }                          // filtre régime souple (évite un pool vide)
-    return Promise.all(mains.map(function(r){ return rsGetRecipe(r.id).then(rsMapRecipe).catch(function(){ return null; }); }));
+    return Promise.all(mains.map(function(r){ return catGetRecipe(r.id).then(catMapRecipe).catch(function(){ return null; }); }));
   }).then(function(details){ const pool=details.filter(Boolean); if(pool.length) genPoolCache=pool; return pool; });
 }
 function runGenerate(wid){
-  if(!navigator.onLine){ setGenMsg('Connexion requise pour générer le menu.'); return; }
   const ta=document.getElementById('owq-panier'), stock=ta?ta.value:''; store.set('owq.panier.'+wid, stock);
   const btn=document.getElementById('gen-go'); if(btn) btn.disabled=true; setGenMsg('Recherche de recettes…');
   loadPool().then(function(pool){
@@ -622,7 +626,7 @@ function renderProposal(){
       h+='<div class="gen-repas'+(ri===0?'':' soir')+(del?' supprime':'')+'" data-gkey="'+gk+'">'
         +(del?'':'<button class="gen-handle" aria-label="Déplacer ce repas" title="Déplacer">'+GRIP_SVG+'</button>')
         +'<span class="gen-moment '+(ri===0?'midi':'soir')+'">'+(ri===0?'Midi':'Soir')+'</span>'
-        +'<a class="gen-titre" href="https://recipesage.com/app/recipe/'+ref.recipe+'" target="_blank" rel="noopener">'+(r?r.titre:ref.recipe)+'</a>';
+        +'<span class="gen-titre">'+(r?r.titre:ref.recipe)+'</span>';
       if(del){ h+='<button class="gen-del" data-gdel="'+gk+'" aria-label="Rétablir ce repas" title="Rétablir">↩</button>'; }
       else { h+='<button class="gen-reroll" data-reroll="'+gk+'" aria-label="Proposer une autre recette" title="Proposer une autre">'+REROLL_SVG+'</button>'
         +'<button class="gen-del" data-gdel="'+gk+'" aria-label="Supprimer ce repas" title="Supprimer">✕</button>'; }
@@ -709,9 +713,9 @@ let iaMode=store.get('owq.ia')==='1', iaTaps=0, iaLast=0, iaTimer=null;
    cas d'échec le prompt le signale et Claude s'en passe. */
 let iaTitres=null;
 function loadIaTitres(){
-  if(iaTitres || !navigator.onLine) return;
-  rsGetRecipes({}).then(function(lite){
-    iaTitres=lite.map(function(r){ return r.title; }).filter(Boolean).sort();
+  if(iaTitres) return;
+  catGetRecipes().then(function(lite){
+    iaTitres=lite.map(function(r){ return r.titre; }).filter(Boolean).sort();
   }).catch(function(){});
 }
 /* Un seul timer : un setTimeout par toucher effacerait le message final. */

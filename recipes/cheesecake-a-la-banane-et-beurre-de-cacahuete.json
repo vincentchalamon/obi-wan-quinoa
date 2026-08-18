@@ -1,0 +1,43 @@
+{
+  "id": "cheesecake-a-la-banane-et-beurre-de-cacahuete",
+  "titre": "Cheesecake à la banane et beurre de cacahuète",
+  "ingredients": [
+    "250g de biscuits (type Graham Crackers ou Digestives)",
+    "90g de beurre fondu",
+    "700g de Cream Cheese (type Philadelphia)",
+    "250g de Ricotta",
+    "150g de sucre blanc",
+    "3 œufs + 1 jaune d'œuf",
+    "25g de fécule de maïs (Maïzena)",
+    "3 bananes très mûres",
+    "100g de beurre de cacahuète",
+    "1 c. à soupe de jus de citron"
+  ],
+  "etapes": [
+    "Préchauffez votre four à 180°C.",
+    "Mélangez les biscuits mixés et le beurre fondu. Tassez fermement au fond du moule (remontez un peu sur les bords si vous aimez les rebords biscuités).",
+    "Pré-cuisson : Enfournez 10 minutes, puis sortez le moule et baissez le four à 150°C.",
+    "Écrasez les bananes en purée.",
+    "Dans le bol du robot muni de la feuille (le batteur plat), travaillez le cream cheese, la ricotta et le sucre à vitesse lente. Important : ne battez pas trop vite pour ne pas incorporer trop d'air, ce qui ferait gonfler puis retomber le gâteau.",
+    "Ajoutez le beurre de cacahuète et la purée de bananes (citronnée pour éviter qu'elle ne grisonne). Mélangez jusqu'à homogénéité.",
+    "Ajoutez la fécule de maïs, puis les œufs un par un, en attendant que chaque œuf soit incorporé avant d'ajouter le suivant. Terminez dès que le mélange est lisse.",
+    "Versez l'appareil sur la base pré-cuite.",
+    "Placez un petit récipient d'eau bouillante dans le bas du four (cela crée une atmosphère humide qui empêche le cheesecake de craquer).",
+    "Enfournez pour 50 à 60 minutes à 150°C.",
+    "Les bords doivent être pris, mais le centre doit encore être légèrement \"tremblotant\" (comme un flan) quand vous secouez doucement le moule.",
+    "Éteignez le four, entrouvrez la porte et laissez le cheesecake dedans pendant 1 heure. Cela évite le choc thermique.",
+    "Sortez-le, laissez-le refroidir complètement à température ambiante, puis placez-le au réfrigérateur pour minimum 12 heures."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "arachide"
+  ],
+  "image": "recipes/images/cheesecake-a-la-banane-et-beurre-de-cacahuete.jpg"
+}

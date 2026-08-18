@@ -1,0 +1,38 @@
+{
+  "id": "gateau-a-l-ananas",
+  "titre": "Gâteau à l’ananas",
+  "ingredients": [
+    "200 gr beurre",
+    "230 gr sucre",
+    "5  oeufs",
+    "250 gr farine à gâteaux Francine",
+    "1 boîte ananas en tranches",
+    "1 c. à café amande amère liquide",
+    "1 c. à café vanille liquide",
+    "30 gr sucre de canne"
+  ],
+  "etapes": [
+    "Préchauffez le four à 180°C (Th.5).",
+    "Faites fondre le beurre et l’incorporer à 230g de sucre.",
+    "Ajoutez les œufs en fouettant bien jusqu’à ce que le mélange soit bien mousseux.",
+    "Ajoutez la farine à gâteaux Francine à la préparation liquide.",
+    "Ajoutez un peu de jus d'ananas de la boîte, l’amande amère et la vanille liquide.",
+    "Dans le moule au four, faites chauffer de l'eau et le sucre de canne pour faire le caramel.",
+    "Une fois le sucre de canne bien dissout et le caramel bien formé, disposez les tranches d'ananas dans le fond et sur le bord du moule latéralement.",
+    "Versez délicatement la pâte dans le moule afin qu’elle reste au-dessus des ananas.",
+    "Mettez au four pendant environ 35 minutes à 180°C (Th.5).",
+    "Démoulez dans un plat ou sur une grille afin que les tranches d’ananas se retrouvent sur le dessus du gâteau."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "image": "recipes/images/gateau-a-l-ananas.jpg"
+}

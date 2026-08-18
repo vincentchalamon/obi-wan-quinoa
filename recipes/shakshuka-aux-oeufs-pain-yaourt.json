@@ -1,0 +1,36 @@
+{
+  "id": "shakshuka-aux-oeufs-pain-yaourt",
+  "titre": "Shakshuka aux œufs, pain & yaourt",
+  "ingredients": [
+    "3 oeufs",
+    "400 g tomates concassées",
+    "1 poivron",
+    "1/2 oignon",
+    "1 gousse ail",
+    "1 cuillère à café cumin",
+    "1 cuillère à café paprika",
+    "huile d'olive",
+    "2 tranches pain complet",
+    "100 g yaourt grec",
+    "30 g salade verte"
+  ],
+  "etapes": [
+    "Émincer l’oignon et le poivron en fines lanières, les faire revenir 8 min à feu moyen dans l’huile d’olive jusqu’à ce qu’ils soient tendres et légèrement dorés.",
+    "Ajouter l’ail écrasé, le cumin et le paprika, remuer 1 min à feu doux jusqu’à ce que les épices libèrent leur parfum.",
+    "Verser les tomates concassées, saler et poivrer, laisser mijoter 10–12 min à feu moyen jusqu’à ce que la sauce épaississe.",
+    "Creuser 3 puits dans la sauce, y casser délicatement un œuf, couvrir et cuire 5–7 min à feu doux jusqu’à ce que les blancs soient pris et les jaunes encore coulants.",
+    "Toaster les tranches de pain complet.",
+    "Servir la shakshuka directement à la poêle avec le pain, le yaourt grec à part et la salade verte."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 930,
+  "prot": 32
+}

@@ -1,0 +1,39 @@
+{
+  "id": "bouchees-moelleuses-aux-pommes",
+  "titre": "Bouchées Moelleuses Aux Pommes",
+  "ingredients": [
+    "190 g farine",
+    "150 g sucre",
+    "3 unité oeuf",
+    "1/2 paquet levure",
+    "15 cl crème liquide",
+    "75 g beurre",
+    "2 pommes"
+  ],
+  "etapes": [
+    "Battre le sucre avec le beurre mou jusqu’à ce que le mélange blanchisse.",
+    "Ajouter les oeufs un à un.",
+    "Lorsque le mélange est homogène, ajouter la crème liquide et le calvados. Mélanger.",
+    "Mélanger la farine avec la levure chimique et l’ajouter progressivement à la pâte, tout en remuant.",
+    "Beurrer et fariner un plat rectangulaire d’environ 30 cm sur 20 cm. Verser la pâte et lisser.",
+    "Éplucher les pommes, les couper en quartier, retirer la partie centrale puis couper chaque quartier en tranches épaisses.",
+    "Disposer les tranches de pommes en ligne sur le dessus de la pâte, en les enfonçant légèrement.",
+    "Enfourner à 200°c pendant 30-35 minutes.",
+    "Couvrir avec une feuille d’aluminium si le dessus du gâteau bronze trop vite.",
+    "Vérifier la cuisson en piquant la lame d’un couteau, elle doit ressortir sèche.",
+    "Laisser tiédir le gâteau puis le saupoudrer de sucre vanillé.",
+    "Couper le gâteau en bouchées lorsqu’il est froid."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 190,
+  "image": "recipes/images/bouchees-moelleuses-aux-pommes.jpg"
+}

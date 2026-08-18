@@ -1,0 +1,36 @@
+{
+  "id": "moussaka-bulgare",
+  "titre": "Moussaka Bulgare",
+  "ingredients": [
+    "500 g de viande hachée (boeuf + porc)",
+    "2 oignons jaunes",
+    "3 cuillères à soupe d'huile végétale",
+    "1 kg de pommes de terre",
+    "2 tomates",
+    "2 oeufs",
+    "1 cuillère à soupe de farine",
+    "400 g de yaourt à la grecque",
+    "Herbes aromatiques",
+    "Huile",
+    "Sel"
+  ],
+  "etapes": [
+    "Émincer les oignons et les faire revenir avec la viance hachée et l'huile dans une grande casserole.",
+    "Hacher les tomates et les ajouter avec les herbes et le sel.",
+    "Couper les pommes de tere en dés et les ajouter au mélange, recouvrir d'eau à niveau.",
+    "Faire cuire en remuant jusqu'à ce que les pommes de rette deviennent douces et cuites.",
+    "Monter un plat à gratin et cuire au four à 220°C pendant 30 minutes environ.",
+    "Une fois le plat cuit, mélanger les oeufs avec le yaourt et la farine, puis verser sur le plat.",
+    "Remettre au four pendant 15 minutes jusqu'à dorure du gratin.",
+    "Saupoudrer d'herbes aromatiques avant de servir."
+  ],
+  "labels": [
+    "repas",
+    "viande"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ]
+}

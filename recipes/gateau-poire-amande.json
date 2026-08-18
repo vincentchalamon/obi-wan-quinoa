@@ -1,0 +1,39 @@
+{
+  "id": "gateau-poire-amande",
+  "titre": "Gâteau Poire Amande",
+  "ingredients": [
+    "8 Poires",
+    "90 g Amande en poudre",
+    "180 g Farine",
+    "4 Œuf(s)",
+    "150 ml Lait",
+    "120 g Beurre",
+    "90 g Sucre",
+    "30 g Amandes effilées",
+    "15 g Sucre vanillé",
+    "1.5 Sachet Levure chimique",
+    "7 gouttes Essence d'amande amère"
+  ],
+  "etapes": [
+    "Préchauffez le four th.6 (180°C).",
+    "Séparez les blancs des jaunes, et montez les blancs en neige.",
+    "Fouettez les jaunes avec les sucres dans un cul-de-poule jusqu'à ce que le mélange blanchisse.",
+    "Ajoutez la farine, la levure et les amandes en poudre avec une pincée de sel. Mélangez.",
+    "Incorporez progressivement le lait et le beurre préalablement fondu à la préparation.",
+    "Incorporez les blancs en neige sans les casser.",
+    "Épluchez et découpez les poires en fines lanières, puis ajoutez-les à la préparation.",
+    "Chemisez un moule rond avec un peu de beurre et de farine. Coulez la pâte dans le moule et recouvrez-la d'amandes effilées.",
+    "Enfournez pour 30 à 40 min."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "image": "recipes/images/gateau-poire-amande.jpg"
+}

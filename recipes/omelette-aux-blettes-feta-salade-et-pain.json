@@ -1,0 +1,33 @@
+{
+  "id": "omelette-aux-blettes-feta-salade-et-pain",
+  "titre": "Omelette aux blettes & féta, salade et pain",
+  "ingredients": [
+    "3 oeufs",
+    "200 g blettes (vert + côtes)",
+    "50 g féta",
+    "1/2 oignon",
+    "huile d'olive",
+    "1 tranche pain complet",
+    "30 g salade verte",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Séparer le vert des côtes ; émincer les côtes et l’oignon.",
+    "Poêler côtes + oignon 6–7 min, ajouter le vert 2–3 min.",
+    "Battre les œufs, saler/poivrer, verser dans la poêle.",
+    "Émietter la féta dessus, cuire à couvert 4–5 min.",
+    "Servir avec le pain et la salade."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 920,
+  "prot": 31
+}

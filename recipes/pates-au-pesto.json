@@ -1,0 +1,32 @@
+{
+  "id": "pates-au-pesto",
+  "titre": "Pâtes au pesto",
+  "ingredients": [
+    "80 g pâtes (sèches)",
+    "17 g roquette (ou basilic)",
+    "5 g coriandre",
+    "1/2 gousse ail",
+    "8 g parmesan râpé",
+    "8 g pignons de pin (ou amandes)",
+    "10 g tomates séchées",
+    "huile d'olive",
+    "sel"
+  ],
+  "etapes": [
+    "Cuire les pâtes.",
+    "Laver la roquette ou basilic, et la coriandre.",
+    "Faire dorer les pignons de pin (ou amandes) à sec dans une poêle bien chaude.",
+    "Dans un blender, mettre la roquette ou basilic, la coriandre, l'ail, le parmesan, les pignons de pin (ou amandes), les tomates séchées et 2 cuillères à soupe d'huile, et mixer jusqu'à optention d'une pâte.",
+    "Ajuster l'huile si nécessaire afin d'obtenir une pâte crémeuse.",
+    "Mélanger les pâtes avec le pesto."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "fruits-a-coque"
+  ]
+}

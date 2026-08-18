@@ -20,14 +20,18 @@
   /* ---------- Recettes ---------- */
   function midi(r){ return Object.assign({}, r, {moment:"Midi"}); }
   function soir(r){ return Object.assign({}, r, {moment:"Soir"}); }
-  /* Résout une référence {recipe:id} en objet recette ; midi/soir selon la position (slot 0 = midi, 1 = soir). */
-  function resolveRepas(ref, slot, R){ const base = R[ref.recipe]; if(!base) return null;
+  /* Résout une référence {recipe:id} en objet recette ; midi/soir selon la position (slot 0 = midi, 1 = soir).
+     Créneau vide (ref.recipe null ou recette absente) -> placeholder {vide:true} CONSERVÉ (menu au fil de l'eau) :
+     ne jamais filtrer, sinon l'indexation di/ri et l'attribution midi/soir se décalent. */
+  function resolveRepas(ref, slot, R){ const moment = slot===0 ? 'Midi' : 'Soir';
+    const base = ref && ref.recipe ? R[ref.recipe] : null;
+    if(!base) return { moment:moment, vide:true, id:(ref&&ref.recipe)||null, titre:'', ingredients:[], etapes:[], shop:[], labels:[] };
     const o = slot===0 ? midi(base) : soir(base); o.id = ref.recipe; return o; }
   function materializeMenus(raw, R){
     const out = {};
     Object.keys(raw).forEach(function(wid){
       out[wid] = { jours: raw[wid].jours.map(function(day){
-        return { repas: day.repas.map(function(ref,slot){ return resolveRepas(ref,slot,R); }).filter(Boolean) };
+        return { repas: day.repas.map(function(ref,slot){ return resolveRepas(ref,slot,R); }) };   // placeholders conservés
       }) };
     });
     return out;
@@ -65,6 +69,14 @@
      ACCENTS PRÉSERVÉS (donc "Pâte" != "Pâté"), puis singularisation régulière -s/-x par mot (sauf
      invariables). Fusionne oeuf/oeufs, tomate/tomates, pomme de terre/pommes de terre. */
   function canonName(n){ return (n||'').toLowerCase().replace(/œ/g,'oe').replace(/\s+/g,' ').trim().split(' ').map(singular).join(' '); }
+
+  /* Slug d'identité d'une recette (nom de fichier). Sert UNIQUEMENT à la création : un renommage
+     conserve le slug d'origine. Sans accents, [a-z0-9] et tirets, sans tiret de bord. */
+  function slugify(titre){ return norm(titre).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+
+  /* Allergènes déclarables (set fermé, aligné annexe II INCO/UE). Le champ recette `allergenes`
+     est un sous-ensemble de ces clés (allergènes PRÉSENTS dans la recette). */
+  const ALLERGENES=['gluten','crustaces','oeuf','poisson','arachide','soja','lait','fruits-a-coque','celeri','moutarde','sesame','sulfites','lupin','mollusques'];
 
   const FRAC_UNI={'½':'1/2','⅓':'1/3','⅔':'2/3','¼':'1/4','¾':'3/4',
     '⅕':'1/5','⅖':'2/5','⅗':'3/5','⅘':'4/5','⅙':'1/6','⅛':'1/8','⅜':'3/8','⅝':'5/8','⅞':'7/8'};
@@ -185,42 +197,79 @@
   /* Agrège les shop[] des repas non supprimés d'une semaine, cumule par clé n|u|r
      (q=null non cumulé), multiplie chaque quantité par les couverts du repas
      (couverts(di,ri) -> facteur, défaut 1), groupe par rayon dans l'ordre `rayons`. */
+  /* Parcourt TOUS les repas (créneaux vides ignorés : shop vide) en séparant conservés / exclus.
+     Un article dont AUCUN repas conservé ne le porte est marqué exclu:true (grisé, non compté) et sa
+     quantité affichée = celle des repas exclus (info). Un article partagé garde q = somme des conservés. */
   function computeCourses(menu, wid, deleted, rayons, couverts){
     if(!menu) return null;
     const cv = couverts || function(){ return 1; };
     const map=new Map(), order=[];
     menu.jours.forEach(function(day,di){
       day.repas.forEach(function(r,ri){
-        if(deleted.has(wid+':'+di+'-'+ri)) return;
+        const del = deleted.has(wid+':'+di+'-'+ri);
         const f = cv(di,ri) || 1;
         (r.shop||[]).forEach(function(s){
           const k=canonName(s.n)+'|'+(s.u||'')+'|'+s.r;   // cumul insensible casse + singulier/pluriel (accents préservés)
-          if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),note:s.note||''});order.push(k);}
+          if(!map.has(k)){map.set(k,{n:s.n,u:s.u||'',r:s.r,q:(s.q==null?null:0),qExcl:(s.q==null?null:0),kept:false,note:s.note||''});order.push(k);}
           const e=map.get(k);
-          if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f;
+          if(del){ if(s.q!=null) e.qExcl=(e.qExcl==null?0:e.qExcl)+s.q*f; }
+          else { e.kept=true; if(s.q!=null) e.q=(e.q==null?0:e.q)+s.q*f; }
           if(s.note && !e.note) e.note=s.note;
         });
       });
     });
     const byR={}; rayons.forEach(function(x){byR[x[0]]=[];});
-    order.forEach(function(k){const e=map.get(k); byR[e.r].push({n:e.n, u:e.u, r:e.r, q:e.q, note:e.note, disp:qLabel(e)});});
+    order.forEach(function(k){const e=map.get(k); const exclu=!e.kept;
+      byR[e.r].push({n:e.n, u:e.u, r:e.r, q:e.q, exclu:exclu, note:e.note,
+        disp:qLabel(exclu?{q:e.qExcl,u:e.u,note:e.note}:{q:e.q,u:e.u,note:e.note})});});
     return rayons.filter(function(x){return byR[x[0]].length;}).map(function(x){return {cls:x[0],rayon:x[1],items:byR[x[0]]};});
   }
 
+  /* ---------- Catalogue local : filtre, delta, choix d'un repas ---------- */
+  /* Filtre la liste allégée (index.json) côté client : type(s), régime(s), allergènes à EXCLURE, recherche
+     texte (sur le champ `search` = titre + ingrédients). Tout comparé via norm (accents/casse). */
+  function catalogueFilter(recipes, opts){
+    opts=opts||{};
+    const types=(opts.types||[]).map(norm), diets=(opts.diets||[]).map(norm),
+      excl=(opts.excludeAllergenes||[]), q=norm(opts.query||'');
+    return (recipes||[]).filter(function(r){
+      const labels=(r.labels||[]).map(norm);
+      if(types.length && !types.some(function(t){ return labels.indexOf(t)!==-1; })) return false;
+      if(diets.length && !diets.every(function(d){ return labels.indexOf(d)!==-1; })) return false;
+      if(excl.length && (r.allergenes||[]).some(function(a){ return excl.indexOf(a)!==-1; })) return false;
+      if(q && (r.search||norm(r.titre||'')).indexOf(q)===-1) return false;
+      return true;
+    });
+  }
+  /* Compare deux index (par id + hash) -> {added, changed, removed} (ids). Pour le téléchargement delta. */
+  function diffCatalogue(oldIndex, newIndex){
+    const o={}, n={};
+    ((oldIndex&&oldIndex.recipes)||[]).forEach(function(r){ o[r.id]=r.hash; });
+    ((newIndex&&newIndex.recipes)||[]).forEach(function(r){ n[r.id]=r.hash; });
+    const added=[], changed=[], removed=[];
+    Object.keys(n).forEach(function(id){ if(!(id in o)) added.push(id); else if(o[id]!==n[id]) changed.push(id); });
+    Object.keys(o).forEach(function(id){ if(!(id in n)) removed.push(id); });
+    return { added:added, changed:changed, removed:removed };
+  }
+  /* Choisit 1 recette pour un créneau (menu au fil de l'eau) : meilleure du pool non déjà utilisée. */
+  function pickSlotRecipe(pool, tokens, usedIds, opts){
+    const ranked=rankPool(pool, tokens, opts||{}), ex=usedIds||new Set();
+    for(let i=0;i<ranked.length;i++){ if(!ex.has(ranked[i].id)) return ranked[i].id; }
+    return ranked.length ? ranked[0].id : null;
+  }
+
   /* ---------- Mode IA : prompt de rédaction de recette ---------- */
-  /* Le deep link ouvre Claude Code AVEC le dépôt : la skill y est lisible, donc le prompt la
-     pointe au lieu de recopier ses règles (grammaire d'ingrédients, labels, nutrition, format).
-     Deux gardes indispensables : le dépôt est en écriture, et rs_publish.mjs n'a pas de token. */
+  /* Le deep link ouvre Claude Code AVEC le dépôt : la skill y est lisible, donc le prompt la pointe au
+     lieu de recopier ses règles. La session cloud a git + le proxy GitHub : elle publie en committant
+     directement le fichier recette sur main (pas de PR ; l'auteur relit avant de pousser). */
   const IA_REPO='vincentchalamon/obi-wan-quinoa';
   const IA_SKILL='.claude/skills/recipe/SKILL.md';
-  /* L'anti-doublons de la skill (étape 2) est infaisable dans la session mobile : rs_catalog.mjs et
-     api.recipesage.com y renvoient 403 (proxy). L'app a l'accès réseau, elle : elle embarque les
-     titres et coupe court aux deux tentatives condamnées. */
+  /* Anti-doublons : le catalogue local (recipes/index.json) est lisible dans la session ; l'app embarque
+     aussi les titres au cas où. */
   function iaDoublons(titres){
     if(!titres || !titres.length)
-      return 'Je n’ai pas pu joindre le catalogue : dis-moi si le plat ressemble à une recette que j’aurais déjà.';
-    return 'N’essaie ni node scripts/rs_catalog.mjs ni api.recipesage.com (403 dans cette session) : voici les '
-      +titres.length+' recettes déjà au catalogue, n’en redéveloppe aucune — '+titres.join(' · ')+'.';
+      return 'Vérifie recipes/index.json pour ne pas créer de doublon (titre ou concept proche).';
+    return 'N’en redéveloppe aucune de déjà présente — voici les '+titres.length+' recettes du catalogue : '+titres.join(' · ')+'.';
   }
   function buildRecipePrompt(demande, opts){
     opts=opts||{};
@@ -234,19 +283,17 @@
         ? 'strictement vegan, aucun produit animal'
         : 'lacto-ovo végétarien, oeufs et laitages autorisés')+'.',
       '',
-      'Deux contraintes propres à cette session mobile : ne modifie pas le dépôt, et ne publie pas la recette '
-        +'(rs_publish.mjs n’a pas de token ici) — je la copierai moi-même dans RecipeSage.',
       iaDoublons(opts.titres),
       '',
-      'Une fois la recette validée, redonne-la en blocs de code séparés, un par champ RecipeSage '
-        +'(Titre, Rendement, Ingrédients, Instructions, Labels, Calories, Protéines), sans commentaire dans les blocs, '
-        +'pour que je puisse copier chaque champ d’un seul geste.'
+      'Une fois la recette validée avec moi : crée le fichier recipes/<slug>.json (schéma interne, avec allergenes), '
+        +'ajoute l’image éventuelle dans recipes/images/, régénère l’index (node scripts/build_index.mjs), valide '
+        +'(node scripts/validate_recipes.mjs), montre-moi le diff, puis committe directement sur main (sans PR).'
     ].join('\n');
   }
 
   return { MOIS, JOURS, pad, idOf, parseId, addDays, startOfWeek, fmt,
            midi, soir, resolveRepas, materializeMenus, frac, qLabel, computeCourses,
-           stripAccents, norm, canonName, parseQty, rayonFor, scaleIngredientLine,
+           stripAccents, norm, canonName, slugify, ALLERGENES, parseQty, rayonFor, scaleIngredientLine,
            splitItems, tokenize, scoreRecipe, rankPool, generateMenu, pickAlternative,
-           buildRecipePrompt };
+           catalogueFilter, diffCatalogue, pickSlotRecipe, buildRecipePrompt };
 });

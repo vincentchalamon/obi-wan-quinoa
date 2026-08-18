@@ -1,0 +1,32 @@
+{
+  "id": "sauce-tomate-au-basilic",
+  "titre": "Sauce tomate au basilic",
+  "ingredients": [
+    "1 kg tomates",
+    "1 oignon",
+    "1 gousse ail",
+    "2 cuillères à soupe huile d'olive",
+    "20 feuilles basilic frais",
+    "1/2 cuillère à café sel",
+    "1 pincée poivre"
+  ],
+  "etapes": [
+    "Ébouillanter les tomates 30 secondes, les rafraîchir à l'eau froide, les peler, les épépiner et les concasser.",
+    "Émincer l'oignon et hacher l'ail.",
+    "Faire suer l'oignon et l'ail dans 1 cuillère à soupe d'huile d'olive 5 minutes sans les colorer.",
+    "Ajouter les tomates et le sel.",
+    "Laisser mijoter à découvert 35 à 45 minutes en remuant, jusqu'à obtenir une sauce nappante.",
+    "Mixer la sauce jusqu'à une texture lisse.",
+    "Hors du feu, incorporer le basilic ciselé et l'huile d'olive restante, puis poivrer."
+  ],
+  "labels": [
+    "végétarien",
+    "sans-lactose",
+    "base",
+    "sans-gluten",
+    "vegan"
+  ],
+  "allergenes": [],
+  "kcal": 60,
+  "prot": 1
+}

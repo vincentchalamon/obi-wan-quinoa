@@ -1,0 +1,39 @@
+{
+  "id": "galettes-de-chou-romanesco",
+  "titre": "Galettes De Chou Romanesco",
+  "ingredients": [
+    "200 g chou romanesco",
+    "20 g farine",
+    "1/4 oeuf",
+    "1 cuillère à soupe lait",
+    "1/2 cuillère à soupe crème",
+    "13 g fromage râpé",
+    "huile d'olive",
+    "sel",
+    "poivre",
+    "noix de muscade"
+  ],
+  "etapes": [
+    "Détachez les fleurettes de chou et lavez les. Faites les cuire dans de l’eau bouillante salée jusqu’à ce qu’elles soient bien tendres (environ 10 minutes)",
+    "Égouttez les soigneusement, mettez les dans un saladier, puis écrasez les à la fourchette jusqu’à ne conserver que de petits grains de chou romanesco (Note : vous pouvez aussi les réduire en purée si vous préférez une texture plutôt lisse).",
+    "Ajoutez la farine et mélangez, puis l’œuf battus en omelette. Mélangez également pour bien enrober.",
+    "Ajoutez le lait et la crème jusqu’à disposer d’une texture « galette-able » puis le fromage, sel, poivre, noix de muscade, et homogénéisez. Rectifiez assaisonnement jusqu’à ce que le goût vous plaise.",
+    "Faites chauffer un peu d’huile dans une poêle antiadhésive (ou une crêpière). Formez des galettes que vous tassez bien, puis faites les cuire environ 5 minutes de chaque côté. Itérez jusqu’à épuisement de la « pâte ».",
+    "Dégustez ces galettes chou romanesco chaudes. Vous pourrez les réchauffer doucement à la poêle si besoin.",
+    "Astuces :",
+    "Dressage : Pour de jolies galettes bien ronde, si comme moi vous n’êtes pas doués en façonnage, utilisez un emporte pièce rond. Déposez le sur la poêle, emplissez le de la « pâte », tassez bien, et retirez le."
+  ],
+  "labels": [
+    "végétarien",
+    "accompagnement"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "kcal": 270,
+  "prot": 13,
+  "image": "recipes/images/galettes-de-chou-romanesco.jpg"
+}

@@ -1,0 +1,34 @@
+{
+  "id": "creme-de-courgettes",
+  "titre": "Crème De Courgettes !",
+  "ingredients": [
+    "3/4 courgette",
+    "38 g crème fraîche épaisse",
+    "20 g gruyère",
+    "1/4 oignon",
+    "88 g pâtes",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "épluchez et découpez finement l'oignon et les courgettes",
+    "faites-les dorer dans une poêle avec de l'huile puis laissez cuire avec un couvercle dessus pendant 15 minutes (pensez à remuer)",
+    "faites bouillir de l'eau salée dans une casserole",
+    "en attendant, dans un saladier mélangez la crème et le fromage, salez et poivrez",
+    "ajoutez ce mélange dans la poêle et laissez mijoter tout en mélangeant",
+    "ajoutez les pâtes dans la casserole et faites cuire le temps indiqué (on a pris les tagliatelles de Pasteole et c'était trop bon)",
+    "égouttez vos pâtes lorsque la cuisson est terminée",
+    "goûtez votre crème de courgette et ajuster l'assaisonnement"
+  ],
+  "labels": [
+    "végétarien",
+    "base"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait"
+  ],
+  "kcal": 555,
+  "prot": 20,
+  "image": "recipes/images/creme-de-courgettes.jpg"
+}

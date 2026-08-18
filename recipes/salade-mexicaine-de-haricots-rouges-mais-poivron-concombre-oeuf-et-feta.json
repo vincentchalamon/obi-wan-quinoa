@@ -1,0 +1,42 @@
+{
+  "id": "salade-mexicaine-de-haricots-rouges-mais-poivron-concombre-oeuf-et-feta",
+  "titre": "Salade mexicaine de haricots rouges, maïs, poivron & concombre, œuf et féta",
+  "ingredients": [
+    "1 boîte haricots rouges",
+    "80 g maïs",
+    "1/2 poivron",
+    "1/2 concombre",
+    "1 tomate",
+    "1 échalote",
+    "1 œuf",
+    "40 g féta",
+    "1 cuillère à soupe huile d'olive",
+    "1/2 citron vert",
+    "1 cuillère à soupe coriandre",
+    "1/2 cuillère à café cumin",
+    "1 pincée paprika",
+    "1 pincée sel",
+    "1 pincée poivre"
+  ],
+  "etapes": [
+    "Cuire l'œuf 9 min dans l'eau bouillante pour un œuf dur, le rafraîchir et l'écaler.",
+    "Égoutter et rincer les haricots rouges et le maïs.",
+    "Couper le poivron en petits dés, le concombre en demi-lunes et la tomate en dés.",
+    "Émincer finement l'échalote et la rincer à l'eau froide pour l'adoucir.",
+    "Dans un saladier, réunir les haricots rouges, le maïs, le poivron, le concombre, la tomate et l'échalote.",
+    "Assaisonner avec l'huile d'olive, le jus du 1/2 citron vert, le cumin, le paprika, le sel et le poivre.",
+    "Ajouter la coriandre ciselée (ou du persil) et mélanger.",
+    "Dresser, émietter la féta et poser l'œuf coupé en deux."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 750,
+  "prot": 40
+}

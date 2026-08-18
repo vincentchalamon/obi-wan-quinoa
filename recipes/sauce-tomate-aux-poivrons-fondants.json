@@ -1,0 +1,32 @@
+{
+  "id": "sauce-tomate-aux-poivrons-fondants",
+  "titre": "Sauce tomate aux poivrons fondants",
+  "ingredients": [
+    "1 kg tomates",
+    "2 poivrons",
+    "1 oignon",
+    "1 gousse ail",
+    "2 cuillères à soupe huile d'olive",
+    "1/2 cuillère à café sel",
+    "1 pincée poivre"
+  ],
+  "etapes": [
+    "Ébouillanter les tomates 30 secondes, les rafraîchir à l'eau froide, les peler, les épépiner et les concasser.",
+    "Émincer l'oignon, hacher l'ail et couper les poivrons en fines lanières.",
+    "Faire suer l'oignon et l'ail dans 1 cuillère à soupe d'huile d'olive 5 minutes sans les colorer.",
+    "Ajouter les tomates et le sel, puis laisser mijoter à découvert 35 à 45 minutes jusqu'à obtenir une sauce nappante.",
+    "Pendant ce temps, faire revenir les poivrons dans l'huile d'olive restante à couvert 12 minutes jusqu'à ce qu'ils soient fondants.",
+    "Ajouter les poivrons à la sauce et poursuivre la cuisson 10 minutes.",
+    "Mixer jusqu'à une texture lisse et poivrer."
+  ],
+  "labels": [
+    "végétarien",
+    "sans-lactose",
+    "base",
+    "sans-gluten",
+    "vegan"
+  ],
+  "allergenes": [],
+  "kcal": 55,
+  "prot": 1
+}

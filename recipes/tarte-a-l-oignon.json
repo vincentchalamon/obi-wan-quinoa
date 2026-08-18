@@ -1,0 +1,37 @@
+{
+  "id": "tarte-a-l-oignon",
+  "titre": "Tarte à l'oignon",
+  "ingredients": [
+    "600 g d'oignons blancs",
+    "2 jaunes d'oeufs",
+    "15 cl de lait",
+    "15 cl de crème liquide entière",
+    "60 g de farine",
+    "Noix de muscade",
+    "Sel",
+    "Poivre",
+    "Beurre",
+    "1 pâte brisée"
+  ],
+  "etapes": [
+    "Peler et émincer les oignons finement.",
+    "Faire fondre une noisette de beurre dans une poêle, y verser les oignons et les faire revenir pendant 10 minutes environ. Ils ne doivent pas colorer.",
+    "Laisser tiédir.",
+    "Préchausser le four à 180°C.",
+    "Disposer les oignons sur la pâte brisée en les répartissant bien.",
+    "Dans un bol, fouetter la crème, le lait, la farine et les jaunes d'oeufs avec le sel, le poivre et un peu de muscade.",
+    "Verser cet appareil sur les oignons",
+    "Enfourner 30 minutes à 180°C, puis 10 minutes à 200°C. La tarte doit être dorée.",
+    "Laisser reposer 10 minutes avant de servir."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ]
+}

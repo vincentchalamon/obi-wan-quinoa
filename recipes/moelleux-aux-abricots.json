@@ -1,0 +1,43 @@
+{
+  "id": "moelleux-aux-abricots",
+  "titre": "Moelleux Aux Abricots",
+  "ingredients": [
+    "20 abricots",
+    "150 g de beurre",
+    "100 g de sucre",
+    "4 oeufs",
+    "200 g de farine",
+    "1 sachet de levure chimique",
+    "1 zeste de citron",
+    "1 sachet de sucre vanillé"
+  ],
+  "etapes": [
+    "Préchauffer le four à 180 °C.",
+    "Laver les abricots, les couper en deux pour retirer le noyau.",
+    "Détailler en dés 1/4 des abricots et réserver.",
+    "Détailler en quartiers le reste des abricots.",
+    "Beurrer et fariner le moule.",
+    "Disposer la moitié des quartiers d’abricots dans le fond.",
+    "Faire fondre le beurre et le verser dans un saladier.",
+    "Ajouter les sucres tant que le beurre est encore chaud et bien remuer pour les dissoudre.",
+    "Une fois le mélange beurre/sucre refroidi, ajouter les oeufs.",
+    "Tamiser ensemble la farine et la levure, et les incorporer au mélange.",
+    "Ajouter le zeste de citron finement râpé.",
+    "Ajouter les dés d'abricots.",
+    "Verser la pâte sur les abricots.",
+    "Déposer sur le dessus les quartiers d’abricot restants.",
+    "Enfourner pour 35 à 40 minutes.",
+    "Laisser refroidir avant de démouler, puis saupoudrer de sucre glace."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "image": "recipes/images/moelleux-aux-abricots.jpg"
+}

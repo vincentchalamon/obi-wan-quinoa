@@ -1,0 +1,52 @@
+{
+  "id": "pad-thai-vegetarien-aux-feves-et-tofu-fume",
+  "titre": "Pad Thaï Végétarien Aux Fèves Et Tofu Fumé",
+  "ingredients": [
+    "50 g nouilles de riz",
+    "1/2 oignon tige",
+    "1/2 gousse ail",
+    "5 g gingembre",
+    "50 g tofu fumé",
+    "50 g fèves",
+    "1 oeuf",
+    "1 cuillère à café pâte de tamarin",
+    "1 cuillère à soupe sauce soja",
+    "1/4 citron vert",
+    "5 g coriandre",
+    "20 g noix de cajou",
+    "1 cuillère à café huile d'olive",
+    "sauce sriracha (facultatif)"
+  ],
+  "etapes": [
+    "Peler et émincer les oignons et les gousses d’ail.",
+    "Peler et râper le gingembre.",
+    "Couper le tofu en dés.",
+    "Concasser les noix de cajou ou les cacahuètes.",
+    "Dans un bol, mélanger le tamarin (ou la sauce worcestershire) avec la sauce soja et l’eau.",
+    "Précuire les fèves 3 minutes dans l’eau bouillante puis les égoutter.",
+    "Faire tremper les nouilles de riz 3 minutes dans de l’eau très chaude. Les égoutter.",
+    "Dans un wok ou à défaut une sauteuse, faire revenir l’ail, l’oignon et le gingembre 1 minute avec l’huile d’olive.",
+    "Ajouter le tofu et les fèves, mélanger et cuire 1 minute en remuant.",
+    "Mettre ces ingrédients sur le côté du wok ou les réserver dans un saladier.",
+    "Casser les œufs dans le wok, les brouiller.",
+    "Mélanger tous les ingrédients avec les œufs.",
+    "Ajouter les nouilles et le mélange tamarin et soja.",
+    "Poursuivre la cuisson 2-3 minutes en mélangeant jusqu’à évaporation de la sauce.",
+    "Répartir dans des bols. Parsemer de noix de cajou ou cacahuètes concassées, de coriandre ciselée et proposer un quart de citron vert et de la sauce sriracha."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-lactose",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "gluten",
+    "oeuf",
+    "soja",
+    "fruits-a-coque"
+  ],
+  "kcal": 530,
+  "prot": 23,
+  "image": "recipes/images/pad-thai-vegetarien-aux-feves-et-tofu-fume.jpg"
+}

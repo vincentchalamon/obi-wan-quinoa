@@ -1,0 +1,43 @@
+{
+  "id": "tartelettes-normandes",
+  "titre": "Tartelettes Normandes",
+  "ingredients": [
+    "150 g Beurre doux",
+    "100 g Sucre glace",
+    "1 pièce(s) Oeuf(s)",
+    "250 g Farine de blé T55",
+    "50 g Poudre d'amande",
+    "4 pièce(s) Pomme(s)",
+    "100 g Sucre en poudre",
+    "25 cl Crème liquide entière",
+    "4 pièce(s) Oeuf(s)",
+    "50 g Sucre glace",
+    "10 g Beurre doux"
+  ],
+  "etapes": [
+    "Dans un bol, mélanger le beurre mou avec le sucre glace et la poudre d'amande, ajouter l'oeuf puis la farine. Ne pas trop travailler la pâte. Réserver au frais 30 min.",
+    "Préchauffer le four à 210 °C (th. 7).",
+    "Beurrer les moules.",
+    "Étaler ensuite la pâte, découper dedans des cercles de 12 cm de diamètre et les foncer dans des moules à tartetelle individuels. Bien appuyer à l'intérieur pour faire adhérer la pâte aux moules.",
+    "Précuire les fonds 10 min dans le four à 210 °C.",
+    "Réserver.",
+    "À l'aide d'un fouet, mélanger énergiquement les œufs avec le sucre semoule, puis incorporer la crème.",
+    "Éplucher la pomme et la couper en  dés, les répartir sur les tartelettes",
+    "Verser le liquide sur les pommes, et cuire l'ensemble au four durant 15 min.",
+    "La crème sur le dessus doit être prise et colorée et les pommes fondantes.",
+    "Laisser refroidir et démouler les tartelettes sur une grille.",
+    "Au moment de déguster, les saupoudrer de sucre glace."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "image": "recipes/images/tartelettes-normandes.jpg"
+}

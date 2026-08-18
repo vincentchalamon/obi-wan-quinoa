@@ -1,0 +1,29 @@
+{
+  "id": "chicon-gratin",
+  "titre": "Chicon gratin",
+  "ingredients": [
+    "6 endives",
+    "50 g de beurre",
+    "50 g de farine",
+    "50 cl de lait",
+    "6 tranches de jambon",
+    "1 Vieux Lille (optionnel)"
+  ],
+  "etapes": [
+    "Mettre de l'eau à bouillir, puis y plonger les endives. Tester la cuisson avec un couteau : elles doivent être tendres.",
+    "À côté, préparer la béchamel : sur feu doux, faire fondre le beurre dans une casserole.",
+    "Verser aussitôt toute la farine et remuer vivement avec un fouet. Laisser sur feu doux pendant 2 minutes.",
+    "Retirer du feu et verser doucement le lait en continuant à fouetter pour éviter les grumeaux.",
+    "Remettre sur feu doux pendant 10-12 minutes et faire chauffer lentement jusqu'à épaississement. Saler, poivrer, muscader.",
+    "Dans un plat à gratin, rouler les endives dans le jambon et les placer. Verser la béchamel et saupoudrer de fromage râpé.",
+    "Enfourner à 180°C pendant 40 minutes."
+  ],
+  "labels": [
+    "repas",
+    "viande"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait"
+  ]
+}

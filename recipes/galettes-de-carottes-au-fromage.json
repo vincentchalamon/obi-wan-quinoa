@@ -1,0 +1,30 @@
+{
+  "id": "galettes-de-carottes-au-fromage",
+  "titre": "Galettes De Carottes Au Fromage",
+  "ingredients": [
+    "3/4 oeuf",
+    "2,5 cl crème liquide",
+    "13 g farine",
+    "63 g carottes râpées",
+    "25 g gruyère râpé"
+  ],
+  "etapes": [
+    "Fouettez 3 oeufs avec 10 cl de crème liquide et 50 g de farine.",
+    "Ajoutez 250 g de carottes râpées et 100 g de gruyère râpé. Salez et poivrez, mélangez.",
+    "Laissez reposer 15 min. Faites chauffer 20 g de beurre et 1 cuillère à soupe d'huile dans une poêle. Formez des galettes.",
+    "Faites dorer à feu doux 5 min de chaque côté.",
+    "Egouttez sur du papier absorbant et servez."
+  ],
+  "labels": [
+    "végétarien",
+    "accompagnement"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 300,
+  "prot": 14,
+  "image": "recipes/images/galettes-de-carottes-au-fromage.jpg"
+}

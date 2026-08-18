@@ -1,0 +1,52 @@
+{
+  "id": "muffins-moelleux-coeur-de-pomme-et-zeste-de-citron",
+  "titre": "Muffins Moelleux \"Cœur de Pomme\" et Zeste de Citron",
+  "ingredients": [
+    "3 pommes",
+    "Jus de citron jaune",
+    "200g de farine T55",
+    "50g de sucre en poudre",
+    "1 sachet de levure chimique",
+    "1/2 cuillère à café de bicarbonate de soude",
+    "1 pincée de sel",
+    "2 œufs",
+    "125g fromage blanc (3% pour une onctuosité sans gras)",
+    "2 à 4 cuillères à soupe de miel ou sirops d'agave, ou 1 cuillère à soupe de cassonade",
+    "1 cuillère à café d'extrait de vanille",
+    "12 moules à muffins (6x3cm)",
+    "Optionnel : zestes d'1 citron",
+    "Optionnel : 1 pincée de cannelle ou de cardamome (pour sublimer la pomme ou le citron)",
+    "Optionnel : amandes effilées ou éclats (à poser dessus avant cuisson)",
+    "Optionnel : sucre glace (pour la déco post-cuisson)"
+  ],
+  "etapes": [
+    "Préchauffer le four à 180°C.",
+    "Zester les citrons et prélever le jus des citrons.",
+    "Peler les pommes.",
+    "Râper finement 1 pomme et la mélanger avec 1 cuillère à soupe de jus de citron (pour réduire l'oxydation).",
+    "Couper les autres pommes en dés de 1cm.",
+    "Faire une compote avec 1/4 des pommes.",
+    "Dans un grand saladier, battre les œufs avec le sirop d'agave (ou miel) et l'extrait de vanille jusqu'à ce que le mélange mousse légèrement.",
+    "Ajouter le fromage blanc, la pomme râpée, les zestes et 1 cuillère à soupe de jus de citron.",
+    "Dans un autre récipient, tamiser la farine avec la levure, le sel et le bicarbonate de soude.",
+    "Optionnel : ajouter la pincée de cannelle ou de cardamome.",
+    "Ajouter les poudres au mélange humide sans trop mélanger.",
+    "Incorporer les 3/4 des dés de pommes.",
+    "Remplisser les moules à moitié, ajouter un peu de compote, puis recouvrir de pâte au 3/4.",
+    "Optionnel : saupoudrer d'amandes effilées.",
+    "Enfourner 20 min.",
+    "Mélanger un peu de jus de citron avec une goutte de miel, et le tartiner au pinceau sur les muffins dès leur sortie du four.",
+    "À conserver dans une boîte hermétique avec un morceau de sopalin."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "image": "recipes/images/muffins-moelleux-coeur-de-pomme-et-zeste-de-citron.jpg"
+}

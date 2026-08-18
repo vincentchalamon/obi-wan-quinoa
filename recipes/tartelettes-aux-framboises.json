@@ -1,0 +1,34 @@
+{
+  "id": "tartelettes-aux-framboises",
+  "titre": "Tartelettes Aux Framboises",
+  "ingredients": [
+    "1 pâte sablée",
+    "25 cl de lait",
+    "1 gousse de vanille",
+    "2 jaunes d'oeuf",
+    "60 gr de sucre",
+    "20 gr de maïzena",
+    "250 gr de framboises",
+    "sucre glace"
+  ],
+  "etapes": [
+    "La crème pâtissière : Mettez le lait à bouillir avec la gousse de vanille fendue. Pendant ce temps, mettez les jaunes d’œuf dans un bol et ajoutez le sucre. Fouettez énergiquement jusqu'à ce que le mélange blanchisse. Ajoutez la maïzena et mélangez bien.",
+    "Une fois que le lait a bouilli, ajoutez-le petit à petit au mélange œufs-sucre-maïzena. Puis, remettez le tout dans la casserole, et sur le feu ( à feu moyen).",
+    "Mélangez constamment avec une cuillère en bois, jusqu'à ce que le mélange atteigne la consistance souhaitée. Cette étape prend environ 10 minutes. Puis laissez-la refroidir, en la couvrant d'un film plastique directement contre la crème, pour éviter la formation d'une peau.",
+    "Etalez votre pâte sablée, et à l'aide d'un bol, découpez 4 cercles de pâte.",
+    "Foncez vos moules à tartelettes préalablement beurrés, et piquez le fond avec une fourchette. Mettez au frais pour 30 minutes, puis cuisez les 20 minutes à 180°C.",
+    "Une fois que les fonds de tartelettes et la crème pâtissière sont froids, appliquez une couche généreuse de crème dans chaque tartelette.",
+    "Disposez joliment des framboises sur chaque tartelette, puis saupoudrez de sucre glace."
+  ],
+  "labels": [
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 471,
+  "prot": 8.9,
+  "image": "recipes/images/tartelettes-aux-framboises.jpg"
+}

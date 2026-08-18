@@ -1,0 +1,39 @@
+{
+  "id": "hachis-parmentier-vegetarien",
+  "titre": "Hachis Parmentier Végétarien",
+  "ingredients": [
+    "2 pommes de terre",
+    "2 champignons de Paris",
+    "1/2 carotte",
+    "40 g céleri",
+    "1/4 blanc de poireau",
+    "1/2 oignon",
+    "1/2 gousse ail",
+    "25 ml crème liquide",
+    "1/2 cuillère à soupe huile d'olive",
+    "muscade",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Pour réaliser cette recette végétarienne de hachis parmentier aux légumes, commencez par préparer les pommes de terre. Épluchez-les et coupez-les en petits morceaux. Faites-les cuire dans de l'eau chaude ou à la vapeur pendant 20 minutes jusqu'à ce qu'elles soient fondantes.",
+    "Pendant ce temps préparez le reste des légumes. Pour cela coupez la base des pieds des champignons, lavez-les. Puis coupez-les en morceaux. Réservez. Épluchez, les carottes, coupez-leurs extrémités puis coupez-les en morceaux. Réservez. Épluchez et coupez les oignons jaunes et gousses d'ail également. Réservez.",
+    "Pour le blanc de poireau, coupez les extrémités puis coupez-les dans la longueur et passez-les sous l'eau pour enlever l'excédent de terre éventuel. Coupez-les en morceaux et réservez. Enfin, épluchez vos branches de céleri avec un économe et coupez-les en morceaux. Versez tous ces légumes dans le mixeur et mixez rapidement pour conserver assez de morceaux et garder un texture un peu ferme.",
+    "Faites chauffer une sauteuse et versez de l'huile d'olive. Versez vos légumes mixés, puis faites cuire ceux-ci pendant 15 minutes environ. Assaisonnez vos légumes, salez, poivrez, puis ajoutez la crème liquide. Mélangez vos légumes et réservez.",
+    "Préchauffez le four à 220°C.",
+    "Dans un plat à gratin, versez la couche de légumes avec les oignons, céleri et blanc de poireau émincé. Étalez en couche uniforme. Réalisez maintenant votre purée de pommes de terre après les avoir cuites à l'eau. Versez vos morceaux de pommes de terre dans un presse purée.",
+    "Ou écrasez avec le dos d'une fourchette pour obtenir une purée épaisse, mélangez avec un peu de muscade si besoin. Rectifiez l'assaisonnement en sel et poivre selon vos goûts. Versez la couche de pommes de terre en purée épaisse sur le hachis parmentier végétarien et enfournez pendant 30 à 35 minutes. La cuisson terminée, servez une part de hachis avec un peu de salade et dégustez."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "lait",
+    "celeri"
+  ],
+  "kcal": 450,
+  "prot": 10,
+  "image": "recipes/images/hachis-parmentier-vegetarien.jpg"
+}

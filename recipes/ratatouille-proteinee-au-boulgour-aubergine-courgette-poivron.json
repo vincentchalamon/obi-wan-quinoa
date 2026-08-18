@@ -1,0 +1,39 @@
+{
+  "id": "ratatouille-proteinee-au-boulgour-aubergine-courgette-poivron",
+  "titre": "Ratatouille protéinée au boulgour, aubergine, courgette & poivron",
+  "ingredients": [
+    "150 g aubergine",
+    "200 g courgette",
+    "100 g poivron",
+    "200 g tomate concassée (boîte)",
+    "100 g tomate ronde",
+    "80 g oignon",
+    "1 gousse ail",
+    "40 g protéine de soja texturée (sèche)",
+    "90 g boulgour",
+    "15 g huile d'olive",
+    "1 cuillère à café herbes de Provence",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Réhydrater la protéine de soja texturée selon les indications du paquet (eau chaude ou bouillon, 5-10 min), égoutter.",
+    "Couper l'aubergine, la courgette, le poivron et la tomate ronde en dés. Émincer l'oignon et l'ail.",
+    "Faire revenir l'oignon et l'ail dans l'huile d'olive 3 min, ajouter l'aubergine et le poivron, cuire 5 min.",
+    "Ajouter la courgette, la tomate ronde, la tomate concassée, les herbes de Provence et la protéine de soja réhydratée. Mijoter 20-25 min à couvert en remuant régulièrement. Saler, poivrer.",
+    "Pendant ce temps, cuire le boulgour dans l'eau bouillante salée selon les indications du paquet.",
+    "Servir la ratatouille protéinée sur le boulgour."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-lactose",
+    "vegan"
+  ],
+  "allergenes": [
+    "gluten",
+    "soja"
+  ],
+  "kcal": 780,
+  "prot": 40
+}

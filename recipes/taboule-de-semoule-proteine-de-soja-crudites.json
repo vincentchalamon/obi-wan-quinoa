@@ -1,0 +1,44 @@
+{
+  "id": "taboule-de-semoule-proteine-de-soja-crudites",
+  "titre": "Taboulé de semoule, protéine de soja & crudités",
+  "ingredients": [
+    "80 g semoule (sèche)",
+    "30 g protéine de soja texturée (sèche)",
+    "1/2 concombre",
+    "2 carottes",
+    "80 g petits pois",
+    "1/4 oignon",
+    "20 g noix",
+    "30 g salade verte",
+    "1 cuillère à café moutarde",
+    "1 cuillère à soupe huile d'olive",
+    "1 cuillère à café vinaigre",
+    "sel",
+    "poivre",
+    "1 cuillère à café cumin",
+    "1 cuillère à café paprika"
+  ],
+  "etapes": [
+    "Réhydrater la protéine de soja dans un grand volume d’eau bouillante salée 10–15 min, jusqu’à tendreté, puis égoutter et presser fort pour retirer l’excès d’eau.",
+    "Verser la semoule dans un saladier, la couvrir d’eau bouillante à hauteur + un filet d’huile, couvrir et laisser gonfler 5 min, puis égrainer à la fourchette.",
+    "Émincer finement l’oignon et le poêler 2 min à feu moyen dans un peu d’huile jusqu’à ce qu’il devienne translucide.",
+    "Ajouter la soja pressée, le cumin et le paprika, poêler 5 min à feu vif jusqu’à ce qu’elle soit dorée et parfumée.",
+    "Détailler le concombre en petits dés, râper les carottes et blanchir les petits pois 2 min à l’eau bouillante s’ils sont crus, puis les rafraîchir.",
+    "Préparer la vinaigrette en émulsionnant moutarde, vinaigre, sel et poivre, puis l’huile d’olive en filet.",
+    "Mélanger semoule, soja, crudités et vinaigrette, rectifier l’assaisonnement, parsemer de noix concassées et servir frais sur un lit de salade verte."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-lactose",
+    "vegan"
+  ],
+  "allergenes": [
+    "gluten",
+    "soja",
+    "fruits-a-coque",
+    "moutarde"
+  ],
+  "kcal": 900,
+  "prot": 32
+}
