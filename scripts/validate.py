@@ -3,10 +3,11 @@
 
 Sans dependance (stdlib uniquement). Usage : python3 scripts/validate.py
 Verifie : manifest valide + icones referencees presentes, assets precaches par le
-service worker presents, et references locales (href/src) de index.html existantes.
+service worker presents, references locales (href/src) de index.html existantes, et
+presence/coherence du catalogue local (recipes/index.json + fichiers references).
 
-Les recettes et les menus proviennent desormais de RecipeSage (cote client,
-localStorage) : il n'y a plus de donnees embarquees dans le depot a valider.
+La validation fine des recettes (schema, nutrition, ingredients) est faite par
+scripts/validate_recipes.mjs. Ici : integrite statique uniquement.
 """
 import json
 import re
@@ -64,8 +65,22 @@ def validate_static():
             err(f"index.html: reference locale absente '{ref}'")
 
 
+def validate_catalogue():
+    idx = load_json("recipes/index.json")
+    if not isinstance(idx, dict) or not isinstance(idx.get("recipes"), list):
+        err("recipes/index.json: absent ou sans tableau 'recipes'")
+        return
+    for r in idx["recipes"]:
+        rid = r.get("id")
+        if not rid:
+            err("recipes/index.json: entree sans id")
+        elif not (ROOT / "recipes" / f"{rid}.json").exists():
+            err(f"recipes/index.json: fichier absent pour '{rid}'")
+
+
 def main():
     validate_static()
+    validate_catalogue()
 
     if errors:
         print(f"FAIL: {len(errors)} erreur(s) de validation :")
