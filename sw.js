@@ -1,7 +1,7 @@
 /* Service worker — cache hors-ligne.
    Stratégie : network-first sur le HTML et les JSON (pour voir les nouveaux menus en ligne),
    cache-first sur les fichiers statiques (icônes, manifeste). */
-const CACHE = 'menu-v19';   // <-- incrémente ce numéro si besoin de purger le cache
+const CACHE = 'menu-v20';   // <-- incrémente ce numéro si besoin de purger le cache
 const ASSETS = [
   './', './index.html', './logic.js', './recipesage.js', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'
@@ -22,6 +22,8 @@ self.addEventListener('activate', function(e){
 self.addEventListener('fetch', function(e){
   var req = e.request;
   if(req.method !== 'GET') return;
+  // cross-origin (API RecipeSage, images) -> laisser le navigateur gerer, sinon NS_ERROR_INTERCEPTION_FAILED en navigation privee
+  if(new URL(req.url).origin !== self.location.origin) return;
   var accept = req.headers.get('accept') || '';
   // JSON de données (recipes/menus) -> network-first : voir les nouveaux menus après un push
   if(new URL(req.url).pathname.endsWith('.json')){
