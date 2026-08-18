@@ -1,0 +1,35 @@
+{
+  "id": "risotto-aux-champignons-et-safran",
+  "titre": "Risotto aux champignons et safran",
+  "portions": 1,
+  "ingredients": [
+    "100 g riz à risotto (arborio, sec)",
+    "1 cuillère à café huile d'olive",
+    "1 pincée safran",
+    "25 g parmesan",
+    "2 cl vin blanc sec",
+    "15 cl bouillon de légumes",
+    "50 g champignons"
+  ],
+  "etapes": [
+    "Préparer le bouillon.",
+    "Diluer le safran dans un peu de bouillon.",
+    "Émincer les champignons et les cuire à la poêle.",
+    "Dans une autre poêle, faire revenir les grains de riz dans l'huile et remuer pendant 1 minute.",
+    "Ajouter le vin et remuer jusqu'à absorption.",
+    "Ajouter une louche de bouillon et remuer jusqu'à absorption.",
+    "Répéter jusqu'à ce que le riz soit cuit.",
+    "Ajouter le parmesan et les champignons émincés cuits, et mélanger.",
+    "Servir à l'emporte-pièce (ou à l'aide d'une tasse).",
+    "Garnir de parmesan et de champignons pour la décoration."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "lait"
+  ],
+  "kcal": 530,
+  "prot": 18
+}

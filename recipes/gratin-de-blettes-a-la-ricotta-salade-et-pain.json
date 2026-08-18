@@ -1,0 +1,34 @@
+{
+  "id": "gratin-de-blettes-a-la-ricotta-salade-et-pain",
+  "titre": "Gratin de blettes à la ricotta, salade et pain",
+  "portions": 1,
+  "ingredients": [
+    "250 g blettes",
+    "150 g ricotta",
+    "2 oeufs",
+    "20 g parmesan végétarien",
+    "1 gousse ail",
+    "muscade",
+    "1 tranche pain complet",
+    "30 g salade verte",
+    "huile d'olive"
+  ],
+  "etapes": [
+    "Faire tomber les blettes (côtes puis vert) 8–10 min avec l’ail.",
+    "Battre œufs + ricotta + muscade ; saler, poivrer.",
+    "Mélanger aux blettes, verser dans un plat, parsemer de parmesan.",
+    "Cuire au four 20–25 min à 190 °C.",
+    "Servir avec la salade et le pain."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 950,
+  "prot": 31
+}

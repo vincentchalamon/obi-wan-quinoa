@@ -1,0 +1,37 @@
+{
+  "id": "brownie-citron-framboise",
+  "titre": "Brownie Citron Framboise",
+  "portions": 8,
+  "ingredients": [
+    "120 gramme sucre",
+    "160 gramme beurre",
+    "50 millilitre jus de citron",
+    "zeste citron",
+    "250 gramme farine",
+    "1 sachet levure",
+    "2 oeuf",
+    "80 gramme framboise",
+    "120 gramme sucre glace"
+  ],
+  "etapes": [
+    "Faire fondre le beurre",
+    "Blanchir les oeufs avec le sucre. Ajouter le jus et le zeste d'un citron",
+    "Ajouter la farine et la levure à la préparation. Bien mélanger",
+    "Mettre une feuille de papier sulfurisé/papier parchemin au fond du moule. Remplir le moule avec la préparation",
+    "Laver les framboises, les incruster dans la prépation",
+    "Cuire a 175 degrés Celcius pendant 20-25 minutes selon la consistence souhaitée",
+    "Laisser refroidir.",
+    "Pendant ce temps préparer un glacage citron en mélangeant le sucre glacé et le jus d'un demi citron.",
+    "Recouvrir avec et laisser le glacage sécher"
+  ],
+  "labels": [
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 405,
+  "prot": 5
+}

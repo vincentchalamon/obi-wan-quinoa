@@ -1,0 +1,40 @@
+{
+  "id": "gateau-a-la-mandarine",
+  "titre": "Gâteau À La Mandarine",
+  "portions": 14,
+  "ingredients": [
+    "6 mandarines",
+    "5 œufs",
+    "210g de beurre",
+    "250g de farine",
+    "80g de Maïzena",
+    "200g de sucre",
+    "1,5 sachet de levure",
+    "1 pincée de sel"
+  ],
+  "etapes": [
+    "Préchauffer le four à 180°C",
+    "Mélanger la farine, la Maïzena et la levure dans un saladier",
+    "Séparer les blancs des jaunes",
+    "Fouetter le beurre pommade en crème avec le sucre jusqu'à obtenir une texture de pommade légère",
+    "Ajouter les jaunes d'œufs un par un à la crème en fouettant bien à chaque ajout",
+    "Râper le zeste des mandarines et le jus d'1 mandarine et les mélanger à la crème en fouettant bien",
+    "Ajouter les poudres (farine, Maïzena, levure) au batteur à vitesse lente jusqu'à incorporation (ne pas trop mélanger)",
+    "Monter les blancs en neige fermes avec une pincée de sel",
+    "Détendre la pâte avec 1/4 des blancs montés en neige",
+    "Ajouter les blancs montés en neige au mélange sans les casser",
+    "Verser dans un moule beurré et enfourner pour 40 à 45 min"
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 295,
+  "prot": 4,
+  "image": "recipes/images/gateau-a-la-mandarine.jpg"
+}

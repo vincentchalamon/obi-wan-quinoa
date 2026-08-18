@@ -57,14 +57,16 @@ test('qLabel : unités, pluriels et note', () => {
   assert.equal(L.qLabel({ q: 0.5, u: '' }), '1/2');
 });
 
-test('materializeMenus : slot 0 = Midi, slot 1 = Soir, référence inconnue filtrée', () => {
+test('materializeMenus : slot 0 = Midi, slot 1 = Soir, créneau vide -> placeholder conservé', () => {
   const R = { a: { titre: 'A', kcal: 100, prot: 10, shop: [] } };
-  const raw = { '2026-07-02': { jours: [{ repas: [{ recipe: 'a' }, { recipe: 'inconnu' }] }] } };
+  const raw = { '2026-07-02': { jours: [{ repas: [{ recipe: 'a' }, { recipe: null }] }] } };
   const m = L.materializeMenus(raw, R);
   const repas = m['2026-07-02'].jours[0].repas;
-  assert.equal(repas.length, 1);            // 'inconnu' filtré
+  assert.equal(repas.length, 2);            // créneau vide conservé (indexation midi/soir préservée)
   assert.equal(repas[0].moment, 'Midi');
   assert.equal(repas[0].titre, 'A');
+  assert.equal(repas[1].moment, 'Soir');
+  assert.equal(repas[1].vide, true);
 });
 
 const RAYONS = [['prot', 'Protéines & laitages'], ['leg', 'Légumes'], ['epi', 'Épicerie & féculents'], ['con', 'Condiments & épices'], ['fru', 'Fruits']];
@@ -89,15 +91,18 @@ test('computeCourses : cumul par clé n|u|r, q:null non cumulé, groupement par 
   assert.equal(con.items[0].disp, '');   // q null -> pas de quantité
 });
 
-test('computeCourses : repas supprimé exclu, rayons vides omis', () => {
+test('computeCourses : repas supprimé -> ingrédient exclusif grisé (exclu), rayon sans article omis', () => {
   const menu = { jours: [
     { repas: [{ shop: [{ n: 'Tofu', q: 200, u: 'g', r: 'prot' }] }] },
     { repas: [{ shop: [{ n: 'Tomates', q: 2, u: '', r: 'leg' }] }] },
   ] };
   const deleted = new Set(['2026-07-02:0-0']); // supprime le tofu
   const data = L.computeCourses(menu, '2026-07-02', deleted, RAYONS);
-  assert.ok(!data.find((s) => s.cls === 'prot'));      // rayon prot vide -> omis
-  assert.ok(data.find((s) => s.cls === 'leg'));
+  const prot = data.find((s) => s.cls === 'prot');
+  assert.ok(prot && prot.items[0].exclu === true);     // tofu exclusif au repas exclu -> visible mais grisé
+  const leg = data.find((s) => s.cls === 'leg');
+  assert.equal(leg.items[0].exclu, false);
+  assert.ok(!data.find((s) => s.cls === 'fru'));       // rayon sans article -> omis
 });
 
 test('computeCourses : les couverts multiplient les quantités (q:null inchangé)', () => {
@@ -307,33 +312,24 @@ test('buildRecipePrompt : demande, saison et skill du dépôt', () => {
   assert.ok(p.includes('lacto-ovo'));
 });
 
-test('buildRecipePrompt : gardes de session (dépôt en écriture, pas de token de publication)', () => {
+test('buildRecipePrompt : publication = créer le fichier + commit direct main (plus de RecipeSage)', () => {
   const p = L.buildRecipePrompt('curry', { mois: 'mars', diet: '', titres: TITRES });
-  assert.ok(p.includes('ne modifie pas le dépôt'));
-  assert.ok(p.includes('ne publie pas la recette'));
+  assert.ok(p.includes('recipes/<slug>.json'));
+  assert.ok(p.includes('scripts/build_index.mjs'));
+  assert.ok(p.includes('committe directement sur main'));
+  assert.ok(!/rs_publish|rs_catalog|api\.recipesage|RecipeSage/.test(p));   // aucune notion RecipeSage
 });
 
-/* Le sandbox mobile n'atteint ni rs_catalog.mjs ni api.recipesage.com (403) : l'app embarque les
-   titres et interdit les deux tentatives, sinon Claude les retente à chaque génération. */
-test('buildRecipePrompt : anti-doublons par titres embarqués, sans appel réseau condamné', () => {
+test('buildRecipePrompt : anti-doublons par titres embarqués (catalogue local)', () => {
   const p = L.buildRecipePrompt('gratin', { mois: 'janvier', diet: '', titres: TITRES });
   assert.ok(p.includes('Chicon gratin') && p.includes('Chili sin carne haricots rouges & soja, riz'));
-  assert.ok(p.includes('2 recettes déjà au catalogue'));
-  assert.ok(/N’essaie ni node scripts\/rs_catalog\.mjs ni api\.recipesage\.com/.test(p));
+  assert.ok(p.includes('2 recettes du catalogue'));
 });
 
-test('buildRecipePrompt : sans titres (hors-ligne), le prompt le dit au lieu de mentir', () => {
+test('buildRecipePrompt : sans titres, renvoie vers recipes/index.json', () => {
   const p = L.buildRecipePrompt('gratin', { mois: 'janvier', diet: '' });
-  assert.ok(p.includes('pas pu joindre le catalogue'));
-  assert.ok(!p.includes('rs_catalog.mjs'));
-  assert.ok(!p.includes('recettes déjà au catalogue'));
-});
-
-test('buildRecipePrompt : export par blocs de code, un par champ RecipeSage', () => {
-  const p = L.buildRecipePrompt('tarte', { mois: 'juin', diet: '', titres: TITRES });
-  assert.ok(p.includes('blocs de code'));
-  ['Titre', 'Ingrédients', 'Instructions', 'Labels', 'Calories', 'Protéines'].forEach((champ) =>
-    assert.ok(p.includes(champ), champ));
+  assert.ok(p.includes('recipes/index.json'));
+  assert.ok(!p.includes('recettes du catalogue :'));
 });
 
 test('buildRecipePrompt : régime vegan durcit la consigne', () => {
@@ -345,4 +341,99 @@ test('buildRecipePrompt : régime vegan durcit la consigne', () => {
 test('buildRecipePrompt : demande vide -> consigne de repli', () => {
   const p = L.buildRecipePrompt('  ', { mois: 'mai', diet: '', titres: TITRES });
   assert.ok(p.includes('surprends-moi'));
+});
+
+/* ---------- Catalogue local (slugify, filtre, delta) ---------- */
+test('slugify : accents/casse/ponctuation -> slug stable', () => {
+  assert.equal(L.slugify('Tôfu & Courgettes Grillées !'), 'tofu-courgettes-grillees');
+  assert.equal(L.slugify('Gâteau au yaourt'), 'gateau-au-yaourt');
+});
+
+test('ALLERGENES : set fermé attendu', () => {
+  ['gluten', 'lait', 'oeuf', 'fruits-a-coque', 'soja'].forEach((a) => assert.ok(L.ALLERGENES.includes(a), a));
+});
+
+test('catalogueFilter : type, régime, exclusion allergène, recherche', () => {
+  const idx = [
+    { id: 'a', titre: 'Tarte tomate', labels: ['repas', 'végétarien'], allergenes: ['gluten', 'lait'], search: 'tarte tomate pate' },
+    { id: 'b', titre: 'Cake banane', labels: ['dessert', 'végétarien'], allergenes: ['gluten', 'oeuf'], search: 'cake banane farine' },
+    { id: 'c', titre: 'Salade', labels: ['repas', 'vegan'], allergenes: [], search: 'salade' },
+  ];
+  assert.deepEqual(L.catalogueFilter(idx, { types: ['repas'] }).map((r) => r.id), ['a', 'c']);
+  assert.deepEqual(L.catalogueFilter(idx, { diets: ['vegan'] }).map((r) => r.id), ['c']);
+  assert.deepEqual(L.catalogueFilter(idx, { excludeAllergenes: ['gluten'] }).map((r) => r.id), ['c']);
+  assert.deepEqual(L.catalogueFilter(idx, { query: 'banane' }).map((r) => r.id), ['b']);
+  assert.deepEqual(L.catalogueFilter(idx, { types: ['repas'], excludeAllergenes: ['lait'] }).map((r) => r.id), ['c']);
+});
+
+test('diffCatalogue : added / changed / removed par hash', () => {
+  const d = L.diffCatalogue(
+    { recipes: [{ id: 'a', hash: '1' }, { id: 'c', hash: '9' }] },
+    { recipes: [{ id: 'a', hash: '2' }, { id: 'b', hash: '5' }] });
+  assert.deepEqual(d.added, ['b']);
+  assert.deepEqual(d.changed, ['a']);
+  assert.deepEqual(d.removed, ['c']);
+});
+
+test('computeCourses : repas exclu -> exclusif grisé (exclu:true), partagé adapté', () => {
+  const RAY = [['leg', 'Légumes'], ['epi', 'Épicerie']];
+  const menu = { jours: [{ repas: [
+    { moment: 'Midi', shop: [{ n: 'tomate', q: 2, u: '', r: 'leg' }] },
+    { moment: 'Soir', shop: [{ n: 'tomate', q: 3, u: '', r: 'leg' }, { n: 'farine', q: 100, u: 'g', r: 'epi' }] },
+  ] }] };
+  const data = L.computeCourses(menu, 'w', new Set(['w:0-1']), RAY, () => 1);   // soir exclu
+  const items = [].concat(...data.map((s) => s.items));
+  const tomate = items.find((i) => i.n === 'tomate'), farine = items.find((i) => i.n === 'farine');
+  assert.equal(tomate.q, 2); assert.equal(tomate.exclu, false);   // partagé : quantité réduite aux repas conservés
+  assert.equal(farine.exclu, true);                               // exclusif au repas exclu : grisé
+});
+
+test('computeCourses : créneau vide ignoré', () => {
+  const RAY = [['leg', 'Légumes']];
+  const menu = { jours: [{ repas: [{ moment: 'Midi', vide: true, shop: [] }, { moment: 'Soir', shop: [{ n: 'carotte', q: 1, u: '', r: 'leg' }] }] }] };
+  const data = L.computeCourses(menu, 'w', new Set(), RAY, () => 1);
+  assert.equal([].concat(...data.map((s) => s.items)).length, 1);
+});
+
+/* ---------- Correspondance des ingrédients (liste de courses) ---------- */
+test('canonUnit : poids/volumes -> base (kg->g, l/cl->ml), cuillères inchangées', () => {
+  assert.deepEqual(L.canonUnit(2, 'kg'), { qty: 2000, unit: 'g' });
+  assert.deepEqual(L.canonUnit(1, 'l'), { qty: 1000, unit: 'ml' });
+  assert.deepEqual(L.canonUnit(20, 'cl'), { qty: 200, unit: 'ml' });
+  assert.deepEqual(L.canonUnit(2, 'cs'), { qty: 2, unit: 'cs' });
+  assert.deepEqual(L.canonUnit(null, 'g'), { qty: null, unit: 'g' });
+});
+
+test('shopCanon : variantes du même produit fusionnées, produits distincts préservés', () => {
+  // apostrophe droite/courbe -> même clé
+  assert.equal(L.shopCanon("huile d'olive"), L.shopCanon('huile d’olive'));
+  // variantes -> produit de base
+  ['farine T55', 'farine de blé', 'Farine de blé T55'].forEach((f) => assert.equal(L.shopCanon(f), L.shopCanon('farine')));
+  ['sucre en poudre', 'sucre blanc'].forEach((s) => assert.equal(L.shopCanon(s), L.shopCanon('sucre')));
+  ['beurre doux', 'beurre fondu', 'beurre mou'].forEach((b) => assert.equal(L.shopCanon(b), L.shopCanon('beurre')));
+  assert.equal(L.shopCanon('oignons jaunes'), L.shopCanon('oignon'));
+  assert.equal(L.shopCanon('pois chiches égouttés'), L.shopCanon('pois chiche'));
+  // distinctions PRÉSERVÉES
+  const base = L.shopCanon('sucre');
+  ['sucre glace', 'sucre vanillé', 'sucre de canne'].forEach((s) => assert.notEqual(L.shopCanon(s), base));
+  assert.notEqual(L.shopCanon('beurre demi-sel'), L.shopCanon('beurre'));
+  assert.notEqual(L.shopCanon("huile d'olive"), L.shopCanon('huile végétale'));
+  assert.notEqual(L.shopCanon('lait de coco'), L.shopCanon('lait'));
+  assert.notEqual(L.shopCanon('riz basmati'), L.shopCanon('riz'));
+  assert.notEqual(L.shopCanon('citron vert'), L.shopCanon('citron'));
+});
+
+test('computeCourses : variantes du même produit cumulées sur une seule ligne', () => {
+  const RAY = [['epi', 'Épicerie'], ['con', 'Condiments']];
+  const menu = { jours: [{ repas: [
+    { shop: [{ n: 'farine T55', q: 200, u: 'g', r: 'epi' }, { n: "huile d'olive", q: 30, u: 'ml', r: 'con' }] },
+    { shop: [{ n: 'farine de blé', q: 100, u: 'g', r: 'epi' }, { n: 'huile d’olive', q: 20, u: 'ml', r: 'con' }] },
+  ] }] };
+  const data = L.computeCourses(menu, 'w', new Set(), RAY, () => 1);
+  const epi = data.find((s) => s.cls === 'epi');
+  assert.equal(epi.items.length, 1);          // farine T55 + farine de blé -> 1 ligne
+  assert.equal(epi.items[0].q, 300);
+  const con = data.find((s) => s.cls === 'con');
+  assert.equal(con.items.length, 1);          // huile d'olive (droite + courbe) -> 1 ligne
+  assert.equal(con.items[0].q, 50);
 });

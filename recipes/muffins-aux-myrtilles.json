@@ -1,0 +1,39 @@
+{
+  "id": "muffins-aux-myrtilles",
+  "titre": "Muffins Aux Myrtilles",
+  "portions": 12,
+  "ingredients": [
+    "2  œufs",
+    "150 g myrtilles (fraîches ou surgelées)",
+    "150 g sucre",
+    "75 g beurre fondu",
+    "2 c. à café levure chimique",
+    "25  cl lait (entier)",
+    "1 sachet sucre vanillé",
+    "350 g farine (tamisée)",
+    "1 pincée sel"
+  ],
+  "etapes": [
+    "Préchauffez votre four à 180°.",
+    "Mélangez dans un bol les ingrédients secs : farine, sucres, levure, sel.",
+    "Faites fondre le beurre.",
+    "Mélangez dans un autre bol le beurre fondu, le lait et les œufs jusqu'à ce que le mélange soit bien lisse.",
+    "Ajoutez progressivement à la préparation beurre/lait/œuf le mélange des ingrédients secs et remuez \"grossièrement\" ; la farine doit être intégrée, mais le mélange doit demeurer grumeleux",
+    "Ajoutez précautionneusement les myrtilles, surtout si elles sont fraiches, pour qu’elles ne s’écrasent pas.",
+    "Dans vos moules à muffins préalablement beurrés, versez la préparation.",
+    "Faites cuire 25 à 30 minutes suivant votre four, en surveillant en fin de cuisson : vos muffins doivent avoir levé et être colorés !",
+    "Laissez vos muffins refroidir sur une grille et dégustez avec gourmandise !"
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 235,
+  "prot": 5,
+  "image": "recipes/images/muffins-aux-myrtilles.jpg"
+}

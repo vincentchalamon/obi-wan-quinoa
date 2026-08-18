@@ -1,0 +1,36 @@
+{
+  "id": "gateau-au-yaourt",
+  "titre": "Gâteau Au Yaourt",
+  "portions": 6,
+  "ingredients": [
+    "1 Yaourt",
+    "3 Oeufs",
+    "2 Pots de sucre",
+    "3 Pots de farine",
+    "1 sachet Levure",
+    "1 sachet Sucre vanillé",
+    "1 Pot d’huile d’arachide",
+    "1 gousse Vanille",
+    "20 g Beurre pour le moule"
+  ],
+  "etapes": [
+    "Préchauffez le four th. 6 (180 °C). Beurrez un moule à manqué.",
+    "Versez le yaourt dans un saladier. Lavez et essuyez le pot qui servira de doseur. Fendez la gousse de vanille dans la longueur et prélevez les graines en grattant à l’aide d’un couteau.",
+    "Fouettez les œufs entiers avec le sucre et ajoutez-les au yaourt et mélangez. Puis versez la farine, la levure, les graines de vanilles, le sucre vanillé, l’huile et mélangez bien pour obtenir une pâte lisse et homogène.",
+    "Versez la pâte dans le moule. Enfournez pour 30 minutes. Laissez refroidir sur la grille du four, puis démoulez. Servez froid."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "arachide"
+  ],
+  "kcal": 645,
+  "prot": 9,
+  "image": "recipes/images/gateau-au-yaourt.jpg"
+}

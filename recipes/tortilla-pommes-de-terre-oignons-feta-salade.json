@@ -1,0 +1,34 @@
+{
+  "id": "tortilla-pommes-de-terre-oignons-feta-salade",
+  "titre": "Tortilla pommes de terre & oignons, féta, salade",
+  "portions": 1,
+  "ingredients": [
+    "2 oeufs",
+    "150 g pommes de terre",
+    "1/2 oignon",
+    "30 g féta",
+    "huile d'olive",
+    "30 g salade verte",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Éplucher les pommes de terre et les couper en fines rondelles, émincer l’oignon.",
+    "Cuire doucement les pommes de terre et l’oignon dans l’huile d’olive à couvert 12-15 min à feu doux, en remuant, jusqu’à ce qu’ils soient tendres sans colorer.",
+    "Battre les 5 œufs, saler, ajouter les pommes de terre et l’oignon égouttés et la féta émiettée, mélanger délicatement.",
+    "Verser la préparation dans la poêle chaude huilée et cuire 5 min à feu moyen-doux, puis retourner à l’aide d’une assiette et cuire 5 min de l’autre face jusqu’à ce que la tortilla soit dorée et prise à cœur.",
+    "Laisser tiédir quelques minutes, couper en parts et servir avec la salade verte."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-lactose",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 420,
+  "prot": 25
+}

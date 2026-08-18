@@ -1,0 +1,37 @@
+{
+  "id": "muffins-groseilles-chocolat-blanc",
+  "titre": "Muffins Groseilles Chocolat Blanc",
+  "portions": 10,
+  "ingredients": [
+    "200g Groseilles",
+    "200g Chocolat blanc",
+    "250g Farine",
+    "80g Sucre",
+    "11g Levure",
+    "80g Huile",
+    "120g Lait",
+    "2 Oeufs",
+    "Sel"
+  ],
+  "etapes": [
+    "Préchauffer le four à 180 °C.",
+    "Dans un saladier, ajouter les ingrédients secs (farine tamisée, levure, sucre, sel) et mélanger.",
+    "Faire un puit et mettre les œufs, le lait, l'huile et mélanger.",
+    "Couper les carrés de chocolat en 4 et les incorporer au mélange.",
+    "Ajouter et mélanger délicatement les groseilles.",
+    "Mettre dans les moules.",
+    "Cuisson 20 à 30 minutes."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 330,
+  "prot": 6,
+  "image": "recipes/images/muffins-groseilles-chocolat-blanc.jpg"
+}

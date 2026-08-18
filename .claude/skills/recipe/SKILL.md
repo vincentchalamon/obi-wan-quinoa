@@ -1,57 +1,60 @@
 ---
 name: recipe
-description: Rédiger une recette végétarienne équilibrée (de saison, sourcée nutrition) et la publier directement dans mon catalogue RecipeSage via l'API (après validation).
+description: Rédiger une recette végétarienne équilibrée (de saison, sourcée nutrition) et la publier dans mon catalogue local (fichier recipes/<slug>.json), puis commit direct sur main après validation.
 argument-hint: "<idée de plat, contrainte ou ingrédients ; ex. 'plat courge riche en protéines'>"
-allowed-tools: Read, WebSearch, WebFetch, Bash
+allowed-tools: Read, Write, Edit, WebSearch, WebFetch, Bash
 ---
 
-Aide l'auteur à **créer une nouvelle recette** pour enrichir son catalogue RecipeSage public (la base de données que l'application Obi-Wan Quinoa interroge pour générer les menus). Elle rédige une recette équilibrée et sourcée, la présente pour **validation**, puis la **publie directement** dans RecipeSage via l'API (`scripts/rs_publish.mjs`). Ne touche pas au dépôt.
+Aide l'auteur à **créer une nouvelle recette** pour enrichir le catalogue **local** de l'application Obi-Wan Quinoa (les recettes vivent dans le dépôt, sous `recipes/`). Rédige une recette équilibrée et sourcée, présente-la pour **validation**, puis **publie** en écrivant le fichier et en **committant directement sur `main`** (pas de PR — l'auteur relit avant le commit).
 
 Demande cible : `$ARGUMENTS` (idée de plat, contrainte, ou ingrédients à valoriser). **Commence toujours par demander à l'auteur ce dont il dispose** (panier AMAP, placard, contraintes, saison, envie) si ce n'est pas déjà précisé : la recette doit d'abord valoriser ces ingrédients (anti-gaspi).
 
 ## Principe
 - **Ne rien inventer côté nutrition.** Tout chiffre/principe vient de `.claude/skills/recipe/references/nutrition.md` (ou d'une source primaire vérifiée via WebSearch/WebFetch), cité dans la justification. Pas un avis médical.
-- Recette **lacto-ovo végétarienne**, **de saison**, portions **pour 1 personne** par défaut (ou précise le rendement).
-- Vise la cohérence avec les cibles de `nutrition.md` (densité protéique, fer + vitamine C, variété, sel modéré). Lis d'abord l'en-tête « Cibles & règles » ; ne lis les sections détaillées que si une valeur est contestée.
-- **Sécurité de la publication** : la skill ne manipule **jamais** les identifiants RecipeSage. L'auteur génère lui-même un token de session (via `users.login`) et le place dans un fichier **gitignoré** (`.rs_token` ou `~/.config/obi-wan-quinoa/rs_token`) ; le script le lit à l'exécution sans l'afficher. **Aucun identifiant ni token n'est écrit dans le dépôt, committé ou publié.**
+- Recette **lacto-ovo végétarienne**, **de saison**, portions **pour 1 personne** par défaut (`portions: 1`) — sauf gâteau/plat multi-parts (indiquer le nombre réel de portions).
+- Vise la cohérence avec les cibles de `nutrition.md` (densité protéique, fer + vitamine C, variété, sel modéré). Lis d'abord l'en-tête « Cibles & règles ».
+- **Qualité (essentielle pour la liste de courses et la lisibilité)** : ingrédients à **nom canonique unique** (mêmes libellés dans tout le catalogue, singulier générique) et **étapes simples** (une action claire par étape). Vérifie la cohérence ingrédients↔étapes.
 
 ## Étapes
-1. **Recueillir** : si `$ARGUMENTS` ne le précise pas, **demander ce dont l'auteur dispose** (panier AMAP, placard, contraintes, saison, objectif) — la recette doit d'abord valoriser ces ingrédients.
-2. **Éviter les doublons** : lister le catalogue existant avec `node scripts/rs_catalog.mjs` et vérifier que la recette envisagée n'y figure pas déjà (titre ou concept proche). Si c'est trop proche d'une recette existante, proposer une variante distincte ou demander confirmation avant de continuer.
-3. **Cadrer** : proposer un titre et un concept (saison, panier, objectif protéines) en 2-3 lignes. Itérer avec l'auteur si besoin.
-4. **Composer** : ingrédients **pour 1 personne**, calibrés sur les grammages par portion de `references/nutrition.md` §11 (GEM-RCN) et le budget/repas (~800-950 kcal, ~55 g protéines, sel < 2,5 g) ; étapes claires.
-5. **Chiffrer** : estimer `kcal` et `protéines` (méthode/source).
-6. **Étiqueter** : un label de **type** — `repas` (seule catégorie générée en menu), `base`, `accompagnement` ou `dessert` — et le(s) label(s) de **régime** (additifs) : `vegetarien` (+ `vegan` si aucun produit animal ; un vegan porte aussi `vegetarien`), plus `sans-gluten`/`sans-lactose` si applicable. **Pas de label par ingrédient** ni `midi`/`soir` (inutiles au générateur).
-7. **Publier** : présenter le bloc de validation ci-dessous, puis publier **après accord explicite** de l'auteur (action externe) :
-   ```sh
-   echo '<recette JSON>' | node scripts/rs_publish.mjs --confirm
-   ```
-   JSON attendu : `{ "title", "yield", "ingredients": [...], "instructions": [...], "labels": [...], "nutritionCalories", "nutritionProtein", "activeTime"?, "totalTime"?, "source"?, "url"? }`. Sans `--confirm` = aperçu (dry-run). Token : cf. « Sécurité de la publication » ci-dessus.
+1. **Recueillir** : si `$ARGUMENTS` ne le précise pas, **demander ce dont l'auteur dispose** — la recette doit d'abord valoriser ces ingrédients.
+2. **Éviter les doublons** : lis les titres de `recipes/index.json` et vérifie que la recette envisagée n'y figure pas (titre ou concept proche). Si trop proche, propose une variante distincte ou demande confirmation.
+3. **Cadrer** : proposer un titre et un concept (saison, panier, objectif protéines) en 2-3 lignes. Itérer si besoin.
+4. **Composer** : ingrédients calibrés sur les grammages par portion de `references/nutrition.md` §11 (GEM-RCN) et le budget/repas (~800-950 kcal, ~55 g protéines, sel < 2,5 g) ; étapes claires.
+5. **Chiffrer** : estimer `kcal` et `prot` **par portion** (méthode/source ; possibilité de recouper avec `scripts/nutrition_table.json` via une somme des ingrédients / portions).
+6. **Étiqueter** : un label de **type** — `repas` (seule catégorie générée en menu), `base`, `accompagnement` ou `dessert` — plus le(s) label(s) de **régime** en forme accentuée (`végétarien` ; + `vegan` si aucun produit animal ; `sans-gluten`/`sans-lactose` si applicable). **Renseigner `allergenes`** : sous-ensemble du set fermé `gluten, crustaces, oeuf, poisson, arachide, soja, lait, fruits-a-coque, celeri, moutarde, sesame, sulfites, lupin, mollusques` (allergènes **présents**). Pas de label par ingrédient ni `midi`/`soir`.
+7. **Publier** (après accord explicite de l'auteur) :
+   - Écrire `recipes/<slug>.json` (`slug` = titre normalisé sans accents ni ponctuation ; un renommage **conserve** l'ancien slug/fichier). Schéma ci-dessous.
+   - Ajouter l'image éventuelle dans `recipes/images/<slug>.<ext>` et référencer le chemin relatif.
+   - Régénérer l'index : `node scripts/build_index.mjs`.
+   - Valider : `node scripts/validate_recipes.mjs` (doit passer) et vérifier `node scripts/lint_recipes.mjs` (0 alerte bloquante).
+   - Montrer le diff, puis **committer directement sur `main`** (sans PR, **sans** footer « Generated with Claude Code »).
 
-## Sortie — bloc de validation (avant publication)
-Format **exact** — grammaire compatible avec l'app : **quantité + unité en tête de ligne**, **une ligne par ingrédient** (jamais deux sur la même ligne), fractions en **ASCII** (`1/2`, pas `½`) et sans nombre mixte (`1,5` plutôt que `1 1/2`), cuillères en toutes lettres (`cuillère à soupe`/`cuillère à café`), unités métriques ; **jamais** le format `Nom — quantité`. Une ligne par étape.
+Depuis l'app mobile Claude, la session cloud dispose de git et du proxy GitHub : le commit sur `main` fonctionne, **à condition que la GitHub App Claude soit installée sur le dépôt** (ou un token `gh` synchronisé via `/web-setup`).
 
-**Un seul ingrédient atomique par ligne** — jamais d'énumération (`sel, poivre` → deux lignes) ni de sous-recette (`vinaigrette : moutarde, huile, citron…` → lister chaque composant sur sa ligne). **Noms canoniques** au singulier générique (`oignon`, `carotte` — pas `oignon jaune`/`petites carottes`, sauf variété essentielle type `citron vert`). **Unités autorisées** : `g`, `kg`, `ml`, `cl`, `l`, `cuillère à soupe`/`café`, `gousse`, `botte`, `tranche`, `pincée`, `sachet`, `boîte`, `pot` — **proscrire** `cm`, `verre`, `branche`, `bouquet`, `goutte` (convertir en métrique ou en quantité comptable). Pas de préfixe `Optionnel :` (mettre l'option en note entre parenthèses). Aucune entité HTML (`&amp;` → `&`).
-
+## Schéma d'un fichier recette (`recipes/<slug>.json`)
+```json
+{
+  "id": "<slug>",
+  "titre": "…",
+  "portions": 1,
+  "ingredients": ["80 g quinoa", "1 gousse ail", "…"],
+  "etapes": ["…", "…"],
+  "labels": ["repas", "végétarien"],
+  "allergenes": ["gluten"],
+  "kcal": 720,
+  "prot": 39,
+  "image": "recipes/images/<slug>.jpg"
+}
 ```
-Titre : <titre>
-Rendement : 1 personne
-Labels : <type: repas|base|accompagnement|dessert>, vegetarien[, vegan][, sans-gluten][, sans-lactose]
+`shop` n'est **pas** stocké (dérivé à l'exécution). `image` optionnelle.
 
-Ingrédients :
-<quantité> <unité> <nom>        (ex. "80 g quinoa", "1 gousse ail", "1/2 citron")
-                                (à éviter : "Quinoa — 80 g", "½ citron", "2 c. à s. sauce soja", "sel, poivre", "1 cm gingembre")
-...
+## Grammaire des ingrédients (compatible app + liste de courses)
+**Quantité + unité en tête de ligne**, **une ligne par ingrédient** (jamais deux) ; fractions en **ASCII** (`1/2`, pas `½`), décimales `1,5` ; cuillères en toutes lettres (`cuillère à soupe`/`café`) ; unités métriques. **Jamais** `Nom — quantité`.
 
-Instructions :
-<étape 1>
-<étape 2>
-...
+**Un seul ingrédient atomique par ligne** — jamais d'énumération (`sel, poivre` → deux lignes) ni de sous-recette (`vinaigrette : moutarde, huile, citron` → chaque composant sur sa ligne, la préparation passant dans les étapes). **Noms canoniques** au singulier générique (`oignon`, `carotte`, `farine` — pas `oignon jaune`/`farine T55`, sauf variété essentielle type `citron vert`). **Unités autorisées** : `g`, `kg`, `ml`, `cl`, `l`, `cuillère à soupe`/`café`, `gousse`, `botte`, `tranche`, `pincée`, `sachet`, `boîte`, `pot` — **proscrire** `cm`, `verre`, `branche`, `bouquet`, `goutte`. Option en note entre parenthèses (`(optionnel)`), pas de préfixe `Optionnel :`. Aucune entité HTML.
 
-Nutrition (à saisir dans RecipeSage) : Calories <n> kcal · Protéines <n> g
-```
-
-Puis une **justification nutritionnelle sourcée** (3-5 puces max), en citant `nutrition.md` (ou la source primaire).
+## Desserts (recettes figées)
+Les recettes de **dessert** existantes sont optimisées : **ne pas modifier** leurs quantités ni leurs instructions ; seule l'harmonisation des libellés d'ingrédients est permise. Pour une **nouvelle** recette, applique pleinement les règles ci-dessus.
 
 ## Condition de complétion
-Recette complète et cohérente (labels type + régime, nutrition chiffrée et sourcée, régime lacto-ovo respecté, format d'ingrédients compatible app), **validée par l'auteur puis publiée** via `scripts/rs_publish.mjs --confirm` (l'auteur peut aussi préférer l'aperçu sans `--confirm` et coller manuellement).
+Recette complète et cohérente (labels type + régime, `allergenes` renseignés, nutrition chiffrée et sourcée par portion, régime lacto-ovo respecté, ingrédients atomiques/canoniques, étapes claires), **validée par l'auteur**, fichier écrit, index régénéré, `validate_recipes.mjs` vert, puis **commit sur `main`**.

@@ -1,0 +1,39 @@
+{
+  "id": "curry-de-lentilles-corail-tofu-epinards-riz-yaourt",
+  "titre": "Curry de lentilles corail & tofu, épinards, riz & yaourt",
+  "portions": 1,
+  "ingredients": [
+    "80 g lentilles corail (sèches)",
+    "130 g tofu ferme",
+    "150 g épinards frais",
+    "60 ml lait de coco",
+    "70 g riz basmati (sec)",
+    "1/2 oignon",
+    "1 gousse ail",
+    "5 g gingembre",
+    "1 cuillère à café curcuma",
+    "1 cuillère à café cumin",
+    "huile d'olive",
+    "100 g yaourt grec",
+    "1/2 citron"
+  ],
+  "etapes": [
+    "Rincer le riz basmati et le cuire à l’eau bouillante salée jusqu’à absorption, puis réserver à couvert.",
+    "Couper le tofu en cubes et les dorer 8 min à feu vif dans l’huile jusqu’à ce qu’ils soient croustillants, puis réserver.",
+    "Émincer l’oignon, l’ail et le gingembre, les faire revenir 4 min à feu moyen jusqu’à ce qu’ils soient fondants, ajouter le curry, le curcuma et le cumin et remuer 1 min jusqu’à ce que les épices embaument.",
+    "Ajouter les lentilles corail rincées et 250 ml d’eau, laisser mijoter 12-15 min jusqu’à ce que les lentilles se délitent.",
+    "Incorporer le lait de coco, le tofu doré et les épinards, cuire 3-4 min jusqu’à ce que les épinards tombent et que la sauce nappe.",
+    "Servir sur le riz, le yaourt grec à part et un filet de citron."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "lait",
+    "soja"
+  ],
+  "kcal": 990,
+  "prot": 56
+}

@@ -1,0 +1,44 @@
+{
+  "id": "salade-de-pates-pois-chiches-oeufs-durs-feta",
+  "titre": "Salade de pâtes pois chiches, œufs durs & féta",
+  "portions": 1,
+  "ingredients": [
+    "80 g pâtes (sèches)",
+    "130 g pois chiches égouttés",
+    "3 oeufs",
+    "40 g féta",
+    "150 g tomates cerises",
+    "1/2 concombre",
+    "1 carotte",
+    "1/4 oignon rouge",
+    "10 g noix",
+    "basilic",
+    "1 cuillère à café moutarde",
+    "1 cuillère à soupe huile d'olive",
+    "1/2 citron",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Cuire les pâtes à l’eau bouillante salée al dente, puis les égoutter et les rafraîchir sous l’eau froide pour stopper la cuisson.",
+    "Plonger les œufs dans l’eau bouillante 9 min pour des œufs durs, les refroidir sous l’eau froide, les écaler et les couper en quartiers.",
+    "Couper les tomates cerises en deux, le concombre en dés, râper la carotte et émincer finement l’oignon rouge.",
+    "Préparer la vinaigrette en émulsionnant moutarde, jus d’un demi-citron, sel et poivre puis l’huile d’olive.",
+    "Mélanger les pâtes, les pois chiches, les légumes et la vinaigrette dans un grand saladier.",
+    "Ajouter par-dessus la féta émiettée, les quartiers d’œufs, les noix et le basilic ciselé, puis servir bien frais."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque",
+    "moutarde"
+  ],
+  "kcal": 980,
+  "prot": 55,
+  "image": "recipes/images/salade-de-pates-pois-chiches-oeufs-durs-feta.jpg"
+}

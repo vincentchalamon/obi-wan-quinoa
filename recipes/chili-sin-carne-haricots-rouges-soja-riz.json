@@ -1,0 +1,39 @@
+{
+  "id": "chili-sin-carne-haricots-rouges-soja-riz",
+  "titre": "Chili sin carne haricots rouges & soja, riz",
+  "portions": 1,
+  "ingredients": [
+    "150 g haricots rouges égouttés",
+    "25 g protéine de soja texturée (sèche)",
+    "200 g tomates concassées",
+    "70 g riz (sec)",
+    "1 poivron",
+    "1/2 oignon",
+    "1 gousse ail",
+    "1 cuillère à café cumin",
+    "1 cuillère à café paprika",
+    "1 cuillère à café origan",
+    "1 pincée piment",
+    "20 g cheddar végétarien (ou yaourt)",
+    "huile d'olive"
+  ],
+  "etapes": [
+    "Réhydrater la protéine de soja dans l’eau bouillante 10 min jusqu’à tendreté, puis égoutter et presser.",
+    "Rincer le riz et le cuire à l’eau bouillante salée jusqu’à absorption, puis réserver à couvert.",
+    "Émincer l’oignon et le poivron, les faire revenir 8 min à feu moyen dans l’huile jusqu’à ce qu’ils soient fondants.",
+    "Ajouter l’ail écrasé, le cumin, le paprika, l’origan et le piment, remuer 1 min à feu doux jusqu’à ce que les épices embaument.",
+    "Verser les tomates concassées, les haricots rouges et la soja, saler et laisser mijoter 15 min à feu doux jusqu’à ce que la sauce nappe.",
+    "Dresser le chili sur le riz, parsemer de cheddar végétarien râpé (ou d’une cuillère de yaourt) et servir chaud."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "lait",
+    "soja"
+  ],
+  "kcal": 990,
+  "prot": 34
+}

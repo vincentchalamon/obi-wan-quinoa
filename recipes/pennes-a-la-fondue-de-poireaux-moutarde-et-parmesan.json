@@ -1,0 +1,38 @@
+{
+  "id": "pennes-a-la-fondue-de-poireaux-moutarde-et-parmesan",
+  "titre": "Pennes À La Fondue De Poireaux, Moutarde Et Parmesan",
+  "portions": 1,
+  "ingredients": [
+    "1/2 oignon",
+    "1/2 poireau (gros)",
+    "90 g pennes (poids cru)",
+    "1/2 cuillère à soupe moutarde",
+    "10 cl crème de soja",
+    "20 g parmesan râpé",
+    "huile d'olive",
+    "pignons de pin",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Émincer finement l'oignon et le poireau (sans les tiges, que vous pouvez conserver pour réaliser un bouillon maison par exemple).",
+    "Chauffer une grande poêle à feu doux avec un bon filet d'huile d'olive. Faire revenir l'oignon et le poireau pendant 5 minutes. Couvrir ensuite d'un couvercle et laisser cuire 10 à 15 minutes supplémentaires en remuant de temps en temps.",
+    "Chauffer une grande casserole d'eau. Une fois à ébullition, la saler et cuire les pennes al dente.",
+    "Une fois que les poireaux seront bien fondants, ajouter la moutarde et la crème de soja. Mélanger et laisser mijoter.",
+    "Ajouter les pâtes cuites à cette préparation avec une louche d'eau de cuisson. Saler, poivrer et ajouter le Parmesan râpé.",
+    "Laisser réduire jusqu'à ce que la sauce soit bien crémeuse. Servir chaud avec des pignons de pin. Conservation : au réfrigérateur pendant 4 jours."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "soja",
+    "moutarde"
+  ],
+  "kcal": 750,
+  "prot": 24,
+  "image": "recipes/images/pennes-a-la-fondue-de-poireaux-moutarde-et-parmesan.jpg"
+}

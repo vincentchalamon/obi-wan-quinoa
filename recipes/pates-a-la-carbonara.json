@@ -1,0 +1,31 @@
+{
+  "id": "pates-a-la-carbonara",
+  "titre": "Pâtes à la carbonara",
+  "portions": 4,
+  "ingredients": [
+    "400 g de linguines",
+    "4 oeufs",
+    "200 g de pecorino",
+    "150 g de guanciale",
+    "Sel",
+    "Poivre",
+    "Huile végétale"
+  ],
+  "etapes": [
+    "Mettre les linguines à chauffer. Réserver 1 louche d'eau de cuisson.",
+    "Faire chauffer une cuillère à soupe d'huile dans une poêle, y verser le guanciale et laisser cuire quelques minutes.",
+    "Casser les oeufs dans un grand saladier. Ajouter du sel et poivre, et mélanger à l'aide d'un fouet.",
+    "Ajouter le parmesan râpé puis battre à nouveau.",
+    "Verser les linguines égouttées dans le saladier puis y ajouter le guanciale.",
+    "Bien remuer. Ajouter l'eau de cuisson réserver pour délayer la sauce. Celle-ci doit être crémeuse."
+  ],
+  "labels": [
+    "repas",
+    "viande"
+  ],
+  "allergenes": [
+    "oeuf"
+  ],
+  "kcal": 795,
+  "prot": 37
+}

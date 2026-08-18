@@ -1,0 +1,39 @@
+{
+  "id": "pancakes-vegan",
+  "titre": "Pancakes Vegan",
+  "portions": 10,
+  "ingredients": [
+    "170 g farine de blé",
+    "50 g sucre",
+    "7 g levure chimique",
+    "50 g yaourt de soja",
+    "1 c. à café extrait de vanille",
+    "190 ml lait végétal",
+    "20 g huile",
+    "1 c. à soupe vinaigre de pommes",
+    "1  pincée sel"
+  ],
+  "etapes": [
+    "Dans un saladier, mélanger le yaourt de soja avec la vanille, le lait, le vinaigre de pommes et l'huile. Ajoutez alors le sucre, le sel et mélangez.",
+    "Ajouter la moitié de la farine, puis remuez jusqu'à l'avoir incorporée.",
+    "Ajoutez le reste de la farine avec la levure, remuez sans trop insister, et laissez poser 15 minutes à température ambiante.",
+    "Dans une poêle chaude (mais pas trop, le premier pancakes vous permettra d'ajuster la température), déposez une bonne cuillère à soupe de pâte.",
+    "Laissez cuire jusqu'à ce que des bulles se forment à la surface (environ une minute), et retourner à l'aide d'une grande spatule.",
+    "Laissez dorer le deuxième coté, puis réservez dans une assiette. Renouvelez jusqu'à ne plus avoir de pâte, jusqu'au dernier pancake, indéniablement moche.",
+    "Consommez avec des fruits frais, du sirop d'érable, et tous les toppings que vous pourrez imaginer."
+  ],
+  "labels": [
+    "végétarien",
+    "sans-lactose",
+    "dessert",
+    "vegan"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "soja"
+  ],
+  "kcal": 115,
+  "prot": 3,
+  "image": "recipes/images/pancakes-vegan.jpg"
+}

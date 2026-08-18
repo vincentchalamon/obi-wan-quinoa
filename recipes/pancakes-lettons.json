@@ -1,0 +1,35 @@
+{
+  "id": "pancakes-lettons",
+  "titre": "Pancakes Lettons",
+  "portions": 3,
+  "ingredients": [
+    "10 pommes de terre",
+    "2 oeufs",
+    "1 oignon",
+    "1 gousse d'ail",
+    "Poivre",
+    "Huile",
+    "Sel",
+    "Épices"
+  ],
+  "etapes": [
+    "Coucher / hacher les pommes de terre, l'oignon et l'ail.",
+    "Ajouter les oeufs, le poivre et les épices.",
+    "Mélanger vigoureusement dans un grand plat. Le mélange doit être légèrement liquide avec quelques grumeaux.",
+    "Ajouter de l'huile au mélange ou dans la poêle mise à chauffer à feu moyen.",
+    "Avec une grosse cuillère, créer les pancakes dans la poêle : faire une boule, puis l'écraser dans la poêle.",
+    "Après 2 minutes, retourner les pancakes. Ils doivent être légèrement grillés, selon préférence."
+  ],
+  "labels": [
+    "végétarien",
+    "sans-lactose",
+    "sans-gluten",
+    "accompagnement",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "oeuf"
+  ],
+  "kcal": 325,
+  "prot": 6
+}

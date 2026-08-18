@@ -1,0 +1,37 @@
+{
+  "id": "quiche-aux-epinards-et-chevre",
+  "titre": "Quiche Aux Epinards Et Chèvre",
+  "portions": 1,
+  "ingredients": [
+    "115 g épinards surgelés",
+    "1/4 pâte brisée",
+    "1 oeuf",
+    "8 cl crème fraîche",
+    "1 cuillère à soupe parmesan râpé",
+    "1/4 bûche de chèvre",
+    "muscade",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Préchauffez le four à 220°C en chaleur tournante.",
+    "Sortez un saladier et commencez par casser les œufs puis battez-les en omelette à la fourchette ou au fouet.",
+    "Préparez les épinards en les déposant directement dans votre poêle chaude. Vous pourrez ensuite recouvrir votre poêle et laisser cuire les épinards pendant quelques minutes. Une fois les épinards cuits, vous pouvez les égoutter. Vous pouvez également ajouter des oignons et/ou de l’ail.",
+    "Dans le saladier où se trouvent les œufs battus, incorporez la muscade, le parmesan, la crème fraîche (crème liquide ou épaisse selon vos envies), le sel et poivre et versez les épinards hachés.",
+    "Dans votre moule, abaissez la pâte brisée sur le fond du moule et versez-y la préparation.",
+    "Découpez la bûche de fromage de chèvre en rondelles puis déposez-les sur votre appareil à tarte.",
+    "Enfournez votre tarte épinard chèvre et laissez cuire environ 30 minutes en vérifiant la cuisson de la pâte."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 720,
+  "prot": 24,
+  "image": "recipes/images/quiche-aux-epinards-et-chevre.jpg"
+}

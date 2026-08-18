@@ -1,0 +1,45 @@
+{
+  "id": "cake-yaourt-peches",
+  "titre": "Cake yaourt pêches",
+  "portions": 9,
+  "ingredients": [
+    "300 g pêches mûres mais fermes (pelées, en dés)",
+    "1 c. à café sucre (pour faire dégorger les pêches)",
+    "1 c. à café farine (pour enrober les pêches)",
+    "125 g yaourt nature",
+    "65 g sucre (pour la pâte)",
+    "140 g farine",
+    "40 g maïzena (fécule de maïs)",
+    "45 ml huile neutre (tournesol, pépins de raisin)",
+    "3 œufs (blancs et jaunes séparés)",
+    "8 g levure chimique",
+    "1 c. à café extrait de vanille",
+    "1 citron non traité (zeste seulement)",
+    "1 pincée de sel",
+    "30 g amandes effilées"
+  ],
+  "etapes": [
+    "Peler les pêches, puis retirer le noyau et les couper en dés d'environ 1 cm. Dans une passoire posée sur un bol, les saupoudrer de sucre (pour faire dégorger les pêches), mélanger et laisser dégorger. Étaler les dés égouttés sur une double feuille de papier absorbant, tamponner le dessus jusqu'à ce que la surface soit mate.",
+    "Préchauffer le four à 180 °C. Beurrer et fariner un moule à cake d'environ 24 cm.",
+    "Monter les blancs en neige avec une pincée de sel (et quelques gouttes de jus de citron, qui stabilisent).",
+    "Dans un grand saladier, fouetter les jaunes avec le yaourt, le sucre, l'extrait de vanille et le citron non traité (zeste seulement) jusqu'à ce que le mélange pâlisse, puis incorporer l'huile neutre en filet.",
+    "Tamiser ensemble la farine, la maïzena, la levure chimique et le sel, puis incorporer ces secs à la base en mélangeant juste jusqu'à disparition de la farine. Ne travaillez pas trop la pâte.",
+    "Ajouter 1/3 des blancs et mélanger vivement pour détendre la pâte. Incorporer le reste en deux fois à la spatule.",
+    "Mélanger les dés de pêches séchés avec une petite poignée de farine (pour enrober les pêches) jusqu'à ce qu'ils soient juste poudrés : la pellicule de farine évite qu'ils ne coulent et alourdissent le bas.",
+    "Verser la moitié de la pâte dans le moule. Répartir les 2/3 des pêches, couvrir du reste de pâte, puis disposer les pêches restantes sur le dessus. Parsemer d'amandes effilées.",
+    "Enfourner 40 à 45 minutes. Couvrir d'alu si les amandes dorent trop vite."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "kcal": 220,
+  "prot": 5,
+  "image": "recipes/images/cake-yaourt-peches.jpg"
+}

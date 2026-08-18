@@ -1,0 +1,42 @@
+{
+  "id": "salade-de-lentilles-vertes-oeufs-durs-skyr",
+  "titre": "Salade de lentilles vertes, œufs durs & skyr",
+  "portions": 1,
+  "ingredients": [
+    "80 g lentilles vertes (sèches)",
+    "3 oeufs",
+    "1/2 botte radis",
+    "1/2 concombre",
+    "15 g noix",
+    "1 échalote",
+    "persil",
+    "1 tranche pain de mie complet",
+    "100 g skyr",
+    "1 cuillère à café moutarde",
+    "1 cuillère à soupe huile d'olive",
+    "1 cuillère à café vinaigre",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Rincer les lentilles vertes et les cuire 18-20 min à l’eau bouillante non salée jusqu’à ce qu’elles soient tendres mais encore fermes, puis égoutter et laisser tiédir.",
+    "Plonger les œufs dans l’eau bouillante 9 min pour des œufs durs, les refroidir sous l’eau froide, les écaler et les couper en deux.",
+    "Couper les radis en rondelles, le concombre en dés et ciseler finement l’échalote.",
+    "Préparer la vinaigrette en émulsionnant moutarde, vinaigre, sel et poivre puis l’huile d’olive.",
+    "Mélanger les lentilles tièdes, les légumes et la vinaigrette pour bien les imprégner.",
+    "Dresser avec les œufs, les noix et le persil ciselé, le pain de mie complet et le skyr à côté."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque",
+    "moutarde"
+  ],
+  "kcal": 850,
+  "prot": 56
+}

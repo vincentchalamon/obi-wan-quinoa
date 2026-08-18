@@ -1,0 +1,37 @@
+{
+  "id": "gateau-leger-aux-framboises",
+  "titre": "Gâteau léger aux framboises",
+  "portions": 9,
+  "ingredients": [
+    "4 oeufs",
+    "200 g de sucre",
+    "200 g de farine",
+    "250 g de framboises",
+    "65 g de beurre (demi-sel de préférence)",
+    "le zeste d'un citron",
+    "Sucre glace"
+  ],
+  "etapes": [
+    "Préchauffez le four à 180°C.",
+    "Fouettez ensemble les œufs et le sucre jusqu'à ce que le mélange blanchisse.",
+    "Ajoutez la farine et le zeste de citron.",
+    "Versez la préparation dans un moule beurré.",
+    "Répartissez les framboises sur le dessus en appuyant légèrement.",
+    "Coupez ensuite le beurre en morceaux et répartissez-les sur le gâteau.",
+    "Enfournez 30 minutes.",
+    "Laissez refroidir avant de démouler, puis saupoudrez de sucre glace."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert",
+    "à optimiser"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 270,
+  "prot": 5,
+  "image": "recipes/images/gateau-leger-aux-framboises.jpg"
+}

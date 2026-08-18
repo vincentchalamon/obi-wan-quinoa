@@ -1,0 +1,46 @@
+{
+  "id": "carotte-cake",
+  "titre": "Carotte Cake",
+  "portions": 16,
+  "ingredients": [
+    "4 œufs",
+    "250g de farine",
+    "200g de sucre brun",
+    "300g de carottes râpées",
+    "200ml d'huile végétale",
+    "2 cuillères à café de levure chimique",
+    "1 cuillère à café de bicarbonate de soude",
+    "1 pincée de sel",
+    "2 cuillères à café de cannelle en poudre",
+    "100g de noix concassées (optionnel)",
+    "1 cuillère à café d'extrait de vanille",
+    "100g de beurre mou",
+    "300g de fromage à la crème (type Philadelphia)",
+    "150g de sucre glace",
+    "1 cuillère à café d'extrait de vanille",
+    "carottes en sucre"
+  ],
+  "etapes": [
+    "Préchauffer le four à 180°C (thermostat 6). Graisser et fariner un moule à gâteau rond.",
+    "Mélanger les ingrédients secs : Dans un grand bol, tamiser la farine, la levure, le bicarbonate, le sel, et la cannelle.",
+    "Battre les œufs et le sucre : Dans un autre bol, battre les œufs avec le sucre brun jusqu'à obtenir un mélange mousseux. Ajouter l'huile et l'extrait de vanille, et bien mélanger.",
+    "Incorporer les ingrédients secs au mélange d’œufs, en mélangeant jusqu'à l'obtention d'une pâte homogène.",
+    "Ajouter les carottes et les noix (si utilisées), et mélanger délicatement.",
+    "Verser la pâte dans le moule et cuire au four pendant environ 45 minutes, ou jusqu'à ce qu'un couteau inséré au centre en ressorte propre.",
+    "Préparer le glaçage : Battre le beurre mou avec le fromage à la crème, le sucre glace, et la vanille jusqu'à obtenir une consistance lisse et homogène.",
+    "Laisser refroidir le gâteau complètement avant de démouler et d'appliquer le glaçage sur le dessus."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "kcal": 425,
+  "prot": 5,
+  "image": "recipes/images/carotte-cake.jpg"
+}

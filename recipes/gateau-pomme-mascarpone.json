@@ -1,0 +1,45 @@
+{
+  "id": "gateau-pomme-mascarpone",
+  "titre": "Gâteau Pomme Mascarpone",
+  "portions": 14,
+  "ingredients": [
+    "4 pommes",
+    "250 g mascarpone",
+    "200 g farine",
+    "100 g sucre en poudre",
+    "4 œuf(s)",
+    "40 g cassonade",
+    "2 c. à café Sucre glace",
+    "1 sachet Levure chimique",
+    "1 c. à café Cannelle",
+    "1 noisette Beurre"
+  ],
+  "etapes": [
+    "Préchauffer le four à 160°C.",
+    "Peler les pommes, enlever le trognon et découper-les en dés.",
+    "Séparer les blancs des jaunes.",
+    "Dans un saladier, battre les jaunes d'œuf avec le sucre en poudre jusqu’à ce qu’ils blanchissent.",
+    "Ajouter le mascarpone et continuer de fouetter jusqu’à obtenir un mélange homogène.",
+    "Tamiser et incorporer la farine et la levure chimique, la cannelle et la cassonade puis bien mélanger.",
+    "Ajouter les morceaux de pommes dans la pâte à gâteau.",
+    "Battre les blancs en neige pas trop fermes (\"bec d'oiseau\").",
+    "Détendre la pâte avec 1/3 des blancs, puis incorporer délicatement à la maryse le reste des blancs sans les casser.",
+    "Beurrer un moule à manqué avec la noisette de beurre, puis fariner légèrement le plat.",
+    "Verser le tout dans le moule à manqué.",
+    "Enfourner pendant 45 minutes.",
+    "Laisser refroidir avant de démouler, puis saupoudrer de sucre glace."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "kcal": 200,
+  "prot": 4,
+  "image": "recipes/images/gateau-pomme-mascarpone.jpg"
+}

@@ -1,8 +1,9 @@
 name: CI
 
-# Verifications legeres, sans dependance : Python et Node sont preinstalles sur
-# le runner, aucun paquet a installer, aucun secret. Le site deploye reste
-# zero-dependance / zero-build ; ceci n'outille que l'integration.
+# Verifications legeres, sans dependance (Python et Node preinstalles, aucun paquet, aucun secret).
+# Path-aware : un job `changes` (git diff, zero-dependance) determine les groupes de fichiers modifies ;
+# chaque job ne tourne que si son groupe change. Seul le job d'agregation `ci-ok` est requis par la
+# protection de branche (les jobs "skipped" ne bloquent donc pas une PR).
 
 on:
   push:
@@ -13,31 +14,107 @@ permissions:
   contents: read
 
 jobs:
-  checks:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.f.outputs.app }}
+      recipes: ${{ steps.f.outputs.recipes }}
+      scripts: ${{ steps.f.outputs.scripts }}
+      tests: ${{ steps.f.outputs.tests }}
+      ci: ${{ steps.f.outputs.ci }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - id: f
+        run: |
+          set -eu
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch --no-tags --depth=1 origin "${{ github.base_ref }}" >/dev/null 2>&1 || true
+            range="origin/${{ github.base_ref }}...HEAD"
+          else
+            before="${{ github.event.before }}"
+            if [ -z "$before" ] || [ "$before" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$before" 2>/dev/null; then
+              range=""
+            else
+              range="$before..${{ github.sha }}"
+            fi
+          fi
+          if [ -z "$range" ]; then changed="$(git ls-files)"; else changed="$(git diff --name-only $range)"; fi
+          echo "Fichiers modifies:"; echo "$changed"
+          m() { echo "$changed" | grep -qE "$1" && echo true || echo false; }
+          {
+            echo "app=$(m '^(index\.html|logic\.js|catalogue\.js|sw\.js|manifest\.webmanifest|icon-.*\.png)$')"
+            echo "recipes=$(m '^recipes/')"
+            echo "scripts=$(m '^scripts/')"
+            echo "tests=$(m '^test/')"
+            echo "ci=$(m '^\.github/workflows/')"
+          } >> "$GITHUB_OUTPUT"
+
+  static:
+    needs: changes
+    if: ${{ needs.changes.outputs.app == 'true' || needs.changes.outputs.ci == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+      - run: python3 scripts/validate.py
 
-      - name: Valider les donnees et l'integrite statique
-        run: python3 scripts/validate.py
-
-      - name: Verifier la syntaxe du service worker et de la logique
-        run: node --check sw.js && node --check logic.js && node --check recipesage.js
-
-      - name: Verifier la syntaxe du JS inline de l'app
+  syntax:
+    needs: changes
+    if: ${{ needs.changes.outputs.app == 'true' || needs.changes.outputs.scripts == 'true' || needs.changes.outputs.ci == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: node --check (app + scripts)
+        run: |
+          node --check sw.js && node --check logic.js && node --check catalogue.js
+          for f in scripts/*.mjs; do node --check "$f"; done
+      - name: node --check (JS inline de l'app)
         run: |
           python3 scripts/extract_app_js.py > app.tmp.js
           node --check app.tmp.js
           rm -f app.tmp.js
 
-      - name: Tests unitaires de la logique pure
-        run: node --test 'test/*.test.js'
+  unit:
+    needs: changes
+    if: ${{ needs.changes.outputs.app == 'true' || needs.changes.outputs.scripts == 'true' || needs.changes.outputs.tests == 'true' || needs.changes.outputs.ci == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: node --test
 
-      - name: Scan de secrets (garde-fou OSS)
+  recipes:
+    needs: changes
+    if: ${{ needs.changes.outputs.recipes == 'true' || needs.changes.outputs.scripts == 'true' || needs.changes.outputs.ci == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Valider le catalogue + fraicheur de l'index
         run: |
+          node scripts/validate_recipes.mjs
+          node scripts/build_index.mjs --check
+          node scripts/lint_recipes.mjs
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: |
           if grep -rInE '(sk-ant-[A-Za-z0-9_-]{8})|(ghp_[A-Za-z0-9]{20})|(github_pat_[A-Za-z0-9_]{20})|(-----BEGIN [A-Z ]*PRIVATE KEY-----)' --exclude-dir=.git .; then
             echo "::error::Secret potentiel detecte dans le depot"
             exit 1
           fi
           echo "Aucun secret detecte"
+
+  # Statut unique requis par la protection de branche : reussit si aucun job requis n'a echoue
+  # (les jobs "skipped" par le filtrage de chemins comptent comme OK).
+  ci-ok:
+    needs: [static, syntax, unit, recipes, secret-scan]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for r in "${{ needs.static.result }}" "${{ needs.syntax.result }}" "${{ needs.unit.result }}" "${{ needs.recipes.result }}" "${{ needs.secret-scan.result }}"; do
+            if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then echo "::error::un job requis a echoue ($r)"; exit 1; fi
+          done
+          echo "CI OK"

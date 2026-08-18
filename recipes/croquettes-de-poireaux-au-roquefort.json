@@ -1,0 +1,35 @@
+{
+  "id": "croquettes-de-poireaux-au-roquefort",
+  "titre": "Croquettes de Poireaux au Roquefort",
+  "portions": 1,
+  "ingredients": [
+    "1/2 poireau",
+    "1/2 oeuf",
+    "25 g farine",
+    "25 g chapelure",
+    "30 g roquefort",
+    "sel",
+    "poivre",
+    "huile d'olive"
+  ],
+  "etapes": [
+    "Préchauffez votre four à 180°C.",
+    "Lavez et coupez le poireau en fines rondelles. Faites-les cuire à la vapeur pendant environ 8 minutes, jusqu'à ce qu'elles soient tendres.",
+    "Écrasez les poireaux à l'aide d'une fourchette ou d'un mixeur jusqu'à obtenir une purée.",
+    "Dans un bol, mélangez la purée de poireaux, l'œuf, la farine, la chapelure et le Roquefort. Assaisonnez avec du sel et du poivre.",
+    "Formez des croquettes de la taille de votre choix et déposez-les sur une plaque de cuisson huilée.",
+    "Enfournez pendant 15-20 minutes, jusqu'à ce qu'elles soient dorées."
+  ],
+  "labels": [
+    "végétarien",
+    "accompagnement"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf"
+  ],
+  "kcal": 445,
+  "prot": 16,
+  "image": "recipes/images/croquettes-de-poireaux-au-roquefort.jpg"
+}

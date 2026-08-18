@@ -1,0 +1,38 @@
+{
+  "id": "chou-vert-mijote-aux-petits-legumes",
+  "titre": "Chou Vert Mijoté Aux Petits Légumes",
+  "portions": 1,
+  "ingredients": [
+    "1/4 chou vert",
+    "1/4 carotte",
+    "1/4 branche céleri",
+    "1/4 oignon",
+    "1/4 gousse ail",
+    "1/2 cuillère à soupe sauce soja",
+    "1 cuillère à café huile de sésame toasté",
+    "1 cuillère à café graines de sésame (ou gomasio)",
+    "huile d'olive"
+  ],
+  "etapes": [
+    "Bien laver le céleri et le couper en tronçons. Peler carotte, oignon et ail. Couper en morceaux. Verser ces petits légumes dans un mixeur pour les hacher finement. Vous pouvez le faire à la main si vous préférez.",
+    "Chauffer et huiler une cocotte. Faire revenir le haché de petits légumes jusqu'à tendreté.",
+    "Pendant ce temps, préparer le chou: éliminer la première couche de feuilles extérieures plus coriaces. Couper le chou en quatre et retirer le coeur blanc qui est dur. Émincer finement les feuilles et bien les laver. Verser le chou émincé dans la cocotte, mélanger et cuire sous couvercle et à feu doux pour 30 minutes. Le chou doit être très tendre.",
+    "Quelques minutes avant la fin de cuisson, mélanger les légumes avec la sauce soja et l'huile de sésame.",
+    "Servir les légumes chauds et les saupoudrer de graines de sésame ou de gomasio."
+  ],
+  "labels": [
+    "végétarien",
+    "sans-lactose",
+    "sans-gluten",
+    "accompagnement",
+    "vegan"
+  ],
+  "allergenes": [
+    "soja",
+    "sesame",
+    "celeri"
+  ],
+  "kcal": 240,
+  "prot": 6,
+  "image": "recipes/images/chou-vert-mijote-aux-petits-legumes.jpg"
+}

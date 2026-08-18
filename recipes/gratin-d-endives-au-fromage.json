@@ -1,0 +1,30 @@
+{
+  "id": "gratin-d-endives-au-fromage",
+  "titre": "Gratin D'endives Au Fromage",
+  "portions": 1,
+  "ingredients": [
+    "167 g endives",
+    "33 g vieux-lille",
+    "83 g pommes de terre",
+    "5 g margarine",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Éplucher et couper les pommes de terre en rondelles. Faire chauffer une casserole d'eau et faire cuire les pommes de terre une dizaine de minutes. Égoutter.",
+    "Nettoyer les endives et les émincer grossièrement. Faire fondre la margarine dans une poêle et les faire cuire. Saler, poivrer.",
+    "Préchauffer le four à 200°C et beurrer un plat à gratin.",
+    "Alterner les couches d'endives et de pommes de terre.",
+    "Couper le fromage en tranches épaisses sans retirer la croûte, et les placer sur le dessus.",
+    "Enfourner 30 minutes. Servir le gratin d'endives au fromage accompagnée d'une salade verte et déguster."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-gluten"
+  ],
+  "allergenes": [],
+  "kcal": 240,
+  "prot": 11,
+  "image": "recipes/images/gratin-d-endives-au-fromage.jpg"
+}

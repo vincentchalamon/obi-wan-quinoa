@@ -1,0 +1,44 @@
+{
+  "id": "cake-tropical-kiwi-noix-de-coco",
+  "titre": "Cake tropical kiwi & noix de coco",
+  "portions": 11,
+  "ingredients": [
+    "180g de farine T55",
+    "50g de fécule de maïs",
+    "1 sachet de levure",
+    "1 pincée de fleur de sel",
+    "60g de noix de coco râpée torréfiée",
+    "3 œufs",
+    "75g de sucre Muscovado",
+    "Zestes d'un citron vert",
+    "120g de yaourt de soja ou grec",
+    "55g de beurre doux",
+    "5 kiwis bio"
+  ],
+  "etapes": [
+    "Préchauffer le four à 160°C.",
+    "Préparer un beurre noisette.",
+    "Écraser la moitié les kiwis en purée, et couper l'autre moitié en dés.",
+    "Réserver un peu de coco râpée non torréfiée pour la décoration finale.",
+    "Monter les œufs, le sucre et les zestes à vitesse maximale pendant 6 à 8 minutes jusqu'à obtenir un ruban.",
+    "Verser en filet le beurre noisette tiède et le yaourt sur les parois du bol tout en continuant de fouetter lentement. Ajouter la purée de kiwi.",
+    "Remplacer le fouet par la feuille. Incorporer le mélange (farine, fécule, levure, sel) et la coco torréfiée. Donner juste 3 ou 4 impulsions pour un mélange hétérogène, surtout pas lisse !",
+    "Terminer à la maryse en incorporant les dés de kiwis farinés. Aller chercher le fond du bol avec un mouvement circulaire lent pour ne pas faire retomber les œufs.",
+    "Enfourner à 160°C pendant 55 minutes.",
+    "À la sortie du four, pendant que le cake est encore brûlant, saupoudrer une fine pluie de noix de coco râpée non torréfiée et râper immédiatement un citron vert par-dessus."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "soja",
+    "fruits-a-coque"
+  ],
+  "kcal": 225,
+  "prot": 5,
+  "image": "recipes/images/cake-tropical-kiwi-noix-de-coco.jpg"
+}

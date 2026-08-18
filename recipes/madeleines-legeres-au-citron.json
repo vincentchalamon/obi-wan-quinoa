@@ -1,0 +1,41 @@
+{
+  "id": "madeleines-legeres-au-citron",
+  "titre": "Madeleines légères au citron",
+  "portions": 4,
+  "ingredients": [
+    "2 œufs (gros)",
+    "50 g sucre",
+    "20 g miel",
+    "120 g farine",
+    "5 g levure chimique",
+    "65 g beurre",
+    "40 ml crème de soja",
+    "1 citron bio (zeste)",
+    "22 ml jus de citron (ou eau de fleur d'oranger)",
+    "1 g sel"
+  ],
+  "etapes": [
+    "Faire fondre le beurre, puis le laisser tiédir. Un beurre trop chaud ferait gonfler les œufs trop tôt.",
+    "Fouetter les œufs avec le sucre, le miel et le sel pendant 3 minutes, jusqu'à ce que le mélange pâlisse et devienne légèrement mousseux.",
+    "Incorporer les zestes de citron avec le jus de citron (ou eau de fleur d'oranger) et la crème de soja. Mélanger jusqu'à homogénéité.",
+    "Tamiser la farine avec la levure chimique par-dessus, puis incorporer délicatement à la maryse sans trop travailler la pâte.",
+    "Verser le beurre tiédi et mélanger juste assez pour obtenir une pâte lisse et brillante.",
+    "Couvrir et placer au réfrigérateur 2h (ou 1h au congélateur). Ce choc thermique est ce qui crée la fameuse bosse.",
+    "Préchauffer le four à 220°C. Beurrer-fariner le moule (ou utiliser un moule en silicone) et remplir chaque empreinte aux 3/4 seulement.",
+    "Enfourner 6 minutes à 220°C, puis baisser à 180°C et poursuivre 6-7 min, jusqu'à ce que les bords soient dorés et la bosse bien formée.",
+    "Démouler immédiatement et laisser refroidir sur une grille."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "soja"
+  ],
+  "kcal": 350,
+  "prot": 7,
+  "image": "recipes/images/madeleines-legeres-au-citron.jpg"
+}

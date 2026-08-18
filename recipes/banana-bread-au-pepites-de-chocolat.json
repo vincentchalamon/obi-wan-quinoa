@@ -1,0 +1,51 @@
+{
+  "id": "banana-bread-au-pepites-de-chocolat",
+  "titre": "Banana Bread Au Pépites De Chocolat",
+  "portions": 14,
+  "ingredients": [
+    "4 bananes bien mûres (+ 1 pour le décor)",
+    "80 g de yaourt à la grecque (0-3% pour la légèreté)",
+    "50 g de cassonade",
+    "50 g de sucre en poudre",
+    "110 g de beurre mou",
+    "1 c. à café d’extrait de vanille",
+    "3 œufs moyen",
+    "320 g de farine (T45 ou T55)",
+    "1 c. à café bombée de levure chimique",
+    "1 c. à café de bicarbonate de soude",
+    "1 pincée de sel",
+    "100 g de pépites de chocolat noir (70% de cacao)",
+    "80g de cerneaux de noix (optionnel)",
+    "Confiture d'abricot ou miel liquide (pour le \"sirop brillance\")"
+  ],
+  "etapes": [
+    "Sortir le beurre 2h avant pour obtenir un beurre mou, pommade, facile à travailler.",
+    "Préchauffez le four à 165°C (chaleur tournante).",
+    "Séparer les blancs des jaunes.",
+    "Dans le bol du robot, fouetter le beurre pommade avec le sucre pour 3-4 minutes jusqu'à ce que le mélange blanchisse et devienne crémeux.",
+    "Ajouter les jaunes d'œufs un à un, puis le yaourt et la vanille.",
+    "Écraser à la fourchette les bananes (sauf celle pour le décor) et les ajouter au mélange.",
+    "Tamiser et mélanger la farine, la levure, le bicarbonate de soude et le sel, et les ajouter doucement au mélange à la spatule sans trop travailler la pâte.",
+    "Concasser et torréfier 5 minutes 3/4 des noix à la poêle à sec.",
+    "Monter les blancs en neige pas trop fermes (\"bec d'oiseau\").",
+    "Incorporer 1/3 des blancs énergiquement pour détendre la pâte, puis le reste délicatement à la maryse pour ne pas les casser.",
+    "Enfin, ajouter délicatement les pépites de chocolat et les noix torréfiées.",
+    "Saupoudrer les noix restantes sur le dessus pour décorer.",
+    "Verser la pâte dans le moule à cake chemisé ou beurré/fariné.",
+    "Enfourner pour environ 1h.",
+    "Laissez refroidir 15 minutes dans le moule puis démoulez et laissez le banana bread refroidir complètement sur une grille."
+  ],
+  "labels": [
+    "végétarien",
+    "dessert"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "kcal": 295,
+  "prot": 6,
+  "image": "recipes/images/banana-bread-au-pepites-de-chocolat.jpg"
+}

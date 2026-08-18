@@ -1,0 +1,38 @@
+{
+  "id": "poivrons-farcis-a-la-russe",
+  "titre": "Poivrons farcis à la russe",
+  "portions": 6,
+  "ingredients": [
+    "2 oignons",
+    "400 g de boeuf",
+    "6 poivons",
+    "1 kg de tomates",
+    "2 céleris",
+    "1 oignon rouge",
+    "3 carottes",
+    "400 g de riz",
+    "Huile",
+    "Sel",
+    "Herbes aromatiques",
+    "Épices"
+  ],
+  "etapes": [
+    "Vider les poivrons et hacher les légumes. Réserver les tomates, 1 carotte, 1 céleri et la moitié d'1 oignon pour la sauce.",
+    "Pendant ce temps, cuire le riz (à demi-cuit).",
+    "Mélanger la moitié des légumes (hors réservés) avec le riz et farcir les poirons.",
+    "Faire revenir à la poêle 1 carottes, 1 céleré et la moitié d'1 oignon avec de l'huile.",
+    "Ajouter les poivrons et garnir de tomates avec leur jus et une louche d'eau. Les poivrons doivent être à moitié recouverts.",
+    "Faire revenir avec de l'eau, puis couvrir et faire cuire à feu moyen pendant 30-40 minutes environ."
+  ],
+  "labels": [
+    "repas",
+    "sans-lactose",
+    "sans-gluten",
+    "viande"
+  ],
+  "allergenes": [
+    "celeri"
+  ],
+  "kcal": 505,
+  "prot": 26
+}

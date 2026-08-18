@@ -1,0 +1,38 @@
+{
+  "id": "buddha-bowl-quinoa-tofu-grille-sauce-tahini",
+  "titre": "Buddha bowl quinoa & tofu grillé, sauce tahini",
+  "portions": 1,
+  "ingredients": [
+    "80 g quinoa (sec)",
+    "150 g tofu ferme",
+    "150 g haricots verts",
+    "1 petite betterave cuite",
+    "30 g jeunes pousses",
+    "sauce soja",
+    "huile d'olive",
+    "tahini",
+    "1/2 citron",
+    "1 gousse ail",
+    "graines de courge (option)"
+  ],
+  "etapes": [
+    "Rincer le quinoa, cuire 12–15 min dans 2× son volume d’eau salée.",
+    "Presser le tofu, cubes, mariner 5 min dans la sauce soja, poêler 8–10 min.",
+    "Cuire les haricots verts 6–8 min, garder croquants.",
+    "Délayer le tahini avec citron, ail râpé, eau et sel.",
+    "Dresser : quinoa, tofu, haricots verts, betterave en dés, pousses ; napper, parsemer de graines."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-lactose",
+    "sans-gluten",
+    "vegan"
+  ],
+  "allergenes": [
+    "soja",
+    "sesame"
+  ],
+  "kcal": 950,
+  "prot": 32
+}

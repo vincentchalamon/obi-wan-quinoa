@@ -1,0 +1,37 @@
+{
+  "id": "mini-souffles-au-chou-fleur",
+  "titre": "Mini Soufflés Au Chou-fleur",
+  "portions": 1,
+  "ingredients": [
+    "100 g chou-fleur",
+    "15 g fromage râpé allégé",
+    "1 oeuf",
+    "10 g beurre allégé",
+    "2,5 cl lait écrémé",
+    "1 pincée noix de muscade",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Faire cuire le chou-fleur à la vapeur.",
+    "L'écraser en purée.",
+    "Préchauffer le four à 180°C.",
+    "Séparer les blancs des jaunes d'oeufs.",
+    "Incorporer dans la purée les jaunes d'oeufs, le beurre pommade, le fromage, le lait, la muscade, le sel et le poivre, et bien mélanger.",
+    "Monter les blancs en neiges fermes et les incorporer délicatement à  la préparation.",
+    "Verser la pâte dans des ramequins beurrés et mettre au four 25 minutes."
+  ],
+  "labels": [
+    "végétarien",
+    "sans-gluten",
+    "accompagnement"
+  ],
+  "allergenes": [
+    "lait",
+    "oeuf",
+    "fruits-a-coque"
+  ],
+  "kcal": 180,
+  "prot": 14,
+  "image": "recipes/images/mini-souffles-au-chou-fleur.jpg"
+}

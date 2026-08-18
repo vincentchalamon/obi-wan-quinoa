@@ -1,0 +1,37 @@
+{
+  "id": "lasagnes-au-potimarron-chevre-et-noisette",
+  "titre": "Lasagnes Au Potimarron, Chèvre Et Noisette",
+  "portions": 1,
+  "ingredients": [
+    "2 pâtes à lasagne",
+    "200 g potimarron",
+    "1 oignon",
+    "1/2 gousse ail",
+    "30 g bûche de chèvre",
+    "25 g noisettes grillées",
+    "8 g beurre",
+    "8 g farine",
+    "7 cl lait",
+    "huile d'olive",
+    "thym",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Coupez le potimarron en petits morceaux. Émincez les oignons et écrasez les gousses d’ail. Dans une casserole faites revenir les oignons et l’ail. Ajoutez les dés de potimarron. Salez, poivrez et laissez cuire à couvert à feux moyen 15mn. Coupez la bûche de chèvre en rondelles. Concassez les noisettes.",
+    "Réalisez la béchamel :",
+    "Faites fondre le beurre dans une casserole, ajoutez la farine et remuez avec une cuillère en bois. Versez le lait dedans tout en remuant à feu doux. Laissez le mélange s’épaissir et retirer du feu. Assaisonnez avec du sel, du poivre et du thym."
+  ],
+  "labels": [
+    "végétarien",
+    "repas"
+  ],
+  "allergenes": [
+    "gluten",
+    "lait",
+    "fruits-a-coque"
+  ],
+  "kcal": 660,
+  "prot": 20,
+  "image": "recipes/images/lasagnes-au-potimarron-chevre-et-noisette.jpg"
+}

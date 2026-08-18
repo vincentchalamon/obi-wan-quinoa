@@ -1,0 +1,37 @@
+{
+  "id": "salade-tiede-de-riz-basmati-peches-roties-haricots-rouges-oignon-rouge-et-quenelle-de-fromage-blanc",
+  "titre": "Salade tiède de riz basmati, pêches rôties & haricots rouges, oignon rouge et quenelle de fromage blanc",
+  "portions": 1,
+  "ingredients": [
+    "70 g riz basmati",
+    "180 g haricots rouges cuits (conserve, égouttés)",
+    "2 pêches",
+    "1/2 oignon rouge",
+    "30 g radis",
+    "80 g tomate cerise",
+    "20 g huile d'olive",
+    "1 cuillère à soupe vinaigre de vin",
+    "80 g fromage blanc",
+    "ciboulette",
+    "sel",
+    "poivre"
+  ],
+  "etapes": [
+    "Cuire le riz basmati dans l'eau bouillante salée selon les indications du paquet, égoutter et laisser tiédir.",
+    "Couper les pêches en quartiers et les poêler 3-4 min dans la moitié de l'huile d'olive à feu vif, jusqu'à légère caramélisation. Réserver.",
+    "Émincer finement l'oignon rouge, couper les radis en fines rondelles et les tomates cerises en deux.",
+    "Mélanger le riz tiède avec les haricots rouges égouttés, l'oignon rouge, les radis, les tomates cerises, le reste d'huile d'olive et le vinaigre. Saler, poivrer.",
+    "Ciseler la ciboulette et l'incorporer au fromage blanc.",
+    "Dresser la salade tiède, disposer les quartiers de pêche rôtis dessus et ajouter une quenelle de fromage blanc à la ciboulette."
+  ],
+  "labels": [
+    "végétarien",
+    "repas",
+    "sans-gluten"
+  ],
+  "allergenes": [
+    "lait"
+  ],
+  "kcal": 860,
+  "prot": 28
+}
